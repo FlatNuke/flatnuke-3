@@ -14,15 +14,6 @@
 
 
 /**
- * A collection of easy to include PHP functions that sanitize user inputs
- *
- * @author The Open Web Application Security Project - {@link http://www.owasp.org/software/labs/phpfilters.html}
- * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
- */
-include_once("include/php_filters/sanitize.php");
-
-
-/**
  * Restituisce la versione attuale di Flatnuke
  *
  * @since 2.5.7
@@ -30,9 +21,18 @@ include_once("include/php_filters/sanitize.php");
  * @return constant Versione di Flatnuke
  */
 function get_fn_version(){
-   define("FN_VERSION", "4.0.0");
+   define("FN_VERSION", "3.1.6");
    return FN_VERSION;
 }
+
+
+/**
+ * A collection of easy to include PHP functions that sanitize user inputs
+ *
+ * @author The Open Web Application Security Project - {@link http://www.owasp.org/software/labs/phpfilters.html}
+ * @license http://opensource.org/licenses/gpl-license.php GNU General Public License
+ */
+include_once("include/php_filters/sanitize.php");
 
 
 /**
@@ -170,7 +170,7 @@ function getpass($user) {
  * Applica un semaforo ad un file
  *
  * Applica un semaforo al file passato come parametro, impedendo qualsiasi
- * azione fintanto che non sarà spento con la chiave MD5 corretta.
+ * azione fintanto che non sara' spento con la chiave MD5 corretta.
  * NB: la gestione dei semafori deve essere supportata dal proprio webserver.
  *
  * @author Simone Vellei <simone_vellei@users.sourceforge.net>
@@ -409,7 +409,7 @@ function getlevel($admin, $from){
 
 
 /**
- * Controllo sulla validità di una stringa alfanumerica
+ * Controllo sulla validita' di una stringa alfanumerica
  *
  * Esegue un controllo sulla stringa passata come parametro, verificando che
  * contenga unicamente caratteri oppure numeri, secondo lo standard UNIX.
@@ -494,27 +494,27 @@ function rawurlencodepath($path){
  * @since 2.5.8
  *
  * @param string $target Directory da eliminare
- * @param boolean $verbose Indica se attivare o meno la modalità 'verbose' (disattivata di default)
+ * @param boolean $verbose Indica se attivare o meno la modalita' 'verbose' (disattivata di default)
  * @return boolean Vero o Falso
 */
 function rmdirr($target, $verbose=FALSE) {
 	$exceptions = array('.','..');
 	if (!$sourcedir = @opendir($target)) {
 		if ($verbose)
-			echo '<strong>Couldn&#146;t open '.$target."</strong><br>\n";
+			echo '<strong>Couldn&#146;t open '.$target."</strong><br />\n";
 		return FALSE;
 	}
 	while(false!==($sibling=readdir($sourcedir))) {
 		if(!in_array($sibling,$exceptions)) {
 			$object = str_replace('//','/',$target.'/'.$sibling);
 			if($verbose)
-				echo 'Processing: <strong>'.$object."</strong><br>\n";
+				echo 'Processing: <strong>'.$object."</strong><br />\n";
 			if(is_dir($object))
 				rmdirr($object);
 			if(is_file($object)) {
 				$result = @unlink($object);
 				if ($verbose&&$result)
-					echo "File has been removed<br>\n";
+					echo "File has been removed<br />\n";
 				if ($verbose&&(!$result))
 					echo "<strong>Couldn&#146;t remove file</strong>";
 			}
@@ -523,7 +523,7 @@ function rmdirr($target, $verbose=FALSE) {
 	closedir($sourcedir);
 	if($result=@rmdir($target)) {
 		if ($verbose)
-			echo "Target directory has been removed<br>\n";
+			echo "Target directory has been removed<br />\n";
 		return TRUE;
 	}
 	if ($verbose)
@@ -545,9 +545,9 @@ function rmdirr($target, $verbose=FALSE) {
  * @param string $mode    modo di scrittura da passare alla funzione fopen
  * @param array  $options lista delle opzioni di scrittura
  * Le opzioni possono essere:
- * 	- nonull: la stringa da scrivere non può essere vuota
- * 	- nophp:  il testo non può contenere codice php
- * 	- nohtml: il testo non può contenere codice html
+ * 	- nonull: la stringa da scrivere non puo' essere vuota
+ * 	- nophp:  il testo non puo' contenere codice php
+ * 	- nohtml: il testo non puo' contenere codice html
  */
 function fnwrite($file, $text, $mode, $options=array()) {
 	$file = getparam($file, PAR_NULL, SAN_NULL);
@@ -619,11 +619,11 @@ function fnwrite($file, $text, $mode, $options=array()) {
 
 /**
  * Funzione che creare le cartelle in Flatnuke.
- * Questa funzione è ridefinibile per permettere di adattarla ad esigenze particolari,
+ * Questa funzione � ridefinibile per permettere di adattarla ad esigenze particolari,
  * ad esempio il safe_mode=on
  *
  * @param string $dirpath il percorso della cartella da creare
- * @param int $mode la modalità di creazione della cartella
+ * @param int $mode la modalit� di creazione della cartella
  * @author Aldo Boccacci
  * @since 3.0
  */
@@ -639,7 +639,7 @@ function fn_mkdir($dirpath,$mode){
 	if (!check_path($dirpath,"","false"))
 		fn_die("Mkdir","the dir ".strip_tags($dirpath)." isn't valid!");
 	$mode = trim($mode);
-	//se $mode non è valido metto quello di default del php
+	//se $mode non � valido metto quello di default del php
 	if (!check_var($mode,"digit"))
 		$mode = 0777;
 // 		fn_die("MKDIR","the mode ".strip_tags($mode)." isn't valid!");
@@ -715,11 +715,11 @@ function email_mask($email_address) {
 /**
  * Controlla il percorso di file che gli viene passato come parametro.
  *
- * Questa funzione verifica la validità del percorso passato come parametro. Innanzitutto viene
+ * Questa funzione verifica la validita' del percorso passato come parametro. Innanzitutto viene
  * verificata la presenza di caratteri potenzialmente pericolosi.
  * Con il secondo parametro si indica eventualmente la cartella all'interno della quale deve trovarsi il file
  * (o sue sottocartelle).
- * Con il terzo parametro si indica se il file può avere estensione "php*"
+ * Con il terzo parametro si indica se il file puo' avere estensione "php*"
  * Se il percorso rispetta tutte le condizioni la funzione restituisce TRUE,
  * in caso contrario restituisce FALSE.
  *
@@ -780,7 +780,7 @@ function check_path($filename,$dirbase,$allow_php){
  * Sono supportati i seguenti tipi:
  * 1. digit: solo numeri
  * 2. alnum: numeri e cifre (no spazi o segni di punteggiatura)
- * 3. text (no html): restituisce true se il testo è uguale al testo restituito dalla funzione strip_tag
+ * 3. text (no html): restituisce true se il testo e' uguale al testo restituito dalla funzione strip_tag
  *                    (ovvero non sono presenti tag html/php nella stringa)
  * 4. boolean: i valori validi sono "1", "0", "true", "false", "on" e "off" (case insensitive)
  *
@@ -827,57 +827,48 @@ include_once("include/php_filters/sanitize.php");
 
 
 /**
- * Questa funzione restituisce TRUE se l'indirizzo passato come parametro è incluso nella lista degli ip bloccati.
- * FALSE se l'indirizzo ip è ok. L'elenco degli ip bloccati è incluso nel file include/blacklists/ipblacklist.php
+ * Questa funzione restituisce TRUE se l'indirizzo passato come parametro e' incluso nella lista degli ip bloccati.
+ * FALSE se l'indirizzo ip e' ok. L'elenco degli ip bloccati e' incluso nel file include/blacklists/ipblacklist.php
  *
- * Restituisce TRUE se l'indirizzo passato come parametro è inserito nella blacklist,
+ * Restituisce TRUE se l'indirizzo passato come parametro e' inserito nella blacklist,
  * FALSE in caso contrario.
  *
  * @author Aldo Boccacci
  * @since 2.6
  *
  * @param string $ip l'indirizzo ip da verificare.
- * @return TRUE se l'indirizzo è vietato, FALSE in caso contrario
+ * @return TRUE se l'indirizzo e' vietato, FALSE in caso contrario
  */
 function is_blocked_ip($ip){
-	if (trim($ip)=="") return FALSE;
+    if (trim($ip)=="") return FALSE;
 
-	/* lighthttp uses ::ffff:127.0.0.1 */
-	if (strpos($ip, '::') === 0) {
-        	$ip = substr($ip, strrpos($ip, ':')+1);
-	}
+    // test IPV4/IPV6 address
+    if (!preg_match("/(?=(s*((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])){3}))|:)))(%.+)?\s*)|(([\w-]+\.)+[\w-]+(\/[\w- .\/?%&amp;=]*)?))/", $ip)){
+        echo "Invalid remote ip adress!<br>";
+        return TRUE;
+    }
 
-	/* deprecated: PHP 5.3 upgrade
-	if (!eregi("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$",$ip)){*/
-	if (!preg_match("/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/",$ip)){
-		echo "Invalid remote ip adress!<br>";
-		return TRUE;
-	}
-	$blstring ="";
-	if (!file_exists("include/blacklists/ipblacklist.php")){
-		fnlog("Flatforum","Blocked ip list file doesn't exists!");
-		return FALSE;
-	}
-	$blstring=get_file("include/blacklists/ipblacklist.php");
+    // test blacklist file existance
+    if (!file_exists("include/blacklists/ipblacklist.php")){
+        fnlog("Flatforum","Blocked ip list file doesn't exists!");
+        return FALSE;
+    }
+    $blstring = "";
+    $blstring = get_file("include/blacklists/ipblacklist.php");
 
-	$iparray=array();
-	$iparray=explode("\n",$blstring);
-	$item="";
+    // process blackfile content
+    $iparray = array();
+    $iparray = explode("\n",$blstring);
+    $item    = "";
 
-	foreach ($iparray as $item){
-		/* deprecated: PHP 5.3 upgrade
-		if (eregi("^#",trim($item))) continue;
-		if (trim($item)=="") continue;
-		if (eregi("\<",$item)) continue;
-		$item = trim(eregi_replace("\*",".",$item));
-		if (eregi($item,$ip)) return TRUE;*/
-		if (preg_match("/^#/",trim($item))) continue;
-		if (trim($item)=="") continue;
-		if (preg_match("/\</",$item)) continue;
-		$item = trim(preg_replace("/\*/",".",$item));
-		if (preg_match('/$item/',$ip)) return TRUE;
-	}
-	return FALSE;
+    foreach ($iparray as $item){
+        if (preg_match("/^#/",trim($item))) continue;
+        if (trim($item)=="") continue;
+        if (preg_match("/\</",$item)) continue;
+        $item = trim(preg_replace("/\*/",".",$item));
+        if (preg_match('/'.$item.'/',$ip)) return TRUE;
+    }
+    return FALSE;
 }
 
 
@@ -891,10 +882,10 @@ function is_blocked_ip($ip){
  * @param string $string la stringa da controllare
  * @param string $spamfile il nome senza estensione del file contenente i criteri di riconiscimento
  * @param boolean $print_alert se settato a TRUE mostra un avviso indicante la parola trovata
- * @param boolean $return_word se settato a TRUE restituisce anziché TRUE la parola trovata
+ * @param boolean $return_word se settato a TRUE restituisce anzich� TRUE la parola trovata
  *                (se non viene trovata restituisce comunque FALSE)
- * @return TRUE se la stringa è vietata, FALSE in caso contrario
- *         (se $return_word è settato a TRUE restituisce, se viene trovata, la parola che risponde alla ricerca)
+ * @return TRUE se la stringa e' vietata, FALSE in caso contrario
+ *         (se $return_word � settato a TRUE restituisce, se viene trovata, la parola che risponde alla ricerca)
  */
 function is_spam($string,$spamfile,$print_alert=FALSE,$return_word=FALSE){
 	if (!check_path($spamfile,"","false")) die("spam file path is not valid! ".basename(__FILE__).": ".__LINE__);
@@ -927,7 +918,7 @@ function is_spam($string,$spamfile,$print_alert=FALSE,$return_word=FALSE){
 				echo "<div style='text-align: center'><blockquote>"._SPAMWORDIS.": <b>".$out[0]."</b></blockquote></div>";
 			$ip = getparam("REMOTE_ADDR",PAR_SERVER,SAN_FLAT);
 			fnlog("Spam", "$ip||".get_username()."||Spamfilter blocked the regexp \"$item\".");
-			//se $return_word è settato a TRUE restituisco la parola trovata
+			//se $return_word � settato a TRUE restituisco la parola trovata
 			if ($return_word)
 				return $out[0];
 			else return TRUE;
@@ -1015,7 +1006,7 @@ function get_mod(){
 
 	if (!is_dir(get_fn_dir("sections")."/$mod") and !ctype_alnum("$mod")){
 		$mod= "FN_INVALID_SECTION";
-		fnlog("ERROR","il parametro \$mod non è valido!");
+		fnlog("ERROR","il parametro \$mod non � valido!");
 	}
 
 	return $mod;
