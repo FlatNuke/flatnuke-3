@@ -31,7 +31,7 @@ function replace_tags(x) {
 	x = x.replace(/\[\/i\]/g, "</i>");
 	x = x.replace(/\[strike\]/g, "<span style='text-decoration:line-through;'>");
 	x = x.replace(/\[\/strike\]/g, "</span>");
-	x = x.replace(/\[quote\=(.+?)\](.+?)\[\/quote\]/g, "<blockquote><b>$1 wrote:</b><br>$2</blockquote>");
+	x = x.replace(/\[quote\=(.+?)\](.+?)\[\/quote\]/g, "<blockquote><b>$1 wrote:</b><br />$2</blockquote>");
 	x = x.replace(/\[\quote\]/g, "<blockquote>");
 	x = x.replace(/\[\/quote\]/g, "</blockquote>");
 	x = x.replace(/\[code\]/g, "<pre>");

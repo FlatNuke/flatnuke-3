@@ -1,42 +1,44 @@
 -------------------------------------------------------------------------------
-XX/XX/XXXX XX:XX    Simone Vellei <simone_vellei@users.sourceforge.net>,
-                    Marco Segato  <marco.segato@gmail.com>,
+XX/XX/XXXX XX:XX 	flatnuke-3.1.6 (Revenge of the Maya)
+
+	Marco Segato <marco.segato@gmail.com>
+	- Fix: fixed IP filtering blacklist (that now supports both IPv4 and IPv6)
+
+-------------------------------------------------------------------------------
+15/11/2014 23:19    Simone Vellei <simone_vellei@users.sourceforge.net>,
+                    Marco Segato  <segatom@users.sourceforge.net>,
                     Aldo Boccacci <zorba_@tin.it>
 
-flatnuke-4.0.0 ()
-	Add: themes are now using Bootstrap, a powerful front-end framework
-	Change: Flatnuke moves to Unicode standard encoding UTF-8
-	Fix: fixed security bug when accessing Admin section
-	Fix: fixed XSS bug (tnx to Canberk Bolat by Mavituna Security)
-	Fix: fixed XSS bug (tnx to Dennis Kelly by Risk Based Security)
+flatnuke-3.1.5 (Revenge of the Maya)
 	Fix: fixed XSS bug and Script Injection bug (tnx to Juri Gianni)
 
+-------------------------------------------------------------------------------
+16/02/2014 14:33    Simone Vellei <simone_vellei@users.sourceforge.net>,
+                    Marco Segato  <segatom@users.sourceforge.net>,
+                    Aldo Boccacci <zorba_@tin.it>
+
+flatnuke-3.1.4 (Revenge of the Maya)
+	Fix: fixed XSS bug (tnx to Dennis Kelly by Risk Based Security)
+
 	Roberto Balbi <roberto.balbi@email.it>
-	- Add: social links on header only news view
-	- Add: auto subscribe to handled topics
-	- Change: management icons behavior in forum and news sections
-	- Change: removed obsolete or unused functions, checks and parameters
-	- Change: conversion to UTF-8
-	- Change: show only tags for current news section
-	- Fix: link to user profile in download sections
+	- Fix: upload screenshot in download section
+
+-------------------------------------------------------------------------------
+25/12/2013 15:42    Simone Vellei <simone_vellei@users.sourceforge.net>,
+                    Marco Segato  <segatom@users.sourceforge.net>,
+                    Aldo Boccacci <zorba_@tin.it>
+
+flatnuke-3.1.3 (Revenge of the Maya)
+	Fix: fixed security bug when accessing Admin section
+	Fix: fixed XSS bug (tnx to Canberk Bolat by Mavituna Security)
+
+	Roberto Balbi <roberto.balbi@email.it>
+	- Fix: link to uploader user profile in download sections
 	- Fix: editor plugins availables also to news moderators
 	- Fix: unwanted strip of htmlentities
-	- Fix: redirection to correct parent section
-	- Fix: many conversion of special characters to html entities
 	- Fix: conversion problem of 3.1.0 upgrade script
 	- Fix: section tags list count when editing news (and rebuild corrects
 	       tags_list.php)
-	- Fix: upload screenshot in download section
-	- Fix: check for security code in log files
-	- Fix: rename and deletion of sections containing a dot in the name
-
-	Alfredo Cosco <orazio.nelson@gmail.com>
-	- Add: introduced htaccess file for Apache Server configs
-	- Change: moved Flatnuke source code to HTML5 standards
-	- Change: new absolutely fabulous theme for admin dashboard
-
-	dan
-	- Add: introduced permalink for read news link
 
 -------------------------------------------------------------------------------
 17/08/2013 10:32    Simone Vellei <simone_vellei@users.sourceforge.net>,
@@ -620,8 +622,8 @@ flatnuke-2.5 (butterfly)
 	* flatnuke:
 
 	Add: supporto livello utenti (Access Control List)
-	Add: supporto per più amministratori
-	Add: il primo utente che si registra sarà amministratore
+	Add: supporto per piu' amministratori
+	Add: il primo utente che si registra sara' amministratore
 	Add: supporto per permessi a sezioni
 	Add: cancella news chiede conferma
 	Add: supporto per titoli blocchi con spazi
@@ -630,7 +632,7 @@ flatnuke-2.5 (butterfly)
 	Change: restyling del blocco login (wow!)
 	Change: restyling tema default
 	Change: riscritta html_entity_decode() per PHP < 4.3
-	Change: una sezione può anche non contenere section.php
+	Change: una sezione puo' anche non contenere section.php
 
 	Marco Segato <segatom@users.sourceforge.net>:
 	Change: aggiornamento galleria immagini
@@ -693,7 +695,7 @@ flatnuke-2.4 (lizard)
 	* forum:
 
 	Add: motore di ricerca anche nel forum
-	Change: l'username non può contenere spazi e deve essere <= 13 caratteri
+	Change: l'username non puo' contenere spazi e deve essere <= 13 caratteri
 
 -------------------------------------------------------------------------------
 20/04/2004 22:45	Simone Vellei	<simone_vellei@users.sourceforge.net>
@@ -864,8 +866,8 @@ FlatNuke-1.6:
 
 	* FlatNuke:
 
-	Add: Il codice adesso è HTML VERAMENTE 4.01 Trasitional.
-	Add: Durante l'inserimento di una news è possibile farne la preview
+	Add: Il codice adesso e' HTML VERAMENTE 4.01 Trasitional.
+	Add: Durante l'inserimento di una news e' possibile farne la preview
 
 	* forum:
 
@@ -880,10 +882,10 @@ FlatNuke-1.5:
 	* FlatNuke:
 
 	Add: Anche le sottosezioni supportano il "none_"
-	Change: Il codice adesso è HTML 4.01 Trasitional.
+	Change: Il codice adesso e' HTML 4.01 Trasitional.
 
 	* forum:
 
 	Add: E' stato inserito un forum (FlatForum).
-	Add: FlatForum è collegato a FlatNuke mediante la sezione "Forum".
+	Add: FlatForum e' collegato a FlatNuke mediante la sezione "Forum".
 	Add: Password utenti memorizzate in MD5

@@ -93,7 +93,7 @@ $section_show_header = "1";
 
 /**
  * Se impostato a 1 attiva di default la votazione per i file
- * 1 = la votazione √® attivata di default
+ * 1 = la votazione Ë attivata di default
  * 0 = la votazione deve essere esplicitamente richiesta
  */
 $defaultvoteon = "1";
@@ -113,7 +113,7 @@ $usermaxFileSize = 1000000;
 $userfilelimit ="5";
 
 /**
- * Il nome del file che conterr√† la lista dei file in attesa di approvazione
+ * Il nome del file che conterr‡ la lista dei file in attesa di approvazione
  */
 $userwaitingfile ="fdwaiting.php";
 

@@ -33,7 +33,7 @@ if (preg_match("/Statistiche.php/i",$_SERVER['PHP_SELF'])) {
 
 if(file_exists(_FN_VAR_DIR."/flatstat/totale.php")){
 	$fd = file(_FN_VAR_DIR."/flatstat/totale.php");
-	echo _VISITS.": $fd[0] <br>";
+	echo _VISITS.": $fd[0] <br />";
 	echo "<div style=\"text-align : center;\"><a href=\"index.php?mod=none_Statistiche\" title=\""._GOTOSECTION.": "._STATISTICS."\">"._STATISTICS."</a></div>";
 }
 ?>

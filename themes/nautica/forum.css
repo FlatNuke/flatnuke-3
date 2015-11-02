@@ -1,0 +1,151 @@
+/* FORUM OVERVIEW */
+
+.forum-header-table{
+ border-style: solid;
+ border-color: #74a8f5;
+ border-collapse: collapse;
+ border-width: 1px;
+}
+
+.forum-header-search,
+.forum-header-wellcome,
+.forum-header-edit-profile,
+.forum-header-enter,
+.forum-header-help,
+.forum-header-members
+{
+border-style: solid;
+ border-color: #74a8f5;
+ border-collapse: collapse;
+ border-width: 1px;
+}
+
+/* GROUP */
+.forum-group-table{
+ width:100%;
+ border-collapse: collapse;
+ border:1px solid #74a8f5;
+
+}
+
+.forum-group-table tr:hover { 
+ background-color: #EEF4FF;
+}
+
+.forum-group-title{
+
+}
+
+.forum-group-name{
+ font-size: 140%;
+ font-weight : bolder;
+}
+
+.forum-group-header{
+ width:100%;
+ border-collapse: collapse;
+ border:1px solid #74a8f5;
+ background-color: #edf3fe;
+}
+
+.forum-group-icon-header,
+.forum-group-arg-header,
+.forum-group-topics-header,
+.forum-group-msg-header,
+.forum-group-latest-msg-header
+{
+ border-collapse: collapse;
+ border:1px solid #74a8f5;
+}
+
+.forum-group-icon,
+.forum-group-arg,
+.forum-group-topics,
+.forum-group-msg,
+.forum-group-latest-msg{
+ border-collapse: collapse;
+ border:1px solid #74a8f5;
+}
+
+/* ARGUMENT */
+
+.forum-arg-table{
+ width:100%;
+ border-collapse: collapse;
+ border:1px solid #74a8f5;
+}
+
+.forum-arg-table tr:hover {
+ background-color: #EEF4FF;
+}
+
+
+.forum-arg-icon-header,
+.forum-arg-mess-header,
+.forum-arg-pages-header,
+.forum-arg-msg-count-header,
+.forum-arg-visits-header,
+.forum-arg-firstpost-header,
+.forum-arg-lastpost-header
+{
+ border-collapse: collapse;
+ border:1px solid #74a8f5;
+ background-color: #edf3fe;
+}
+
+
+.forum-arg-icon,
+.forum-arg-mess,
+.forum-arg-pages,
+.forum-arg-msg-count,
+.forum-arg-visits,
+.forum-arg-firstpost,
+.forum-arg-lastpost
+{
+ border-collapse: collapse;
+ border:1px solid #74a8f5;
+}
+
+
+/* TOPIC */
+
+.forum-topic-table{
+ border-collapse: collapse;
+ border:1px solid #74a8f5;
+ width: 100%;
+}
+
+.forum-topic-user-header,
+.forum-topic-post-header
+{
+ border-collapse: collapse;
+ border:1px solid #74a8f5;
+ background-color: #edf3fe;
+}
+
+.forum-topic-footer,
+.forum-topic-mail,
+.forum-topic-user,
+.forum-topic-post,
+.forum-topic-post-options
+{
+ border-collapse: collapse;
+ border:1px solid #74a8f5;
+}
+
+.forum-page-selector
+{
+ border: 1px solid #74a8f5;
+ text-decoration:none;
+ background-color: #EEF4FF;
+ padding: 1px 3px 1px 3px;
+}
+
+.forum-new
+{
+ font-size: 140%;
+ border: 1px solid #74a8f5;
+ text-decoration:none;
+ background-color: #EEF4FF;
+ padding: 2px 5px 2px 5px;
+}

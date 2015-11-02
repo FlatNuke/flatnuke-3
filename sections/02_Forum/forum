@@ -19,4 +19,4 @@ if (preg_match("/section.php/i",$_SERVER['PHP_SELF']))
 	}
 
 ?>
-<script>window.location='forum';</script>
+<script language="javascript">window.location='forum';</script>

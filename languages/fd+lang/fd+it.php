@@ -147,7 +147,7 @@ define("_FDCREATESUBSECT","Crea una nuova sezione all&#8217;interno di: ");
 //Alert
 define("_FDDESCTOOLONG","<b>Attenzione!</b> la stringa contenente la descrizione &egrave; troppo lunga!");
 define("_FDNAMETOOLONG","<b>Attenzione!</b> la stringa contenente la descrizione &egrave; troppo lunga!");
-define("_FDREADONLYDIR","<b>Attenzione:</b> non &egrave; possibile scrivere nella cartella. Verificare i permessi.");
+define("_FDREDONLYDIR","<b>Attenzione:</b> non &egrave; possibile scrivere nella cartella. Verificare i permessi.");
 define("_FDERROR","<B>Errore!</B>");
 
 //error

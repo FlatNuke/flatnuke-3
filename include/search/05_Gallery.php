@@ -44,10 +44,10 @@ function show_gallery_result($files){
 	//se non ho trovato niente...
 	if ($where!="allsite"){
 		if (count($files)==0){
-			echo _NORESULT."<br><a href=\"javascript:history.back();\" title=\""._INDIETRO."\">&lt;&lt; "._INDIETRO."</a>";
+			echo _NORESULT."<br /><a href=\"javascript:history.back();\" title=\""._INDIETRO."\">&lt;&lt; "._INDIETRO."</a>";
 
 		}
-		else echo "<br><b>"._FP_RISULTATI.":</b><br><br>";
+		else echo "<br /><b>"._FP_RISULTATI.":</b><br /><br />";
 	}
 	else {
 		echo "<h4>Gallery:</h4>";
@@ -64,7 +64,7 @@ function show_gallery_result($files){
 		$ext="";
 		$ext = get_file_extension($file);
 		echo getIcon("png",$icon_style);
-		echo "<a href=\"index.php?mod=".rawurlencodepath($tempmod)."\" title=\""._GOTOSECTION.": ".preg_replace("/^\//","",$tempmod)."\">".basename($file)."</a><br>";
+		echo "<a href=\"index.php?mod=".rawurlencodepath($tempmod)."\" title=\""._GOTOSECTION.": ".preg_replace("/^\//","",$tempmod)."\">".basename($file)."</a><br />";
 	}
 }
 
@@ -101,7 +101,9 @@ function list_gallery_files($dirbase){
 		if (_FN_USERLEVEL < getsectlevel($tempmod)) continue;
 
 		if (preg_match("/\.png$|\.jpg$|\.jpeg$/i",$file)){
+// 		echo $file;
 			if (file_exists("sections/$tempmod/gallery")) $files[] = $file;
+// 			echo "$file<br />";
 		}
 
 	}
@@ -113,8 +115,8 @@ function list_gallery_files($dirbase){
  * Cerca la stringa $string nei nomi dei file $files
  * @param string $string la stringa da cercare
  * @param array $files l'array di file in cui cercare la stringa
- * @param string $method il metodo di ricerca. PuÃ² essere "OR" oppure "AND"
- * @return un array con i percorsi dei file in cui Ã¨ stata trovata la stringa
+ * @param string $method il metodo di ricerca. Può essere "OR" oppure "AND"
+ * @return un array con i percorsi dei file in cui è stata trovata la stringa
  */
 function find_gallery_files($string,$files,$method){
 	$string=getparam($string,PAR_NULL,SAN_FLAT);

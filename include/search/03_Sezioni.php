@@ -43,10 +43,10 @@ global $theme;
 $where = getparam("where",PAR_POST,SAN_FLAT);
 	if ($where!="allsite"){
 		if (count($files)==0){
-			echo _NORESULT."<br><a href=\"javascript:history.back();\" title=\""._INDIETRO."\">&lt;&lt; "._INDIETRO."</a>";
+			echo _NORESULT."<br /><a href=\"javascript:history.back();\" title=\""._INDIETRO."\">&lt;&lt; "._INDIETRO."</a>";
 
 		}
-		else echo "<br><b>"._FP_RISULTATI.":</b><br><br>";
+		else echo "<br /><b>"._FP_RISULTATI.":</b><br /><br />";
 	}
 	else {
 		echo "<h4>Sezioni:</h4>";
@@ -57,11 +57,11 @@ $where = getparam("where",PAR_POST,SAN_FLAT);
 	$last_update = filemtime($file);
 		if (preg_match("/section\.php$/i",$file)){
 			$file = preg_replace("/\/\//","/",$file);
-			echo "<img src=\"themes/$theme/images/section.png\" alt=\"section\" />&nbsp;<a href=\"index.php?mod=".rawurlencodepath(preg_replace("/^sections\//i","",dirname($file)))."\"  title=\""._GOTOSECTION.": ".preg_replace("/^sections\//i","",dirname($file))."\">".preg_replace("/^sections\//u","",preg_replace("/none_/i","",dirname($file)))."</a> (".date("d/m/Y - H:i",$last_update).")<br>";
+			echo "<img src=\"themes/$theme/images/section.png\" alt=\"section\" />&nbsp;<a href=\"index.php?mod=".rawurlencodepath(preg_replace("/^sections\//i","",dirname($file)))."\"  title=\""._GOTOSECTION.": ".preg_replace("/^sections\//i","",dirname($file))."\">".preg_replace("/^sections\//u","",preg_replace("/none_/i","",dirname($file)))."</a> (".date("d/m/Y - H:i",$last_update).")<br />";
 		}
 		else {
 			$file = preg_replace("/\/\//","/",$file);
-			echo "<img src=\"themes/$theme/images/section.png\" alt=\"section\" />&nbsp;<a href=\"index.php?mod=".rawurlencodepath(preg_replace("/^sections\//i","",dirname($file)))."&amp;file=".rawurlencodepath(basename($file))."\" title=\""._GOTOSECTION.": ".preg_replace("/sections\//i","",$file)."\">".preg_replace("/sections\//i","",preg_replace("/none_/i","",$file))."</a> (".date("d/m/Y - H:i",$last_update).") <br>";
+			echo "<img src=\"themes/$theme/images/section.png\" alt=\"section\" />&nbsp;<a href=\"index.php?mod=".rawurlencodepath(preg_replace("/^sections\//i","",dirname($file)))."&amp;file=".rawurlencodepath(basename($file))."\" title=\""._GOTOSECTION.": ".preg_replace("/sections\//i","",$file)."\">".preg_replace("/sections\//i","",preg_replace("/none_/i","",$file))."</a> (".date("d/m/Y - H:i",$last_update).") <br />";
 
 		}
 	}
@@ -73,8 +73,8 @@ $where = getparam("where",PAR_POST,SAN_FLAT);
  * Cerca la stringa $string nei file $files
  * @param string $string la stringa da cercare
  * @param array $files l'array di file in cui cercare la stringa
- * @param string $method il metodo di ricerca. PuÃ² essere "OR" oppure "AND"
- * @return un array con i percorsi dei file in cui Ã¨ stata trovata la stringa
+ * @param string $method il metodo di ricerca. Può essere "OR" oppure "AND"
+ * @return un array con i percorsi dei file in cui è stata trovata la stringa
  */
 function find_section($string,$files,$method){
 	$string=getparam($string,PAR_NULL,SAN_FLAT);
@@ -134,6 +134,7 @@ function list_files($dirbase){
 		if (_FN_USERLEVEL < getsectlevel($tempmod)) continue;
 		if (preg_match("/section\.php$|\.htm$|\.html$|\.txt$/i",$file)){
 			$files[] = $file;
+// 			echo "$file<br />";
 		}
 
 	}

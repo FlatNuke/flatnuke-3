@@ -97,7 +97,7 @@ define("_FDRENAMECHANGENAME","Elige otro nombre.");
 define("_FDRENAMEALERT","<b>Atenci&oacute;n!</b> No se puede cambiar el nombre del archivo");
 
 //Delete file
-define("_FDDELSURE","Â¿Est&aacute; seguro que desea eliminar el archivo: ");
+define("_FDDELSURE","¿Est&aacute; seguro que desea eliminar el archivo: ");
 define("_FDDEL", "Eliminar");
 define("_FDCANC", "Cancelar");
 define("_FDDELOK","Los archivos eliminados: ");
@@ -153,7 +153,7 @@ define("_FDFILENOTSELECT","Seleccione un archivo!");
 //Alert
 define("_FDDESCTOOLONG","<b>Atenci&oacute;n!</b> la descripci&oacute;n es demasiado largo.");
 define("_FDNAMETOOLONG","<b>Atenci&oacute;n!</b> el t&iacute;tulo es demasiado largo.");
-define("_FDREADONLYDIR","<b>Atenci&oacute;n:</b> comprobar el permiso de escritura de este directorio.");
+define("_FDREDONLYDIR","<b>Atenci&oacute;n:</b> comprobar el permiso de escritura de este directorio.");
 define("_FDERROR","<B>Error!</B>");
 
 //error

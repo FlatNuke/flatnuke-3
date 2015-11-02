@@ -106,7 +106,7 @@ else  {
  * @author Marco Segato <segatom@users.sourceforge.net> | 20070317: ready to 2.5.9
  */
 function login_interface(){
-	?><div style="text-align:center">
+	?><div align="center">
 	<fieldset>
 	<legend><?php echo _FLOGIN?></legend>
 	<form action="index.php?mod=none_Login" method="post">
@@ -122,19 +122,19 @@ function login_interface(){
 	global $remember_login;
 	if($remember_login==1) {
 		echo "<div style=\"margin:1em;\"><label for=\"rememberlogin\">"._REMEMBERLOGIN."</label>";
-		echo "<input type=\"checkbox\" alt=\"remember_login\" name=\"rememberlogin\" id=\"rememberlogin\" /><br>";
+		echo "<input type=\"checkbox\" alt=\"remember_login\" name=\"rememberlogin\" id=\"rememberlogin\" /><br />";
 		echo "</div>";
-	} else echo "<br>";
+	} else echo "<br />";
 	// login button
 	?><input type="submit" value="<?php echo _LOGIN?>" />
 	</form>
 	</fieldset>
-	<br><?php
+	<br /><?php
 	// link to register
 	global $reguser;
 	if ($reguser=="1" or $reguser=="2"){
 		echo _NONREG;
-		?><br><b><a href="index.php?mod=none_Login&amp;action=visreg" title="<?php echo _REGORA?>"><?php echo _REGORA?></a></b><?php
+		?><br /><b><a href="index.php?mod=none_Login&amp;action=visreg" title="<?php echo _REGORA?>"><?php echo _REGORA?></a></b><?php
 	}
 	?></div><?php
 }
@@ -184,16 +184,16 @@ function view_members(){
 
 	// check that current user is logged
 	if (!is_guest()) {
-		echo "<b>"._FUTENTI."</b>:<br><br>";
+		echo "<b>"._FUTENTI."</b>:<br /><br />";
 		?>
-		<table style="border-collapse:collapse; width:95%;border-spacing: 10px;">
+		<table width='95%' cellspacing='1' cellpadding='2' style="border-collapse:collapse">
 		<tbody>
-		<tr class="forum-group-header">
-		<td class="forum-group-table" style="white-space:nowrap;"><b><?php echo _NOMEUTENTE?></b></td>
-		<td class="forum-group-table" style="white-space:nowrap;"><b><?php echo _LEVEL?></b></td>
-		<td class="forum-group-table" style="white-space:nowrap;"><b><?php echo _FNOME?></b></td>
-		<td class="forum-group-table" style="white-space:nowrap;"><b><?php echo _FEMAIL?></b></td>
-		<td class="forum-group-table" style="white-space:nowrap;"><b><?php echo _FHOME?></b></td>
+		<tr class='forum-group-header'>
+		<td class='forum-group-table' style='white-space:nowrap;'><b><?php echo _NOMEUTENTE?></b></td>
+		<td class='forum-group-table' style='white-space:nowrap;'><b><?php echo _LEVEL?></b></td>
+		<td class='forum-group-table' style='white-space:nowrap;'><b><?php echo _FNOME?></b></td>
+		<td class='forum-group-table' style='white-space:nowrap;'><b><?php echo _FEMAIL?></b></td>
+		<td class='forum-group-table' style='white-space:nowrap;'><b><?php echo _FHOME?></b></td>
 		</tr>
 		<?php
 		// start printing each user
@@ -205,26 +205,27 @@ function view_members(){
 				$user = str_replace(".php","",$members[$x]);
 				$profile = load_user_profile($user);
 				echo "<tr>";
-				echo "<td class=\"forum-group-table\" style=\"white-space:nowrap;\"><a href=\"index.php?mod=none_Login&amp;action=viewprofile&amp;user=$user\">$user</a></td>";
-				echo "<td class=\"forum-group-table centeredDiv\" style=\"white-space:nowrap;\">".$profile['level']."&nbsp;</td>";
-				echo "<td class=\"forum-group-table\" style=\"white-space:nowrap;\">".$profile['name']."&nbsp;</td>";
-				echo "<td class=\"forum-group-table centeredDiv\" style=\"white-space:nowrap;\">";
+				echo "<td class='forum-group-table' style='white-space:nowrap;'><a href=\"index.php?mod=none_Login&amp;action=viewprofile&amp;user=$user\">$user</a></td>";
+				echo "<td class='forum-group-table' align='center' style='white-space:nowrap;'>".$profile['level']."&nbsp;</td>";
+				echo "<td class='forum-group-table' style='white-space:nowrap;'>".$profile['name']."&nbsp;</td>";
+				echo "<td class='forum-group-table' align='center' style='white-space:nowrap;'>";
 				// e-mail address
-				if ($profile['mail']!="" and (($profile['hiddenmail']!="1" and !is_guest()) or is_admin())) {
-					echo "<a href=\"mailto:".$profile['mail']."\"><span title=\"".$profile['mail']."\">"._ICONMAIL."</span></a>";
+				if($profile['mail']!="" and $profile['hiddenmail']!="1" and !is_guest()) {
+					echo "<a href=\"mailto:".$profile['mail']."\"><img src=\"forum/icons/mail.png\" alt=\"".$profile['mail']."\" title=\"".$profile['mail']."\" /></a>";
 				}
-				else
+				else if ($profile['mail']!="" and $profile['hiddenmail']=="1" and is_admin()) {
+					echo "<a href=\"mailto:".$profile['mail']."\"><img src=\"forum/icons/mail.png\" alt=\"".$profile['mail']."\" title=\"".$profile['mail']."\" /></a>";
+				}
+				else if ($profile['mail']!="" and $profile['hiddenmail']=="1" and !is_admin()){
 					echo "&nbsp;";
-
+				}
+				else echo "&nbsp;";
 				echo "</td>";
 				// web site address
-				echo "<td class='forum-group-table' class=\"centeredDiv\" style='white-space:nowrap;'>";
+				echo "<td class='forum-group-table' align='center' style='white-space:nowrap;'>";
 				if($profile['homepage']!="") {
-					echo "<a href=\"".$profile['homepage']."\" target=\"_blank\"><span title=\"".preg_replace("/^http\:\/\//s","",$profile['homepage'])."\">"._ICONHOME."</span></a>";
-				}
-				else
-					echo "&nbsp;";
-
+					echo "<a href=\"".$profile['homepage']."\" target=\"_blank\"><img src=\"forum/icons/home.png\" alt=\"".preg_replace("/^http\:\/\//s","",$profile['homepage'])."\" title=\"".preg_replace("/^http\:\/\//s","",$profile['homepage'])."\" /></a>";
+				} else echo "&nbsp;";
 				echo "</td>";
 				// end of user's informations
 				echo "</tr>";
@@ -275,7 +276,7 @@ function view_profile($user=""){
 	// check profile exists
 	if(!file_exists(get_fn_dir("users")."/$user.php")) {
 		?><div style="width:95%; margin-top:1em; text-align:center;">
-		<br><b><?php echo _NORESULT?></b><br>
+		<br /><b><?php echo _NORESULT?></b><br />
 		</div><?php
 		fnlog("Viewprofile", $addr."||".$myforum."||Tried to view unexistant $user profile.");
 		return;
@@ -286,19 +287,19 @@ function view_profile($user=""){
 	if(!is_guest()) {
 		$profile = load_user_profile($user);
 		// username
-		echo "<b>$user</b><br>";
+		echo "<b>$user</b><br />";
 		// avatar
 		$img = $profile['avatar'];
 		if($img!="") {
 			if(!stristr($img,"http://"))
-				echo "<img src='forum/$img' alt='$user' style='max-width:120px; border:0' />";
-			else echo "<img src='$img' alt='$user' style='max-width:120px; border:0' />";
-		} else echo "<img src='forum/images/blank.png' alt='$user' style='max-width:120px; border:0' />";
-		echo "<br><br>";
+				echo "<img src='forum/$img' alt='$user' border='0' style='max-width:120px' />";
+			else echo "<img src='$img' alt='$user' border='0' style='max-width:120px' />";
+		} else echo "<img src='forum/images/blank.png' alt='$user' border='0' style='max-width:120px' />";
+		echo "<br /><br />";
 		$style1 = "font-style:bold; padding:0.2em;";
 		$style2 = "padding:0.2em;";
 		?>
-		<table class=\"centeredDiv\" style="border-collapse:collapse; border:1px; width:70%">
+		<table width='70%' align='center' border='1' style="border-collapse:collapse">
 		<tbody>
 		<tr>
 		<td width="30%" style="<?php echo $style1?>"><b><?php echo _FNOME?>:</b></td>
@@ -348,7 +349,7 @@ function view_profile($user=""){
 		</tr>
 		<tr>
 		<td style="<?php echo $style1?>"><b><?php echo _FNPRESENTATION; ?>:</b></td>
-		<td style="<?php echo $style2?>"><?php echo tag2html($profile['presentation']); ?></td>
+		<td style="<?php echo $style2?>"><?php echo tag2html($profile['presentation'],"forum"); ?></td>
 		</tr>
 		<tr>
 		<td style="<?php echo $style1?>"><b><?php echo _LEVEL?>:</b></td>
@@ -356,7 +357,7 @@ function view_profile($user=""){
 		</tr>
 		</tbody>
 		</table>
-		<br>
+		<br />
 		<?php
 		// admins can delete profiles
 		if(is_admin()) {
@@ -399,7 +400,7 @@ function login(){
 	if(!file_exists(get_fn_dir("users")."/$nome.php") || ($nome=="")) {
 		if (file_exists(get_waiting_users_dir()."/$nome.php")){
 			echo "<div style=\"text-align: center;\"><b>"._WAITINGUSERLOGIN;
-			echo "</b><br>"._CONTACTADMIN."<br><br><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
+			echo "</b><br />"._CONTACTADMIN."<br /><br /><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
 			return;
 		}
 
@@ -409,12 +410,12 @@ function login(){
 		// goto registration module
 		?><div style="width:95%;margin:1em;text-align:center;">
 		<b><?php echo $nome?></b> <?php echo _FNONREG?>
-		<br><br><?php
+		<br /><br /><?php
 		// link to register
 		global $reguser;
 		if ($reguser=="1" or $reguser=="2"){
 			echo _NONREG;
- 			?><br><b><a href="<?php echo $url?>/index.php?mod=none_Login&amp;action=visreg" title="<?php echo _REGORA?>"><?php echo _REGORA?></a></b><?php
+ 			?><br /><b><a href="<?php echo $url?>/index.php?mod=none_Login&amp;action=visreg" title="<?php echo _REGORA?>"><?php echo _REGORA?></a></b><?php
 		}
 		?></div><?php
 	}
@@ -443,13 +444,13 @@ function login(){
 			$myforum = getparam("myforum",PAR_COOKIE,SAN_FLAT);
 			fnlog("Login", $addr."||".$myforum."||User $nome login.");
 			// go back to ref page
-			?><script>window.location='<?php echo getparam("HTTP_REFERER", PAR_SERVER, SAN_FLAT)?>';</script><?php
+			?><script language="javascript">window.location='<?php echo getparam("HTTP_REFERER", PAR_SERVER, SAN_FLAT)?>';</script><?php
 	 	}
 		// wrong password
 		else {
 			?><div style="width:95%;margin:1em;text-align:center;">
 			<b><?php echo $nome?></b> <?php echo _FERRPASS?>
-			<br><br>
+			<br /><br />
 			<a href="javascript:history.back()">&lt;&lt;&nbsp;<?php echo _INDIETRO?></a>
 			</div><?php
 		}
@@ -491,7 +492,7 @@ function edit_profile($user=""){
 	else {
 		fnlog("Editprofile", $addr."||".$myforum."||Tried to edit ".$user." profile.");
 		// go back home
-		?><script>window.location='index.php';</script><?php
+		?><script language="javascript">window.location='index.php';</script><?php
 	}
 }
 
@@ -507,7 +508,7 @@ function save_profile(){
 	global $reguser;
 	if ($reguser!="1" and $reguser!="2"){
 		//posso continuare solo se sto modificando il mio profilo.
-		//oppure se sto modificando il profilo di un altro in qualità di amministratore
+		//oppure se sto modificando il profilo di un altro in qualita' di amministratore
 		$nome="";
 		$myforum="";
 		$nome=getparam("user",PAR_POST,SAN_FLAT);
@@ -574,7 +575,7 @@ function save_profile(){
 	if(isset($_POST['level'])) $level=getparam("level",PAR_POST,SAN_FLAT);
 		else $level="";
 	if(!is_numeric($level)) $level="";
-	//solo un amministratore può impostare un livello 10
+	//solo un amministratore pu� impostare un livello 10
 	if ($level==10 and !is_admin())
 		$level=0;
 
@@ -634,14 +635,14 @@ function save_profile(){
 	if($level>10)
 		$level=10;
 	// io posso modificare il mio ma solo se mantengo il livello!!!
-	// l'amministratore può modificare tutti i profili
+	// l'amministratore puo' modificare tutti i profili
 	if((($nome==$myforum) and (getlevel($nome,"home")==$level) and versecid($nome)) or ((getlevel($myforum,"home")==10) and versecid($myforum))){
 
-		?><br><br>
-		<table style="border:0" cellspacing='0' cellpadding='0' bgcolor="<?php echo $forumborder?>" width="95%">
+		?><br /><br />
+		<table border='0' cellspacing='0' cellpadding='0' bgcolor="<?php echo $forumborder?>" width="95%">
 		<tbody><tr>
 		<td>
-		<table width='100%' style="border:0" cellspacing='1' cellpadding='3'>
+		<table width='100%' border='0' cellspacing='1' cellpadding='3'>
 		<tbody>
 		<tr>
 		<td bgcolor="<?php echo $forumback?>" colspan=5>
@@ -689,14 +690,14 @@ function save_profile(){
 				$regpass = md5 ($regpass);
 			else {
 				echo "<div style='text-align: center;'>
-				<b>"._PASSERR."</b><br>
+				<b>"._PASSERR."</b><br />
 				<a href=\"javascript:history.back()\">&lt;&lt;"._INDIETRO."</a>
 				</div>";
 				return;
 			}
 		}
 
-		$firma=str_replace("\n","<br>",$firma);
+		$firma=str_replace("\n","<br />",$firma);
 
 		$old_data = load_user_profile($nome);
 		$data = array();
@@ -721,7 +722,7 @@ function save_profile(){
 
 		save_user_profile($nome,$data);
 		fnlog("Saveprofile", getparam("REMOTE_ADDR",PAR_SERVER, SAN_FLAT)."||".$myforum."||User $myforum changed his profile.");?>
-		<div style="text-align:center">
+		<div align="center">
 		<?php echo _FOKMODPROF?>
 		</div>
 		</td>
@@ -747,7 +748,7 @@ function save_profile(){
  * @author Marco Segato <segatom@users.sourceforge.net> | 20110507: use of captcha
  */
 function reguser(){
-	//controllo se è possibile registrarsi sulo sito
+	//controllo se e' possibile registrarsi sulo sito
 	if (isset($_GET['reguser']) or isset($_POST['reguser']) or isset($_COOKIE['reguser'])) die(_NONPUOI);
 	global $reguser,$sitename;
 	if ($reguser!="1" and $reguser!="2") die(_NONPUOI);
@@ -765,7 +766,7 @@ function reguser(){
 
 		if(!$captchaok) {
 			// anti-spam code is NOT right
-			echo "<div style='text-align: center;'><b/>"._CAPTCHA_ERROR."</b><br>";
+			echo "<div style='text-align: center;'><b/>"._CAPTCHA_ERROR."</b><br />";
 			// back or automatic redirect to the index after 2 seconds
 			?><p><a href="javascript:history.back()">&lt;&lt;<?php echo _INDIETRO?></a></p></div><?php
 			return;
@@ -779,7 +780,7 @@ function reguser(){
 	global $forumback,$forumborder;
 	$nome=getparam("nome",PAR_POST,SAN_FLAT);
 	if(!is_alphanumeric($nome)) {
-		echo _FERRCAMPO."<br>";
+		echo _FERRCAMPO."<br />";
 		echo "<a href=\"javascript:history.back()\">&lt;&lt;"._INDIETRO."</a>";
 		return;
 	}
@@ -851,18 +852,18 @@ function reguser(){
 	$firma=str_replace(chr(10),"",str_replace(chr(13),"",$firma));
 
 	?>
-	<br><br>
-	<table cellspacing='0' cellpadding='0' bgcolor='<?php echo $forumborder?>' width="95%" style="border:0">
+	<br /><br />
+	<table border='0' cellspacing='0' cellpadding='0' bgcolor='<?php echo $forumborder?>' width="95%">
 	<tbody><tr>
 	<td>
-	<table width='100%' cellspacing='1' cellpadding='3' style="border:0">
+	<table width='100%' border='0' cellspacing='1' cellpadding='3'>
 	<tbody>
 	<tr>
 	<td bgcolor="<?php echo $forumback?>" colspan=5>
 	<?php
 	if(!user_exists($nome,TRUE)){
 		if(($nome=="") OR ($regpass=="") OR (stristr($nome," ")) OR (strlen($nome)>13) OR (stristr($nome,"\"")) OR (stristr($nome,"\\")) OR ($regpass != $reregpass) or !is_alphanumeric($nome)){
-			print _FERRCAMPO."<br>
+			print _FERRCAMPO."<br />
 		<a href=\"javascript:history.back()\">&lt;&lt;"._INDIETRO."</a>";
 		}
 		else{
@@ -919,7 +920,7 @@ function reguser(){
 			$pass = "";
 			$pass = $regpass;
 			$regpass = md5 ($regpass);
-			$firma=str_replace("\n","<br>",$firma);
+			$firma=str_replace("\n","<br />",$firma);
 
 
 			$data = array();
@@ -938,24 +939,24 @@ function reguser(){
 
 			if ($reguser==2){
 
-				//controllo che la mail non sia già stata usata per la registrazione di un altro utente
+				//controllo che la mail non sia gia' stata usata per la registrazione di un altro utente
 				if (in_array($email,list_reg_emails()) or in_array($email,list_reg_emails(1))){
 					echo "<div style=\"text-align: center;\">"._THEMAIL." $email "._MAILUSED;
-					echo "<br><br><a href=\"javascript:history.back()\">&lt;&lt;"._INDIETRO."</a></div>";
+					echo "<br /><br /><a href=\"javascript:history.back()\">&lt;&lt;"._INDIETRO."</a></div>";
 					die();
 				}
 
 				//genero il codice di attivazione
 				$data['regcode'] = mt_rand(1,99999999);
-				//devo controllare la validità della mail
-				//se non è valida interrompo e permetto di tornare indietro
+				//devo controllare la validita' della mail
+				//se non e' valida interrompo e permetto di tornare indietro
 				if (!check_mail($email)){
 					echo "<div style=\"text-align: center;\"><b>"._ERREMAIL."!</b>";
-					echo "<br><br><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
+					echo "<br /><br /><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
 					die();
 				}
 
-				//se l'e-mail è spammosa blocco tutto!
+				//se l'e-mail e' spammosa blocco tutto!
 				if (is_spam($email,"emails")){
 					echo "<b>"._ERREMAIL."</b> ("._ISSPAM.")";
 					$addr = getparam("REMOTE_ADDR",PAR_SERVER, SAN_FLAT);
@@ -976,13 +977,13 @@ function reguser(){
 			if ($reguser==2){
 				//stampo il link di attivazione a schermo (solo in fase di scrittura del codice)
 				$url = "http://".$_SERVER['SERVER_NAME']."/".$_SERVER['SCRIPT_NAME']."?mod=none_Login&action=activateuser&user=$nome&regcode=".$data['regcode'];
-// 				echo "<br><br>$url";
+// 				echo "<br /><br />$url";
 
 				$message = _IST_REG_MAIL."\n\n$url";
 
 				if (@mail($email, _COMP_REG_MAIL." $sitename", $message,"FROM: $sitename <noreply@noreply>\r\nX-Mailer: Flatnuke on PHP/".phpversion())){
 					echo _COMP_REG." <b>$email</b>";
-					echo "<br>"._COMP_REG2;
+					echo "<br />"._COMP_REG2;
 					fnlog("Registration", $addr."||".$myforum."||Activation mail sent for $nome.");
 				}
 				else {
@@ -993,12 +994,12 @@ function reguser(){
 
 			}
 			else echo _FORAREG;
-			?><br>
+			?><br />
 			<a href="index.php?mod=none_Login">&lt;&lt;<?php echo _LOGIN?></a></div><?php
 		}
 	}
 	else{
-		?><div style="text-align: center;"><b><?php echo _FUSERSCE?></b><br><br><a href="index.php?mod=none_Login&amp;action=visreg">&lt;&lt;<?php echo _INDIETRO?></a></div><?php
+		?><div style="text-align: center;"><b><?php echo _FUSERSCE?></b><br /><br /><a href="index.php?mod=none_Login&amp;action=visreg">&lt;&lt;<?php echo _INDIETRO?></a></div><?php
 	}
 	?>
 	</td>
@@ -1047,7 +1048,7 @@ function delete_user($user=""){
 		fnlog("Deleteuser", $addr."||".$myforum."||Tried to delete ".$user." profile.");
 	}
 	// back to login section
-	?><script>window.location='index.php?mod=none_Login';</script><?php
+	?><script language="javascript">window.location='index.php?mod=none_Login';</script><?php
 }
 
 
@@ -1075,11 +1076,11 @@ function logout(){
 	setcookie("myforum","",NULL,"$url");
 	fnlog("Logout", $addr."||".$myforum."||User $myforum logout.");
 	// go back
-	//rimosso il codice per tornar alla pagina precedente perchè, se soggetta
+	//rimosso il codice per tornar alla pagina precedente perch�, se soggetta
 	//a limiti di visione viene restituito un errore
 	//getparam("HTTP_REFERER", PAR_SERVER, SAN_FLAT)
-	?><script>window.location='index.php';</script>
-	<noscript><div style="text-align: center;"><br><b><a href="index.php" title="Home page">Home page</a></b></div></noscript><?php
+	?><script language="javascript">window.location='index.php';</script>
+	<noscript><div style="text-align: center;"><br /><b><a href="index.php" title="Home page">Home page</a></b></div></noscript><?php
 }
 
 
@@ -1101,8 +1102,8 @@ function edit_user_interface($user,$action){
 	global $reguser;
 
 	?>
-		<script src="include/javascripts/md5.js"></script>
-		<script type="text/javascript">
+		<script language="JavaScript" src="include/javascripts/md5.js"></script>
+		<script type="text/javascript" language="javascript">
 	function show_gravatar()
 	{
 		if(document.getElementsByName('email')[0].value == '') {
@@ -1140,7 +1141,7 @@ function edit_user_interface($user,$action){
 					return false;
 				}
 			<?php
-			//se è obbligatoria anche la mail controllo che sia presente
+			//se � obbligatoria anche la mail controllo che sia presente
 			if ($reguser=="2" and $action=="reguser"){
 				?>
 			else if(document.getElementsByName('email')[0].value=='')
@@ -1205,17 +1206,17 @@ function edit_user_interface($user,$action){
 		$style1 = "padding:0.2em;";
 		$style2 = "padding:0.2em;";
 		?>
-		<br>
-		<table style="text-align:center: border:1px; width:70%;border-collapse:collapse">
+		<br />
+		<table width="70%" align="center" border="1" style="border-collapse:collapse">
 		<tbody>
 		<?php
 		if ($action=="edit"){?>
 		<tr>
-		<td width="30%" style="<?php echo $style1?>"><label for="regpass"><?php echo _PASSWORD?><br>(<?php echo _FDIVERS?>)</label></td>
+		<td width="30%" style="<?php echo $style1?>"><label for="regpass"><?php echo _PASSWORD?><br />(<?php echo _FDIVERS?>)</label></td>
 		<td style="<?php echo $style2?>"><input name="regpass" type="password" id="regpass" value="" /></td>
 		</tr>
 		<tr>
-		<td width="30%" style="<?php echo $style1?>"><label for="reregpass"><?php echo _REPEATPASSWORD?><br>(<?php echo _FDIVERS?>)</label></td>
+		<td width="30%" style="<?php echo $style1?>"><label for="reregpass"><?php echo _REPEATPASSWORD?><br />(<?php echo _FDIVERS?>)</label></td>
 		<td style="<?php echo $style2?>"><input name="reregpass" type="password" id="reregpass" value="" /></td>
 		</tr>
 		<?php
@@ -1289,14 +1290,14 @@ function edit_user_interface($user,$action){
 			if(strstr($profile['avatar'],"images/")) {
 				$img_dir = "forum/";
 			}
-			?><img src="<?php
+			?><img name="avatar" src="<?php
 
 			if ($action=="edit") echo $img_dir.$profile['avatar'];
 			else if ($action=="reguser") echo "forum/images/blank.png";
 
 
-			?>" alt="avatar" style="max-width:120px;border:0" id="avatar" />
-			<br>
+			?>" alt="avatar" border="0" style="max-width:120px;" id="avatar" />
+			<br />
 			<select name="ava" id="ava" onchange='document.avatar.src="forum/images/"+this.options[this.selectedIndex].value'>
 			<option value="" disabled="disabled">----</option><?php
 			$modlist = array();
@@ -1315,8 +1316,8 @@ function edit_user_interface($user,$action){
 					echo "selected=\"selected\"";
 				echo ">$modlist[$i]</option>\n";
 			}
-			?></select><br><br>
-			<?php echo _FAVATREM?>:<br><?php
+			?></select><br /><br />
+			<?php echo _FAVATREM?>:<br /><?php
 			if(strstr($profile['avatar'],"http://")){
 				echo "<input type=\"text\" name=\"url_avatar\" value=".$profile['avatar']." />";
 			}
@@ -1324,7 +1325,7 @@ function edit_user_interface($user,$action){
 				echo "<input type=\"text\" name=\"url_avatar\" />";
 			}
 			?>
-			<br><br>
+			<br /><br />
 			<input name="use_gravatar" type="button" id="use_gravatar" onclick="show_gravatar()" value="<?php echo _USEGRAVATAR?>"/>
 			<?php echo " "._GRAVATARINFO; ?>
 
@@ -1332,7 +1333,7 @@ function edit_user_interface($user,$action){
 		</tr>
 		<tr>
 		<td style="<?php echo $style1?>"><label for="firma"><?php echo _FFIRMA?></label></td><?php
-		$profile['sign'] = str_replace("<br>","\n",$profile['sign']);
+		$profile['sign'] = str_replace("<br />","\n",$profile['sign']);
 		$profile['sign'] = chop($profile['sign']);
 		?><td style="<?php echo $style2?>"><textarea name="firma" id="firma" rows="5" cols="23"><?php echo stripslashes($profile['sign']);?></textarea></td>
 		</tr>
@@ -1406,7 +1407,7 @@ function activate_user($user,$regcode){
 		if (trim($regcode)==trim($userdata['regcode'])){
 			if (rename(get_waiting_users_dir()."/$user.php",get_fn_dir('users')."/$user.php")){
 				echo "<div style=\"text-align: center;\">"._FORAREG;
-				?><br>
+				?><br />
 				<a href="index.php?mod=none_Login">&lt;&lt;<?php echo _LOGIN?></a></div><?php
 				fnlog("Registration","$addr||".get_username()."||User $user succesfully activate the profile");
 			}
@@ -1492,7 +1493,7 @@ function send_new_password() {
 		$message = str_replace("__REGCODE__", $rand_pwd, $message);
 		if (@mail($email, _NEWPWDFROM." $sitename", $message,"FROM: $sitename <noreply@noreply>\r\nX-Mailer: Flatnuke on PHP/".phpversion())){
 			echo _COMP_REG." <b>$email</b>";
-			echo "<br>"._COMP_REG2;
+			echo "<br />"._COMP_REG2;
 			fnlog("New password", $addr."||||Activation mail for a new password sent to user '$user'.");
 		} else {
 			echo _ACTIVATIONMAILNOTSENT;

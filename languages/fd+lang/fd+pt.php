@@ -63,7 +63,7 @@ define("_FDBACK","Tr&aacute;s");
 define("_FDRETURN","Retornar");
 define("_FDEDITDESC","Editar descri&ccedilla;&atilde;o do ficheiro: ");
 define("_FDEDITHEADER","Nesta p&aacute;gina pode editar a descri&ccedilla;&atilde;o do ficheiro gerido por FlatDownloadPlus. As mudan&ccedilla;as ser&atilde;o gravadas no ficheiro: ");
-define("_FDEDITFOOTER","Pode tamb&eacute;m mudar o ficheiro em si.<br>O novo ficheiro pode ter um nome diferente. Se o novo nome &eacute; diferente, fd+ mudar&aacute; a correspondente \".descri&ccedilla;&atilde;o\".<br> O ficheiro antigo ser&aacute; apagado.");
+define("_FDEDITFOOTER","Pode tamb&eacute;m mudar o ficheiro em si.<br />O novo ficheiro pode ter um nome diferente. Se o novo nome &eacute; diferente, fd+ mudar&aacute; a correspondente \".descri&ccedilla;&atilde;o\".<br /> O ficheiro antigo ser&aacute; apagado.");
 define("_FDEDITSAVE", "Gravar mudan&ccedilla;as");
 define("_FDEDITDONE", "Mudan&ccedilla;as aplicadas");
 define("_FDBASIC","Basic");//need translation
@@ -129,19 +129,19 @@ define("_FDCREATESUBSECT","Criar uma sec&ccedilla;&atilde;o em: ");
 define("_FDNOTWRITE","is not writeable!");
 
 //upload file
-define("_FDTOOBIG","<b>Aten&ccedilla;&atilde;o!</b><br>Este ficheiro n&atilde;o pode ser enviado para o servidor por ser muito grande.");
+define("_FDTOOBIG","<b>Aten&ccedilla;&atilde;o!</b><br />Este ficheiro n&atilde;o pode ser enviado para o servidor por ser muito grande.");
 define("_FDUPLOADOK","Ficheiro enviado com sucesso.");
-define("_FDUPLOADEXISTS","<b>Aten&ccedilla;&atilde;o!</b> Na directoria seleccionada esiste um ficheiro com o mesmo nome. <br> Se quer modificar este ficheiro ou a descri&ccedilla;&atilde;o relacionada, usa a fun&ccedilla;&atilde;o <b>Editar</b>.");
+define("_FDUPLOADEXISTS","<b>Aten&ccedilla;&atilde;o!</b> Na directoria seleccionada esiste um ficheiro com o mesmo nome. <br /> Se quer modificar este ficheiro ou a descri&ccedilla;&atilde;o relacionada, usa a fun&ccedilla;&atilde;o <b>Editar</b>.");
 define("_FDFILENOTSELECT","Seleccione um ficheiro!");
 
 //Alert
 define("_FDDESCTOOLONG","<b>Aten&ccedilla;&atilde;o!</b> a descri&ccedilla;&atilde;o &eacute; muito longa.");
 define("_FDNAMETOOLONG","<b>Aten&ccedilla;&atilde;o!</b> o t&iacute;tulo &eacute; muito longo.");
-define("_FDREADONLYDIR","<b>Aten&ccedilla;&atilde;o:</b> verificar permiss&atilde;o de escrita nesta directoria.");
+define("_FDREDONLYDIR","<b>Aten&ccedilla;&atilde;o:</b> verificar permiss&atilde;o de escrita nesta directoria.");
 define("_FDERROR","<B>Erro!</B>");
 
 //error
-define("_FDNONPUOI","<b>You may not do that!</b> (erro de seguran&ccedilla;a.)<br> FDPlus: linha ");
+define("_FDNONPUOI","<b>You may not do that!</b> (erro de seguran&ccedilla;a.)<br /> FDPlus: linha ");
 define("_FDERROR1","O ficheiro enviado excede o upload_max_filesize directive in php.ini.");
 define("_FDERROR2","O ficheiro enviado excede o MAX_FILE_SIZE directive que foi especificado no formul&aacute;rio HTML.");
 define("_FDERROR3","O ficheiro enviado o foi apenas parcialmente.");

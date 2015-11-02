@@ -48,7 +48,7 @@ if (file_exists("sections/none_Statistiche/referblacklist.php")){
 
 		$from = getparam("HTTP_REFERER", PAR_SERVER, SAN_FLAT);
 
-		//se Ã¨ spam ritorno
+		//se è spam ritorno
 		if (preg_match("/".trim($spamrule)."/",$from)) return;
 	}
 }
@@ -57,7 +57,7 @@ if (file_exists("sections/none_Statistiche/referblacklist.php")){
 // Solo la prima volta che viene eseguito flatnuke, dopo la sua installazione
 if (!file_exists(_FN_VAR_DIR."/flatstat")){
   if (!fn_mkdir(_FN_VAR_DIR."/flatstat",0777)){
-    echo "<b>Errore!</b><br>Directory per le statistiche non creata, verificare i permessi di scrittura<br>";
+    echo "<b>Errore!</b><br />Directory per le statistiche non creata, verificare i permessi di scrittura<br />";
     die();
   }
   $tmp="0";
@@ -87,7 +87,7 @@ if ($search == false || $search == null){
   // Se la ricerca non ha prodotto risultati
   // Prova a creare la cartella dell'anno
   if (fn_mkdir(_FN_VAR_DIR."/flatstat/$currentYear",0777)){
-    // La cartella Ã¨ stata creata
+    // La cartella è stata creata
     // Genera un file per ogni mese
     for ($month=1;$month<=12;$month++)  {
       if ($month==12) {$nextMonth=1;}
@@ -113,16 +113,16 @@ if ($search == false || $search == null){
     unlock($sem);
   }
   else {
-    // La cartella non Ã¨ stata creata
+    // La cartella non è stata creata
     // Stampa un errore
-    echo "<b>Errore!</b><br>Directory non creata, verificare i permessi di scrittura<br>";
+    echo "<b>Errore!</b><br />Directory non creata, verificare i permessi di scrittura<br />";
   }
 }
 else {
-  // La ricerca Ã¨ andata a buon fine
+  // La ricerca è andata a buon fine
 }
 
-// PuÃ² aggiungere una visita
+// Può aggiungere una visita
 $month = date ("n");
 $day = date ("j");
 // Inserisce visita nel file generale
@@ -227,7 +227,7 @@ if (file_exists(_FN_VAR_DIR."/flatstat/referer.dat")) {
       $tmp.=$fd[$i];
     }
   }
-  // Se alla fine del ciclo non Ã¨ stato trovato il referer viene accodato
+  // Se alla fine del ciclo non è stato trovato il referer viene accodato
   if (!$updateReferer)
   $tmp.="$from|1\n";
 }

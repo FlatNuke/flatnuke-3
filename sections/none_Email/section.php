@@ -75,7 +75,7 @@ global $admin_mail;
 if($contact==""){
 	//javascript code by Aldo Boccacci
 	?>
-	<script type="text/javascript">
+	<script type="text/javascript" language="javascript">
 	function check_email(email){
 		var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 		if (!filter.test(email)) {
@@ -137,7 +137,7 @@ if($contact==""){
 	echo "<p>"._CN_TITLE."</p>\n
 		<div style='margin-left: 1em'>\n
 		<form action='$req' method='post' onsubmit=\"return validate_email_form()\">\n
-			<label for='name'>"._FNOME.":</label><br><input type='text' name='name' id='name' style='width:60%' ";
+			<label for='name'>"._FNOME.":</label><br /><input type='text' name='name' id='name' style='width:60%' ";
 			if (!is_guest()){
 				$data = load_user_profile(_FN_USERNAME);
 				if ($data['name']!="") echo "value=\"".$data['name']." ("._FN_USERNAME.")\"";
@@ -147,8 +147,8 @@ if($contact==""){
 				echo "value=\"".strip_tags($_SESSION['name'])."\"";
 				unset($_SESSION['name']);
 			}
-			echo "/><br><br>\n
-			<label for='contact'>"._CN_YOUR_EMAIL.":</label><br><input type='text' name='contact' id='contact' style='width:60%' ";
+			echo "/><br /><br />\n
+			<label for='contact'>"._CN_YOUR_EMAIL.":</label><br /><input type='text' name='contact' id='contact' style='width:60%' ";
 			if (!is_guest()){
 // 				$data = load_user_profile(_FN_USERNAME);
 				if ($data['mail']!="") echo "value=\"".$data['mail']."\"";
@@ -161,19 +161,19 @@ if($contact==""){
 				echo "value=\"".strip_tags($_SESSION['contact'])."\"";
 				unset($_SESSION['contact']);
 			}
-			echo "/><br><br>\n
-			<label for='subject'>"._CN_SUBJECT.":</label><br><input type='text' name='subject' id='subject' style='width:95%'";
+			echo "/><br /><br />\n
+			<label for='subject'>"._CN_SUBJECT.":</label><br /><input type='text' name='subject' id='subject' style='width:95%'";
 			if (isset($_SESSION['subject'])){
 				echo "value=\"".strip_tags($_SESSION['subject'])."\" ";
 				unset($_SESSION['subject']);
 			}
-			echo "/><br><br>\n
-			<label for='message'>"._FMESS.":</label><br><textarea name='message' id='message' rows='20' cols='80' style='width:95%'>";
+			echo "/><br /><br />\n
+			<label for='message'>"._FMESS.":</label><br /><textarea name='message' id='message' rows='20' cols='80' style='width:95%'>";
 			if (isset($_SESSION['message'])){
 				echo strip_tags($_SESSION['message']);
 				unset($_SESSION['message']);
 			}
-			echo "</textarea><br>\n";
+			echo "</textarea><br />\n";
 
 			include("include/captcha/fncaptcha.php");
 			$fncaptcha = new fncaptcha();
@@ -216,19 +216,19 @@ if($contact==""){
 		$sendmail = mail($admin_mail, $subject." (from ".strip_tags($sitename).")", $message, $headers);
 		if($sendmail){
 			// the mail was correctly send, kill session security code
-			echo "<div style=\"text-align:center;\"><br><b>"._CN_SENDOK."</b><br>";
+			echo "<div style=\"text-align:center;\"><br /><b>"._CN_SENDOK."</b><br />";
 			unset($_SESSION['security_code']);
 			// back or automatic redirect to the index after 2 seconds
 			?><p><a href="<?php echo $req?>"><?php echo _INDIETRO?></a></p><meta http-equiv="Refresh" content="2; URL=<?php echo $req?>"></div><?php
 		} else {
 			// the server do not support sending emails, kill session security code
-			echo "<div style=\"text-align:center;\"><br><b>"._CN_SENDKO."</b><br>";
+			echo "<div style=\"text-align:center;\"><br /><b>"._CN_SENDKO."</b><br />";
 			unset($_SESSION['security_code']);
 			?><p><a href="<?php echo $req?>"><?php echo _INDIETRO?></a></p><meta http-equiv="Refresh" content="2; URL=<?php echo $req?>"></div><?php
 		}
 	} else {
 		// there was an error in the mail address, kill session security code
-		echo "<div style=\"text-align:center;\"><br><b>"._CN_ADDRESSERROR."</b><br>";
+		echo "<div style=\"text-align:center;\"><br /><b>"._CN_ADDRESSERROR."</b><br />";
 		unset($_SESSION['security_code']);
 		?><p><a href="<?php echo $req?>"><?php echo _INDIETRO?></a></p><meta http-equiv="Refresh" content="2; URL=<?php echo $req?>"></div><?php
 	}

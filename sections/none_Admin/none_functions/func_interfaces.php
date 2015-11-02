@@ -1,125 +1,142 @@
 <?php
 /*
- * Format the parent items in the menu
- *
- * @author Alfredo Cosco <orazio.nelson@gmail.com>
- * @version 201405
- * 
- */
-function fncc_format_parent_item($icon_name,$label,$icon_size="fw") {
-	echo "<a href=\"#\"><i class=\"fa fa-".$icon_name." fa-".$icon_size."\"></i>&nbsp;".$label."<span class=\"fa arrow\"></span></a>";
-	}
-	
-function fncc_format_end_item($link_func_name, $icon_name,$label,$icon_size="fw") {
-	$mod = getparam("mod", PAR_GET, SAN_FLAT);
-	echo "<li>";
-	echo build_fnajax_link($mod, "&amp;op=".$link_func_name, "fncc-adminpanel", "get");
-	echo "<i class=\"fa fa-".$icon_name." fa-".$icon_size."\"></i>&nbsp;";
-	echo $label;
-	echo "</a></li>";
-	}
-	
-/*
  * Print main menu with options' icons
  *
  * @author Marco Segato <segatom@users.sourceforge.net>
- * @author Alfredo Cosco <orazio.nelson@gmail.com>, rewrtote to work with admin theme and metisMenu
- * @version 201405
- */	
-function fncc_main_new() {
+ * @version 20130216
+ */
+function fncc_main() {
 	// security conversions
 	$mod = getparam("mod", PAR_GET, SAN_FLAT);
-	?>                         
-		<li>
-		<a href="index.php?mod=<?php echo $mod?>" title="Dashboard" accesskey="0">
-			<i class="fa fa-dashboard fa-fw"></i>&nbsp;<?php echo _FNCC_DASHBOARD?>	
-		</a>
+	?><ul class="htabs">
+		<li class="dashgroup">
+			<a href="index.php?mod=<?php echo $mod?>" title="Dashboard" accesskey="0">
+			<img src="images/dashboard/home.png" /><br/><?php echo _FNCC_DASHBOARD?>
+			</a>
 		</li>
-		<li>
-			<?php fncc_format_parent_item('umbrella', _FNCC_FNOPTIONS)?>
-			<ul class="nav nav-second-level">
-			<?php 
-			//GENERAL INFOS
-			fncc_format_end_item('fnccinfo','info-circle',_FNCC_SERVERINFOS);
-			//GENERAL CONFIGURATION
-			fncc_format_end_item('fnccconf','cogs',_FNCC_GENERALCONF);
-			?>
-			<!-- FTP MANAGER -->
-			<li><a href="#" onclick="window.open('sections/<?php echo $mod?>/none_tools/webadmin.php','','toolbar=no,scrollbars=yes,resizable=yes');">
-				<i class="fa fa-folder-open fa-fw"></i>&nbsp;<?php echo _FNCC_FILEMANAGER?>
-			</a></li>
-			</ul>
-			<!-- /.nav-second-level -->								
+		<li class="dashgroup">
+			<?php echo build_fnajax_link($mod, "&amp;fncclist=fncclist1", "dashtab", "get"); ?>
+			<img src="<?php echo get_fn_dir("sections")."/$mod"?>/none_images/info.png" /><br/><?php echo _FNCC_FNOPTIONS?>
+			</a>
 		</li>
-		<li>
-			<?php fncc_format_parent_item('pencil-square-o', _FNCC_MANAGEFN)?>
-			<ul class="nav nav-second-level">
-			<?php 
-			//EDITING MOTD 
-			fncc_format_end_item('fnccmotd','pencil-square-o',_FNCC_MOTD);
-			//EDITING POLL
-			fncc_format_end_item('fnccpolledit','tasks',_FNCC_POLL);
-			//DOWNLOAD CONFIGURATION 
-			fncc_format_end_item('fnccdownconf','download',_FNCC_DOWNCONF);
-			?>			
-			</ul>
+		<li class="dashgroup">
+			<?php echo build_fnajax_link($mod, "&amp;fncclist=fncclist2", "dashtab", "get"); ?>
+			<img src="<?php echo get_fn_dir("sections")."/$mod"?>/none_images/app_kate.png" /><br/><?php echo _FNCC_MANAGEFN?>
+			</a>
 		</li>
-		<li>
-			<?php fncc_format_parent_item('users', _FNCC_USERS)?>
-			<ul class="nav nav-second-level">
-			<?php 
-			//MEMBERS LIST 
-			fncc_format_end_item('fnccmembers','users',_FNCC_USERSLIST);
-			//ADD A MEMBER
-			fncc_format_end_item('fnccnewprofile','plus-square-o',_FNCC_ADDUSER);
-			//WAITING MEMBER
-			//fncc_format_end_item('fnccwaitingusers','user',_FNCC_DOWNCONF);
-			?>
-			<!--WAITING MEMBER-->
-				<li>
-					<?php echo build_fnajax_link($mod, "&amp;op=fnccwaitingusers", "fncc-adminpanel", "get"); ?>
-					<i class="fa fa-user fa-fw"></i>&nbsp;<?php echo _FNCC_USERSTOACTIVATE?> (<?php echo fncc_countwaitingusers()?>)
-					</a>
-				</li>			
-			</ul>
+		<li class="dashgroup">
+			<?php echo build_fnajax_link($mod, "&amp;fncclist=fncclist3", "dashtab", "get"); ?>
+			<img src="<?php echo get_fn_dir("sections")."/$mod"?>/none_images/kdmconfig.png" /><br/><?php echo _FNCC_USERS?>
+			</a>
 		</li>
-		<li>
-			<?php fncc_format_parent_item('lock', _FNCC_SECURITY)?>
-			<ul class="nav nav-second-level">
-			<?php 
-			//BACKUPS 
-			fncc_format_end_item('fnccbackup','archive',_FNCC_BACKUPS);
-			//VIEW LOGS
-			fncc_format_end_item('fncclogs','th-list',_FNCC_LOGS);
-			//MANAGE BLACKLISTS
-			fncc_format_end_item('fnccblacklists','exclamation-triangle',_FNCC_BLACKLISTS);
-			?>						
-			</ul>
+		<li class="dashgroup">
+			<?php echo build_fnajax_link($mod, "&amp;fncclist=fncclist4", "dashtab", "get"); ?>
+			<img src="<?php echo get_fn_dir("sections")."/$mod"?>/none_images/security.png" /><br/><?php echo _FNCC_SECURITY?>
+			</a>
 		</li>
-		<li>
-			<?php fncc_format_parent_item('picture-o ', _FNCC_THEME)?>
-			<ul class="nav nav-second-level">
-			<?php 
-			//THEME STRUCTURE 
-			fncc_format_end_item('fnccthemestruct','wrench',_FNCC_THEMESTRUCTURE);
-			//THEME PERSONALIZATION
-			fncc_format_end_item('fnccthemestyle','puzzle-piece',_FNCC_THEMESTYLE);
-			//CSS EDITING
-			fncc_format_end_item('fnccthemecss','css3',_FNCC_CSSTHEME);
-			//FORUM CSS EDITING
-			fncc_format_end_item('fnccforumcss','css3',_FNCC_CSSFORUM);
-			?>				
-			</ul>
+		<li class="dashgroup">
+			<?php echo build_fnajax_link($mod, "&amp;fncclist=fncclist5", "dashtab", "get"); ?>
+			<img src="<?php echo get_fn_dir("sections")."/$mod"?>/none_images/kig.png" /><br/><?php echo _FNCC_THEME?>
+			</a>
 		</li>
-		<li>
-			<?php fncc_format_parent_item('coffee ', 'Plugins')?>
-			<ul class="nav nav-second-level">
-				<?php fncc_get_thirdparty_plugins(); ?>
-			</ul>
+		<li class="dashgroup">
+			<?php echo build_fnajax_link($mod, "&amp;fncclist=fnccplugins", "dashtab", "get"); ?>
+			<img src="<?php echo get_fn_dir("sections")."/$mod"?>/none_images/hdd_unmount.png" /><br/>Plugins
+			</a>
 		</li>
-	<?php
+	</ul><?php
 }
 
+/*
+ * Print submenu with options' icons
+ *
+ * @author Marco Segato <segatom@users.sourceforge.net>
+ * @version 20130216
+ */
+function fncc_list1() {
+	// security conversions
+	$mod = getparam("mod", PAR_GET, SAN_FLAT);
+	?><!-- GENERAL INFOS -->
+	<?php echo build_fnajax_link($mod, "&amp;op=fnccinfo", "fn_adminpanel", "get"); ?>
+		<img src="<?php echo get_fn_dir("sections")?>/<?php echo $mod?>/none_images/info.png" alt="info" border="0" style="width:24px;" />&nbsp;<?php echo _FNCC_SERVERINFOS?>
+	</a>
+	<!-- GENERAL CONFIGURATION -->
+	<?php echo build_fnajax_link($mod, "&amp;op=fnccconf", "fn_adminpanel", "get"); ?>
+		<img src="<?php echo get_fn_dir("sections")?>/<?php echo $mod?>/none_images/kcontrol.png" alt="info" border="0" style="width:24px;" />&nbsp;<?php echo _FNCC_GENERALCONF?>
+	</a>
+	<!-- FTP MANAGER -->
+	<a href="#" onclick="window.open('sections/<?php echo $mod?>/none_tools/webadmin.php','','toolbar=no,scrollbars=yes,resizable=yes');">
+		<img src="<?php echo get_fn_dir("sections")?>/<?php echo $mod?>/none_images/kfm.png" alt="file manager" border="0" style="width:24px;" />&nbsp;<?php echo _FNCC_FILEMANAGER?>
+	</a>
+	<?php
+}
+function fncc_list2() {
+	// security conversions
+	$mod = getparam("mod", PAR_GET, SAN_FLAT);
+	?><!-- EDITING MOTD -->
+	<?php echo build_fnajax_link($mod, "&amp;op=fnccmotd", "fn_adminpanel", "get"); ?>
+		<img src="<?php echo get_fn_dir("sections")?>/<?php echo $mod?>/none_images/app_kate.png" alt="motd" border="0" style="width:24px;" />&nbsp;<?php echo _FNCC_MOTD?>
+	</a>
+	<!-- EDITING POLL -->
+	<?php echo build_fnajax_link($mod, "&amp;op=fnccpolledit", "fn_adminpanel", "get"); ?>
+		<img src="<?php echo get_fn_dir("sections")?>/<?php echo $mod?>/none_images/poll.png" alt="poll" border="0" style="width:24px;" />&nbsp;<?php echo _FNCC_POLL?>
+	</a>
+	<!-- DOWNLOAD CONFIGURATION -->
+	<?php echo build_fnajax_link($mod, "&amp;op=fnccdownconf", "fn_adminpanel", "get"); ?>
+		<img src="<?php echo get_fn_dir("sections")?>/<?php echo $mod?>/none_images/down.png" alt="download" border="0" style="width:24px;" />&nbsp;<?php echo _FNCC_DOWNCONF?>
+	</a><?php
+}
+function fncc_list3() {
+	// security conversions
+	$mod = getparam("mod", PAR_GET, SAN_FLAT);
+	?><!-- MEMBERS LIST -->
+	<?php echo build_fnajax_link($mod, "&amp;op=fnccmembers", "fn_adminpanel", "get"); ?>
+		<img src="<?php echo get_fn_dir("sections")?>/<?php echo $mod?>/none_images/kdmconfig.png" alt="manage users" border="0" style="width:24px;" />&nbsp;<?php echo _FNCC_USERSLIST?>
+	</a>
+	<!-- ADD A MEMBER -->
+	<?php echo build_fnajax_link($mod, "&amp;op=fnccnewprofile", "fn_adminpanel", "get"); ?>
+		<img src="<?php echo get_fn_dir("sections")?>/<?php echo $mod?>/none_images/add_user.png" alt="add user" border="0" style="width:24px;" />&nbsp;<?php echo _FNCC_ADDUSER?>
+	</a>
+	<!-- WAITING MEMBER -->
+	<?php echo build_fnajax_link($mod, "&amp;op=fnccwaitingusers", "fn_adminpanel", "get"); ?>
+		<img src="<?php echo get_fn_dir("sections")?>/<?php echo $mod?>/none_images/waiting_user.png" alt="waiting" border="0" style="width:24px;" />&nbsp;<?php echo _FNCC_USERSTOACTIVATE?> (<?php echo fncc_countwaitingusers()?>)
+	</a><?php
+}
+function fncc_list4() {
+	// security conversions
+	$mod = getparam("mod", PAR_GET, SAN_FLAT);
+	?><!-- BACKUPS -->
+	<?php echo build_fnajax_link($mod, "&amp;op=fnccbackup", "fn_adminpanel", "get"); ?>
+		<img src="<?php echo get_fn_dir("sections")?>/<?php echo $mod?>/none_images/hdd_unmount.png" alt="backup" border="0" style="width:24px;" />&nbsp;<?php echo _FNCC_BACKUPS?>
+	</a>
+	<!-- VIEW LOGS -->
+	<?php echo build_fnajax_link($mod, "&amp;op=fncclogs", "fn_adminpanel", "get"); ?>
+		<img src="<?php echo get_fn_dir("sections")?>/<?php echo $mod?>/none_images/mimetype_log.png" alt="logs" border="0" style="width:24px;" />&nbsp;<?php echo _FNCC_LOGS?>
+	</a>
+	<!-- MANAGE BLACKLISTS -->
+	<?php echo build_fnajax_link($mod, "&amp;op=fnccblacklists", "fn_adminpanel", "get"); ?>
+		<img src="<?php echo get_fn_dir("sections")?>/<?php echo $mod?>/none_images/security.png" alt="blacklists" border="0" style="width:24px;" />&nbsp;<?php echo _FNCC_BLACKLISTS?>
+	</a><?php
+}
+function fncc_list5() {
+	// security conversions
+	$mod = getparam("mod", PAR_GET, SAN_FLAT);
+	?><!-- THEME STRUCTURE -->
+	<?php echo build_fnajax_link($mod, "&amp;op=fnccthemestruct", "fn_adminpanel", "get"); ?>
+		<img src="<?php echo get_fn_dir("sections")?>/<?php echo $mod?>/none_images/kig.png" alt="structure" border="0" style="width:24px;" />&nbsp;<?php echo _FNCC_THEMESTRUCTURE?>
+	</a>
+	<!-- THEME PERSONALIZATION -->
+	<?php echo build_fnajax_link($mod, "&amp;op=fnccthemestyle", "fn_adminpanel", "get"); ?>
+		<img src="<?php echo get_fn_dir("sections")?>/<?php echo $mod?>/none_images/gimp.png" alt="theme" border="0" style="width:24px;" />&nbsp;<?php echo _FNCC_THEMESTYLE?>
+	</a>
+	<!-- CSS EDITING -->
+	<?php echo build_fnajax_link($mod, "&amp;op=fnccthemecss", "fn_adminpanel", "get"); ?>
+		<img src="<?php echo get_fn_dir("sections")?>/<?php echo $mod?>/none_images/stylesheet1.png" alt="css" border="0" style="width:24px;" />&nbsp;<?php echo _FNCC_CSSTHEME?>
+	</a>
+	<?php echo build_fnajax_link($mod, "&amp;op=fnccforumcss", "fn_adminpanel", "get"); ?>
+		<img src="<?php echo get_fn_dir("sections")?>/<?php echo $mod?>/none_images/stylesheet2.png" alt="css" border="0" style="width:24px;" />&nbsp;<?php echo _FNCC_CSSFORUM?>
+	</a><?php
+}
 
 /*
  * Print Flatnuke AJAX link/form
@@ -132,26 +149,21 @@ function fncc_main_new() {
  * @param   string	$target    DIV target where to write results
  * @param   string	$method    'get' or 'post'
  * @param   string	$form      Form name from which keeping POST variables
- * @param	string	class	   Add one or more classes as in html attribute class: sep by space
  * @return  string	$fnajax    HTML code to print
  */
-function build_fnajax_link($mod, $option, $target, $method, $form="", $class=NULL) {
+function build_fnajax_link($mod, $option, $target, $method, $form="") {
 	// security conversions
 	$mod    = getparam($mod,    PAR_NULL, SAN_FLAT);
 	$option = getparam($option, PAR_NULL, SAN_FLAT);
 	$target = getparam($target, PAR_NULL, SAN_FLAT);
 	$method = strtolower(getparam($method, PAR_NULL, SAN_FLAT));
-	$class = getparam($class, PAR_NULL, SAN_FLAT);
-
-	if(strlen($class)>0){$class=" class=\"".$class."\"";}
-	else {$class="";}
 	// build the link
 	switch($method) {
 	case "get":
-		$fnajax = "<a href=\"javascript:jQueryFNcall('".get_fn_dir("sections")."/$mod/section.php?mod=$mod"."$option','$method','$target');\"".$class.">";
+		$fnajax = "<a href=\"javascript:jQueryFNcall('".get_fn_dir("sections")."/$mod/section.php?mod=$mod"."$option','$method','$target');\">";
 	break;
 	case "post":
-		$fnajax = "\n<form id=\"$form\" action=\"javascript:jQueryFNcall('".get_fn_dir("sections")."/$mod/section.php?mod=$mod','$method','$target','$form');\" role=\"form\"".$class.">\n";
+		$fnajax = "\n<form id=\"$form\" action=\"javascript:jQueryFNcall('".get_fn_dir("sections")."/$mod/section.php?mod=$mod','$method','$target','$form');\">\n";
 	break;
 	default: $fnajax = "";
 	}
@@ -164,9 +176,6 @@ function build_fnajax_link($mod, $option, $target, $method, $form="", $class=NUL
  *
  * @author Marco Segato <segatom@users.sourceforge.net>
  * @version 20100102
- * 
- * @author Alfredo Cosco <orazio.nelson@gmail.com>, added "jQuery Version"
- * @version 20140522
  */
 function fncc_info() {
 	// security conversions
@@ -182,41 +191,34 @@ function fncc_info() {
 	$my_siteurl = str_replace(get_fn_dir("sections")."/".$mod."/section.php","index.php",$my_siteurl);
 	$protocol   = (isset($_SERVER['HTTPS']) AND $_SERVER['HTTPS']=="on") ? ("https://") : ("http://");
 	// print some informations about the site
-	?>
-		<div><strong><?php echo _FNCC_SITEURL?></strong><?php echo $protocol.$my_siteurl?></div>
-		<div><strong><?php echo _FNCC_OS?></strong><?php echo PHP_OS?></div>
-		<div><strong><?php echo _FNCC_WEBSERVER?></strong><?php echo $_SERVER["SERVER_SOFTWARE"]?></div>
-		<div><strong><?php echo _FNCC_PHP?></strong><?php echo phpversion();?> - <a href="<?php echo get_fn_dir("sections")?>/<?php echo $mod?>/none_tools/phpinfo.php" target="new" title="PHP informations">PHPInfo</a></div>
-		<div><strong><?php echo _FNCC_GDLIB?></strong><?php echo $GDinfo;?></div>
-		<div><strong><?php echo _FNCC_FLATNUKE?></strong><?php if(function_exists("get_fn_version")) echo get_fn_version(); else echo _FNCC_FNUNKNOWN;?></div>
-		<div><strong>jQuery version:</strong>&nbsp;<span class="fn-jq-version"></span>
-		<script>
-		$(document).ready(function()
-		{ var v = jQuery.fn.jquery; 
-		 $(".fn-jq-version").text(v)
-		 });
-		</script>
-		<hr>
-		</div>
-		<?php
+	?><div style="padding: 0em 0.5em 2em 0.5em;">
+	<span class="fncc_title"><?php echo _FNCC_SERVERINFO?></span>
+	<div style="padding-top:1em;"><b><?php echo _FNCC_SITEURL?></b><?php echo $protocol.$my_siteurl?></div>
+	<div style="padding-top:1em;"><b><?php echo _FNCC_OS?></b><?php echo PHP_OS?></div>
+	<div style="padding-top:1em;"><b><?php echo _FNCC_WEBSERVER?></b><?php echo $_SERVER["SERVER_SOFTWARE"]?></div>
+	<div style="padding-top:1em;"><b><?php echo _FNCC_PHP?></b><?php echo phpversion();?> - <a href="<?php echo get_fn_dir("sections")?>/<?php echo $mod?>/none_tools/phpinfo.php" target="new" title="PHP informations">PHPInfo</a></div>
+	<div style="padding-top:1em;"><b><?php echo _FNCC_GDLIB?></b><?php echo $GDinfo;?></div>
+	<div style="padding-top:1em;"><b><?php echo _FNCC_FLATNUKE?></b><?php if(function_exists("get_fn_version")) echo get_fn_version(); else echo _FNCC_FNUNKNOWN;?></div><?php
 	$total_space   = round(disk_free_space("./")/1024/1024,2);
 	$site_space    = round(fncc_getsize("./")/1024/1024,2);
 	$perc_occupied = round($site_space*100/$total_space,1);
 	$perc_free     = round(100-($site_space*100/$total_space),1);
 	?>
-		<div><strong><?php echo _FNCC_SERVERSPACE?></strong> <?php echo "$total_space Mb";?></div>
-		<div><strong><?php echo _FNCC_SITESPACE?></strong> <?php echo "$site_space Mb";?></div>
-		<div><strong>Spazio utilizzato:</strong> <?php echo $perc_occupied?>%</div>
-		<div class="col-lg-4 progress progress-striped">
-			<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<?php echo $perc_occupied?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $perc_occupied?>%;">
-			<?php echo $perc_occupied?>%
-			</div>
-		</div>
-		<div class="clearfix"></div>
-		<h2><?php echo _FNCC_MYINFOS?></h2>
-		<div><strong><?php echo _FNCC_IP?></strong><?php echo $_SERVER["REMOTE_ADDR"]?></div>
-		<div><strong><?php echo _FNCC_USERAGENT?></strong><?php echo $_SERVER["HTTP_USER_AGENT"]?></div>
-<?php
+	<div style="padding-top:1em;"><b><?php echo _FNCC_SERVERSPACE?></b><?php echo "$total_space Mb";?></div>
+	<div style="padding:1em 0em 2em 0em;"><b><?php echo _FNCC_SITESPACE?></b><?php echo "$site_space Mb";?>
+		<p><table align="center" cellspacing="0"><tbody><tr>
+		<td><?php echo $perc_occupied?>%&nbsp;</td>
+		<td style="width:<?php echo $perc_occupied?>px;background-color:#FF0000;"></td>
+		<td style="width:<?php echo $perc_free?>px;background-color:#00FF00;"></td>
+		<td>&nbsp;<?php echo $perc_free?>%</td>
+		</tr></tbody></table></p>
+	</div>
+	<span class="fncc_title"><?php echo _FNCC_MYINFOS?></h4></span>
+	<div style="padding-top:1em;"><b><?php echo _FNCC_IP?></b><?php echo $_SERVER["REMOTE_ADDR"]?></div>
+	<div style="padding-top:1em;"><b><?php echo _FNCC_USERAGENT?></b><?php echo $_SERVER["HTTP_USER_AGENT"]?></div>
+	</div><?php
+	// print the back button
+	echo _FNCC_GOTOP;
 }
 
 /*
@@ -242,7 +244,110 @@ function fncc_getsize($dirpath) {
 	return $totalsize;
 }
 
+/*
+ * Flatnuke general configuration
+ *
+ * @author Marco Segato <segatom@users.sourceforge.net>
+ * @version 20100101
+ */
+function fncc_conf() {
+	?><div style="padding: 0 0.5em 2em 0.5em;">
+		<span class="fncc_title"><?php echo _FNCC_DESGENERALCONF?></span>
+		<div style="padding-top:1em;"><?php fncc_generalconf(); ?></div>
+	</div><?php
+	// print the back button
+	echo _FNCC_GOTOP;
+}
 
+/*
+ * Manage MOTD file
+ *
+ * @author Marco Segato <segatom@users.sourceforge.net>
+ * @version 20100101
+ */
+function fncc_motd() {
+	?><div style="padding: 0 0.5em 2em 0.5em;">
+		<span class="fncc_title"><?php echo _FNCC_DESMOTD?></span>
+		<div style="padding-top:1em;"><?php fncc_editconffile(get_fn_dir("var")."/motd.php"); ?></div>
+	</div><?php
+	// print the back button
+	echo _FNCC_GOTOP;
+}
+
+/*
+ * Manage poll configuration
+ *
+ * @author Marco Segato <segatom@users.sourceforge.net>
+ * @version 20100101
+ */
+function fncc_polledit() {
+	?><div style="padding: 0 0.5em 2em 0.5em;">
+		<span class="fncc_title"><?php echo _FNCC_DESPOLL?></span>
+		<div style="padding-top:1em;"><?php fncc_editpoll(); ?></div>
+	</div><?php
+	// print the back button
+	echo _FNCC_GOTOP;
+}
+
+/*
+ * Manage FdPlus configuration
+ *
+ * @author Marco Segato <segatom@users.sourceforge.net>
+ * @version 20100101
+ */
+function fncc_downconf() {
+	?><div style="padding: 0 0.5em 2em 0.5em;">
+		<span class="fncc_title"><?php echo _FNCC_DESDOWNCONF?></span>
+		<div style="padding-top:1em;"><?php fncc_fdplusconf(); ?></div>
+	</div><?php
+	// print the back button
+	echo _FNCC_GOTOP;
+}
+
+/*
+ * List all members of the site
+ *
+ * @author Marco Segato <segatom@users.sourceforge.net>
+ * @version 20100101
+ */
+function fncc_members() {
+	?><div style="padding: 0 0.5em 2em 0.5em;">
+		<span class="fncc_title"><?php echo _FNCC_DESUSERSLIST?></span>
+		<div style="padding-top:1em;"><?php fncc_userslist(); ?></div>
+	</div><?php
+	// print the back button
+	echo _FNCC_GOTOP;
+}
+
+/*
+ * Add a new user profile
+ *
+ * @author Marco Segato <segatom@users.sourceforge.net>
+ * @version 20100101
+ */
+function fncc_newprofile() {
+	?><div style="padding: 0 0.5em 2em 0.5em;">
+		<span class="fncc_title"><?php echo _FNCC_DESADDUSER?></span>
+		<div style="padding-top:1em;"><?php fncc_newuserprofile(); ?></div>
+	</div><?php
+	// print the back button
+	echo _FNCC_GOTOP;
+}
+
+/*
+ * Add a waiting user profile
+ *
+ * @author Marco Segato <segatom@users.sourceforge.net>
+ * @version 20100101
+ */
+function fncc_waitingusers() {
+	?><div style="padding: 0 0.5em 2em 0.5em;">
+		<span class="fncc_title"><?php echo _FNCC_WAITINGUSERS?></span>
+		<div style="padding-top:1em;"><?php fncc_listwaiting(); ?></div>
+	</div><?php
+	// print the back button
+	echo _FNCC_GOTOP;
+}
 
 /*
  * Returns the number of users waiting for activation
@@ -264,6 +369,20 @@ function fncc_countwaitingusers() {
 	return(count($waitinglist));
 }
 
+/*
+ * Admin can create and download FN backups
+ *
+ * @author Marco Segato <segatom@users.sourceforge.net>
+ * @version 20100101
+ */
+function fncc_backups() {
+	?><div style="padding: 0 0.5em 2em 0.5em;">
+		<span class="fncc_title"><?php echo _FNCC_DESBACKUPS?></span>
+		<div style="padding-top:1em;"><?php fncc_managebackups(); ?></div>
+	</div><?php
+	// print the back button
+	echo _FNCC_GOTOP;
+}
 
 /*
  * Returns the list of backup files
@@ -285,6 +404,99 @@ function fncc_listbackups() {
 	return($backup_files);
 }
 
+/*
+ * Admin can look at Flatnuke logs
+ *
+ * @author Marco Segato <segatom@users.sourceforge.net>
+ * @version 20100101
+ */
+function fncc_logs() {
+	?><div style="padding: 0 0.5em 2em 0.5em;">
+		<span class="fncc_title"><?php echo _FNCC_DESLOGS?></span>
+		<div style="padding-top:1em;"><?php fncc_managelogs(); ?></div>
+	</div><?php
+	// print the back button
+	echo _FNCC_GOTOP;
+}
+
+/*
+ * Admin can manage Flatnuke blacklists
+ *
+ * @author Marco Segato <segatom@users.sourceforge.net>
+ * @version 20100101
+ */
+function fncc_blacklists() {
+	?><div style="padding: 0 0.5em 2em 0.5em;">
+		<span class="fncc_title"><?php echo _FNCC_DESBLACKLISTS?></span>
+		<div style="padding-top:1em;"><?php fncc_manageblacklists(); ?></div>
+	</div><?php
+	// print the back button
+	echo _FNCC_GOTOP;
+}
+
+/*
+ * Manage theme's structure
+ *
+ * @author Marco Segato <segatom@users.sourceforge.net>
+ * @version 20100101
+ */
+function fncc_themestruct() {
+	global $theme;
+	?><div style="padding: 0 0.5em 2em 0.5em;">
+		<span class="fncc_title"><?php echo _FNCC_DESTHEMESTRUCTURE?></span>
+		<div style="padding-top:1em;"><?php fncc_editconffile(get_fn_dir("themes")."/$theme/structure.php"); ?></div>
+	</div><?php
+	// print the back button
+	echo _FNCC_GOTOP;
+}
+
+/*
+ * Manage theme's personalisations
+ *
+ * @author Marco Segato <segatom@users.sourceforge.net>
+ * @version 20100101
+ */
+function fncc_themestyle() {
+	global $theme;
+	?><div style="padding: 0 0.5em 2em 0.5em;">
+		<span class="fncc_title"><?php echo _FNCC_DESTHEMESTYLE?></span>
+		<div style="padding-top:1em;"><?php fncc_editconffile(get_fn_dir("themes")."/$theme/theme.php"); ?></div>
+	</div><?php
+	// print the back button
+	echo _FNCC_GOTOP;
+}
+
+/*
+ * Manage theme's CSS file
+ *
+ * @author Marco Segato <segatom@users.sourceforge.net>
+ * @version 20100101
+ */
+function fncc_themecss() {
+	global $theme;
+	?><div style="padding: 0 0.5em 2em 0.5em;">
+		<span class="fncc_title"><?php echo _FNCC_DESCSSTHEME?></span>
+		<div style="padding-top:1em;"><?php fncc_editconffile(get_fn_dir("themes")."/$theme/style.css"); ?></div>
+	</div><?php
+	// print the back button
+	echo _FNCC_GOTOP;
+}
+
+/*
+ * Manage forum's CSS file
+ *
+ * @author Marco Segato <segatom@users.sourceforge.net>
+ * @version 20100101
+ */
+function fncc_forumcss() {
+	global $theme;
+	?><div style="padding: 0 0.5em 2em 0.5em;">
+		<span class="fncc_title"><?php echo _FNCC_DESCSSFORUM?></span>
+		<div style="padding-top:1em;"><?php fncc_editconffile(get_fn_dir("themes")."/$theme/forum.css"); ?></div>
+	</div><?php
+	// print the back button
+	echo _FNCC_GOTOP;
+}
 
 /*
  * Section reserved to site admins only
@@ -294,8 +506,8 @@ function fncc_listbackups() {
  */
 function fncc_onlyadmin() {
 	?><div style="padding: 2em 0.5em 2em 0.5em;text-align:center;"><h4><?php echo _FNCC_ONLYADMIN?></h4>
-		<div><img src="images/maintenance.png" alt="lock"  /></div>
-		<div><?php echo _FNCC_DESONLYADMIN?></div>
+		<div style="padding-top:1em;"><img src="images/maintenance.png" alt="lock" border="0" /></div>
+		<div style="padding-top:1em;"><?php echo _FNCC_DESONLYADMIN?></div>
 	</div><?php
 	// log the attempt
 	$ip = getparam("REMOTE_ADDR", PAR_SERVER, SAN_NULL);
@@ -306,15 +518,15 @@ function fncc_onlyadmin() {
  * Load the list of third party plugins in the dashboard
  *
  * @author Alfredo Cosco <orazio.nelson@gmail.com>
- * @version 20140509
+ * @version 20130216
  */
-function fncc_get_thirdparty_plugins() {
+function get_thirdparty_plugins() {
 	// security conversions
 	$mod = getparam("mod", PAR_GET, SAN_FLAT);
 	$sections = get_fn_dir("sections");
 	// check plugin's directory existance
 	if(!is_dir("$sections/$mod/none_plugins")) {
-		echo "The plugins directory does not exist, create the <i>none_plugins</i> directory in <i>$sections/$mod</i><br>";
+		echo "The plugins directory does not exist, create the <i>none_plugins</i> directory in <i>$sections/$mod</i><br />";
 	} else {
 		// search for installed plugins
 		$modlist   = array();
@@ -333,73 +545,21 @@ function fncc_get_thirdparty_plugins() {
 		if(count($modlist)<=0) {
 			echo "The plugins directory is empty";
 		} else {
-			
-
-			
 			$modlist = str_replace("none_","",$modlist);
 			sort($modlist);
 			foreach($modlist as $k=>$v) {
-				
-				if(file_exists($sections."/".$mod."/none_plugins/none_".$v."/pluginconf.php"))
-				{
-				include_once($sections."/".$mod."/none_plugins/none_".$v."/pluginconf.php");
-				}
-				
 				$parsev  = str_replace("_", " ", $v);
-				echo "<li>".build_fnajax_link("$mod/none_plugins/none_$v", "&amp;plugin=none_$v", "fncc-adminpanel", "get");
-				if(strlen($picon)>0){
-					echo "<i class=\"fa ".$picon." fa-fw\"></i>&nbsp;";
+				echo build_fnajax_link("$mod/none_plugins/none_$v", "&amp;plugin=none_$v", "fn_adminpanel", "get");
+				if(file_exists("$sections/$mod/none_plugins/none_$v/modicon.png")){
+					echo "<img src=\"$sections/$mod/none_plugins/none_$v/modicon.png\" alt=\"$parsev\" border=\"0\" style=\"width:24px;\" />&nbsp;";
 				} else {
-					echo "<i class=\"fa fa-gift fa-fw\"></i>&nbsp;";
+					echo "<img src=\"$sections/$mod/none_images/info.png\" alt=\"Add a 48x48 image modicon.png to: none_$v module to customize\" border=\"0\" style=\"width:24px;\" />&nbsp;";
 				}
 				echo $parsev;
-				echo "</a></li>";
+				echo "</a>";
 			}
 		}
 	}
 }
-
-/*
- * 
- * @author Alfredo Cosco <orazio.nelson@gmail.com>
- * @version 20140511
- * */
- 
-function fncc_create_module_header($title){
-$header="<div class=\"row\">
-	<div class=\"col-lg-12\">
-		<h1 class=\"page-header fncc-title\">".$title."</h1>
-    </div><!-- /.col-lg-12 -->
-</div>
-<!-- /.row -->
-";	
-echo $header;
-	}
-
-/*
- * 
- * @author Alfredo Cosco <orazio.nelson@gmail.com>
- * @version 20140511
- * */
-function fncc_create_module_page($title, $callback = null,$param=null) {
-	
-	//page header
-	echo "
-	<div class=\"row\">
-		<div class=\"col-lg-12\">
-			<h1 class=\"page-header fncc-title\">".$title."</h1>
-		</div><!-- /.col-lg-12 -->
-	</div><!-- /.row -->
-	"; 
-	//page
-	echo "<div class=\"row\">
-	<div class=\"col-lg-12\">";
-	call_user_func($callback,$param);
-	echo "</div><!-- /.col-lg-12 -->
-	</div><!-- /.row -->";
-	
-	//return $page;
-}
-
 
 ?>

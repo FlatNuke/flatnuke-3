@@ -45,10 +45,10 @@ $where = getparam("where",PAR_POST,SAN_FLAT);
 	//se non ho trovato niente...
 	if ($where!="allsite"){
 		if (count($files)==0){
-			echo _NORESULT."<br><a href=\"javascript:history.back();\" title=\""._INDIETRO."\">&lt;&lt; "._INDIETRO."</a>";
+			echo _NORESULT."<br /><a href=\"javascript:history.back();\" title=\""._INDIETRO."\">&lt;&lt; "._INDIETRO."</a>";
 
 		}
-		else echo "<br><b>"._FP_RISULTATI.":</b><br><br>";
+		else echo "<br /><b>"._FP_RISULTATI.":</b><br /><br />";
 	}
 	else {
 		echo "<h4>Commenti:</h4>";
@@ -61,7 +61,7 @@ $where = getparam("where",PAR_POST,SAN_FLAT);
 		$tempmod = preg_replace("/^sections\//i","",dirname($file));
 
 		global $theme;
-		echo _ICONCOMMENT."&nbsp;<a href=\"index.php?mod=".rawurlencodepath($tempmod)."\" title=\""._GOTOSECTION.": ".preg_replace("/none_/i","",$tempmod)."\">".preg_replace("/none_/i","",$tempmod)."</a><br>";
+		echo "<img src=\"themes/$theme/images/comment.png\" alt=\"comment\" />&nbsp;<a href=\"index.php?mod=".rawurlencodepath($tempmod)."\" title=\""._GOTOSECTION.": ".preg_replace("/none_/i","",$tempmod)."\">".preg_replace("/none_/i","",$tempmod)."</a><br />";
 
 	}
 }
@@ -101,6 +101,7 @@ function list_uc_files($dirbase){
 		if (getLevel($myforum,"home") < getsectlevel($tempmod)) continue;
 		if (basename($file)=="comments.php"){
 			$files[] = $file;
+// 			echo "$file<br />";
 		}
 
 	}
@@ -112,8 +113,8 @@ function list_uc_files($dirbase){
  * Cerca la stringa $string nei file $files
  * @param string $string la stringa da cercare
  * @param array $files l'array di file in cui cercare la stringa
- * @param string $method il metodo di ricerca. PuÃ² essere "OR" oppure "AND"
- * @return un array con i percorsi dei file in cui Ã¨ stata trovata la stringa
+ * @param string $method il metodo di ricerca. Può essere "OR" oppure "AND"
+ * @return un array con i percorsi dei file in cui è stata trovata la stringa
  */
 function find_uc_files($string,$files,$method){
 	$string=getparam($string,PAR_NULL,SAN_FLAT);

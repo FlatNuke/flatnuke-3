@@ -28,7 +28,7 @@ if (preg_match("/fduser.php/i",$_SERVER['PHP_SELF'])) {
 
 /**
  * Il carattere che separa il codice random di sicurezza dal nome del file
- * (questo √® meglio non modificarlo)
+ * (questo Ë meglio non modificarlo)
  */
 $separator_char ="-";
 
@@ -38,9 +38,9 @@ $GLOBALS['separator_char'] = $separator_char;
 
 /**
  * Questa funzione mostra il pulsante per permettere agli utenti di caricare dei file.
- * Se l'utente √® abilitato ad uploadare file verr√† mostrato il pulsante, in caso contrario sar√†
- * mostrata una scritta specificante il motivo dell'impossibilt√† di caricare files.
- * Se l'utente collegato √® un amministratore sar√† mostrato un pulsante per andare alla pagina
+ * Se l'utente Ë abilitato ad uploadare file verr‡ mostrato il pulsante, in caso contrario sar‡
+ * mostrata una scritta specificante il motivo dell'impossibilt‡ di caricare files.
+ * Se l'utente collegato Ë un amministratore sar‡ mostrato un pulsante per andare alla pagina
  * di validazione dei file in attesa di approvazione
  * @author Aldo Boccacci
  * @since 0.7
@@ -58,17 +58,17 @@ global $userfilelimit;
 	if (user_can_upload() and (get_n_waiting_files()<$userfilelimit)){
 		$path =getparam("mod", PAR_GET, SAN_FLAT);
 		//pulsante per aggiungere un nuovo file
-		echo "<div align=\"center\"><br><form action=\"index.php?mod=none_Fdplus\" method=\"POST\">
+		echo "<div align=\"center\"><br /><form action=\"index.php?mod=none_Fdplus\" method=\"POST\">
 		<input type=\"hidden\" name=\"path\" value=\"sections/$path\" readonly=\"readonly\">
 		<input type=\"hidden\" name=\"fdaction\" value=\"useraddfile\" readonly=\"readonly\">
 		<input type=\"hidden\" name=\"fdfile\" value=\"new\" readonly=\"readonly\">
 		<input type=\"SUBMIT\" value=\""._FDPROPOSE."\"></form></div>";
 	}
 	else if (user_can_upload() and !(get_n_waiting_files()<$userfilelimit)){
-		echo "<div align=\"center\"><br><span style=\"color : #ff0000;\">"._FDLIMIT."</span></div>";
+		echo "<div align=\"center\"><br /><span style=\"color : #ff0000;\">"._FDLIMIT."</span></div>";
 	}
 	else if (fd_is_admin()){
-		echo "<div align=\"center\"><br><form action=\"index.php?mod=none_Fdplus\" method=\"POST\">
+		echo "<div align=\"center\"><br /><form action=\"index.php?mod=none_Fdplus\" method=\"POST\">
 		<input type=\"hidden\" name=\"fdaction\" value=\"publishuserfileinterface\" readonly=\"readonly\">
 		<input type=\"SUBMIT\" value=\""._FDPUBLISHFILES." (".get_n_waiting_files().")\"></form></div>";
 	}
@@ -76,8 +76,8 @@ global $userfilelimit;
 }
 
 /**
- * Restituisce true se l'utente √® autorizzato a caricare file nella sezione corrente
- * @return TRUE se l'utente collegato √® autorizzato a caricare file. FALSE in caso contrario
+ * Restituisce true se l'utente Ë autorizzato a caricare file nella sezione corrente
+ * @return TRUE se l'utente collegato Ë autorizzato a caricare file. FALSE in caso contrario
  * @author Aldo Boccacci
  * @since 0.7
  */
@@ -111,7 +111,7 @@ function user_can_upload(){
 				$counter++;
 			}
 
-			//controllo se √® in elenco
+			//controllo se Ë in elenco
 			if (!in_array($myforum,$bannedusers)){
 				if ($checklevel==TRUE) return TRUE;
 				else return FALSE;
@@ -223,14 +223,14 @@ function user_upload(){
 	if (trim($mod)!="none_Fdplus") fd_die(_FDNONPUOI.basename(__FILE__).": ".__LINE__);
 
 	if (!isset($_FILES['fdfile'])) {
-		echo "<br><br><div align=\"center\"><b>"._FDFILENOTSELECT."</b></div>";
+		echo "<br /><br /><div align=\"center\"><b>"._FDFILENOTSELECT."</b></div>";
 		fd_die("File to upload not selected. FDuser:".__LINE__);
 	}
 
 
 	if (isset($_FILES['fdfile']['name']) and trim($_FILES['fdfile']['name'])==""){
-		echo "<br><br><div align=\"center\">"._FDFILENOTSELECT;
-		echo "<br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br><br></div>";
+		echo "<br /><br /><div align=\"center\">"._FDFILENOTSELECT;
+		echo "<br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br /><br /></div>";
 			fd_die("File to upload not selected. FDuser:".__LINE__);
 	}
 
@@ -239,9 +239,9 @@ function user_upload(){
 	}
 
 	if ($_FILES['fdfile']['size']>$usermaxFileSize) {
-		echo "<div align=\"center\"><br>"._FDTOOBIG;
-		// Il file non √® stato caricato perch√® le sue dimensioni sono eccessive.<br>";
-		echo "<br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br><br>";
+		echo "<div align=\"center\"><br />"._FDTOOBIG;
+		// Il file non Ë stato caricato perchË le sue dimensioni sono eccessive.<br />";
+		echo "<br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br /><br />";
 		echo "</div>";
 		fdlogf($_FILES['fdfile']['size'].": "._FDTOOBIG);
 		fd_die("File to upload has size==0. FDuser:".__LINE__);
@@ -255,11 +255,11 @@ function user_upload(){
 		else if ($_FILES['fdfile']['error']==6) echo _FDERROR6;
 		else if ($_FILES['fdfile']['error']==7) echo _FDERROR7;
 
-		fd_die("<br><br><b>FDuser:</b> upload error. (".$_FILES['fdfile']['error'].")");
+		fd_die("<br /><br /><b>FDuser:</b> upload error. (".$_FILES['fdfile']['error'].")");
 
 
 	}
-	if ($_FILES['fdfile']['size']==0) fd_die("<br><b>Error! </b>"._FDSIZE." file: 0 kb");
+	if ($_FILES['fdfile']['size']==0) fd_die("<br /><b>Error! </b>"._FDSIZE." file: 0 kb");
 
 
 	//ULTIMO CONTROLLO ALL'ARRAY $_FILES
@@ -279,8 +279,8 @@ function user_upload(){
 		$extensions_array=array();
 		$extensions_array = split(",",strtolower($extensions));
 		if (!in_array(strtolower($info['extension']),$extensions_array)) {
-			echo "<br><br><div align=\"center\">"._NOTVALIDEXT;
-			echo "<br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br><br></div>";
+			echo "<br /><br /><div align=\"center\">"._NOTVALIDEXT;
+			echo "<br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br /><br /></div>";
 			fd_die("",__FILE__,__LINE__);
 
 		}
@@ -302,10 +302,10 @@ function user_upload(){
 	if(user_can_upload()){
 // print_r($_FILES);
 		if ($_FILES['fdfile']['name']<>""){
-			//controllo che il file non sia gi√† esistente
+			//controllo che il file non sia gi‡ esistente
 			if (file_exists("$path/".$_FILES['fdfile']['name'])){
-				echo "<div align=\"center\"><br>"._FDUPLOADEXISTS."<br>";
-				echo "<br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br><br></div>";
+				echo "<div align=\"center\"><br />"._FDUPLOADEXISTS."<br />";
+				echo "<br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br /><br /></div>";
 				fd_die("",__FILE__,__LINE__);
 
 			}
@@ -315,18 +315,18 @@ function user_upload(){
 			//inserisci il path
 // 			echo "$path/$hiddenfilename";
 			if (user_can_upload()){
-// 			echo $_FILES['fdfile']['tmp_name']."<br>"."$path/".$_FILES['fdfile']['name'];
+// 			echo $_FILES['fdfile']['tmp_name']."<br />"."$path/".$_FILES['fdfile']['name'];
 			if (move_uploaded_file($_FILES['fdfile']['tmp_name'], "$path/$hiddenfilename")){
 				echo "<div align=\"center\">"._FDUPLOADOK;
 
-				echo "<br><br>"._FDWAITFORADMIN;
+				echo "<br /><br />"._FDWAITFORADMIN;
 				//print_r($_FILES);
 				echo "</div>";
 			}
 			else {
-				echo "<div align=\"center\"><br>"._FDTOOBIG;
-				// Il file non √® stato caricato perch√® le sue dimensioni sono eccessive.<br>";
-				echo "<br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br><br>";
+				echo "<div align=\"center\"><br />"._FDTOOBIG;
+				// Il file non Ë stato caricato perchË le sue dimensioni sono eccessive.<br />";
+				echo "<br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br /><br />";
 				echo "</div>";
 				fd_die("",__FILE__,__LINE__);
 			}
@@ -371,7 +371,7 @@ function user_upload(){
 	}//fine is_admin(?)
 
 		$path = preg_replace("/.*sections\//i", "", $path);
-		echo "<br><br><div align=\"center\"><a href=\"index.php?mod=$path\"><b>"._FDRETURN."</b></a></div>";
+		echo "<br /><br /><div align=\"center\"><a href=\"index.php?mod=$path\"><b>"._FDRETURN."</b></a></div>";
 
 }
 
@@ -447,7 +447,7 @@ function insert_in_waiting_list($path){
 	if (!file_exists(_FN_VAR_DIR."/fdplus/")) fn_mkdir(_FN_VAR_DIR."/fdplus/",0777);
 	//idem per il file con le statistiche
 	if (!file_exists(_FN_VAR_DIR."/fdplus/$userwaitingfile")){
-		$string= "<?xml version='1.0' encoding='UTF-8'?>\n<userwaitaingfiles>\n</userwaitingfiles>";
+		$string= "<?xml version='1.0'?>\n<userwaitaingfiles>\n</userwaitingfiles>";
 
 		fnwrite(_FN_VAR_DIR."/fdplus/$userwaitingfile",$string,"w",array("nonull"));
 	}
@@ -474,7 +474,7 @@ function insert_in_waiting_list($path){
 	$newstring .= "\n</userwaitingfiles>";
 	if (preg_match("/\<\?/",$newstring) or preg_match("/\?\>/",$newstring)) fd_die("You cannot insert php tags in the waiting list file! FDuser: ".__LINE__);
 
-	fnwrite(_FN_VAR_DIR."/fdplus/$userwaitingfile","<?xml version='1.0' encoding='UTF-8'?>\n".$newstring,"w",array("nonull"));
+	fnwrite(_FN_VAR_DIR."/fdplus/$userwaitingfile","<?xml version='1.0'?>\n".$newstring,"w",array("nonull"));
 }
 
 /**
@@ -502,7 +502,7 @@ function get_waiting_files(){
 	if (!file_exists(_FN_VAR_DIR."/fdplus/")) fn_mkdir(_FN_VAR_DIR."/fdplus/",0777);
 	//idem per il file con le statistiche
 	if (!file_exists(_FN_VAR_DIR."/fdplus/$userwaitingfile")){
-		$string= "<?xml version='1.0' encoding='UTF-8'?>\n<userwaitingfiles>\n</userwaitingfiles>";
+		$string= "<?xml version='1.0'?>\n<userwaitingfiles>\n</userwaitingfiles>";
 
 		fnwrite(_FN_VAR_DIR."/fdplus/$userwaitingfile",$string,"w",array("monull"));
 	}
@@ -542,7 +542,7 @@ function publish_interface(){
 	if (!file_exists(_FN_VAR_DIR."/fdplus/")) fn_mkdir(_FN_VAR_DIR."/fdplus/",0777);
 	//idem per il file con le statistiche
 	if (!file_exists(_FN_VAR_DIR."/fdplus/$userwaitingfile")){
-		$string= "<?xml version='1.0' encoding='UTF-8'?>\n<userwaitingfiles>\n</userwaitingfiles>";
+		$string= "<?xml version='1.0'?>\n<userwaitingfiles>\n</userwaitingfiles>";
 
 		fnwrite(_FN_VAR_DIR."/fdplus/$userwaitingfile",$string,"w",array("nonull"));
 	}
@@ -551,7 +551,7 @@ function publish_interface(){
 	$datastring = get_xml_element("userwaitingfiles",get_file(_FN_VAR_DIR."/fdplus/$userwaitingfile"));
 	$userwaitingarray=array();
 	$userwaitingarray= get_xml_array("file",$datastring);
-	echo "<b>I seguenti file sono in attesa di validazione: </b><br>(Potrete modificare le descrizioni dopo la pubblicazione)";
+	echo "<b>I seguenti file sono in attesa di validazione: </b><br />(Potrete modificare le descrizioni dopo la pubblicazione)";
 	foreach ($userwaitingarray as $userwaitingelement){
 // 		$userwaitingelement = get_xml_element("file",$userwaitingelement);
 		if (!file_exists($userwaitingelement)) continue;
@@ -581,8 +581,8 @@ function publish_file($path){
 	$newpath = "$newdir/$newname";
 
 	if (file_exists($newpath)){
-		echo "<b>"._ATTENTION."!</b> "._THEFILE." <b>$newpath</b> esiste gi√†. <br>
-		Sar√† mantenuto il file temporaneo in attesa che l'amministratore lo modifichi manualmente.";
+		echo "<b>"._ATTENTION."!</b> "._THEFILE." <b>$newpath</b> esiste gi‡. <br />
+		Sar‡ mantenuto il file temporaneo in attesa che l'amministratore lo modifichi manualmente.";
 		$newpath = "$newdir/TOGLIMI-$newname";
 	}
 
@@ -609,13 +609,13 @@ function publish_file($path){
 function fd_delete_file($path){
 	if (!fd_check_path($path,"sections/","false")) fd_die("\$path isn't valid. FDuser: ".__LINE__);
 	confermaelimina($path);
-	//solo se √® stato effettivamente eliminato...
+	//solo se Ë stato effettivamente eliminato...
 	if (!file_exists($path)) insert_in_waiting_list($path);
 
 }
 
 /**
- * Restituisce true se il file √® stato proposto da un utente e deve ancora essere
+ * Restituisce true se il file Ë stato proposto da un utente e deve ancora essere
  * approvato dall'amministratore
  * @return TRUE se il file si trova nella lista dei file caricati da un utente in attesa di validazione,
  *         FALSE in caso contrario

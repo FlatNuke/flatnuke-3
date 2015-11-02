@@ -32,7 +32,7 @@ if (file_exists("include/redefine/".__FUNCTION__.".php")){
 
 	if (!fd_check_path($path,"sections/","false")) fd_die(_FDNONPUOI.basename(__FILE__).": ".__LINE__);
 
-	//se c'è bisogno rinomino la cartella di archivio
+	//se c'e' bisogno rinomino la cartella di archivio
 	rename_archivedir($archivedir);
 	$extensions_array=array();
 	$extensions_array = explode(",",strtolower($extensions));
@@ -61,7 +61,7 @@ if (file_exists("include/redefine/".__FUNCTION__.".php")){
 		//visualizzo ciascun file
 		if (!preg_match("/\.php.$|\.php$/i",$filename) and !preg_match("/\.description/i",$filename)) {
 			//se si tratta di una firma gpg ed esiste il file corrispondente
-			//non devo visualizzare il file (sarà integrato nel box del file corrispondente)
+			//non devo visualizzare il file (sara' integrato nel box del file corrispondente)
 			if (preg_match("/\.$extsig$/i",$filename) and file_exists(preg_replace("/\.$extsig$/i","",$filename))) continue;
 			//se si tratta di uno screenshot
 			global $extscreenshot;
@@ -76,11 +76,11 @@ if (file_exists("include/redefine/".__FUNCTION__.".php")){
 
 
 	//amministrazione della sezione
-	echo "<br>";
+	echo "<br />";
 	echo "<div align=center>";
 	if (is_dir("sections/none_Statistiche/download_stats/")){
 		echo "<a href=\"index.php?mod=none_Statistiche/download_stats\" title=\""._FDSTATTITLE."\">"._FDSTAT."</a>";
-		echo "<br>";
+		echo "<br />";
 	}
 
 
@@ -89,10 +89,10 @@ if (file_exists("include/redefine/".__FUNCTION__.".php")){
 		$lastdir = strrchr(dirname($filename),"/");
 		if (!preg_match("/$archivedir/i",$lastdir)){
 			if (is_writable(dirname($filename))){
-				//echo "<br><a href=\"index.php?mod=none_Fdplus&amp;fdaction=addfile&amp;fdfile=new&amp;path=$path\" title=\""._FDADDFILETITLE."\"><b>"._FDADDFILE."</b></a>";
+				//echo "<br /><a href=\"index.php?mod=none_Fdplus&amp;fdaction=addfile&amp;fdfile=new&amp;path=$path\" title=\""._FDADDFILETITLE."\"><b>"._FDADDFILE."</b></a>";
 
 				//pulsante per aggiungere un nuovo file
-				echo "<br><form action=\"index.php?mod=none_Fdplus\" method=\"POST\">
+				echo "<br /><form action=\"index.php?mod=none_Fdplus\" method=\"POST\">
 				<input type=\"hidden\" name=\"path\" value=\"$path\" readonly=\"readonly\">
 				<input type=\"hidden\" name=\"fdaction\" value=\"addfile\" readonly=\"readonly\">
 				<input type=\"hidden\" name=\"fdfile\" value=\"new\" readonly=\"readonly\">
@@ -126,10 +126,10 @@ if (file_exists("include/redefine/".__FUNCTION__.".php")){
 				<input type=\"SUBMIT\" value=\""._FDDONOTALLOWUSERUPLOAD."\"></form>";
 				}
 			}
-			else echo "<br><span style=\"color : #ff0000;\">"._FDREADONLYDIR."</span>";
+			else echo "<br /><span style=\"color : #ff0000;\">"._FDREDONLYDIR."</span>";
 		}
 	}
-	echo "</div><br>";
+	echo "</div><br />";
 
 // 	module_copyright("FDplus",get_fd_version(),"<b>Aldo Boccacci</b> aka Zorba","zorba_(AT)tin.it", "http://www.aldoboccacci.it", "Gpl version 2.0");
 
@@ -177,7 +177,7 @@ if (file_exists("include/redefine/".__FUNCTION__.".php")){
 			return;
 		}
 
-		//se è un file php ritorno
+		//se e' un file php ritorno
 		if (preg_match("/php/i",$ext)) {
 			return;
 		}
@@ -205,7 +205,7 @@ if (file_exists("include/redefine/".__FUNCTION__.".php")){
 
 		//solo gli amministratori possono vedere i file nascosti
 		if ($description['hide']=="true" and !fd_is_admin()) return;
-		//controllo se il livello dell'utente è adeguato a quello del file
+		//controllo se il livello dell'utente e' adeguato a quello del file
 		$myforum="";
 		$myforum=_FN_USERNAME;
 		if ($description['level']!="-1"){
@@ -231,7 +231,7 @@ if (file_exists("include/redefine/".__FUNCTION__.".php")){
 
 		$string_title="";
 		/* Generazione Tabella */
-		echo "<br><br>";
+		echo "<br /><br />";
 		if (ltrim($description['name'])==""){
 			$string_title = "<a id=\"".create_id($filename)."\" title=\"mime icon\">".getIcon($ext,$icon_style)."</a>".basename($filename);
 			if ($description['hide']=="true") $string_title = "<span style=\"color : #ff0000; text-decoration : line-through;\">".$string_title."</span>";
@@ -252,7 +252,7 @@ if (file_exists("include/redefine/".__FUNCTION__.".php")){
 				<td align="left" width="20%"><b><?php echo _FDNAME;?></b></td>
 				<td><?php
 
-				//ora è possibile scaricare il file anche cliccando sul suo nome
+				//ora e' possibile scaricare il file anche cliccando sul suo nome
 				if (ltrim($description['name'])==""){
 // 					echo basename($filename);
 					echo "<b><u><a href=\"index.php?mod=none_Fdplus&amp;fdaction=download&amp;url=".rawurlencodepath($filename)."\" title=\""._FDDOWNLOADFILE.basename($filename)."\">".basename($filename)."</a></u></b>";
@@ -298,7 +298,7 @@ if (file_exists("include/redefine/".__FUNCTION__.".php")){
 				<td>".$description['desc']."</td>
 			</tr>";
 			}
-			//se non è nullo mostro anche il campo "versione"
+			//se non e' nullo mostro anche il campo "versione"
 			if (trim($description['version'])!=""){
 				echo "<tr><td align=\"left\"><b>"._FDVERSION."</b></td>";
 				echo "<td>".$description['version']."</td></tr>";
@@ -311,13 +311,13 @@ if (file_exists("include/redefine/".__FUNCTION__.".php")){
 
 			}
 
-			//se non è nullo mostro anche il campo "md5"
+			//se non e' nullo mostro anche il campo "md5"
 			if (ltrim($description['md5'])!=""){
 				echo "<tr><td align=\"left\"><b>md5</b></td>";
 				echo "<td>".$description['md5']."</td></tr>";
 			}
 
-			//se non è nullo mostro anche il campo "sha1"
+			//se non e' nullo mostro anche il campo "sha1"
 			if (ltrim($description['sha1'])!=""){
 				echo "<tr><td align=\"left\"><b>sha1</b></td>";
 				echo "<td>".$description['sha1']."</td></tr>";
@@ -379,7 +379,7 @@ if (file_exists("include/redefine/".__FUNCTION__.".php")){
 				//ricarico l'array con i dati in modo che vengano mostrati quelli aggiornati
 				$description = load_description($filename);
 				// se ho aggiunto un voto devo ricaricare la pagina per mostrarlo
-				// -> (non è più necessario essendo stato inserito il codice prima che vengano
+				// -> (non � pi� necessario essendo stato inserito il codice prima che vengano
 				// mostrati i dati
 // 				echo "<meta http-equiv=\"Refresh\" content=\"1; URL=index.php?mod=$mod\">";
 			}
@@ -387,7 +387,7 @@ if (file_exists("include/redefine/".__FUNCTION__.".php")){
 			echo "<tr>";
 			echo "<td style=\"vertical-align : top;\">";
 			echo "<b>"._FDRATING."&nbsp;</b>";//$voteaverage";
-			echo "<br>(<i>".$description['totalvote']." "._FDVOTES."</i>)";
+			echo "<br />(<i>".$description['totalvote']." "._FDVOTES."</i>)";
 			echo "</td>";
 
 			echo "<td style=\"vertical-align : top;\">";
@@ -405,9 +405,9 @@ if (file_exists("include/redefine/".__FUNCTION__.".php")){
 
 			<?php
 // 				echo "<tr><td></td><td></td></tr>";
-				if ($showdownloadlink=="1")echo "<tr><th colspan=\"2\"><div align='center'><a href=\"index.php?mod=none_Fdplus&amp;fdaction=download&amp;url=".rawurlencodepath($filename)."\" title=\""._FDDOWNLOADFILE.basename($filename)."\">"._FDDOWNLOAD."</a></div></th></tr>";
+				if ($showdownloadlink=="1")echo "<tr><th colspan=\"2\"><a href=\"index.php?mod=none_Fdplus&amp;fdaction=download&amp;url=".rawurlencodepath($filename)."\" title=\""._FDDOWNLOADFILE.basename($filename)."\">"._FDDOWNLOAD."</a></th></tr>";
 
-			//controlla se l'utente è admin
+			//controlla se l'utente e' admin
 			if(fd_is_admin()){
 				file_admin_panel($filename,$description);
 			}
@@ -468,7 +468,7 @@ if ($myforum!="" and !is_alphanumeric($myforum)) return;
 
 
 	if (fd_is_admin()){
-	echo "<div align=\"center\"><br><form action=\"index.php?mod=none_Fdplus\" method=\"POST\">
+	echo "<div align=\"center\"><br /><form action=\"index.php?mod=none_Fdplus\" method=\"POST\">
 		<input type=\"hidden\" name=\"fdaction\" value=\"publishuserfileinterface\" readonly=\"readonly\">
 		<input type=\"SUBMIT\" value=\""._FDPUBLISHFILES." (".get_n_waiting_files().")\"></form></div>";
 
@@ -566,7 +566,7 @@ if ($myforum!="" and !is_alphanumeric($myforum)) return;
 				$file = preg_replace("/\.description$/i","",$file);
 				if (!fd_user_can_view_file($file)) continue;
 				$desc = load_description($file);
-				echo "<br>&nbsp;&nbsp;&nbsp;&#187;&nbsp;<a href=\"index.php?mod=".rawurlencodepath(preg_replace("/^sections\//i","",$dir))."#".rawurlencodepath(create_id($file))."\" title=\""._FDDOWNLOADFILE.basename($file)."\">".basename($file)."</a>";
+				echo "<br />&nbsp;&nbsp;&nbsp;&#187;&nbsp;<a href=\"index.php?mod=".rawurlencodepath(preg_replace("/^sections\//i","",$dir))."#".rawurlencodepath(create_id($file))."\" title=\""._FDDOWNLOADFILE.basename($file)."\">".basename($file)."</a>";
 				if ((time()-$desc['time'])<$newfiletime*3600) {
 					echo "&nbsp;<img src=\"images/mime/new.gif\" alt=\"new file!\">";
 				}
@@ -589,18 +589,18 @@ if ($myforum!="" and !is_alphanumeric($myforum)) return;
 	if(fd_is_admin()){
 		if (is_writable("sections/$mod")){
 			//pulsante per creare una nuova sezione
-			echo "<div align=\"center\"><br><br><form action=\"index.php?mod=none_Fdplus&amp;\" method=\"POST\">
+			echo "<div align=\"center\"><br /><br /><form action=\"index.php?mod=none_Fdplus&amp;\" method=\"POST\">
 			<input type=\"hidden\" name=\"fdmod\" value=\"$mod\" readonly=\"readonly\">
 			<input type=\"hidden\" name=\"fdaction\" value=\"createsectinterface\" readonly=\"readonly\">
 			<input type=\"SUBMIT\" value=\""._FDCREATESECTDOWNLOAD."\"></form></div>";
 		}
-		else echo "<br><span style=\"color : #ff0000;\">"._FDREADONLYDIR."</span>";
+		else echo "<br /><span style=\"color : #ff0000;\">"._FDREDONLYDIR."</span>";
 	}
 
 // 	module_copyright("FDplus",get_fd_version(),"<b>Aldo Boccacci</b> aka Zorba","zorba_(AT)tin.it", "http://www.aldoboccacci.it", "Gpl version 2.0");
 
 /**
- * Al momento inutilizzata. Servirà per creare un header nella sezione di riepilogo (ce n'è la necessità?)
+ * Al momento inutilizzata. Servira' per creare un header nella sezione di riepilogo (ce n'e' la necessita'?)
  */
 function fd_header(){
 return;
@@ -640,7 +640,7 @@ echo "</td>";
 echo "</tr>";
 
 echo "</table>";
-echo "<br>";
+echo "<br />";
 
 }
 }
@@ -699,7 +699,7 @@ if (count($files)>0){
 			if (!in_array(strtolower($ext),$extensions_array)){
 				continue;
 			}
-			//se è un file php ritorno
+			//se e' un file php ritorno
 			if (preg_match("/php/i",$ext)) {
 				continue;
 			}
@@ -781,13 +781,13 @@ if (count($dirs)>0){
 
 		if ($thereisnewfile and file_exists("images/mime/new.gif")) echo "&nbsp;<img src=\"images/mime/new.gif\" alt=\"new file\">";
 
-		echo "<br>";
+		echo "<br />";
 	}
 
 }
 
 if (is_dir("sections/$mod/none_archivedir")){
-	echo "<img src=\"themes/$theme/images/subsection.png\" alt=\"Subsection\">&nbsp;<i><a href=\"index.php?mod=$mod/none_archivedir\" title=\""._GOTOSECTION.": $mod/none_archivedir\">"._FDARCHIVEDIR."</a></i><br>";
+	echo "<img src=\"themes/$theme/images/subsection.png\" alt=\"Subsection\">&nbsp;<i><a href=\"index.php?mod=$mod/none_archivedir\" title=\""._GOTOSECTION.": $mod/none_archivedir\">"._FDARCHIVEDIR."</a></i><br />";
 }
 
 //fine sezioni
@@ -845,10 +845,10 @@ function fd_show_screenshot($file){
 	// controlla se il web server ha le librerie GD
 	if(!function_exists("ImageJpeg")) {
 		$gd_flag = FALSE;
-		//return; // se le librerie non sono installate, al posto della miniatura sarà visualizzata l'immagine originale rimpicciolita
+		//return; // se le librerie non sono installate, al posto della miniatura sara' visualizzata l'immagine originale rimpicciolita
 	} else $gd_flag = TRUE;
 
-	//DEVO DISABILITARE GD PERCHÉ DÀ PROBLEMI CON ALCUNE IMMAGINI
+	//DEVO DISABILITARE GD PERCHE' DA' PROBLEMI CON ALCUNE IMMAGINI
 	$gd_flag=FALSE;
 
 	echo "<a rel=\"lightbox\" href=\"$file.$extscreenshot\" title=\"".basename($file)."\">";

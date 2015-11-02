@@ -1,5 +1,5 @@
 # Flatnuke version
-VER = "3.1.5"
+VER = "3.1.6"
 DEV ?=
 # Current user name
 USER = $(shell whoami)

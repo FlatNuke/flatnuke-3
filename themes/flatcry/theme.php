@@ -1,4 +1,4 @@
-<?php
+<?php 
 $bodycolor = "#ffffff";
 $bgcolor1  = "#ffffff";
 $bgcolor3  = "#ffffff";
@@ -11,6 +11,7 @@ $forumborder = "#dddddd";
 $forumback   = "#ffffff";
 
 define("_THEME_VER", 1);
+define("_THEME_DOCTYPE", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n");
 
 // open a normal table
 function OpenTable() {
@@ -54,7 +55,6 @@ function CloseBlockMenu() {
   echo "</div>\n</div>\n";
 }
 
-
 // function to create horizontal menu
 function create_menu_horiz() {
 	$mod = getparam("mod", PAR_GET, SAN_FLAT);
@@ -67,15 +67,16 @@ function create_menu_horiz() {
 		return;
 	// print menu
 	$menu_item = _HOMEMENUTITLE;	// homesite
-	$class = ($mod == "") ? "active":"";
-	echo "\n<li class=\"".$class."\"><a href=\"index.php\" title=\""._FINDH."\">".$menu_item."</a></li>";
+	echo "<div id='portalTabs'><ul>";
+	$class = ($mod == "") ? "selected":"plain";
+	echo "\n<li class='$class'><a href=\"index.php\" title=\""._FINDH."\">$menu_item</a></li>";
 	for ($i=0; $i < count($menu_links); $i++) {
 		$father_sect = explode("/", $menu_names[$i]);
-		$class = ($father_mod[0] == $father_sect[0]) ? "active":"";
+		$class = ($father_mod[0] == $father_sect[0]) ? "selected":"plain";
 		echo "\n<li class=\"$class\">$menu_links[$i]</li>";
 	}
+	echo "</ul></div>";
 }
-
 
 // function to create block menu
 function create_block_menu() {
@@ -88,16 +89,18 @@ function create_block_menu() {
 	if($menu_links == null)
 		return;
 	// print menu
+	OpenBlockMenu();
 	$menu_item = _HOMEMENUTITLE;	// homesite
-	$class = ($mod == "") ? "active":"";
-	echo "\n<a href=\"index.php\" class=\"list-group-item ".$class."\" title=\""._FINDH."\">".$menu_item."<span class=\"glyphicon glyphicon-chevron-right\"></span></a>";
+	$class = ($mod == "") ? "mysel":"plain";
+	echo "<ul class='noul'>";
+	echo "\n<li class='$class'><a href=\"index.php\" title=\""._FINDH."\">$menu_item</a></li>";
 	for ($i=0; $i < count($menu_links); $i++) {
 		$father_sect = explode("/", $menu_names[$i]);
-		$class = ($father_mod[0] == $father_sect[0]) ? "active":"";
-		// add icons to the right
-		$tmp = str_replace("</a>","<span class=\"glyphicon glyphicon-chevron-right\"></span></a>",$menu_links[$i]);
-		echo str_replace("title=","class=\"list-group-item $class\" title=",$tmp);
+		$class = ($father_mod[0] == $father_sect[0]) ? "mysel":"plain";
+		echo "\n<li class='$class'>$menu_links[$i]</li>";
 	}
+	echo "</ul>";
+	CloseBlockMenu();
 }
 
 // function to create footer site
@@ -107,9 +110,9 @@ function CreateFooterSite() {
 	echo $footer_elements['img_w3c']." ";
 	echo $footer_elements['img_css']." ";
 	echo $footer_elements['img_rss']." ";
-	echo $footer_elements['img_mail'];
-	echo "<br>".$footer_elements['legal'];
-	echo "<br>".$footer_elements['time'];  // use it to test speed improvements
+	echo $footer_elements['img_mail']."<br />";
+	echo $footer_elements['legal']."<br />";
+	echo $footer_elements['time'];
 }
 
 ?>

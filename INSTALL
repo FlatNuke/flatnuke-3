@@ -7,11 +7,11 @@ Decomprimi l'archivio:
 
 	# tar xvfz FlatNuke-x.y.tar.gz
 
-Flatnuke Ã¨ distribuito in un archivio compresso, avente estensione tar.gz.
-Per aprirlo Ã¨ necessario un programma capace di leggere questi file, come ad esempio:
+Flatnuke è distribuito in un archivio compresso, avente estensione tar.gz.
+Per aprirlo è necessario un programma capace di leggere questi file, come ad esempio:
   1. 7-zip: per Windows (http://www.7-zip.org)
   2. ark o FileRoller: per Linux
-Si raccomanda di NON usare Winzip in quanto non Ã¨ in grado di estrarre le
+Si raccomanda di NON usare Winzip in quanto non è in grado di estrarre le
 cartelle vuote presenti all'interno di un file compresso.
 
 STEP 2
@@ -46,7 +46,7 @@ STEP 4
 Accedi al tuo sito.
 
 PRIMO ACCESSO
-Al primo accesso, una semplice procedura automatizzata ti guiderÃ  nel setup iniziale
+Al primo accesso, una semplice procedura automatizzata ti guiderà nel setup iniziale
 e nella creazione del primo account utente con privilegi di amministratore.
 
 Se hai apprezzato Flatnuke, segnala la tua pagina sul sito ufficiale http://flatnuke.org!
@@ -109,34 +109,34 @@ If you liked Flatnuke, submit your new website to http://flatnuke.org!
 INSTALLATION (FRANCAIS)
 -----------------------
 
-Ã‰TAPE 1
-DÃ©compresser l'archive :
+ÉTAPE 1
+Décompresser l'archive :
 	
 	# tar xvfz flatNuke- X.y.tar.gz
 
-Flatnuke est distribuÃ© dans une archive compressÃ©e en tar.gz.
-Pour l'ouvrir, il est nÃ©cessaire d'utiliser un programme capable de dÃ©compresser
+Flatnuke est distribué dans une archive compressée en tar.gz.
+Pour l'ouvrir, il est nécessaire d'utiliser un programme capable de décompresser
 ceux-ci, comme par exemple :
 	1. 7-zip : pour Windows (http://www.7-zip.org)
 	2. ark ou FileRoller : pour Linux
-L'utilisation de Winzip est dÃ©conseillÃ©e, car il rencontre des soucis dans
+L'utilisation de Winzip est déconseillée, car il rencontre des soucis dans
 l'extraction de dossiers vides.
 
-Ã‰TAPE 2
-Uploder tout le contenu Ã  la racine du site web.
+ÉTAPE 2
+Uploder tout le contenu à la racine du site web.
 
-Ã‰TAPE 3
+ÉTAPE 3
 SI LE SERVEUR WEB LE DEMANDE, il faudra donner les permissions suivantes
 (cela dependra de la configuration apache de votre serveur)
 
-	NÃ‰CESSAIRE
+	NÉCESSAIRE
 	-------------------------
 	chmod 777 var/
 	chmod 777 var/firstinstall
 	chmod 777 sections/
 	chmod 777 sections/none_News/
 	
-	CONSEILLÃ‰
+	CONSEILLÉ
 	-------------------------
 	chmod 777 blocks/dx/
 	chmod 777 blocks/dx/*
@@ -145,19 +145,19 @@ SI LE SERVEUR WEB LE DEMANDE, il faudra donner les permissions suivantes
 	chmod 777 blocks/center/bottom/
 	chmod 777 blocks/center/top/
 	
-	CONSEILLÃ‰
+	CONSEILLÉ
 	---------------------------------------------
 	chmod 777 config.php
 	chmod 777 download/
 	chmod 777 download/fdconfig.php
 
-Ã‰TAPE 4
-Connectez-vous Ã  votre site.
+ÉTAPE 4
+Connectez-vous à votre site.
 
-PREMIER ACCÃˆS
-Au premier accÃ¨s, une procÃ©dure automatisÃ©e vous guidera Ã  la
-configuration initiale et Ã  la crÃ©ation de l'utilisateur avec privilÃ¨ges
+PREMIER ACCÈS
+Au premier accès, une procédure automatisée vous guidera à la
+configuration initiale et à la création de l'utilisateur avec privilèges
 d'administrateur.
 
-Si vous apprÃ©ciez FlatNuke, envoiez votre site Ã  http://flatnuke.org!
+Si vous appréciez FlatNuke, envoiez votre site à http://flatnuke.org!
 

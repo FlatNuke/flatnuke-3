@@ -85,7 +85,7 @@ elseif ($vota!="")
 
 	for($n=0; $n<count($votante); $n++)
 		{ if($ip_indirizzo == get_xml_element("ip",$votante[$n]) and time() < (get_xml_element("time",$votante[$n])+3600*$sondaggio_ip_scadenza))
-			{ echo "<script>
+			{ echo "<script language=\"javascript\">
 					alert(\""._FP_GIAVOTATO." $sondaggio_ip_scadenza "._FP_ORE.".\");
 					window.location='index.php?mod=$mod1&risultati=1';
 				</script>";
@@ -94,19 +94,19 @@ elseif ($vota!="")
 		}
 	$risposta = getparam("risposta",PAR_POST,SAN_FLAT);
 	if($ip_valido != 0 and $risposta != "") // ip e` valido, ed e` stata scelta almeno un'opzione di voto
-		{ // accede in modalit√† esclusiva
+		{ // accede in modalit‡ esclusiva
 		$sem = lock($sondaggio_ip_file);
-		// √® il primo IP che viene inserito
+		// Ë il primo IP che viene inserito
 		if(!stristr($ip_file_dati,"<votanti>"))
 			{ $ip_file_dati = "<votanti>\n\t<votante>\n\t\t<ip>$ip_indirizzo</ip>\n\t\t<time>".time()."</time>\n\t</votante>\n</votanti>";
 			}
-		// c'√® almeno un IP registrato
+		// c'Ë almeno un IP registrato
 		else	{ $ip_file_dati = str_replace("</votanti>", "\t<votante>\n\t\t<ip>$ip_indirizzo</ip>\n\t\t<time>".time()."</time>\n\t</votante>\n</votanti>",$ip_file_dati);
 			}
 		$file_ip_w = fopen($sondaggio_ip_file, "w");
 		fwrite($file_ip_w,"$ip_file_dati");
 		fclose($file_ip_w);
-		//fine modalit√† esclusiva
+		//fine modalit‡ esclusiva
 		unlock($sem);
 	/*----------------- fine controllo ip -------------------*/
 		$file_dati = get_file($sondaggio_file_dati);
@@ -115,15 +115,15 @@ elseif ($vota!="")
 		$new_voto = get_xml_element("voto",$opzione[$risposta]) + 1; // calcolo voto
 		$file_dati = str_replace("<testo>".get_xml_element("testo",$opzione[$risposta])."</testo>\n\t\t\t<voto>".get_xml_element("voto",$opzione[$risposta])."</voto>", "<testo>".get_xml_element("testo",$opzione[$risposta])."</testo>\n\t\t\t<voto>$new_voto</voto>",$file_dati);
 		$file_dati_w = fopen($sondaggio_file_dati, "w+");		// aggiornamento file sondaggio
-		// modalit√† esclusiva
+		// modalit‡ esclusiva
 		$sem = lock($sondaggio_file_dati);
 		fwrite($file_dati_w,"$file_dati");
 		fclose($file_dati_w);
-		//fine modalit√† esclusiva
+		//fine modalit‡ esclusiva
 		unlock($sem);
 		fnlog($zone, "$ip_indirizzo||$myforum||Vote added.");
 		}
-	else echo "<div align=\"center\"><strong><font color=\"red\">"._FP_VOTONONVALIDO."</font></strong></div><br>";
+	else echo "<div align=\"center\"><strong><font color=\"red\">"._FP_VOTONONVALIDO."</font></strong></div><br />";
 	// stampa la situazione attuale del sondaggio
 	print_poll();
 	// stampa link finestra copyright
@@ -136,7 +136,7 @@ elseif ($vota!="")
 ---------------------------------------------------------------------------------------------*/
 elseif($modifica!="")
 	{ if(/*!(isset($myforum) and (getlevel($myforum,"home")==10) and versecid($myforum))*/ !is_admin())
-		{ ?><SCRIPT>location="index.php"</SCRIPT><?php
+		{ ?><SCRIPT LANGUAGE="JavaScript">location="index.php"</SCRIPT><?php
 		}
 
 	echo "<form action=\"index.php?mod=$mod1\" method=\"post\">";
@@ -149,14 +149,14 @@ elseif($modifica!="")
 	echo "<strong>"._FP_STATOSONDAGGIO."</strong>";	// stato del sondaggio - aperto/chiuso
 	if($attivo=="y")
 		{ echo "<input type=\"radio\" name=\"fp_stato\" value=\"y\" checked>"._FP_APERTO."</input>";
-		echo "<input type=\"radio\" name=\"fp_stato\" value=\"n\">"._FP_CHIUSO."</input><br>";
+		echo "<input type=\"radio\" name=\"fp_stato\" value=\"n\">"._FP_CHIUSO."</input><br />";
 		}
 	else { echo "<input type=\"radio\" name=\"fp_stato\" value=\"y\">"._FP_APERTO."</input>";
-		echo "<input type=\"radio\" name=\"fp_stato\" value=\"n\" checked>"._FP_CHIUSO."</input><br>";
+		echo "<input type=\"radio\" name=\"fp_stato\" value=\"n\" checked>"._FP_CHIUSO."</input><br />";
 		}
-	echo "<br><strong>"._FP_DOMANDASONDAGGIO."</strong> ";	// domanda sondaggio
-	echo "<input type=\"text\" name=\"salva_domanda\" value=\"".get_xml_element("domanda",$file_xml)."\" /><br><br>";
-	echo "<div align=\"justify\">"._FP_ISTRUZIONIMODIFICA."</div><br>";
+	echo "<br /><strong>"._FP_DOMANDASONDAGGIO."</strong> ";	// domanda sondaggio
+	echo "<input type=\"text\" name=\"salva_domanda\" value=\"".get_xml_element("domanda",$file_xml)."\" /><br /><br />";
+	echo "<div align=\"justify\">"._FP_ISTRUZIONIMODIFICA."</div><br />";
 	echo "<table><tbody>";
 	for($n=0; $n<count($opzione); $n++)			// stampa risposte possibili e voti raccolti (max 9)
 		{ echo "<tr>";
@@ -177,7 +177,7 @@ elseif($modifica!="")
 	echo "</tbody></table>";
 	// autorizzazione admin per modificare sondaggio
 	if(/*isset($myforum) and (getlevel($myforum,"home")==10) and versecid($myforum)*/ is_admin())
-		{ echo "<br><div align=\"center\"><input type=\"submit\" value=\""._FP_MODIFICA."\" name=\"mod\" /> ";
+		{ echo "<br /><div align=\"center\"><input type=\"submit\" value=\""._FP_MODIFICA."\" name=\"mod\" /> ";
 		echo "<input type=\"submit\" value=\""._FP_CHIUDIARCHIVIA."\" name=\"arc\" /></div>";
 		}
 	echo "</form>";
@@ -211,7 +211,7 @@ elseif($mod!="")
 	$array_opzioni[7] = getparam("salva_opzioni7",PAR_POST,SAN_FLAT); $array_voti[7] = getparam("salva_voti7",PAR_POST,SAN_FLAT);
 	$array_opzioni[8] = getparam("salva_opzioni8",PAR_POST,SAN_FLAT); $array_voti[8] = getparam("salva_voti8",PAR_POST,SAN_FLAT);
 
-	$file_xml = "<?xml version='1.0' encoding='UTF-8'?>\n<sondaggio>\n";
+	$file_xml = "<?xml version='1.0'?>\n<sondaggio>\n";
 	$file_xml .= "\t<attivo>$attivo</attivo>\n";
 	$file_xml .= "\t<domanda>$array_domanda</domanda>\n";
 	$file_xml .= "\t<opzioni>\n";
@@ -239,14 +239,14 @@ elseif($mod!="")
 	$file_xml .= "</sondaggio>\n";
 
 	$file_dati_w = fopen($sondaggio_file_dati, "w");
-	// accesso modalit√† esclusiva
+	// accesso modalit‡ esclusiva
 	$sem = lock($sondaggio_file_dati);
 	fwrite($file_dati_w, stripslashes($file_xml));
 	fclose($file_dati_w);
-	// fine modalit√† esclusiva
+	// fine modalit‡ esclusiva
 	unlock($sem);
 	fnlog($zone,"$ip_indirizzo||$myforum||Configuration changed.");
-	echo "<script>
+	echo "<script language=\"javascript\">
 			alert(\""._FP_MODIFICAOK."\");
 			window.location='index.php';
 		</script>";
@@ -259,24 +259,24 @@ elseif($mod!="")
 elseif($arc!="")
 	{ copy($sondaggio_file_dati, $percorso_vecchi."/".time().".xml"); // archiviazione sondaggio
 	$file_w = fopen($sondaggio_file_dati, "w");	// crea nuovo sondaggio vuoto
-	//accesso modalit√† esclusiva
+	//accesso modalit‡ esclusiva
 	$sem = lock($sondaggio_file_dati);
-	fwrite($file_w,"<?xml version='1.0' encoding='UTF-8'?>\n<sondaggio>\n\t<attivo>n</attivo>\n\t<domanda>"._FP_NUOVOSONDAGGIO."</domanda>\n\t<opzioni>\n");
+	fwrite($file_w,"<?xml version='1.0'?>\n<sondaggio>\n\t<attivo>n</attivo>\n\t<domanda>"._FP_NUOVOSONDAGGIO."</domanda>\n\t<opzioni>\n");
 	for($riga=1; $riga<4; $riga++)
 		fwrite($file_w, "\t\t<opzione>\n\t\t\t<testo>"._FP_OPZIONE."$riga</testo>\n\t\t\t<voto>$riga</voto>\n\t\t</opzione>\n");
 	fwrite($file_w,"\t</opzioni>\n</sondaggio>\n");
 	fclose($file_w);
-	// fine modalit√† esclusiva
+	// fine modalit‡ esclusiva
 	unlock($sem);
 	$file_ip_w = fopen($sondaggio_ip_file, "w");	// azzeramento IP registrati
-	// accesso modalit√† esclusiva
+	// accesso modalit‡ esclusiva
 	$sem = lock($sondaggio_ip_file);
-	fwrite($file_ip_w,"<?xml version='1.0' encoding='UTF-8'?>\n");
+	fwrite($file_ip_w,"<?xml version='1.0'?>\n");
 	fclose($file_ip_w);
-	// fine modalit√† esclusiva
+	// fine modalit‡ esclusiva
 	unlock($sem);
 	fnlog($zone, "$ip_indirizzo||$myforum||Poll stored, new one created.");
-	echo "<script>
+	echo "<script language=\"javascript\">
 			alert(\""._FP_ARCHIVEOK."\");
 			window.location='index.php';
 		</script>";
@@ -289,13 +289,13 @@ elseif($arc!="")
 elseif($inscomm!="")
 	{ OpenTableTitle(_FP_ADDCOMM);
 
-	if(($myforum!="") or ($guestcomment==1))			// controllo se utente non registrato pu√≤ postare o no
+	if(($myforum!="") or ($guestcomment==1))			// controllo se utente non registrato puÚ postare o no
 		{ echo "<form action=\"index.php?mod=$mod1\" method=\"post\">
 			<input type=\"hidden\" name=\"writecomm\" value=\"writecomm\" />
-			<strong>"._FP_COMMENTI."</strong><br>
-			<textarea cols=\"50\" rows=\"7\" name=\"body\"></textarea><br><br>
+			<strong>"._FP_COMMENTI."</strong><br />
+			<textarea cols=\"50\" rows=\"7\" name=\"body\"></textarea><br /><br />
 			<input type=\"submit\" value=\""._FP_FINVIA."\" />
-		</form><br>";
+		</form><br />";
 		}
 	else echo _FP_DEVIREG." <strong>".$sitename."</strong> "._FP_DEVIREG2; // utenti non registrati non possono postare
 
@@ -312,7 +312,7 @@ elseif($writecomm!="")
 	{ $by = (get_username()=="") ? (_FP_SCON) : (get_username());
 	$what = getparam("body",PAR_POST,SAN_HTML);
 	$what = str_replace("\r","",$what);
-	$what = str_replace("\n","<br>",$what);
+	$what = str_replace("\n","<br />",$what);
 	// controllo sull'accesso concorrente
 	$lockfile = $sondaggio_file_dati;
 	// accesso esclusivo alla risorsa
@@ -323,24 +323,24 @@ elseif($writecomm!="")
 	if(!stristr($string, "<commenti>"))
 		{ $string = str_replace("</sondaggio>", "\t<commenti>\n\t\t<commento>\n\t\t\t<by>$by</by>\n\t\t\t<what>$what</what>\n\t\t</commento>\n\t</commenti>\n</sondaggio>",$string);
 	}
-	// c'√® almeno un commento gi√† inserito
+	// c'Ë almeno un commento gi‡ inserito
 	else { $string = str_replace("</commenti>", "\t<commento>\n\t\t\t<by>$by</by>\n\t\t\t<what>$what</what>\n\t\t</commento>\n\t</commenti>",$string);
 	}
 
 	$fp = fopen($lockfile, "w");
 	fwrite($fp, stripslashes("$string"));
 	fclose($fp);
-	// fine modalit√† esclusiva
+	// fine modalit‡ esclusiva
 	unlock($sem);
 	fnlog($zone, "$ip_indirizzo||$myforum||Comment inserted.");
 
-	echo "<script>
+	echo "<script language=\"javascript\">
 			window.location='index.php?mod=$mod1&risultati=1';
 		</script>";
 	}
 
 /*---------------------------------------------------------------------------------
-  se nessuna opzione √® stata scelta e sondaggio √® aperto visualizza risultati
+  se nessuna opzione Ë stata scelta e sondaggio Ë aperto visualizza risultati
 ---------------------------------------------------------------------------------*/
 else { $file_xml = get_file($sondaggio_file_dati);
 	// controllo che il sondaggio sia attivo
@@ -365,7 +365,7 @@ function print_poll()
 	for($n=0; $n<count($opzione); $n++)				// conteggio voti totali
 		$voti_tot += get_xml_element("voto",$opzione[$n]);
 
-	echo "<div align=\"center\"><strong>".get_xml_element("domanda",$file_xml)." ($voti_tot "._FP_VOTITOTALI.")</strong><br><br>";
+	echo "<div align=\"center\"><strong>".get_xml_element("domanda",$file_xml)." ($voti_tot "._FP_VOTITOTALI.")</strong><br /><br />";
 
 	echo "<table><tbody>";
 	for($n=0; $n<count($opzione); $n++)				// stampa risultati sondaggio
@@ -385,12 +385,12 @@ function print_poll()
 		}
 	echo "</tbody></table>";
 
-	echo "</div><br><br>";
+	echo "</div><br /><br />";
 
 	OpenTable();
 	echo "<b>"._FP_COMMENTI."</b> | <a href=\"index.php?mod=$mod1&amp;inscomm=1\" title=\""._FP_ADDCOMM."\">"._FP_ADDCOMM."</a>";
 	CloseTable();
-	echo "<br>";
+	echo "<br />";
 	$commenti = get_xml_element("commenti",$file_xml);
 	$commento = get_xml_array("commento",$commenti);
 	for($n=0; $n<count($commento); $n++)				// stampa commenti a sondaggio
@@ -406,19 +406,19 @@ function print_poll()
 				$img = $userdata['avatar'];
 				if($img!="")
 					{ if(!stristr($img,"http://"))
-						echo "<img src='forum/".$img."' alt='avatar' class=\"avatar\" />";
+						echo "<img src='forum/".$img."' alt='avatar' border='0' align='left' hspace='10' vspace='5' style='max-width:100px' />";
 					else
-						echo "<img src='".$img."' alt='avatar' class=\"avatar\" />";
+						echo "<img src='".$img."' alt='avatar' border='0' align='left' hspace='10' vspace='5' style='max-width:100px' />";
 					}
-				else echo "<img src='forum/images/blank.png' alt='avatar' class=\"avatar\" />";
+				else echo "<img src='forum/images/blank.png' alt='avatar' border='0' align='left' hspace='10' vspace='5' style='max-width:100px' />";
 				}
-			else echo "<img src='forum/images/blank.png' alt='avatar' class=\"avatar\" />";
+			else echo "<img src='forum/images/blank.png' alt='avatar' border='0' align='left' hspace='10' vspace='5' style='max-width:100px' />";
 			// fine avatar
 			print "<b>"._FP_DA."</b> $user";
 			}
-		echo "<br><br>".get_xml_element("what",$commento[$n]);
+		echo "<br /><br />".get_xml_element("what",$commento[$n]);
 		print "</div>";
-		echo "<br>";
+		echo "<br />";
 		}
   }
 

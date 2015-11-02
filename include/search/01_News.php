@@ -61,7 +61,7 @@ if ($tags_string!=""){
 		show_result($news_sections[$n],$arrayok);
 	}
 	if ($no_result==TRUE)
-		echo _NORESULT."<br><a href=\"javascript:history.back();\" title=\""._INDIETRO."\">&lt;&lt; "._INDIETRO."</a>";
+		echo _NORESULT."<br /><a href=\"javascript:history.back();\" title=\""._INDIETRO."\">&lt;&lt; "._INDIETRO."</a>";
 }
 else if ($category!=""){
 	$news_sections = load_news_sections_list();
@@ -80,7 +80,7 @@ else if ($category!=""){
 		show_result($news_sections[$n],$arrayok);
 	}
 	if ($no_result==TRUE)
-		echo _NORESULT."<br><a href=\"javascript:history.back();\" title=\""._INDIETRO."\">&lt;&lt; "._INDIETRO."</a>";
+		echo _NORESULT."<br /><a href=\"javascript:history.back();\" title=\""._INDIETRO."\">&lt;&lt; "._INDIETRO."</a>";
 }
 else if ($find!=""){
 	if ($where=="allsite")
@@ -101,7 +101,7 @@ else if ($find!=""){
 		show_result($news_sections[$n],$arrayok);
 	}
 	if ($no_result==TRUE)
-		echo _NORESULT."<br><a href=\"javascript:history.back();\" title=\""._INDIETRO."\">&lt;&lt; "._INDIETRO."</a>";
+		echo _NORESULT."<br /><a href=\"javascript:history.back();\" title=\""._INDIETRO."\">&lt;&lt; "._INDIETRO."</a>";
 
 }
 
@@ -109,8 +109,8 @@ else if ($find!=""){
  * Cerca la stringa $string nei file $files
  * @param string $string la stringa da cercare
  * @param array $files l'array di file in cui cercare la stringa
- * @param string $method il metodo di ricerca. PuÃ² essere "OR" oppure "AND"
- * @return un array con i percorsi dei file in cui Ã¨ stata trovata la stringa
+ * @param string $method il metodo di ricerca. Può essere "OR" oppure "AND"
+ * @return un array con i percorsi dei file in cui è stata trovata la stringa
  */
 function find_news($string,$files,$method){
 	$string=getparam($string,PAR_NULL,SAN_FLAT);
@@ -245,7 +245,7 @@ function show_result($section, $news_array){
 		else echo "<h2>$sectionshow</h2>";
 		for ($i=0;$i<count($news_array);$i++){
 			$data = load_news_header($section,$news_array[$i]);
-			echo _ICONREAD."&nbsp;<a href=\"index.php?$modstring"."action=viewnews&amp;news=".$news_array[$i]."\" title=\"visualizza news\">".$data['title']."</a> (".date("d/m/Y - H:i", get_news_time($news_array[$i])).", "._LETTO.$data['reads']." "._VOLTE.")<br>";
+			echo "<img src=\"themes/$theme/images/read.png\" alt=\"News\" />&nbsp;<a href=\"index.php?$modstring"."action=viewnews&amp;news=".$news_array[$i]."\" title=\"visualizza news\">".$data['title']."</a> (".date("d/m/Y - H:i", get_news_time($news_array[$i])).", "._LETTO.$data['reads']." "._VOLTE.")<br />";
 		}
 	}
 }

@@ -93,7 +93,7 @@ for ($j=1 ;$j<count($years); $j++){
 
 }
   // Output
-  echo "Visite totali: $totalStat<br><br>";
+  echo "Visite totali: $totalStat<br /><br />";
     switch($op){
       // Visualizza statistiche del mese selezionato
       case "m":
@@ -114,18 +114,18 @@ for ($j=1 ;$j<count($years); $j++){
           <tbody>
           <tr>
             <td width=\"20%\" valign=\"top\">
-              $yearSel:<br>";
+              $yearSel:<br />";
               for ($i=0;$i < count($months); $i++){
                 // Se e' il mese selezionato
                 // Stampa il nome del mese
                 // Altrimenti, stampa il nome del mese e lo linka alle relative statistiche
                 if ($i+1==$monthSel){
-                  echo "<br><i>$months[$i]</i>";}
+                  echo "<br /><i>$months[$i]</i>";}
                 else{
                   if ($monthsStat[$i]==0){
-                    echo "<br>$months[$i]";}
+                    echo "<br />$months[$i]";}
                   else {
-                    echo "<br><a href=\"index.php?mod=none_Statistiche&amp;op=m&amp;year=$yearSel&amp;month=".($i+1)."\">$months[$i]</a>";}
+                    echo "<br /><a href=\"index.php?mod=none_Statistiche&amp;op=m&amp;year=$yearSel&amp;month=".($i+1)."\">$months[$i]</a>";}
                 }
               }
 
@@ -142,7 +142,7 @@ for ($j=1 ;$j<count($years); $j++){
                <td>";
                if ($totalSel!=0 && $daysStat[$i]!=0) {
                  $percentage=($daysStat[$i]/$totalSel)*100;
-                 echo "<hr style=\"width:".$percentage."%\">";}
+                 echo "<hr align=\"left\" width=\"$percentage%\" size=\"5\" noshade />";}
                echo "</td>
                <td width=\"25%\">
                $daysStat[$i]
@@ -170,7 +170,7 @@ for ($j=1 ;$j<count($years); $j++){
         echo "Impossibile visualizzare le statistiche del mese selezionato";
         die();
         }
-        echo "<br><a href=\"javascript:history.back()\">&lt;&lt; Indietro</a>";
+        echo "<br /><a href=\"javascript:history.back()\">&lt;&lt; Indietro</a>";
         closeTable();
         break;
 
@@ -191,10 +191,10 @@ for ($j=1 ;$j<count($years); $j++){
           }
           if (count($data_array["counter"])>1)
 		array_multisort($data_array["counter"], SORT_NUMERIC, SORT_DESC, $data_array["referer"]);
-          echo "Referer:<br><br>";
+          echo "Referer:<br /><br />";
           openTable();
           echo "<font class=\"content\">FILTRA</font>
-          <br>- Visualizza referer appartenenti ad uno specificato dominio:
+          <br />- Visualizza referer appartenenti ad uno specificato dominio:
           <table width=\"95%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">
           <tbody>
           <tr>
@@ -209,7 +209,7 @@ for ($j=1 ;$j<count($years); $j++){
           </table>
           ";
           closeTable();
-          echo "<br><br>Totale: $total<br><br><table width=\"95%\" border=\"0\" cellspacing=\"0\" cellpadding=\"5\">
+          echo "<br /><br />Totale: $total<br /><br /><table width=\"95%\" border=\"0\" cellspacing=\"0\" cellpadding=\"5\">
           <tbody>
           ";
           for ($i=0; $i<count($data_array["referer"]);$i++){
@@ -219,7 +219,7 @@ for ($j=1 ;$j<count($years); $j++){
             // per evitare una deformazione orizzontale del sito
             while (strlen($string)>80){
               $referer .= substr($string, 0, 80);
-              $referer .="<br>";
+              $referer .="<br />";
               $string = substr($string, 80);
             }
             $referer .=$string;
@@ -233,7 +233,7 @@ for ($j=1 ;$j<count($years); $j++){
         else {
           echo "Errore! File referer non esistente";
         }
-        echo "<br><a href=\"javascript:history.back()\">&lt;&lt; Indietro</a>";
+        echo "<br /><a href=\"javascript:history.back()\">&lt;&lt; Indietro</a>";
         closeTable();
         break;
 
@@ -266,13 +266,13 @@ for ($j=1 ;$j<count($years); $j++){
           }
         }
         if ($total ==0){
-          echo "<br>La ricerca non ha prodotto risultati";
+          echo "<br />La ricerca non ha prodotto risultati";
         }
         else {
 	  if (count($data_array["counter"])>1)
             array_multisort($data_array["counter"], SORT_NUMERIC, SORT_DESC, $data_array["referer"]);
 
-          echo "<br><br>Totale: $total<br><br><table width=\"95%\" border=\"0\" cellspacing=\"0\" cellpadding=\"5\">
+          echo "<br /><br />Totale: $total<br /><br /><table width=\"95%\" border=\"0\" cellspacing=\"0\" cellpadding=\"5\">
           <tbody>
           ";
           for ($i=0; $i<count($data_array["referer"]);$i++){
@@ -282,7 +282,7 @@ for ($j=1 ;$j<count($years); $j++){
             // per evitare una deformazione orizzontale del sito
             while (strlen($string)>80){
               $referer .= substr($string, 0, 80);
-              $referer .="<br>";
+              $referer .="<br />";
               $string = substr($string, 80);
             }
             $referer .=$string;
@@ -297,7 +297,7 @@ for ($j=1 ;$j<count($years); $j++){
         }
 
         closeTable();
-        echo "<br><a href=\"javascript:history.back()\">&lt;&lt; Indietro</a>";
+        echo "<br /><a href=\"javascript:history.back()\">&lt;&lt; Indietro</a>";
         break;
 
 
@@ -309,15 +309,15 @@ for ($j=1 ;$j<count($years); $j++){
         <tbody>
         <tr>
           <td width=\"20%\" valign=\"top\">
-            Anno:<br>";
+            Anno:<br />";
             for ($i=1;$i < count($years); $i++){
               // Se e' l'anno selezionato
               // Stampa il nome dell'anno
               // Altrimenti, stampa il nome dell'anno e lo linka alle relative statistiche
               if ($years[$i]==$yearSel){
-                echo "<br>$years[$i]";}
+                echo "<br />$years[$i]";}
               else{
-                echo "<br><a href=\"index.php?mod=none_Statistiche&amp;op=y&amp;year=$years[$i]\">$years[$i]</a>";
+                echo "<br /><a href=\"index.php?mod=none_Statistiche&amp;op=y&amp;year=$years[$i]\">$years[$i]</a>";
               }
             }
 
@@ -339,7 +339,7 @@ for ($j=1 ;$j<count($years); $j++){
                 <td>";
                if ($totalSel!=0 && $monthsStat[$i]!=0) {
                  $percentage=($monthsStat[$i]/$totalSel)*100;
-                 echo "<hr style=\"width:".$percentage."%\">";}
+                 echo "<hr align=\"left\" width=\"$percentage%\" size=\"5\" noshade />";}
                 echo "</td>
                 <td width=\"20%\">
                   $monthsStat[$i]
@@ -364,7 +364,7 @@ for ($j=1 ;$j<count($years); $j++){
         </tbody>
         </table>";
         closeTable();
-        echo "<br>";
+        echo "<br />";
         // Controlla l'esistenza del file dei referer
         if (file_exists(get_fn_dir("var")."/flatstat/referer.dat")){
           $data_array = array();
@@ -380,7 +380,7 @@ for ($j=1 ;$j<count($years); $j++){
 			array_multisort($data_array["counter"], SORT_NUMERIC, SORT_DESC, $data_array["referer"]);
           openTable();
           // Stampa i primi 10 referer
-          echo "Top 10 Referer:<br><br>
+          echo "Top 10 Referer:<br /><br />
           <table width=\"95%\" border=\"0\" cellspacing=\"0\" cellpadding=\"5\">
           <tbody>
           ";
@@ -391,7 +391,7 @@ for ($j=1 ;$j<count($years); $j++){
             // per evitare una deformazione orizzontale del sito
             while (strlen($string)>80){
               $referer .= substr($string, 0, 80);
-              $referer .="<br>";
+              $referer .="<br />";
               $string = substr($string, 80);
             }
             $referer .=$string;
@@ -400,7 +400,7 @@ for ($j=1 ;$j<count($years); $j++){
             <td width=\"20%\">".$data_array["counter"][$i]."</td>
             <td width=\"80%\"><a target=\"new\" href=\"".$data_array["referer"][$i]."\">".$referer."</a></td></tr>";
           }
-        echo "</tbody></table><br><a href=\"index.php?mod=none_Statistiche&amp;op=r\">Visualizza tutti i referer</a>";
+        echo "</tbody></table><br /><a href=\"index.php?mod=none_Statistiche&amp;op=r\">Visualizza tutti i referer</a>";
         closeTable();
         }
         break;

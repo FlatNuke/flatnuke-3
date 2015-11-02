@@ -14,7 +14,7 @@ $mesi = array("Januar","Februar","M&auml;rz","April","Mai","Juni","Juli","August
 $GLOBALS['giorni'] = $giorni;
 $GLOBALS['mesi'] = $mesi;
 
-define("_CHARSET","UTF-8"); // ISO-8859-1 to UTF-8
+define("_CHARSET","ISO-8859-1");
 define("_CERCA","Suchen");
 define("_CERCASTR","Suchen in: ");
 define("_ALLSITE","gesamter Website");
@@ -126,7 +126,6 @@ define("_FUTENTE","Benutzer");
 define("_FMESS","Nachricht");
 define("_FNUOVOMESS","Neue Nachricht");
 define("_FOGG","Betreff");
-define("_FCREATOP","Create new thread"); // need translation
 define("_FTOPOK","Thema angelegt");
 define("_FLEGGI","Lesen");
 define("_FMESSOK","Nachricht abgeschickt");
@@ -137,10 +136,16 @@ define("_SCON","unbekannt");
 define("_FGUIDA","Hilfe");
 define("_FUTENTI","registrierte Benutzer");
 define("_FDELUTENTE","Account l&ouml;schen");
-define("_REG_AGREEMENT_TERMS","Die Administratoren und Moderatoren dieses Forums versuchen m&uuml;gliche anst&uuml;ssige oder illegale Inhalte schnellstm&uuml;glichst zu l&uuml;schen oder bearbeiten; es ist jedoch unter Umst&auml;nden nicht m&uuml;glich, jeden einzelnen Post zu pr&uuml;fen. Deshalb best&auml;tigst Du mit Absenden dieses Formulars dar&uuml;ber Aufgekl&auml;rt zu sein, dass die Eintr&auml;ge in diesem Forum nur die Ansichten und Meinung des jeweiligen Autors wiederspiegeln, jedoch nicht die der Betreiber (Webmaster, Adminstratoren und Moderatoren) dieses Forums (ausser nat&uuml;rlich sie sind von betreffenden Personen), und diese deswegen nicht f&uuml;r den Inhalt solcher Eintr&auml;ge verantwortlich gemacht werden k&uuml;nnen.<br><br>Du stimmst weiterhin zu, keine vulg&auml;ren, obsz&uuml;nen, sexbezogenen, bedrohlichen, gewaltverherrlichenden oder sonstwie als anst&uuml;ssig zu betrachtenden Inhalte in diesem Forum zu ver&uuml;ffentlichen, und auch die geltende Rechtslage zu achten. Missachtung dieses Punkts kann dazu f&uuml;hren, dass Du sofort und dauerhaft gebannt wirst (und eventuell dein Internetanbieter informiert wird). Um diese M&uuml;glichkeit zu haben werden zu allen Eintr&auml;gen die IP-Adressen gespeichert. Du stimmst zu, dass die Betreiber dieses Forums das Recht haben, Inhalte frei zu l&uuml;schen, umbenennen, verschieben oder bearbeiten, wenn dies passend erscheint. Als registrierter Benutzer stimmst Du zu, dass die von Dir oben angegebenen Daten in einer Datenbank gespeichert werden. Diese Informationen werden vertraulich gehandhabt und nicht ohne Dein Wissen an Dritte weitergegeben, jedoch k&uuml;nnten Daten durch Versuche, den Server zu hacken unsicher werden. Du best&auml;tigst hiermit, dass die Betreiber dieser Site f&uuml;r solche Probleme nicht verantwortlich gemacht werden k&uuml;nnen. <br><br>Diese Forensoftware benutzt Cookies um Informationen auf Deinem heimischen Computer zu speichern. Diese Cookies enthalten keine der oben eingegebenen Daten; sie dienen nur dem optimalen Anzeigen der Website. Die Emailadresse wird von keiner automatischen Funktion benutzt.<br><br>Durch klicken des &#8217;Registrieren&#8217;-Knopfes best&auml;tigst Du, dass Du diese Bestimmungen gelesen hast und akzeptierst."); // taken & modified from PhpBB (http://www.phpbb.com/)
+define("_REG_AGREEMENT_TERMS","Die Administratoren und Moderatoren dieses Forums versuchen m&uuml;gliche anst&uuml;ssige oder illegale Inhalte schnellstm&uuml;glichst zu l&uuml;schen oder bearbeiten; es ist jedoch unter Umst&auml;nden nicht m&uuml;glich, jeden einzelnen Post zu pr&uuml;fen. Deshalb best&auml;tigst Du mit Absenden dieses Formulars dar&uuml;ber Aufgekl&auml;rt zu sein, dass die Eintr&auml;ge in diesem Forum nur die Ansichten und Meinung des jeweiligen Autors wiederspiegeln, jedoch nicht die der Betreiber (Webmaster, Adminstratoren und Moderatoren) dieses Forums (ausser nat&uuml;rlich sie sind von betreffenden Personen), und diese deswegen nicht f&uuml;r den Inhalt solcher Eintr&auml;ge verantwortlich gemacht werden k&uuml;nnen.<br /><br />Du stimmst weiterhin zu, keine vulg&auml;ren, obsz&uuml;nen, sexbezogenen, bedrohlichen, gewaltverherrlichenden oder sonstwie als anst&uuml;ssig zu betrachtenden Inhalte in diesem Forum zu ver&uuml;ffentlichen, und auch die geltende Rechtslage zu achten. Missachtung dieses Punkts kann dazu f&uuml;hren, dass Du sofort und dauerhaft gebannt wirst (und eventuell dein Internetanbieter informiert wird). Um diese M&uuml;glichkeit zu haben werden zu allen Eintr&auml;gen die IP-Adressen gespeichert. Du stimmst zu, dass die Betreiber dieses Forums das Recht haben, Inhalte frei zu l&uuml;schen, umbenennen, verschieben oder bearbeiten, wenn dies passend erscheint. Als registrierter Benutzer stimmst Du zu, dass die von Dir oben angegebenen Daten in einer Datenbank gespeichert werden. Diese Informationen werden vertraulich gehandhabt und nicht ohne Dein Wissen an Dritte weitergegeben, jedoch k&uuml;nnten Daten durch Versuche, den Server zu hacken unsicher werden. Du best&auml;tigst hiermit, dass die Betreiber dieser Site f&uuml;r solche Probleme nicht verantwortlich gemacht werden k&uuml;nnen. <br /><br />Diese Forensoftware benutzt Cookies um Informationen auf Deinem heimischen Computer zu speichern. Diese Cookies enthalten keine der oben eingegebenen Daten; sie dienen nur dem optimalen Anzeigen der Website. Die Emailadresse wird von keiner automatischen Funktion benutzt.<br /><br />Durch klicken des &#8217;Registrieren&#8217;-Knopfes best&auml;tigst Du, dass Du diese Bestimmungen gelesen hast und akzeptierst."); // taken & modified from PhpBB (http://www.phpbb.com/)
 define("_LEGAL","Dies ist freie Software ver&uuml;ffentlicht unter der GNU General Public License.");
 define("_NOPUBNEWS","Keine geposteten News");
-define("_MOTDMESS","<h1>Hello, FlatNuke!</h1><br><p>Please complete the configuration of your new website by clicking on \"<a href=\"index.php?mod=none_Admin\">Manage the website</a>\" inside the Login block.<br>To find out everything you can do with your new CMS, have a look to the file <a href=\"README\" target=\"_blank\">README</a> and register to the official forum on <a href=\"http://flatnuke.org\" target=\"_blank\">http://flatnuke.org</a>.</p>");// need translation
+define("_MOTDMESS","Congratulations! You have successfully installed <b>FlatNuke</b>, a CMS (Content Management
+System) that doesn&#8217;t need any database and uses only flat-files (so the name).<br />
+Please complete the configuration of your new website by clicking on
+\"<a href=\"index.php?mod=none_Admin\">Manage the website</a>\" inside the Login block.<br />
+To find out everything you can do with your new CMS, have a look to the file <a
+href=\"README\">README</a> and register to the official forum on
+<a href=\"http://www.flatnuke.org\">flatnuke.org</a>.");// need translation
 define("_LEVEL","Benutzerlevel");
 define("_NOLEVELSECT","Du hast nicht das Recht, diesen Inhalt zu betrachten");
 define("_SICURO","Sicher, dass Du das tun willst?");
@@ -165,7 +170,7 @@ define("_FP_NOACTIVE","Momentan keine aktive Umfrage vorhanden:");
 define("_FP_STATOSONDAGGIO","Umfragestatus");
 define("_FP_APERTO","Aktiv");
 define("_FP_DOMANDASONDAGGIO","Frage");
-define("_FP_ISTRUZIONIMODIFICA","W&auml;hle die Antworten, die die Nutzer ausw&auml;hlen k&ouml;nnen:<br> damit eine Antwort
+define("_FP_ISTRUZIONIMODIFICA","W&auml;hle die Antworten, die die Nutzer ausw&auml;hlen k&ouml;nnen:<br /> damit eine Antwort
 					g&uuml;ltig ist, m&uuml;ssen sowohl <strong>die Option als auch das Stimmfeld</strong> ausgef&uuml;llt sein.
 					Wenn du eine neue Antwort machst, tippe <strong>0</strong> als Zahl der Stimmen ein");
 define("_FP_OPZIONENUM","Option Nummer");
@@ -184,7 +189,7 @@ define("_FIG_TXT_PAGINA","Seite ");
 define("_FIG_TXT_NOGD","<b>Fehler</b>: GD library nicht gefunden (PHP)!");
 define("_FIG_TXT_NOIMAGES","Keine Bilder.");
 define("_FIG_ADMIN_SECT","Gallerieadministration");
-define("_FIG_TXT_NUMCOLSROWS","Bildtabelle Ma√üe: ");
+define("_FIG_TXT_NUMCOLSROWS","Bildtabelle Maﬂe: ");
 define("_FIG_TXT_NUMCOLS","Spalten ");
 define("_FIG_TXT_NUMROWS"," Reihen ");
 define("_FIG_TXT_DIMTHUMBS","Thumbnail  H&ouml;he/Breite (Standartwert: 175px): ");
@@ -208,7 +213,7 @@ define("_FIG_RENAMEOK","Bild umbenannt!");
 define("_FIG_RENAMENO","Bild nicht umbenannt!");
 define("_FIG_DEVIREG","Du musst registriert sein");
 define("_FIG_DEVIREG2","um einen Kommentar hinzuzuf&uuml;gen!");
-define("_FIG_INGRANDIRE","klicken Sie, um zu vergr&ouml;√üern");
+define("_FIG_INGRANDIRE","klicken Sie, um zu vergr&ouml;ﬂern");
 define("_MAINT","ACHTUNG: Site aktiv.");
 define("_MAINT_MSG","Administratoranmeldung im Formular unten:");
 define("_FASTNEWSSTR","Add this link to your bookmarks and use it to publish news in a very fast and simple way:");   // need translation
@@ -290,11 +295,11 @@ define("_GROUPRENAMED","Forum erfolgreich umbenannt!");
 define("_DOESNTEXISTS","existiert nicht!");
 define("_ATTENTION","Achtung");
 define("_DELETEGROUPALERT1","Unterforum WIRKLICH l&ouml;schen");
-define("_DELETEGROUPALERT2","In dem Fall bitte den Haken in de n&auml;chsten Zeile setzen und &#8217;OK&#8217; klicken.<br><b>Achtung:</b> das Unterforum kann nur gel&ouml;scht werden, falls es keine Kategorien enth&auml;lt .");
+define("_DELETEGROUPALERT2","In dem Fall bitte den Haken in de n&auml;chsten Zeile setzen und &#8217;OK&#8217; klicken.<br /><b>Achtung:</b> das Unterforum kann nur gel&ouml;scht werden, falls es keine Kategorien enth&auml;lt .");
 define("_DELETEGROUPALERT3","Unterforum definitiv l&ouml;schen");
 define("_DELETEGROUPNOCONFIRM","Wenn Du das Unterforum wirklich l&ouml;schen willst musst du im vorigen Fenster den Haken zur Best&auml;tigung setzen.");
 define("_DELETEGROUPOK","Unterforum erfolgreich gel&ouml;scht!");
-define("_GROUPNOTEMPTY","enth&auml;lt ein oder mehrere Kategorien. <br>Vorm l&ouml;schen des Unterforums musst Du diese verschieben oder l&ouml;schen.");
+define("_GROUPNOTEMPTY","enth&auml;lt ein oder mehrere Kategorien. <br />Vorm l&ouml;schen des Unterforums musst Du diese verschieben oder l&ouml;schen.");
 define("_ARGUMENTGROUP","Unterforum f&uuml;r Kategorie ausw&auml;hlen");
 define("_ARGUMENTNAME","Name f&uuml;r Kategorie ausw&auml;hlen");
 define("_ARGUMENTLEVEL","Benutzerlevel ausw&auml;hlen");
@@ -320,7 +325,7 @@ define("_ARGUMENTUNLOCKED","Kategorie freigegeben");
 define("_ARGALREADYUNLOCKED","Kategorie ist bereits offen");
 define("_DELETEARGUMENT1","Kategorie wirklich l&uuml;schen");
 define("_DELETEARGUMENT2","in Unterforum ");
-define("_DELETEARGUMENT3","Wenn Du dies wirklich tun willst unten den Haken setzen und &#8217;OK&#8217; klicken.<br><b>Achtung</b>: alle vorhandenen Themen werden gel&uuml;scht!");
+define("_DELETEARGUMENT3","Wenn Du dies wirklich tun willst unten den Haken setzen und &#8217;OK&#8217; klicken.<br /><b>Achtung</b>: alle vorhandenen Themen werden gel&uuml;scht!");
 define("_DELETEARGUMENT","Kategorie l&uuml;schen");
 define("_ARGUMENTDELETED","Kategorie gel&uuml;scht");
 define("_DIRNOTDELETED","L&uuml;schen des Ordners nicht m&uuml;glich");
@@ -418,10 +423,10 @@ define("_FNPRESENTATION","Presentation");//need translation
 
 // 2.7.1
 define("_NEWPWDSTRING","Lost password");//need translation
-define("_NEWPWDFORM","<b>Recover Password</b>:<br><br>
+define("_NEWPWDFORM","<b>Recover Password</b>:<br /><br />
 	To recover your password, please provide the e-mail address you have
-	associated with your member account and click on the Submit button.<br>
-	The e-mail will also contain your NEW password.<br>
+	associated with your member account and click on the Submit button.<br />
+	The e-mail will also contain your NEW password.<br />
 	Pay attention on the fact that you will not be able to use your new password
 	till you will validate the request; so, without validation,
 	you still have to use the old password.");//need translation
@@ -460,7 +465,7 @@ define("_FN_SETUP_RESULT","Result");//need translation
 define("_FN_SETUP_RELOAD","Page refresh");//need translation
 define("_FN_SETUP_ADMINPROFILE","Administrator profile");//need translation
 define("_FN_SETUP_ADMINTXT","Kreiren Sie ein neues Profil um die Website zu bedienen, der erste registrierte Benutzer wird als Administratoralle Erlaubnisse haben:");
-define("_FN_SETUP_END","Gratuliere!<br>FLATNUKE Installation ist beendet!");
+define("_FN_SETUP_END","Gratuliere!<br />FLATNUKE Installation ist beendet!");
 define("_STICKYNEWS","Sticky news");//need translation
 define("_UNSTICKYNEWS","Normale Nachricht");
 define("_SEARCHTAG","Suche die Tag");

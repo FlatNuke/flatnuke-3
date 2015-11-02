@@ -40,17 +40,10 @@ function jQueryFNcall(urltocall, method, target, paramform) {
 		// display final results
 		success:function(data) {
 			$('#'+target).html(data);
-			if(method=='post'){
-				$('html, body').animate({scrollTop: ($('body').offset().top)},500);
-				$('#form-success').fadeIn(700).delay(300).fadeOut(700);
-				}
 		},
 		// display a warning when some error occurs
 		error: function(data) {
 			$('#'+target).html("<strong>Error loading the page...</strong>");
-			
-		},
-		//cache: false
+		}
 	});
 }
-

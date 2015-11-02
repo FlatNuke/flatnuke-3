@@ -6,7 +6,7 @@
  * versione: 0.2
  * data rilascio: 18/9/2005
  *
- * Il layout grafico √® stato curato da Marco Segato
+ * Il layout grafico Ë stato curato da Marco Segato
  * sito web: marcosegato.altervista.org
  *
  * Traduzione inglese: Speleoalex (con suggerimenti di Marco Segato)
@@ -32,7 +32,7 @@
  * Foundation, inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
 
-//lo script non pu√≤ essere richiamato da solo
+//lo script non puÚ essere richiamato da solo
 if (preg_match("/Utenti.php/i",$_SERVER['PHP_SELF'])) {
     Header("Location: ../../index.php");
     die();
@@ -63,10 +63,10 @@ $adminonline = "";
 if (!file_exists($logfile)){
 	echo _UO_LOG_NOT_EXIST;
 	if (create_log_file($logfile)==0)
-		echo "<br><b>"._UO_LOG_FILE_CREATED."</b><br>";
+		echo "<br /><b>"._UO_LOG_FILE_CREATED."</b><br />";
 }
 
-//verifico i dati gi√† inseriti nel file di log
+//verifico i dati gi‡ inseriti nel file di log
 check_data($logfile);
 
 //aggiungo i dati dell'utente collegato
@@ -88,7 +88,7 @@ if (ltrim($event)=="") continue;
 	$data = array();
 	$data = preg_split("/\|/", $event);
 // 	if (!isset($data[1])) continue;
-	//se il tempo limite non √® scaduto
+	//se il tempo limite non Ë scaduto
 	if ($data[1]> $time-120){
 	//echo "tempo ok";
 		//echo "data3= $data[3]";
@@ -101,7 +101,7 @@ if (ltrim($event)=="") continue;
 			if (ltrim($useronline)==""){
 				$useronline = $useronline.add_image("usr-user")."<a href=\"index.php?mod=none_Login&amp;action=viewprofile&amp;user=".$data[2]."\" title=\""._UO_VIEW_PROFILE."\">$data[2]</a>";
 			}
-			else $useronline = $useronline."<br>".add_image("usr-user")."<a href=\"index.php?mod=none_Login&amp;action=viewprofile&amp;user=".$data[2]."\" title=\""._UO_VIEW_PROFILE."\">$data[2]</a>";
+			else $useronline = $useronline."<br />".add_image("usr-user")."<a href=\"index.php?mod=none_Login&amp;action=viewprofile&amp;user=".$data[2]."\" title=\""._UO_VIEW_PROFILE."\">$data[2]</a>";
 			//echo "sono un utente";
 		}
 		//se sono un amministratore
@@ -110,32 +110,32 @@ if (ltrim($event)=="") continue;
 			if (ltrim($adminonline)==""){
 				$adminonline = $adminonline.add_image("usr-admin")."<a href=\"index.php?mod=none_Login&amp;action=viewprofile&amp;user=".$data[2]."\" title=\""._UO_VIEW_PROFILE."\">$data[2]</a>";
 			}
-			else $adminonline = $adminonline."<br>".add_image("usr-admin")."<a href=\"index.php?mod=none_Login&amp;action=viewprofile&amp;user=".$data[2]."\" title=\""._UO_VIEW_PROFILE."\">$data[2]</a>";
+			else $adminonline = $adminonline."<br />".add_image("usr-admin")."<a href=\"index.php?mod=none_Login&amp;action=viewprofile&amp;user=".$data[2]."\" title=\""._UO_VIEW_PROFILE."\">$data[2]</a>";
 		}
 	}
 	//else echo "tempo scaduto";
 }
 
 //mostro il tutto
-echo "<b>"._UO_USERS_ONLINE."</b><br>";
-echo add_image("group-admins")."<b>$countadmin</b>&nbsp;"._UO_ADMINISTRATORS."<br>";
+echo "<b>"._UO_USERS_ONLINE."</b><br />";
+echo add_image("group-admins")."<b>$countadmin</b>&nbsp;"._UO_ADMINISTRATORS."<br />";
 //se esiste un elenco di amministratori lo mostro
-if (!ltrim($adminonline)=="") echo "<i>$adminonline</i><br>";
+if (!ltrim($adminonline)=="") echo "<i>$adminonline</i><br />";
 
-echo add_image("group-users")."<b>$countuser</b> "._UO_USERS."<br>";
+echo add_image("group-users")."<b>$countuser</b> "._UO_USERS."<br />";
 //se esists un elenco di utenti lo mostro
-if (!ltrim($useronline)=="") echo "<i>$useronline</i><br>";
+if (!ltrim($useronline)=="") echo "<i>$useronline</i><br />";
 
 
-echo add_image("group-guests")."<b>$countguest</b> "._UO_GUESTS."<br>";
+echo add_image("group-guests")."<b>$countguest</b> "._UO_GUESTS."<br />";
 
 
 /**
- * Crea il file di log se non √® presente
+ * Crea il file di log se non Ë presente
  * @param string $logfile il percorso del file di log
  * valori restituiti:
- * 0 : il file √® stato creato con successo
- * 1 : il file esisteva gi√†
+ * 0 : il file Ë stato creato con successo
+ * 1 : il file esisteva gi‡
  * 2 : non sono riuscito a scrivere
  * @author Aldo Boccacci
  */
@@ -160,7 +160,7 @@ function create_log_file($logfile){
 
 /**
  * Aggiunge i dati dell'utente on-line nel file di log
- * La struttura del file √®:
+ * La struttura del file Ë:
  * indirizzo ip|time della visita|nome utente|livello
  * @param string $ip l'indirizzo ip del visitatore
  * @param string $time restituisce il timestamp del momento della visita
@@ -184,22 +184,22 @@ $check = get_file($logfile);
 $check = str_replace("<?php die(); ?>\n","",$check);
 // echo htmlentities($check);
 if (stristr($check,"<?php ") or stristr($check,"?>")) die(_NONPUOI);
-//se l'utente √® gi√† stato censito ritorno
+//se l'utente Ë gi‡ stato censito ritorno
 //Controllo prima l'ip e poi il nome utente (se necessario)
 if (preg_match("/".encode_ip($ip)."/", $check)){
-	//se l'indirizzo ip √® gi√† stato inserito ma il nome utente √® diverso
-	//(ovvero se ho pi√π utenti all'interno di una lan)
+	//se l'indirizzo ip Ë gi‡ stato inserito ma il nome utente Ë diverso
+	//(ovvero se ho pi˘ utenti all'interno di una lan)
 	// Security convertions
 	$myforum = _FN_USERNAME;
 
 	if (ltrim($myforum)!="" and _FN_USERLEVEL!=-1){
 		//gestisco gli utenti all'interno della lan
-		//Se il nome utente √® gi√† inserito devo ritornare
+		//Se il nome utente Ë gi‡ inserito devo ritornare
 		if (preg_match("/\|$myforum\|/i", $check)){
 			return;
 		}
 	}
-	//se l'indizzo ip √® stato inserito e non √® settato il nome utente
+	//se l'indizzo ip Ë stato inserito e non Ë settato il nome utente
 	//posso ritornare senza problemi
 	else return;
 
@@ -213,11 +213,11 @@ if (!file_exists($logfile)) echo "<b>"._UO_LOG_NOT_EXIST."</b>";
 	//controllo i dati per evitare che siano inseriti valori inappropriati
 	if (!ctype_alnum(encode_ip($ip))) return;
 	if (!preg_match("/^[0-9]+$/",$time)) return;
-	//strano a dirsi ma il seguente controllo pu√≤ provocare dei crash di apache!
+	//strano a dirsi ma il seguente controllo puÚ provocare dei crash di apache!
 // 	if (!ctype_digit($time)) return;
 	//Non vengono gestiti i nomi utente che contengono caratteri non alfanumerici
 	//In questo caso si compare come semplici guest
-	//√® opportuno aggiornare i profili utente!
+	//Ë opportuno aggiornare i profili utente!
 	if (!is_alphanumeric($myforum)) $myforum="";
 
 	$text = encode_ip($ip)."|$time|".$myforum."|"._FN_USERLEVEL."\n";
@@ -269,13 +269,13 @@ $item = preg_split("/\n/", $text);
 //echo $time;
 foreach ($item as $event){
 	if (ltrim($event)=="") continue;
-	//echo $event."<br>";
+	//echo $event."<br />";
 	//$textdata = $event; // variabile inutilizzata
 	$data=array();
 	$data = preg_split("/\|/", $event);
 	//controllo che il time non sia malformato
 	if (!preg_match("/^[0-9]+$/",trim($data[1]))) continue;
-	//se il tempo limite non √® scaduto
+	//se il tempo limite non Ë scaduto
 	if ($data[1]> time()-120){
 		$newtext = $newtext.$event."\n";
 	}
@@ -308,10 +308,10 @@ $type=getparam($type, PAR_NULL, SAN_FLAT);
 }
 
 /**
- * Restituisce true se l'utente √® di livello 10
+ * Restituisce true se l'utente Ë di livello 10
  * (e dunque possiede i privilegi di amministrazione)
  * @author Aldo Boccacci
- * @return TRUE se l'utente collegato √® di livello 10, FALSE in tutti gli altri casi
+ * @return TRUE se l'utente collegato Ë di livello 10, FALSE in tutti gli altri casi
  */
 function is_admin2(){
 	// Security convertions
@@ -339,9 +339,9 @@ function encode_ip($ip){
 
 /**
  * Imposta la lingua dell'interfaccia.
- * La traduzione inglese delle stringhe √® stata presa dal sito di speleoalex
+ * La traduzione inglese delle stringhe Ë stata presa dal sito di speleoalex
  * (con suggerimenti di Marco Segato)
- * La traduzione tedesca √® stata inviata da bjorn splinter (insites[at]gmail.com)
+ * La traduzione tedesca Ë stata inviata da bjorn splinter (insites[at]gmail.com)
  * @param string $lang il codice a due caratteri che identifica la lingua
  * @since 0.2
  * @author Aldo Boccacci
@@ -350,7 +350,7 @@ function uo_set_lang($lang){
 	$lang=getparam($lang, PAR_NULL, SAN_FLAT);
 	if (!isset($lang)) $lang ="it";
 	if ($lang=="it"){
-		define ("_UO_LOG_NOT_EXIST","<b>Attenzione:</b> il file di log non esiste.<br>");
+		define ("_UO_LOG_NOT_EXIST","<b>Attenzione:</b> il file di log non esiste.<br />");
 		define ("_UO_LOG_FILE_CREATED","file di log creato con successo!");
 		define ("_UO_USERS_ONLINE","Persone&nbsp;on-line:");
 		define ("_UO_USERS","utenti");
@@ -361,20 +361,20 @@ function uo_set_lang($lang){
 		define ("_UO_VIEW_PROFILE","Visualizza il profilo dell'utente");
 	}
 	else if ($lang=="de"){
-		define ("_UO_LOG_NOT_EXIST","<b>Achtung:</b> Logfile existiert nicht.<br>");
+		define ("_UO_LOG_NOT_EXIST","<b>Achtung:</b> Logfile existiert nicht.<br />");
 		define ("_UO_LOG_FILE_CREATED","Logfile erzeugt!");
 		define
 		("_UO_USERS_ONLINE","Personen&nbsp;on-line:&nbsp;&nbsp;");
 		define ("_UO_USERS","Angemeldete");
 		define ("_UO_ADMINISTRATORS","Administratoren");
-		define ("_UO_GUESTS","G√§ste");
+		define ("_UO_GUESTS","G‰ste");
 		define ("_UO_FILENOTEXIST","<b>Warnung!</b>: File existiert nicht.");
 		define ("_UO_LOG_CREATE","Schreibe Logfile.");
 		define ("_UO_VIEW_PROFILE","Userprofil ansehen.");
 	}
 
 	else {
-		define ("_UO_LOG_NOT_EXIST","<b>Attention:</b> log file doesn't exist.<br>");
+		define ("_UO_LOG_NOT_EXIST","<b>Attention:</b> log file doesn't exist.<br />");
 		define ("_UO_LOG_FILE_CREATED","log file created!");
 		//gli spazi servono per evitare di spezzare la linea che mostra il numero di amministratori
 		define ("_UO_USERS_ONLINE","People&nbsp;on-line:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
@@ -390,7 +390,7 @@ function uo_set_lang($lang){
 
 /**
  * Controlla la stringa da scrivere sul file di supporto, al fine di impedire l'inserimento
- * di caratteri non previsti dalla struttura del file. L'approccio √® di tipo "white-list".
+ * di caratteri non previsti dalla struttura del file. L'approccio Ë di tipo "white-list".
  * Questa funzione rimuove dalla stringa passata come parametro i caratteri: "-", "|" e "\n"
  * e restituisce true se la porzione rimanente risponde ai criteri fissati
  * da is_alphanumeric().

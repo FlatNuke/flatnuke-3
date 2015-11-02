@@ -24,7 +24,7 @@
  * Foundation, inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA
  */
 
-//lo script non pu√≤ essere richiamato direttamente
+//lo script non puÚ essere richiamato direttamente
 
 if (preg_match("/fd+.php/i",$_SERVER['PHP_SELF'])) {
     Header("Location: ../index.php");
@@ -32,14 +32,14 @@ if (preg_match("/fd+.php/i",$_SERVER['PHP_SELF'])) {
 }
 
 //CONFIGURAZIONE AVANZATA: NON MODIFICARE!
-//Il file che conterr√† l'elenco dei file pi√π scaricati
+//Il file che conterr‡ l'elenco dei file pi˘ scaricati
 $max_download_file = "fd_top_download.php";
 
 //Il nome della cartella di archivio
 $archivedir = "none_archivedir";
 
 //L'estensione dei file di descrizione
-//questa variabile non √® ancora usata
+//questa variabile non Ë ancora usata
 $desc_extension=".description";
 
 //il file di log
@@ -90,7 +90,7 @@ if (fd_is_admin()) require_once("download/include/fdadmin.php");
 //inclusione moduli esterni
 fd_load_php_code("download/include/phpfunctions/");
 
-//A seconda dei parametri passati si intraprender√† l'azione opportuna
+//A seconda dei parametri passati si intraprender‡ l'azione opportuna
 //PARAMETRI GET
 if (isset($_GET['fdaction'])){
 

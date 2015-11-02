@@ -37,7 +37,7 @@ global $fuso_orario,$mesi,$giorni,$theme,$bgcolor2,$bgcolor3;
 
 view_forum_header();
 if (_FN_IS_ADMIN){
-	echo "<br><br><div align=\"center\"><form action=\"index.php?mod=$mod\" method=\"post\">
+	echo "<br /><br /><div align=\"center\"><form action=\"index.php?mod=$mod\" method=\"post\">
 <input type=\"hidden\" name=\"ffaction\" value=\"ffcontrolpanel\" />
 <input type=\"submit\" value=\""._FFCONTROLPANEL."\">
 </form></div>";
@@ -62,12 +62,12 @@ if (!is_writable(get_forum_root())) echo _THEDIR." <b>".get_forum_root()."</b> "
 
 if (count(list_forum_groups(get_forum_root()))==0) echo "disabled=\"disabled\"";
 ?> />
-<?php if (count(list_forum_groups(get_forum_root()))==0) echo "<br><i>"._CREATEGROUPS."</i>";?>
+<?php if (count(list_forum_groups(get_forum_root()))==0) echo "<br /><i>"._CREATEGROUPS."</i>";?>
 </form>
 </div>
 <?php
 }//fine controllo admin
-if (!_FN_IS_ADMIN) echo "<br><br>";
+if (!_FN_IS_ADMIN) echo "<br /><br />";
 view_ffmotd();
 //stampo i gruppi + gli argomenti
 $groups=array();
@@ -77,13 +77,12 @@ $groups = list_forum_groups(get_forum_root());
 // $groups[]= "NULL";
 	foreach($groups as $group){
 		ff_view_group(get_forum_root(),$group);
-		echo "<br>";
+		echo "<br />";
 	}
 
 echo "<br/>";
 module_copyright("Flatforum",get_ff_version(),"<b>Aldo Boccacci</b> aka Zorba","zorba_(AT)tin.it", "http://www.aldoboccacci.it", "Gpl version 2.0");
 }
-
 /**
  * Visualizza l'argomento del forum indicato
  *
@@ -134,6 +133,8 @@ function forum_view_argument($root,$group,$argument){
 		}
 	}
 
+
+
 	//INTESTAZIONE GRUPPO
 	echo "<table style=\"width:100%;border-collapse: collapse;border:0px;\"><tr><td width=\"33%\">";
 
@@ -144,83 +145,98 @@ function forum_view_argument($root,$group,$argument){
 		ff_page_selector($page,$pagescount,$link);
 	}
 
-	echo "</td><td width=\"34%\">";
+	echo "</td><td width=\"33%\">";
 	//al centro nulla
 	echo "</td><td width=\"33%\">";
 	if (!_FN_IS_GUEST){
-		if (argument_is_locked(get_forum_root(),$group,$argument)){
-			if (is_forum_moderator()){
-				echo "<div><span class=\"forum-new\" >"._ICONLOCK."<a style=\"font-size: 120%;\" href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;ffaction=newtopic\"  title='"._FCREATOP."'/>"._FNUOVOTOP."</a></span></div>";
-			}
-			else echo "<div><span title=\""._ARGUMENTLOCKED."\">"._ICONLOCK."</span>&nbsp;"._ARGUMENTLOCKED."<br><br></div>";
-		}
-		else {
-			echo "<div><br><span class='forum-new'><a style='font-size: 120%;' href='index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;ffaction=newtopic' title='"._FCREATOP."'>"._FNUOVOTOP."</a></span><br><br></div>";
-		}
-	}//fine controllo guest
+	if (argument_is_locked(get_forum_root(),$group,$argument)){
+		if (_FN_IS_ADMIN or is_forum_moderator()){
 
-	echo "</td></tr></table><br><table";
+			echo "<div align=\"right\"><span class=\"forum-new\" ><img src=\"forum/icons/lock.png\" alt=\"locked\" />&nbsp;<a style=\"font-size: 120%;\" href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;ffaction=newtopic\" title=\"crea una nuova discussione\">"._FNUOVOTOP."</a></span></div>";
+
+		}
+		else echo "<div align=\"right\"><span class=\"forum-new\"><img src=\"forum/icons/lock.png\" alt=\"locked\" /><br/><br/></span></div>";
+	}
+	else {
+		?>
+		<div align="right"><br/><span class="forum-new"><a style="font-size: 120%;" href="index.php?mod=<?php echo rawurlencodepath($mod); ?>&amp;group=<?php echo rawurlencodepath($group); ?>&amp;argument=<?php echo rawurlencodepath($argument); ?>&amp;ffaction=newtopic" title="crea una nuova discussione"><?php echo _FNUOVOTOP; ?></a></span><br/><br/>
+		</div><?php
+	}
+	}//fine controllo guest
+	echo "</td></tr></table>";
+	?><br/>
+	<table <?php
 
 	if (file_exists("themes/$theme/forum.css")){
 		echo " class=\"forum-arg-table\"";
 	}
-	else echo " style=\"width:100%;border-collapse: collapse;border:1px solid $bgcolor2;\" ";
+	else echo "style=\"width:100%;border-collapse: collapse;border:1px solid $bgcolor2;\" border=\"1\"";
+	?>
+	cellspacing="0">
 
-	echo " cellspacing='0'><tr><td";
 
+	<tr>
+	<?php
+	echo "<td";
 	if (file_exists("themes/$theme/forum.css")){
 		echo " class=\"forum-arg-icon-header\"";
 	}
 	else echo " style=\"background-color : $bgcolor3;\"";
+	echo "><!--icona--></td>";
 
-	echo "><!--icona--></td><td";
-
+	echo "<td";
 	if (file_exists("themes/$theme/forum.css")){
 		echo " class=\"forum-arg-mess-header\"";
 	}
 	else echo " style=\"background-color : $bgcolor3;\"";
+	echo "><b>"._FTITTOP."</b></td>";
 
-	echo "><b>"._FTITTOP."</b></td><td";
-
+	echo "<td";
 	if (file_exists("themes/$theme/forum.css")){
 		echo " class=\"forum-arg-pages-header\"";
 	}
 	else echo " style=\"background-color : $bgcolor3;\"";
+	echo "><b>"._FNPAG."</b></td>";
 
-	echo "><b>"._FNPAG."</b></td><td";
-
+	echo "<td";
 	if (file_exists("themes/$theme/forum.css")){
 		echo " class=\"forum-arg-msg-count-header\"";
 	}
 	else echo " style=\"background-color : $bgcolor3;\"";
+	echo "><b>"._FNMESS."</b></td>";
 
-	echo "><b>"._FNMESS."</b></td><td";
-
+	echo "<td";
 	if (file_exists("themes/$theme/forum.css")){
 		echo " class=\"forum-arg-visits-header\"";
 	}
 	else echo " style=\"background-color : $bgcolor3;\"";
-	echo "><b>"._VISITS."</b></td><td";
+	echo "><b>"._VISITS."</b></td>";
 
+	echo "<td";
 	if (file_exists("themes/$theme/forum.css")){
 		echo " class=\"forum-arg-firstpost-header\"";
 	}
 	else echo " style=\"background-color : $bgcolor3;\"";
+	echo "><b>"._FINIPOST."</b></td>";
 
-	echo "><b>"._FINIPOST."</b></td><td";
-
+	echo "<td";
 	if (file_exists("themes/$theme/forum.css")){
 		echo " class=\"forum-arg-lastpost-header\"";
 	}
 	else echo " style=\"background-color : $bgcolor3;\"";
+	echo "><b>"._FULTPOST."</b></td>";
 
-	echo "><b>"._FULTPOST."</b></td></tr>";
+	?>
+	</tr>
+
+	<?php
+
 
 	$topic="";
 	$count=(($page-1) * $topicperpage);
 	$oldcount = $count;
 
-	for ($count; $count<($topicperpage+$oldcount); $count++) {
+	for ($count;$count <($topicperpage+$oldcount); $count++){
 
 		if (isset($topics[$count])) $topic = $topics[$count];
 		else continue;
@@ -231,22 +247,18 @@ function forum_view_argument($root,$group,$argument){
 		if (!is_forum_moderator() and !topic_is_visible($topic)) continue;
 
 		echo "<tr>";
-		echo "<td class=\"forum-arg-icon\">";
-
+		echo "<td class=\"forum-arg-icon\" align=\"right\"><img src=\"";
 		if (preg_match("/top_/i",basename($topic)))
-			echo _ICONONTOP;
-		else
-			echo "<img src='forum/icons/normal.png' />";
-
-		if (topic_is_locked($topic))
-			echo "<br><span title='"._TOPICLOCKED."'>"._ICONLOCK."</span>";
-
+			echo "forum/icons/ontop.png";
+		else echo "forum/icons/normal.png";
+		echo "\" alt=\"\" />";
+		if (topic_is_locked($topic)) echo "<br/><img src=\"forum/icons/lock.png\" alt=\"Lock\" />";
 		echo "</td>";
-		echo "<td class='forum-arg-mess' align='left'>";
+		echo "<td class=\"forum-arg-mess\" align=\"left\">";
 		//se e' nascosto
 		if (is_forum_moderator() and !topic_is_visible($topic))
 			echo "<span style=\"color : #ff0000; text-decoration : line-through;\">";
-		echo "<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=".basename($topic)."&amp;page=last\" title='"._VIEWTOPICTITLE.": ".$topicdata['properties']['topictitle']."'>".$topicdata['properties']['topictitle']."</a>";
+		echo "<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=".basename($topic)."&amp;page=last\" title=\""._VIEWTOPICTITLE.": ".$topicdata['properties']['topictitle']."\">".$topicdata['properties']['topictitle']."</a>";
 		//se e' nascosto
 		if (is_forum_moderator() and !topic_is_visible($topic))
 			echo "</span>";
@@ -260,7 +272,7 @@ function forum_view_argument($root,$group,$argument){
 				echo "[<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=".basename($topic)."&amp;page=$countpages\" title=\""._GOTOTHEPAGE." $countpages\">$countpages</a>]";
 				//sistema
 
-				if (($countpages/3) == round($countpages/3)) echo "<br>";
+				if (($countpages/3) == round($countpages/3)) echo "<br />";
 			}
 		}
 		else echo "[<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=".basename($topic)."&amp;page=1\" title=\""._GOTOTHEPAGE." 1\">1</a>]";
@@ -276,7 +288,7 @@ function forum_view_argument($root,$group,$argument){
 		$tmp=date(" m",$postime+(3600*$fuso_orario));
 		echo $mesi[$tmp-1];
 		echo date(" y ",$postime+(3600*$fuso_orario));
-		echo "<br>";
+		echo "<br/>";
 		echo date(" H:i:s ",$postime+(3600*$fuso_orario));
 
 		echo "</td>";
@@ -289,50 +301,59 @@ function forum_view_argument($root,$group,$argument){
 		$tmp=date(" m",$postime+(3600*$fuso_orario));
 		echo $mesi[$tmp-1];
 		echo date(" y ",$postime+(3600*$fuso_orario));
-		echo "<br>";
+		echo "<br/>";
 		echo date(" H:i:s ",$postime+(3600*$fuso_orario));
 
 		echo "</td>";
 		echo "</tr>";
 
-		if (is_forum_moderator()){
+		if (_FN_IS_ADMIN or is_forum_moderator()){
 			echo "<tr><td colspan=\"7\" align=\"center\">";
 			if (_FN_IS_ADMIN){
-				echo "<a href=\"index.php?mod=modcont&amp;file=".rawurlencodepath($topic)."&amp;from=index.php?mod=".rawurlencodepath($mod).rawurlencode("&")."group=".rawurlencodepath($group).rawurlencode("&")."argument=".rawurlencodepath($argument)."\" title='"._EDITTOPIC.": ".$topicdata['properties']['topictitle']."'>"._ICONMODIFY._MODIFICA."</a>";
-
-				echo "&nbsp;<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;topicpath=".rawurlencodepath($topic)."&amp;ffaction=movetopicinterface\" title=\""._MOVETOPIC.": ".$topicdata['properties']['topictitle']."\">"._ICONMOVE._MOVE."</a>";
-
-				echo "&nbsp;<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;topicpath=".rawurlencodepath($topic)."&amp;ffaction=deletetopicinterface\" title=\""._DELETETOPIC.": ".$topicdata['properties']['topictitle']."\">"._ICONDELETE._ELIMINA."</a>";
+				echo "<img src=\"themes/$theme/images/modify.png\" alt=\"Modify\" />&nbsp;";
+				echo "<a href=\"index.php?mod=modcont&amp;file=".rawurlencodepath($topic)."&amp;from=index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."\" title=\""._EDITTOPIC.": ".$topicdata['properties']['topictitle']."\">"._MODIFICA."</a>";
+				echo " | <img src=\"themes/$theme/images/delete.png\" alt=\"Delete\" />&nbsp;";
+				echo "<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;topicpath=".rawurlencodepath($topic)."&amp;ffaction=deletetopicinterface\" title=\""._DELETETOPIC.": ".$topicdata['properties']['topictitle']."\">"._ELIMINA."</a>";
+				echo " | <img src=\"forum/icons/move.png\" alt=\"Modify\" />&nbsp;";
+				echo "<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;topicpath=".rawurlencodepath($topic)."&amp;ffaction=movetopicinterface\" title=\""._MOVETOPIC.": ".$topicdata['properties']['topictitle']."\">"._MOVE."</a>";
 			}
 
 			if (is_forum_moderator()){
+				if (_FN_IS_ADMIN) echo " | ";
 				if (!preg_match("/top_/i",basename($topic))){
-					echo "&nbsp;<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=".basename($topic)."&amp;ffaction=ontop\" title=\""._STICKYTOPIC.": ".$topicdata['properties']['topictitle']."\">"._ICONONTOP._STICKY."</a>";
+					echo "<img src=\"forum/icons/ontop.png\" alt=\"Ontop\" />&nbsp;";
+					echo "<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=".basename($topic)."&amp;ffaction=ontop\" title=\""._STICKYTOPIC.": ".$topicdata['properties']['topictitle']."\">"._STICKY."</a>";
 				}
 				else {
-					echo "&nbsp;<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=".basename($topic)."&amp;ffaction=normal\" title=\""._UNSTICKYTOPIC.": ".$topicdata['properties']['topictitle']."\">"._ICONNORMAL._UNSTICKY."</a>";
+					echo "<img src=\"forum/icons/normal.png\" alt=\"Normal\" />&nbsp;";
+					echo "<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=".basename($topic)."&amp;ffaction=normal\" title=\""._UNSTICKYTOPIC.": ".$topicdata['properties']['topictitle']."\">"._UNSTICKY."</a>";
+
 				}
 
 				//NASCONDI/MOSTRA TOPIC
 				if (topic_is_visible($topic)){
-					echo "&nbsp;<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=".basename($topic)."&amp;ffaction=hide\" title=\""._HIDETOPIC.": ".$topicdata['properties']['topictitle']."\">"._ICONHIDE._HIDE."</a>";
+					echo " | <img src=\"forum/icons/hide.png\" alt=\"Delete\" />&nbsp;";
+					echo "<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=".basename($topic)."&amp;ffaction=hide\" title=\""._HIDETOPIC.": ".$topicdata['properties']['topictitle']."\">"._HIDE."</a>";
 				}
 				else {
-					echo "&nbsp;<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=".basename($topic)."&amp;ffaction=show\" title=\""._SHOWTOPIC.": ".$topicdata['properties']['topictitle']."\">"._ICONSHOW._SHOW."</a>";
+					echo " | <img src=\"forum/icons/show.png\" alt=\"Delete\" />&nbsp;";
+					echo "<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=".basename($topic)."&amp;ffaction=show\" title=\""._SHOWTOPIC.": ".$topicdata['properties']['topictitle']."\">"._SHOW."</a>";
 				}
 
 				//LOCKING
 				//se e' bloccato l'argomento non posso agire sul singolo topic
 				if (!argument_is_locked(get_forum_root(),$group,$argument)){
 					if (topic_is_locked($topic)){
-						echo "&nbsp;<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=".basename($topic)."&amp;ffaction=unlock\" title=\""._UNLOCKTOPIC.": ".$topicdata['properties']['topictitle']."\">"._ICONUNLOCK._UNLOCK."</a>";
+						echo " | <img src=\"forum/icons/unlock.png\" alt=\"Unlock\" />&nbsp;";
+						echo "<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=".basename($topic)."&amp;ffaction=unlock\" title=\""._UNLOCKTOPIC.": ".$topicdata['properties']['topictitle']."\">"._UNLOCK."</a>";
 					}
 					else {
-						echo "&nbsp;<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=".basename($topic)."&amp;ffaction=lock\" title=\""._LOCKTOPIC.": ".$topicdata['properties']['topictitle']."\">"._ICONLOCK._LOCK."</a>";
+						echo " | <img src=\"forum/icons/lock.png\" alt=\"Lock\" />&nbsp;";
+						echo "<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=".basename($topic)."&amp;ffaction=lock\" title=\""._LOCKTOPIC.": ".$topicdata['properties']['topictitle']."\">"._LOCK."</a>";
 					}
 				}
 				else {
-					echo "&nbsp;<span title=\""._ARGUMENTLOCKED."\">"._ICONLOCK."</span>"._ARGUMENTLOCKED;
+					echo " | <img src=\"forum/icons/unlock.png\" alt=\"Unlock\" />&nbsp;Argomento bloccato";
 				}
 			}
 			echo "</td></tr>";
@@ -341,10 +362,14 @@ function forum_view_argument($root,$group,$argument){
 
 	}
 
-	echo "</table>";
+	?>
+
+	</table>
+
+	<?php
 
 	//INTESTAZIONE GRUPPO
-	echo "<br><table style=\"width:100%;border-collapse: collapse;border:0px;\"><tr><td width=\"33%\">";
+	echo "<br /><table style=\"width:100%;border-collapse: collapse;border:0px;\"><tr><td width=\"33%\">";
 
 	if (count($topics)>$topicperpage){
 
@@ -353,33 +378,39 @@ function forum_view_argument($root,$group,$argument){
 		ff_page_selector($page,$pagescount,$link);
 	}
 
-	echo "</td><td width=\"34%\">";
+	echo "</td><td width=\"33%\">";
 	//al centro nulla
 	echo "</td><td width=\"33%\">";
 	if (!_FN_IS_GUEST){
-		if (argument_is_locked(get_forum_root(),$group,$argument)){
-			if (is_forum_moderator()){
-				echo "<div><span class=\"forum-new\" >"._ICONLOCK."<a style=\"font-size: 120%;\" href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;ffaction=newtopic\" title='"._FCREATOP."' />"._FNUOVOTOP."</a></span></div>";
-			}
-			else echo "<div><span title=\""._ARGUMENTLOCKED."\">"._ICONLOCK."</span>&nbsp;"._ARGUMENTLOCKED."<br><br></div>";
+	if (argument_is_locked(get_forum_root(),$group,$argument)){
+		if (_FN_IS_ADMIN or is_forum_moderator()){
+
+			echo "<div align=\"right\"><span class=\"forum-new\" ><img src=\"forum/icons/lock.png\" alt=\"locked\" />&nbsp;<a style=\"font-size: 120%;\" href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;ffaction=newtopic\" title=\"crea una nuova discussione\">"._FNUOVOTOP."</a></span></div>";
+
 		}
-		else {
-			echo "<div><br><span class='forum-new'><a style='font-size: 120%;' href='index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;ffaction=newtopic' title='"._FCREATOP."'>"._FNUOVOTOP."</a></span><br><br></div>";
-		}
+		else echo "<div align=\"right\"><span class=\"forum-new\"><img src=\"forum/icons/lock.png\" alt=\"locked\" /><br/><br/></span></div>";
+	}
+	else {
+		?>
+		<div align="right"><br/><span class="forum-new"><a style="font-size: 120%;" href="index.php?mod=<?php echo rawurlencodepath($mod); ?>&amp;group=<?php echo rawurlencodepath($group); ?>&amp;argument=<?php echo rawurlencodepath($argument); ?>&amp;ffaction=newtopic" title="crea una nuova discussione"><?php echo _FNUOVOTOP; ?></a></span><br/><br/>
+		</div><?php
+	}
 	}//fine controllo guest
 	echo "</td></tr></table>";
 
 	if (count($topics)>$topicperpage){
-		//Per accessibilità
-		echo "<div style=\"text-align: center;\"><noscript><br><br>";
+		//Per accessibilita'
+		echo "<div style=\"text-align: center;\"><noscript><br /><br />";
 
 		for ($count=1; $count<$pagescount+1;$count++){
 			if ($page == $count) echo "[$count]";
 			else echo "[<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;page=$count\" title=\""._GOTOTHEPAGE." $count\">$count</a>]";
-			if (($count/20) == round($count/20)) echo "<br>";
+
+			if (($count/20) == round($count/20)) echo "<br />";
 		}
 
 		echo "</noscript>";
+
 		echo "</div>";
 	}
 }
@@ -396,13 +427,13 @@ function ff_view_group($root,$group){
 	global $fuso_orario,$mesi,$giorni,$theme,$bgcolor2,$bgcolor3;
 
 	if (isset($_GET['group'])) view_forum_header();
-	if (isset($_GET['group'])) echo "<br>";
+	if (isset($_GET['group'])) echo "<br />";
 
 	echo "<table ";
 	if (file_exists("themes/$theme/forum.css")){
 		echo "class=\"forum-group-table\" ";
 	}
-	else echo "style=\"width:100%;border-collapse: collapse;border:1px solid  $bgcolor2;\" ";
+	else echo "style=\"width:100%;border-collapse: collapse;border:1px solid  $bgcolor2;\" border=\"1\"";
 
 	echo  "cellspacing=\"0\">";
 
@@ -427,8 +458,11 @@ function ff_view_group($root,$group){
 
 	//opzioni di amministrazione per i gruppi
 	if (_FN_IS_ADMIN){
-		echo "&nbsp;&nbsp;<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;ffaction=renamegroupinterface\" title=\""._RENAMEGROUP.": $groupname\">"._ICONRENAME._RENAMEGROUP."</a>";
-		echo "&nbsp;<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;ffaction=deletegroupinterface\" title=\""._DELETEGROUP.": $groupname\">"._ICONDELETE._DELETEGROUP."</a>";
+		echo " | <img src=\"forum/icons/rename.png\" alt=\"Delete\" />&nbsp;";
+		echo "<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;ffaction=renamegroupinterface\" title=\""._RENAMEGROUP.": $groupname\">"._RENAMEGROUP."</a>";
+		echo "&nbsp;|&nbsp;<img src=\"themes/$theme/images/delete.png\" alt=\"Delete\" />&nbsp;";
+		echo "<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;ffaction=deletegroupinterface\" title=\""._DELETEGROUP.": $groupname\">"._DELETEGROUP."</a>";
+
 	}
 
 	echo "</td></tr>";
@@ -463,16 +497,19 @@ function ff_view_group($root,$group){
 		$argumentname= str_replace("_"," ",preg_replace("/^[0-9]*_/i","",$argument));
 
 		echo "<tr>";
-		echo "<td class=\"forum-group-icon\"><img src=\"".$argumentdata['icon']."\" alt=\"icon\" />";
+		echo "<td class=\"forum-group-icon\" align=\"right\" valign=\"top\"><img src=\"".$argumentdata['icon']."\" alt=\"icon\" />";
 		if (argument_is_locked(get_forum_root(),$group,$argument)){
-			echo "<br/><span title=\""._ARGUMENTLOCKED."\">"._ICONLOCK."</span>";
+			echo "<br/><img src=\"forum/icons/lock.png\" alt=\"locked\" />";
 		}
 		echo "</td>";
 		echo "<td class=\"forum-group-arg\" valign=\"top\"><a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."\" title=\""._VIEWARGUMENTTITLE.": $argumentname\">$argumentname</a>";
 		if ($argumentdata['description']!="")
-			echo "<br><i>".$argumentdata['description']."</i>";
+			echo "<br/><i>".$argumentdata['description']."</i>";
 		echo "</td>";
+
+
 		echo "<td class=\"forum-group-topics\" align=\"center\" valign=\"top\">".$argumentstats['topics']."</td>";
+
 		echo "<td class=\"forum-group-msg\" align=\"center\" valign=\"top\">".$argumentstats['posts']."</td>";
 
 		if (trim($argumentstats['lastpost'])!=""){
@@ -482,7 +519,7 @@ function ff_view_group($root,$group){
 		}
 		echo "<td class=\"forum-group-latest-msg\" align=\"center\" valign=\"top\">";
 		if ($argumentstats['topics']!=0){
-			echo "<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=".basename($argumentstats['lastpost'])."&amp;page=last\" title=\""._VIEWTOPICTITLE.": ".$data['properties']['topictitle']."\"><b>".$latestpost['poster']."</b><br>";
+			echo "<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=".basename($argumentstats['lastpost'])."&amp;page=last\" title=\""._VIEWTOPICTITLE.": ".$data['properties']['topictitle']."\"><b>".$latestpost['poster']."</b><br/>";
 			$postime = $latestpost['time'];
 			//stampo la data dell'ultimo post
 // 			echo $giorni[date("w",$postime+(3600*$fuso_orario))];
@@ -492,32 +529,34 @@ function ff_view_group($root,$group){
 			echo $mesi[$tmp-1];
 			echo "&nbsp;";
 			echo date("Y ",$postime+(3600*$fuso_orario));
-			echo "<br>";
+			echo "<br/>";
 			echo date(" H:i:s ",$postime+(3600*$fuso_orario));
 			echo "</a>";
 		}
-		else echo _NOTOPICS."!<br><br><br>";
+		else echo _NOTOPICS."!<br/><br/><br/>";
 		echo "</td></tr>";
 		if (_FN_IS_ADMIN){
 			echo "<tr><td colspan=\"5\" align=\"center\">";
 
-			echo "&nbsp;<a href=\"index.php?mod=".rawurlencode($mod)."&amp;group=".rawurlencode($group)."&amp;argument=".rawurlencode($argument)."&amp;ffaction=renameargument\" title=\""._RENAMEARGTITLE.": $argumentname\">"._ICONRENAME._RENAME."</a>";
+			echo "<img src=\"forum/icons/rename.png\" alt=\"Rename\" />&nbsp;<a href=\"index.php?mod=".rawurlencode($mod)."&amp;group=".rawurlencode($group)."&amp;argument=".rawurlencode($argument)."&amp;ffaction=renameargument\" title=\""._RENAMEARGTITLE.": $argumentname\">"._RENAME."</a>";
 
-			echo "&nbsp;<a href=\"index.php?mod=".rawurlencode($mod)."&amp;group=".rawurlencode($group)."&amp;argument=".rawurlencode($argument)."&amp;ffaction=editargument\" title=\""._EDITARGTITLE.": $argumentname\">"._ICONMODIFY._MODIFICA."</a>";
+			echo " | <img src=\"themes/$theme/images/modify.png\" alt=\"Modify\" />&nbsp;<a href=\"index.php?mod=".rawurlencode($mod)."&amp;group=".rawurlencode($group)."&amp;argument=".rawurlencode($argument)."&amp;ffaction=editargument\" title=\""._EDITARGTITLE.": $argumentname\">"._MODIFICA."</a>";
 
-			echo "&nbsp;<a href=\"index.php?mod=".rawurlencode($mod)."&amp;group=".rawurlencode($group)."&amp;argument=".rawurlencode($argument)."&amp;ffaction=moveargumentinterface\" title=\""._MOVEARGTITLE.": $argumentname\">"._ICONMOVE._MOVE."</a>";
-
-			echo "&nbsp;<a href=\"index.php?mod=".rawurlencode($mod)."&amp;group=".rawurlencode($group)."&amp;argument=".rawurlencode($argument)."&amp;ffaction=deleteargumentinterface\" title=\""._DELETEARGTITLE.": $argumentname\">"._ICONDELETE._ELIMINA."</a>";
+			echo " | <img src=\"forum/icons/move.png\" alt=\"Modify\" />&nbsp;<a href=\"index.php?mod=".rawurlencode($mod)."&amp;group=".rawurlencode($group)."&amp;argument=".rawurlencode($argument)."&amp;ffaction=moveargumentinterface\" title=\""._MOVEARGTITLE.": $argumentname\">"._MOVE."</a>";
 
 			if (argument_is_locked($root,$group,$argument)){
-				echo "&nbsp;<a href=\"index.php?mod=".rawurlencode($mod)."&amp;group=".rawurlencode($group)."&amp;argument=".rawurlencode($argument)."&amp;ffaction=unlockargument\" title=\""._UNLOCKARGTITLE.": $argumentname\">"._ICONUNLOCK._UNLOCK."</a>";
+				echo " | <img src=\"forum/icons/unlock.png\" alt=\"Unlock\" />&nbsp;<a href=\"index.php?mod=".rawurlencode($mod)."&amp;group=".rawurlencode($group)."&amp;argument=".rawurlencode($argument)."&amp;ffaction=unlockargument\" title=\""._UNLOCKARGTITLE.": $argumentname\">"._UNLOCK."</a>";
 			}
 			else {
-				echo "&nbsp;<a href=\"index.php?mod=".rawurlencode($mod)."&amp;group=".rawurlencode($group)."&amp;argument=".rawurlencode($argument)."&amp;ffaction=lockargument\" title=\""._LOCKARGTITLE.": $argumentname\">"._ICONLOCK._LOCK."</a>";
+				echo " | <img src=\"forum/icons/lock.png\" alt=\"Lock\" />&nbsp;<a href=\"index.php?mod=".rawurlencode($mod)."&amp;group=".rawurlencode($group)."&amp;argument=".rawurlencode($argument)."&amp;ffaction=lockargument\" title=\""._LOCKARGTITLE.": $argumentname\">"._LOCK."</a>";
 			}
 
+			echo " | <img src=\"themes/$theme/images/delete.png\" alt=\"Delete\" />&nbsp;<a href=\"index.php?mod=".rawurlencode($mod)."&amp;group=".rawurlencode($group)."&amp;argument=".rawurlencode($argument)."&amp;ffaction=deleteargumentinterface\" title=\""._DELETEARGTITLE.": $argumentname\">"._ELIMINA."</a>";
+
+
 			echo "</td></tr>";
-		}
+
+	}
 	}
 
 	echo "</table>";
@@ -570,6 +609,7 @@ function forum_view_topic($root,$group,$argument,$topic){
 
 	view_forum_header();
 
+
 	//INTESTAZIONE
 	echo "<table style=\"width:100%;border-collapse: collapse;border:0px;\"><tr><td width=\"33%\">";
 
@@ -580,30 +620,28 @@ function forum_view_topic($root,$group,$argument,$topic){
 		ff_page_selector($page,$pagescount,$link);
 	}
 
-	echo "</td><td width=\"34%\">";
+	echo "</td><td width=\"33%\">";
 	//al centro nulla
 	echo "</td><td width=\"33%\">";
 	if (!_FN_IS_GUEST){
-		if (!is_forum_moderator() and topic_is_locked($topicpath)){ // non può rispondere
-			echo "<div align=\"right\"><span title='"._TOPICLOCKED."'>"._ICONLOCK."</span>&nbsp;"._TOPICLOCKED."</div>";
+		if (!is_forum_moderator() and topic_is_locked($topicpath)){
+			echo "<img src=\"forum/icons/lock.png\" alt=\"locked\" />";
 		}
-		else { // può rispondere
-			echo "<div>";
-			if (is_forum_moderator() and topic_is_locked($topicpath))
-				echo "<span title='"._TOPICLOCKED."'>"._ICONLOCK."</span>&nbsp;";
-			echo "<span class=\"forum-new\"><a style=\"font-size: 140%;\" href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=$topic&amp;ffaction=newpost\" title=\""._FRISP."\">"._FRISP."</a>";
+		else {
+			echo "<div align=\"right\"><br/><span class=\"forum-new\">";
+			if (is_forum_moderator() and topic_is_locked($topicpath)) echo "<img src=\"forum/icons/lock.png\" alt=\"locked\" /> ";
+			echo "<a style=\"font-size: 140%;\" href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=$topic&amp;ffaction=newpost\" title=\""._FRISP."\">"._FRISP."</a>";
 			echo "</span></div>";
 		}
 	}
 	echo "</td></tr></table>";
 
-
-	echo "<br><table  ";
+	echo "<br /><table  ";
 
 	if (file_exists("themes/$theme/forum.css")){
 		echo "class=\"forum-topic-table\" ";
 	}
-	else echo "style=\"width:100%;border-collapse: collapse;border:1px solid $bgcolor2;\" ";
+	else echo "style=\"width:100%;border-collapse: collapse;border:1px solid $bgcolor2;\" border=\"1\"";
 
 	echo ">";
 
@@ -641,7 +679,7 @@ function forum_view_topic($root,$group,$argument,$topic){
 	for ($count;$count <($postperpage+$oldcount); $count++){
 		if (isset($posts[$count])) $post = $posts[$count];
 		else continue;
-		//mostro il post (a meno che non lo abbia già mostrato in cima)
+		//mostro il post (a meno che non lo abbia gia' mostrato in cima)
 		if ($postontop==$count) {
 			if ($postontop!="") continue;
 		}
@@ -649,8 +687,31 @@ function forum_view_topic($root,$group,$argument,$topic){
 
 
 	}
+	/*
+	echo "<tr><td class=\"forum-topic-footer\" colspan=\"2\" align=\"center\"><br />";
+	if (count($topicdata['posts'])>$postperpage){
+		$pagescount = ceil(count($topicdata['posts'])/$postperpage);
 
-	echo "</table><br>";
+		if ($page=="0" or $page=="1" or trim($page)==""){
+		}
+		else {
+			echo "<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=".basename($topic)."&amp;page=".($page-1)."\" title=\"visualizza le discussioni precedenti\">precedenti</a>&nbsp;";
+		}
+
+		for ($count=1;$count<$pagescount+1;$count++){
+			if ($page==$count) echo "[$count]";
+			else echo "[<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=".basename($topic)."&amp;page=$count\" title=\"visualizza la pagina $count\">$count</a>]";
+		}
+
+		if (trim($page)!=$pagescount){
+			echo "&nbsp;<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=".basename($topic)."&amp;page=".($page+1)."\" title=\"visualizza le discussioni successive\">successivi</a>&nbsp;";
+		}
+	}
+	else echo "[<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=".basename($topic)."&amp;page=1\" title=\"visualizza la pagina 1\">1</a>]";
+
+	echo "<br /><br /></td></tr>";
+	*/
+	echo "</table><br />";
 
 
 
@@ -676,7 +737,7 @@ function forum_view_topic($root,$group,$argument,$topic){
 		}
 
 		echo "<input type=\"submit\" value=\"OK\" />";
-		echo "</form></div><br>";
+		echo "</form></div><br />";
 	}
 
 	//FONDO PAGINA
@@ -689,22 +750,21 @@ function forum_view_topic($root,$group,$argument,$topic){
 		ff_page_selector($page,$pagescount,$link);
 	}
 
-	echo "</td><td width=\"34%\">";
+	echo "</td><td width=\"33%\">";
 	//al centro nulla
 	echo "</td><td width=\"33%\">";
 	if (!_FN_IS_GUEST){
-		if (!is_forum_moderator() and topic_is_locked($topicpath)){ // non può rispondere
-			echo "<div align=\"right\"><span title='"._TOPICLOCKED."'>"._ICONLOCK."</span>&nbsp;"._TOPICLOCKED."</div>";
+		if (!is_forum_moderator() and topic_is_locked($topicpath)){
+			echo "<img src=\"forum/icons/lock.png\" alt=\"locked\" />";
 		}
-		else { // può rispondere
-			echo "<div align=\"right\">";
-			if (is_forum_moderator() and topic_is_locked($topicpath))
-				echo "<span title='"._TOPICLOCKED."'>"._ICONLOCK."</span>&nbsp;";
-			echo "<span class=\"forum-new\"><a style=\"font-size: 140%;\" href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=$topic&amp;ffaction=newpost\" title=\""._FRISP."\">"._FRISP."</a>";
+		else {
+			echo "<div align=\"right\"><br/><span class=\"forum-new\">";
+			if (is_forum_moderator() and topic_is_locked($topicpath)) echo "<img src=\"forum/icons/lock.png\" alt=\"locked\" /> ";
+			echo "<a style=\"font-size: 140%;\" href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=$topic&amp;ffaction=newpost\" title=\""._FRISP."\">"._FRISP."</a>";
 			echo "</span></div>";
 		}
 	}
-	echo "</td></tr></table>";
+	echo "</td></tr></table><br />";
 
 
 }
@@ -720,7 +780,7 @@ function forum_view_user_profile($user){
 		return "profilo non valido!";
 
 	if (!file_exists(get_fn_dir("users")."/$user.php")){
-	echo "<div style=\"align: center;\"><br><b>$user</b></div>";
+	echo "<div style=\"align: center;\"><br /><b>$user</b></div>";
 	return;
 	}
 
@@ -731,17 +791,15 @@ function forum_view_user_profile($user){
 
 // 	echo "<img src=\"forum/".$userdata['avatar']."\" alt='avatar' border='0' style='max-width:120px;' /><br />";
 	$img = $userdata['avatar'];
+	if($img!="") {
+		if(!stristr($img,"http://"))
+			echo "<img src='forum/$img' alt='$user' border='0' style='max-width:120px' />";
+		else echo "<img src='$img' alt='$user' border='0' style='max-width:120px' />";
+	}
+	else echo "<img src='forum/images/blank.png' alt='$user' border='0' style='max-width:120px' />";
+	echo "<br />";
 
-	// save_user_profile imposta sermpre blank.png se non specificata...
-	// 	if($img!="") { // ...quindi questo controllo è inutile
-	if(!stristr($img,"http://"))
-		echo "<img src='forum/$img' alt='$user' style='max-width:120px' />";
-	else
-		echo "<img src='$img' alt='$user' style='max-width:120px' />";
-// 	}
-// 	else echo "<img src='forum/images/blank.png' alt='$user' border='0' style='max-width:120px' />";
-
-	echo "<br><b>$user</b><br><br>";
+	echo "<b>$user</b><br/><br/>";
 
 	// tabella per livello
 	$level=$userdata['level'];
@@ -756,7 +814,7 @@ function forum_view_user_profile($user){
 	echo "<div style='position:relative;float:left;width:30px;'>0</div>";
 	echo "<div style='position:relative;float:right;width:30px;text-align:right;'>10</div>";
 	echo "<div style='position:relative;margin-left:0px;margin-right:0px;text-align:center;'><b>"._LEVEL." $level</b></div>";
-	echo "<div class=\"centeredDiv\">";
+	echo "<div align='center'>";
 	echo "<hr size='1' noshade width='100%' />";
 	for($i=0; $i<$level; $i++) {
 		echo "<img align='middle' src='$level_img_y' alt='level' />";
@@ -764,33 +822,37 @@ function forum_view_user_profile($user){
 	for($j=$i; $j<10; $j++) {
 		echo "<img align='middle' src='$level_img_n' alt='level' />";
 	}
-	echo "<hr>";
+	echo "<hr size='1' noshade width='100%' />";
 
+// 	if (is_forum_moderator() and !_FN_IS_ADMIN) echo "moderatore<br/><br />";
 	echo "</div>";
-	echo "<a href=\"index.php?mod=none_Login&amp;action=viewprofile&amp;user=$user\" title='"._VIEW_USERPROFILE."'>"._ICONPROFILE."</a>";
+	echo "<a href=\"index.php?mod=none_Login&amp;action=viewprofile&amp;user=$user\" title=\"visualizza il profilo dell'utente\"><img src=\"forum/icons/profile.png\" alt=\"profile\" border=0 /></a>&nbsp;";
 
 	if (!_FN_IS_GUEST AND trim($userdata['mail'])!=""){
-		if ($userdata['hiddenmail']=="0" or _FN_IS_ADMIN) echo "&nbsp;<a href=\"mailto:".$userdata['mail']."\" title=\"manda una e-mail all'utente\">"._ICONMAIL."</a>";
+		if ($userdata['hiddenmail']=="1"){
+			if (_FN_IS_ADMIN) echo "<a href=\"mailto:".$userdata['mail']."\" title=\"manda una e-mail all'utente\"><img src=\"forum/icons/mail.png\" alt=\"mail\" border=0 /></a>&nbsp;";
+		}
+		else echo "<a href=\"mailto:".$userdata['mail']."\" title=\"manda una e-mail all'utente\"><img src=\"forum/icons/mail.png\" alt=\"mail\" border=0 /></a>&nbsp;";
 	}
 
 	if (trim($userdata['homepage'])!=""){
-		echo "&nbsp;<a href=\"".$userdata['homepage']."\" target=blank title=\"home page dell'utente\">"._ICONHOME."</a>";
+		echo "<a href=\"".$userdata['homepage']."\" target=blank title=\"home page dell'utente\"><img src=\"forum/icons/home.png\" alt=\"home page\" border=0 /></a>";
 	}
 
 	echo "<div style='align:center;border:0;'>\n";
 	if (trim($userdata['jabber'])!=""){
-		?><a href="xmpp:<?php echo $userdata['jabber']?>"><img src="images/useronline/im_jabber.png" alt="Jabber" title="Jabber" style='border:0' /></a><?php
+		?><a href="xmpp:<?php echo $userdata['jabber']?>"><img src="images/useronline/im_jabber.png" alt="Jabber" title="Jabber" border="0" /></a><?php
 	}
 	if (trim($userdata['skype'])!=""){
 		?>
 		<script type="text/javascript" src="http://download.skype.com/share/skypebuttons/js/skypeCheck.js"></script>
-		<a href="skype:<?php echo $userdata['skype']?>?chat" onclick="return skypeCheck();"><img src="http://mystatus.skype.com/smallicon/<?php echo $userdata['skype']?>" alt="Skype" title="Skype" style='border:0' /></a><?php
+		<a href="skype:<?php echo $userdata['skype']?>?chat" onclick="return skypeCheck();"><img src="http://mystatus.skype.com/smallicon/<?php echo $userdata['skype']?>" alt="Skype" title="Skype" border="0" /></a><?php
 	}
 	if (trim($userdata['icq'])!=""){
-		?>&nbsp;<a href="http://people.icq.com/people/cmd.php?uin=<?php echo $userdata['icq']?>&amp;action=message"><img src="http://status.icq.com/online.gif?icq=<?php echo $userdata['icq']?>&amp;img=26" alt="ICQ" title="ICQ" style='border:0' /></a><?php
+		?>&nbsp;<a href="http://people.icq.com/people/cmd.php?uin=<?php echo $userdata['icq']?>&amp;action=message"><img src="http://status.icq.com/online.gif?icq=<?php echo $userdata['icq']?>&amp;img=26" alt="ICQ" title="ICQ" border="0" /></a><?php
 	}
 	if (trim($userdata['msn'])!=""){
-		?>&nbsp;<a href="msnim:chat?contact=<?php echo $userdata['msn']?>"><img src="images/useronline/im_msn.png" alt="MSN" title="MSN" style='border:0' /></a><?php
+		?>&nbsp;<a href="msnim:chat?contact=<?php echo $userdata['msn']?>"><img src="images/useronline/im_msn.png" alt="MSN" title="MSN" border="0" /></a><?php
 	}
 	echo "\n</div>\n";
 }
@@ -833,11 +895,11 @@ function view_forum_header(){
 	if (file_exists("themes/$theme/forum.css")){
 		echo "class=\"forum-header-table\" ";
 	}
-	else echo "style=\"width:100%;border-collapse: collapse;border:1px solid $bgcolor2\" cellspacing=\"0\" ";
+	else echo "style=\"width:100%;border-collapse: collapse;border:1px solid $bgcolor2\" border=\"1\" cellspacing=\"0\" ";
 	?>
-	>
-	<tr><td class="forum-header-search" colspan="5" style="text-align:center">
-		<script type="text/javascript">
+	width="100%">
+	<tr><td class="forum-header-search" colspan="5" align="center">
+		<script type="text/javascript" language="javascript">
 	function validateforumsearch()
 		{
 			if(document.getElementById('findforum').value=='')
@@ -854,7 +916,7 @@ function view_forum_header(){
 	<input type="hidden" name="method" value="AND" />
 	<input type="hidden" name="mod" value="none_Search" />
 	<label for="findforum" ><?php echo _CERCA;?>:</label>
-	<input type="text" name="find" id ="findforum"/>
+	<input type="text" name="find" id ="findforum" size="16" />
 	&nbsp;&nbsp;
 	<label for="where"><?php echo _CERCASTR; ?></label>
 	<select name="where" id="where">
@@ -862,10 +924,10 @@ function view_forum_header(){
 	<?php
 	global $search_plugins_dir;
 	$plugin="";
-
+	
 	$plugins = glob("$search_plugins_dir/*.php");
 	if (!$plugins) $plugins = array(); // glob may returns boolean false instead of an empty array on some systems
-
+	
 	foreach ($plugins as $plugin){
 		$plugin_name ="";
 		$plugin_name = preg_replace("/\.php$/i","",basename($plugin));
@@ -875,8 +937,8 @@ function view_forum_header(){
 	?>
 	</select>
 	&nbsp;&nbsp;
-	<input type="radio" value="AND" id="AND" name="method" checked="checked" /><label for="AND">AND</label>
-	<input type="radio" value="OR" id="OR" name="method" /><label for="OR">OR</label>
+	<input type="radio" value="AND" id="AND" name="method" alt="AND search" checked="checked" /><label for="AND">AND</label>
+	<input type="radio" value="OR" id="OR" name="method" alt="OR search" /><label for="OR">OR</label>
 	&nbsp;&nbsp;<input type="submit" value="<?php echo _CERCA?>" />
 	</form></td></tr>
 	<!--funzioni per gli utenti -->
@@ -892,24 +954,24 @@ function view_forum_header(){
 	echo "</td>";
 
 	if ($reguser=="1" and _FN_IS_GUEST){
-		echo "<td class=\"forum-header-edit-profile\"><a href=\"index.php?mod=none_Login&amp;action=visreg\" title=\""._REGORA."\">"._REGORA."</a></td>";
+		echo "<td class=\"forum-header-edit-profile\" align=\"center\"><a href=\"index.php?mod=none_Login&amp;action=visreg\" title=\""._REGORA."\">"._REGORA."</a></td>";
 	}
 	else {
-		echo "<td class=\"forum-header-edit-profile\"><a href=\"index.php?mod=none_Login&amp;action=editprofile&amp;user="._FN_USERNAME."\" title=\"modifica il tuo profilo\">"._FMODPROF."</a></td>";
+		echo "<td class=\"forum-header-edit-profile\" align=\"center\"><a href=\"index.php?mod=none_Login&amp;action=editprofile&amp;user="._FN_USERNAME."\" title=\"modifica il tuo profilo\">"._FMODPROF."</a></td>";
 	}
 
 	if (_FN_IS_GUEST){
-		echo "<td class=\"forum-header-enter\"><b><a href=\"index.php?mod=none_Login\" title=\""._LOGIN."\">"._LOGIN."</a></b></td>";
+		echo "<td class=\"forum-header-enter\" align=\"center\"><b><a href=\"index.php?mod=none_Login\" title=\""._LOGIN."\">"._LOGIN."</a></b></td>";
 	}
 
 	else {
-		echo "<td class=\"forum-header-enter\"><a href='index.php?mod=none_Login&amp;action=logout&amp;from=home' title=\""._LOGOUT."\"><b>"._LOGOUT."</b></a></td>";
+		echo "<td class=\"forum-header-enter\" align=\"center\"><a href='index.php?mod=none_Login&amp;action=logout&amp;from=home' title=\""._LOGOUT."\"><b>"._LOGOUT."</b></a></td>";
 	}
 
 	$rules="";
 	if (file_exists(get_forum_root()."/rules.php"))
 		$rules = get_file(get_forum_root()."/rules.php");
-	echo "<td class=\"forum-header-help\">";
+	echo "<td class=\"forum-header-help\" align=\"center\">";
 	if (file_exists(get_forum_root()."/rules.php") and trim($rules)!=""){
 
 		echo "<b><a href=\"index.php?mod=$mod&amp;ffaction=viewrules\" title=\"Visualizza il regolamento del Forum\">Regolamento</a></b>";
@@ -920,7 +982,7 @@ function view_forum_header(){
 	echo "</td>";
 
 	//visualizzazione utenti
-	echo "<td class=\"forum-header-members\">
+	echo "<td class=\"forum-header-members\" align=\"center\">
 	<a href=\"index.php?mod=none_Login&amp;action=viewmembers\" title=\"visualizza i profili degli utenti registrati\"><b>".count(list_users())."</b> "._FUTENTI."</a></td>";
 	?>
 
@@ -934,7 +996,7 @@ function view_forum_header(){
 	if ($group==""){
 		$admins = list_admins();
 		if ($admins!=0){
-			echo "<br><b>"._ADMINS.": </b>";
+			echo "<br /><b>"._ADMINS.": </b>";
 			for ($countadmins=0;$countadmins<count($admins);$countadmins++){
 				echo "<a href=\"index.php?mod=none_Login&amp;action=viewprofile&amp;user=".$admins[$countadmins]."\" title=\"visualizza il profilo dell'utente\">".$admins[$countadmins]."</a>";
 				if ($countadmins!=(count($admins)-1)) echo ", ";
@@ -944,7 +1006,7 @@ function view_forum_header(){
 
 		$moderators = list_forum_moderators();
 		if (count($moderators)>0){
-			echo "<br><b>"._MODERATORS.":</b> ";
+			echo "<br /><b>"._MODERATORS.":</b> ";
 			for ($countmoderators=0;$countmoderators<count($moderators);$countmoderators++){
 				echo "<a href=\"index.php?mod=none_Login&amp;action=viewprofile&amp;user=".$moderators[$countmoderators]."\" title=\"visualizza il profilo dell'utente\">".$moderators[$countmoderators]."</a>";
 				if ($countmoderators!=(count($moderators)-1)) echo ", ";
@@ -957,7 +1019,7 @@ function view_forum_header(){
 	$topicdata = array();
 	$topicdata = load_topic(get_forum_root()."/$group/$argument/$topic");
 
-	echo "<b><br>"._BROWSE.":</b><br>";
+	echo "<b><br/>"._BROWSE.":</b><br/>";
 	echo "[ <a href=\"index.php?mod=".rawurlencodepath($mod)."\" title=\""._VIEWFORUMHOME."\"><b>".preg_replace("/^[0-9]*_/i","",basename($mod))."</b></a>";
 	if ($group!="")
 		echo " / <a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."\" title=\""._VIEWGROUPTITLE.": ".str_replace("_"," ",preg_replace("/^[0-9]*_/i","",$group))."\"><b>".str_replace("_"," ",preg_replace("/^[0-9]*_/i","",$group))."</b></a> ";
@@ -969,7 +1031,7 @@ function view_forum_header(){
 
 	if ($group!="" and $argument!="" and $topic!="")
 		echo " / ".$topicdata['properties']['topictitle'];
-	echo " ]<br><br>";
+	echo " ]<br/><br />";
 }
 
 /**
@@ -1001,7 +1063,7 @@ function view_post($post,$topicdata,$group,$argument,$topic,$count){
 		echo $mesi[$tmp-1];
 		echo date(" Y ",$postime+(3600*$fuso_orario));
 		echo date(" H:i:s ",$postime+(3600*$fuso_orario));
-		echo "<br><br>";
+		echo "<br/><br/>";
 
 		if ($post['lasteditposter']!="" and $post['lastedit']!=""){
 			echo "<i>"._LASTEDITBY." <b>".$post['lasteditposter']."</b>  (";
@@ -1012,27 +1074,27 @@ function view_post($post,$topicdata,$group,$argument,$topic,$count){
 			echo $mesi[$tmp-1];
 			echo date(" Y ",$postime+(3600*$fuso_orario));
 			echo date(" H:i:s",$postime+(3600*$fuso_orario));
-			echo ")</i><br><br>";
+			echo ")</i><br/><br/>";
 		}
 
 		if ($topicdata['properties']['postontop']==$count)
 			if ($topicdata['properties']['postontop']!="")
-				echo _ICONONTOP."&nbsp;";
-		echo "<b>".$post['postsubj']."</b><br><br>";
+				echo "<img src=\"forum/icons/ontop.png\" alt=\"Ontop\" />&nbsp;";
+		echo "<b>".$post['postsubj']."</b><br/><br/>";
 
 		$postbody = preg_replace("/&#91;/i","[",$post['postbody']);
 		$postbody = preg_replace("/&#93;/i","]",$postbody);
-		$postbody = preg_replace("/\n/i","<br>",$postbody);
+		$postbody = preg_replace("/\n/i","<br />",$postbody);
 		$postbody = preg_replace("/\r/i","",$postbody);
-		echo tag2html($postbody);
+		echo tag2html($postbody,"forum");
 
 
 		$userdata = array();
 		if (file_exists(get_fn_dir("users")."/".$post['poster'].".php")){
 			$userdata = load_user_profile($post['poster']);
 			if (preg_replace("/^#/","",$userdata['sign'])!=""){
-				echo "<br><br>--<br>";
-				echo tag2html(preg_replace("/^#/","",$userdata['sign']));
+				echo "<br/><br/>--<br/>";
+				echo tag2html(preg_replace("/^#/","",$userdata['sign']),"forum");
 			}
 		}
 
@@ -1042,26 +1104,27 @@ function view_post($post,$topicdata,$group,$argument,$topic,$count){
 
 
 		if (!_FN_IS_GUEST){
+// 			if (_FN_IS_ADMIN or (_FN_USERNAME==$post['poster']) or is_forum_moderator()) echo " | ";
 			if (!is_forum_moderator() and $topicdata['properties']['locked']=="true") {
-				echo "<span title='"._TOPICLOCKED."'>"._ICONLOCK."</span>&nbsp;"._TOPICLOCKED;
+			echo "<img src=\"forum/icons/lock.png\" alt=\"Lock\" />";
 			}
-			else echo "&nbsp;<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=$topic&amp;ffaction=newpost&amp;quote=$count\" title=\""._QUOTEPOST."\">"._ICONQUOTE._QUOTE."</a>";
+			else echo "<img src=\"forum/icons/quote.png\" alt=\"quota\" />&nbsp;<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=$topic&amp;ffaction=newpost&amp;quote=$count\" title=\""._QUOTEPOST."\">"._QUOTE."</a>";
 		}
 
 		if (_FN_IS_ADMIN or (_FN_USERNAME==$post['poster']) or is_forum_moderator()){
-			echo "&nbsp;<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=$topic&amp;ffaction=editpost&amp;quote=$count\" title=\""._EDITPOST."\">"._ICONMODIFY._MODIFICA."</a>";
-		}
-		if (_FN_IS_ADMIN){
-			echo "&nbsp;<a href=\"#\" onclick=\"check('index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=$topic&amp;ffaction=deletepost&amp;number=$count')\" title=\""._DELETEPOST."\">"._ICONDELETE._ELIMINA."</a>";
+			echo " | <img src=\"themes/$theme/images/modify.png\" alt=\"Modify\" />&nbsp;<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=$topic&amp;ffaction=editpost&amp;quote=$count\" title=\""._EDITPOST."\">"._MODIFICA."</a>";
 		}
 		if (is_forum_moderator()){
 			if ($topicdata['properties']['postontop']=="" or $topicdata['properties']['postontop']!=$count)
-				echo "&nbsp;<a href=\"#\" onclick=\"check('index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=$topic&amp;ffaction=setpostontop&amp;number=$count')\" title=\""._STICKYPOST."\">"._ICONONTOP._STICKY."</a>";
+				echo " | <img src=\"forum/icons/ontop.png\" alt=\"ontop\" />&nbsp;<a href=\"#\" onclick=\"check('index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=$topic&amp;ffaction=setpostontop&amp;number=$count')\" title=\""._STICKYPOST."\">"._STICKY."</a>";
 			else
-				echo "&nbsp;<a href=\"#\" onclick=\"check('index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=$topic&amp;ffaction=removepostontop')\" title=\""._NORMALPOST."\">"._ICONNORMAL._NORMAL."</a>";
+				echo " | <img src=\"forum/icons/normal.png\" alt=\"normal\" />&nbsp;<a href=\"#\" onclick=\"check('index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=$topic&amp;ffaction=removepostontop')\" title=\""._NORMALPOST."\">"._NORMAL."</a>";
 
 		}
 
+		if (_FN_IS_ADMIN){
+			echo " | <img src=\"themes/$theme/images/delete.png\" alt=\"delete\" />&nbsp;<a href=\"#\" onclick=\"check('index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=$topic&amp;ffaction=deletepost&amp;number=$count')\" title=\""._DELETEPOST."\">"._ELIMINA."</a>";
+		}
 		if (!_FN_IS_GUEST) echo "</td></tr>";
 }
 
@@ -1078,7 +1141,7 @@ function view_ffmotd(){
 	if (trim($string)=="") return;
 
 	echo "<fieldset>
-<legend>Forum</legend>$string</fieldset><br>";
+<legend>Forum</legend>$string</fieldset><br />";
 
 }
 
@@ -1134,7 +1197,7 @@ if (!check_path($root,get_forum_root(),"false")) ff_die("forum root is not valid
 	}
 
 
-	echo "<br><br>\n<b>Thread:</b><br><br><div style=\"overflow:auto;height:400px;width:100%;border:1px;text-align:left\">";
+	echo "<br /><br />\n<b>Thread:</b><br /><br /><div style=\"overflow:auto;height:400px;width:100%;border:1px;text-align:left\">";
 	$posts = $topicdata['posts'];
 	$post=array();
 
@@ -1151,7 +1214,7 @@ if (!check_path($root,get_forum_root(),"false")) ff_die("forum root is not valid
 		echo $mesi[$tmp-1];
 		echo date(" Y ",$postime+(3600*$fuso_orario));
 		echo date(" H:i:s ",$postime+(3600*$fuso_orario));
-		echo "<br>";
+		echo "<br />";
 		if ($post['lasteditposter']!="" and $post['lastedit']!=""){
 			echo "<i>Ultima modifica di <b>".$post['lasteditposter']."</b>  (";
 			$postime = $post['lastedit'];
@@ -1161,12 +1224,12 @@ if (!check_path($root,get_forum_root(),"false")) ff_die("forum root is not valid
 			echo $mesi[$tmp-1];
 			echo date(" Y ",$postime+(3600*$fuso_orario));
 			echo date(" H:i:s",$postime+(3600*$fuso_orario));
-			echo ")</i><br>";
+			echo ")</i><br/>";
 		}
 
-		echo "<b>".tag2html($post['postsubj'])."</b><br>";
+		echo "<b>".tag2html($post['postsubj'],"forum")."</b><br />";
 
-		echo tag2html($post['postbody'])."<br><hr><br>";
+		echo tag2html($post['postbody'],"forum")."<br /><hr /><br />";
 
 	}
 
@@ -1175,8 +1238,8 @@ if (!check_path($root,get_forum_root(),"false")) ff_die("forum root is not valid
 	$postontop = $topicdata['properties']['postontop'];
 	if ($postontop!="" and isset($posts[$postontop])){
 		$post = $posts[$postontop];
-		echo _ICONONTOP;
-		echo "&nbsp;<b>".$post['poster']."</b> - ";
+		echo "<img src=\"forum/icons/ontop.png\" alt=\"Ontop\" />&nbsp;";
+		echo "<b>".$post['poster']."</b> - ";
 		//time
 		$postime = $post['time'];
 		echo $giorni[date("w",$postime+(3600*$fuso_orario))];
@@ -1185,7 +1248,7 @@ if (!check_path($root,get_forum_root(),"false")) ff_die("forum root is not valid
 		echo $mesi[$tmp-1];
 		echo date(" Y ",$postime+(3600*$fuso_orario));
 		echo date(" H:i:s ",$postime+(3600*$fuso_orario));
-		echo "<br>";
+		echo "<br />";
 		if ($post['lasteditposter']!="" and $post['lastedit']!=""){
 			echo "<i>Ultima modifica di <b>".$post['lasteditposter']."</b>  (";
 			$postime = $post['lastedit'];
@@ -1195,12 +1258,12 @@ if (!check_path($root,get_forum_root(),"false")) ff_die("forum root is not valid
 			echo $mesi[$tmp-1];
 			echo date(" Y ",$postime+(3600*$fuso_orario));
 			echo date(" H:i:s",$postime+(3600*$fuso_orario));
-			echo ")</i><br>";
+			echo ")</i><br/>";
 		}
 
-		echo "<b>".tag2html($post['postsubj'])."</b><br>";
+		echo "<b>".tag2html($post['postsubj'],"forum")."</b><br />";
 
-		echo tag2html($post['postbody'])."<br><hr><br>";
+		echo tag2html($post['postbody'],"forum")."<br /><hr /><br />";
 	}
 
 	echo "</div>";

@@ -1,8 +1,8 @@
-<?php
+<?php 
 
 /*
   RSS Feed Generator for PHP 4 or higher version
-  Version 1.0.3
+  Version 1.0.3  
   Written by Vagharshak Tozalakyan <vagh@armdex.com>
   License: GNU Public License
 
@@ -31,12 +31,11 @@ class rssGenerator_rss
     {
         $selfUrl = (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != 'on' ? 'http://' : 'https://');
         $selfUrl .= $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
-        $rss = "<?xml version='1.0' encoding='";
+        $rss = '<?xml version="1.0"';
         if (!empty($this->encoding)) {
-            $rss .= $this->encoding;
+            $rss .= ' encoding="' . $this->encoding . '"';
         }
-        else $rss .= "UTF-8";
-        $rss .= "'?>" . "\n";
+        $rss .= '?>' . "\n";
         if (!empty($this->stylesheet)) {
             $rss .= $this->stylesheet . "\n";
         }

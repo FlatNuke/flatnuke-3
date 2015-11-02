@@ -1,0 +1,332 @@
+/* This is my first designs using CSS, Please visit me at http://www.studio7designs.com or email aran@studio7designs.com if you have any questions. Thanks, and have fun!
+CSS layout: */
+
+body {
+margin: 0 auto;
+padding: 0;
+font: 76% Arial, Helvetica, sans-serif;
+background: #f4f4f4 url(images/backround.gif) top center repeat-y;
+}
+
+.box_right {
+position:relative;
+float:right;
+clear:both;
+width:200px;
+margin:0 0 5px 10px;
+padding:0 10px 0 10px;
+background:#f7f9f7;
+color:#000000;
+font-family:Arial, Helvetica, sans-serif;
+font-size:.9em;
+}
+
+.box_right p {
+margin:5px 5px;
+}
+
+.box_cnr_top {
+background:url(images/cnr_tr.gif) no-repeat top right;
+margin:0 -10px 0 -10px;
+}
+
+.box_cnr_bottom {
+background:url(images/cnr_br.gif) no-repeat top right;
+margin:0 -10px 0 -10px;
+}
+
+img.cnr {
+width:8px;
+height:8px;
+border:none;
+display: block !important;
+}
+
+#leftsidebar {
+background: #ffffff;
+color: #303030;
+margin: 0 auto;
+width: 760px;
+}
+
+#header {
+margin: 0 0 8px 0;
+border: 0;
+}
+
+#header_menu {
+background: url("images/header.jpg") no-repeat top left;
+width: 760px;
+height: 35px;
+padding-bottom: 10px;
+}
+#topmenu {
+clear: left;
+float: left;
+width: 150px;
+height: 84px;
+margin: 0 0 10px 0;
+padding: 0;
+font-size: 0.9em;
+color: #ffffff;
+background: #f7f9f7 url(images/topmenu.png) top left no-repeat;
+}
+
+#little_box {
+padding: 5px;
+}
+
+#menu {
+clear: left;
+float: left;
+width: 150px;
+margin: 0 0 0px 0;
+padding: 0;
+font-size: 0.9em;
+}
+
+#menu ul {	
+list-style: none;
+width: 150px;
+margin: 0 0 10px 0;
+padding: 0;
+font-size: 1.1em;
+}	
+
+#menu li {
+margin-bottom: 4px;
+background-color: #ffffff;
+}
+
+#menu li a {
+font-weight: bold;
+height: 20px;
+text-decoration: none;
+color: #86C32A;
+display: block;
+padding: 5px 0 0 8px;
+background-color: #ffffff;
+border-left: 5px solid #86C32A;
+}	
+	
+#menu li a:hover {
+background: #86C32A;
+color: #ffffff;
+border-left: 5px solid #86C32A;
+}
+
+.leftnews {
+margin: 1px 0 1px 0;
+padding: 10px;
+width: 130px;
+color: #505050;
+background-color: #f7f9f7;
+line-height: 1.3em;
+}
+
+.rightnews {
+float: right;
+width: 130px;
+background-color: #f7f9f7;
+margin: 0 0 10px 10px;
+padding: 5px;
+font-size: 0.9em;
+line-height: 1.5em;
+}
+
+#rightnews p {
+margin: 0 0 1.5em 0;
+}
+
+#content {
+margin: 0 146px 20px 160px;
+border-left: 1px solid #f0f0f0;
+border-right: 1px solid #f0f0f0;
+padding: 0 10px 0 10px;
+line-height: 1.6em;
+text-align: left;
+}
+
+#content h2 {
+font-size: 1.5em;
+margin: 0 0 0.5em 0;
+}
+
+#content img {
+	/*padding: 0px;
+	display:inline;
+	border: thin none #CCCCCC;
+	background-color: #FFFFFF;*/
+}
+
+.greenbox {
+background-color: #f7f9f7;
+border: 1px solid #94BD53;
+color: inherit;
+padding: 5px;
+margin: 0px;
+}
+
+.bluebox {
+background-color: #EDF3FE;
+border: 1px solid #74A8F5;
+color: inherit;
+padding: 5px;
+margin: 0px;
+}
+
+.splitright {
+background-color: #ffffff;
+width: 49%;
+float: right;
+overflow: hidden;
+}
+
+.splitleft {
+background-color: #ffffff;
+width: 49%;
+float: left;
+overflow: hidden;
+}
+
+.blogtitle {
+font-size: 44px;
+font-family:Arial, Helvetica, sans-serif;
+color: #74A8F5;
+font-weight: bold;
+margin-bottom: 5px;
+margin-top: 25px;
+}
+
+.blogsubtitle {
+font-size: 12px;
+margin: 11px 0 25px 0;
+font-family:Arial, Helvetica, sans-serif;
+color: #74A8F5;
+text-align: left;
+border-bottom: 2px dotted #86c32a;
+/* CEE3Ae */
+}
+
+.block_blogtitle {
+}
+
+h3 {
+font-size: 1.3em;
+margin: 0 0 10px 0;
+border-bottom: 1px solid #d0d0d0;
+}
+
+a {
+text-decoration: none;
+color: #74A8F5;
+}
+
+a:hover {
+text-decoration: underline;
+color: #86C32A;
+}
+
+a img {
+border: 0;
+}
+
+#footer {
+clear: both;
+margin: 0 auto;
+padding: 0 0 0 0;
+border-top: 3px solid #86C32A;
+width: 760px;
+text-align: right;
+color: #86C32A;
+font-size: 9px;
+}
+
+#footer a {
+color: #86C32A;
+text-decoration: none;
+}
+
+#footer a:hover {
+text-decoration: underline;
+color: #74A8F5;
+}
+
+.left {
+margin: 10px 10px 5px 0;
+float: left;
+}
+
+.right {
+margin: 10px 0 5px 10px;
+float: right;
+}
+
+.textright {
+text-align: right;
+}
+
+.center {
+text-align: center;
+}
+
+.small {
+font-size: 0.9em;
+}
+
+.bold {
+font-weight: bold;
+}
+
+.hide {
+display: none;
+}
+
+.style3 {color: #666666}
+.boxtitle {color: #74a8f5; background: url("images/bullet_blue.gif") no-repeat center left; padding-bottom: 8px; padding-top:8px; padding-left: 20px; font-weight: bold;
+font-size: 1.2em;}
+.divline {color: #d0d0d0; padding-top: 5px; margin-bottom: 5px; border-bottom: 1px solid;}
+.style4 {color: #999999}
+.style5 {color: #FF9933}
+.style6 {color: #86C32A}
+.style7 {color: #74A8F5}
+
+/* workarounds and hacks */
+.clearfix:after {
+content: "."; 
+display: block; 
+height: 0; 
+clear: both; 
+visibility: hidden;
+}
+
+.clearfix {display: inline-table;}
+
+/* Hides from IE-mac \*/
+* html .clearfix {height: 1%;}
+.clearfix {display: block;}
+/* End hide from IE-mac */
+
+TABLE {
+	font-size: 12px;
+}
+
+TD {
+	font-size: 12px;
+}
+
+INPUT {
+ background-color: #f7f9f7;
+ border: 1px solid #a0a0a0;
+}
+
+SELECT {
+ background-color: #f7f9f7;
+ border: 1px solid #a0a0a0;
+ font-size: 12px;
+}
+TEXTAREA {
+ background-color: #f7f9f7;
+ border: 1px solid #a0a0a0;
+ font-size: 12px;
+}

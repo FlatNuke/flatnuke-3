@@ -22,6 +22,8 @@ include_once("flatnews/include/news_functions.php");
 // automatically load PHP code in files contained in include/phpfunctions
 load_php_code("include/phpfunctions");
 
+//nel caso in cui non vengano definite le costanti standard di Flatnuke
+// if (!"_FN_VAR_DIR") create_fn_constants(); // create_fn_constants() is executed anyhow by index.php immediately after
 
 /**
  * Funzione che inizializza le costanti legate a Flatnuke.
@@ -93,7 +95,7 @@ function view_section($section){
 	// check if section really exists
 	if(!file_exists("sections/$section")) {
 		OpenTable();
-		print("<div class=\"centeredDiv\"><b>"._SECTNOTEXIST."</b></div><br><br>");
+		print("<div align='center'><b>"._SECTNOTEXIST."</b></div><br /><br />");
 		if (file_exists("themes/$theme/fn_404.php")) {
 			include(stripslashes("themes/$theme/fn_404.php"));
 		} else {
@@ -106,7 +108,7 @@ function view_section($section){
 	// CHECKING SECTION PERMISSIONS -->
 	if (!user_can_view_section($section,_FN_USERNAME)){
 		OpenTable();
-		print("<div class=\"centeredDiv\"><b>"._NOLEVELSECT."</b></div><br><br>");
+		print("<div align='center'><b>"._NOLEVELSECT."</b></div><br /><br />");
 		if (file_exists("themes/$theme/fn_denied.php")) {
 			include(stripslashes("themes/$theme/fn_denied.php"));
 		} else {
@@ -144,12 +146,11 @@ function view_section($section){
 				$accesskey = "accesskey=\"".get_access_key($mypath)."\"";
 			}
 			$tit .= "<a href='index.php?mod=".rawurlencodepath($mypath)."' title=\""._GOTOSECTION.": ".str_replace("_"," ",$tmp)."\" $accesskey>".str_replace("_"," ",$tmp)."</a> / ";
-		}
-		else {
+		} else {
 			$tit .= str_replace("_"," ",$tmp);
 			/* deprecated: PHP 5.3 upgrade
 			$tit = ereg_replace("\.[a-z0-9]{1,4}$","",$tit); // delete file extension*/
-			// $tit = preg_replace("/\.[a-z0-9]{1,4}$/","",$tit); // delete file extension - useless for directories
+			$tit = preg_replace("/\.[a-z0-9]{1,4}$/","",$tit); // delete file extension
 		}
 	}
 
@@ -170,7 +171,8 @@ function view_section($section){
 
 	//creo i link per i siti sociali (se non siamo in una sezione di notizie)
 	if (!file_exists(_FN_SECTIONS_DIR."/"._FN_MOD."/news")){
-	echo "<div class='social-links' style='float:right;margin-left:10px;margin-bottom:10px;/*border:1px;border-left-style: solid; border-bottom-style: solid;border-color: #d5d6d7;*/'>";
+	echo "<div class='social-links' style='float:right;margin-left:10px;margin-bottom:10px;/*border:1px;
+border-left-style: solid; border-bottom-style: solid;border-color: #d5d6d7;*/'>";
 // 	echo "<div class='social-links'>";
 	create_social_links($_SERVER["SERVER_NAME"].$_SERVER['REQUEST_URI'],_FN_TITLE);
 	echo "</div>";
@@ -182,33 +184,33 @@ function view_section($section){
 	if($file==""){
 		if(file_exists("sections/$section/section.php")){
 			include("sections/$section/section.php");
-			echo "<br>";
+			echo "<br />";
 		}
 		/* Main download section with Fdplus */
 		if(file_exists("sections/$section/download") and is_file("sections/$section/download")) {
-			echo "<br>";
+			echo "<br />";
 			include_once("download/fd+.php");
 			fd_overview();
 		}
 		/* Single download section with Fdplus */
 		if(file_exists("sections/$section/downloadsection") and is_file("sections/$section/downloadsection")) {
-			echo "<br>";
+			echo "<br />";
 			include_once("download/fd+.php");
 			fd_view_section();
 		}
 		/* Forum section with Flatforum */
 		if(file_exists("sections/$section/forum") and is_file("sections/$section/forum")) {
-			echo "<br>";
+			echo "<br />";
 			include_once("forum/flatforum.php");
 		}
 		/* Gallery section */
 		if(file_exists("sections/$section/gallery") and is_file("sections/$section/gallery")) {
-			echo "<br>";
+			echo "<br />";
 			include("gallery/gallery.php");
 		}
 		/* News section */
 		if(file_exists("sections/$section/news") and is_file("sections/$section/news")) {
-			echo "<br>";
+			echo "<br />";
 			include("flatnews/flatnews.php");
 		}
 	} else {
@@ -225,10 +227,10 @@ function view_section($section){
 		$options .= "$key=$value&amp;";
 	}
 	$options = getparam($options,PAR_NULL, SAN_HTML);
-	echo "<div style=\"text-align:right\"><a href='print.php".$options."' target='new' title=\""._STAMPA."\">"._ICONPRINT."</a></div>";
+	echo "<div align='right'><a href='print.php".$options."' target='new' title=\""._STAMPA."\"><img src='themes/$theme/images/print.png' border='0' alt='print' /></a></div>";
 
 	// Administration of the section (visible only to administrtaors)
-	echo "<hr>";
+	echo "<hr size='1' />";
 	if(_FN_IS_ADMIN AND is_writeable("sections/$section") AND !fn_is_system_dir($section)) {
 		section_admin_panel();
 	}
@@ -363,7 +365,7 @@ function create_blocks($edge){
 				$title .= "&amp;fneditor=fckeditor";
 			else if ($news_editor=="ckeditor" AND file_exists("include/plugins/editors/ckeditor/ckeditor.php") and $php_free==TRUE)
 				$title .= "&amp;fneditor=ckeditor";
-			$title .= " \" title=\""._MODIFICA."\">"._ICONMODIFY."</a>";
+			$title .= " \" title=\""._MODIFICA."\"><img src=\"themes/$theme/images/modify.png\" alt=\"Modify\" /></a>";
 		}
 		// backward theme compatibility
 		if(function_exists("OpenBlock")){
@@ -406,7 +408,7 @@ function edit_content($filename,$editor="html"){
 
 	if(stristr($filename,"..") or !file_exists($filename)) {
 		OpenTable();
-		print("<div class=\"centeredDiv\"><b>"._NORESULT."</b></div>");
+		print("<div align='center'><b>"._NORESULT."</b></div>");
 		CloseTable();
 		return;
 	}
@@ -434,7 +436,7 @@ function edit_content($filename,$editor="html"){
 	echo "</textarea>";
 	}
 
-	echo "<br><br>
+	echo "<br /><br />
 	<input type=\"hidden\" name=\"file\" value=\"".$filename."\" />
 	<input type=\"submit\" value=\""._MODIFICA."\" />
 	</form>";
@@ -482,7 +484,7 @@ function user_edit_content($filename,$editor="html"){
 
 	if(stristr($filename,"..") or !file_exists($filename)) {
 		OpenTable();
-		print("<div class=\"centeredDiv\"><b>"._NORESULT."</b></div>");
+		print("<div align='center'><b>"._NORESULT."</b></div>");
 		CloseTable();
 		return;
 	}
@@ -519,7 +521,7 @@ function user_edit_content($filename,$editor="html"){
 	echo "</textarea>";
 	}
 
-	echo "<br><br>
+	echo "<br /><br />
 	<input type=\"hidden\" name=\"file\" value=\"".$filename."\" />
 	<input type=\"submit\" value=\""._MODIFICA."\" />
 	</form>";
@@ -586,7 +588,7 @@ function parse_RSS($url){
 				} else {
 					if (strcmp($link,$title2) AND $items[$i] != "") {
 						$cont = 1;
-						$content .= "<b><big>&middot;</big></b>&nbsp;<a href=\"$link\" target=\"new\">$title2</a><br>\n";
+						$content .= "<b><big>&middot;</big></b>&nbsp;<a href=\"$link\" target=\"new\">$title2</a><br />\n";
 					}
 				}
 			}
@@ -601,7 +603,7 @@ function parse_RSS($url){
  *
  * Restituisce il livello della sezione passata come parametro, leggendolo dal
  * file <i>/section/nomesezione/level.php</i>:
- *  - -1 se non esiste il file level.php, la sezione sarà visibile da tutti;
+ *  - -1 se non esiste il file level.php, la sezione sara' visibile da tutti;
  *  - 0 per una sezione visibile solo da utenti registrati;
  *  - da 1 a 9 per una sezione visibile solo da utenti di livello intermedio;
  *  - 10 per una sezione visibile solo da utenti amministratore.
@@ -621,11 +623,29 @@ function getsectlevel($section){
 
 
 /**
- * Genera un log di attività
+ * Funzione alternativa a html_entity_decode()
+ *
+ * Rimpiazza la funzione nativa di PHP html_entity_decode() per gli utenti
+ * che utilizzano una versione di PHP piu' vecchia della 4.3.0.
+ *
+ * @author Documentazione ufficiale PHP - {@link http://it.php.net/manual/en/function.html-entity-decode.php}
+ *
+ * @param string $string
+ * @return string Una stringa che preserva i caratteri speciali HTML
+ */
+function unhtmlentities($string) {
+  	/*$trans_tbl = get_html_translation_table(HTML_ENTITIES);
+	$trans_tbl = array_flip($trans_tbl);
+        return strtr($string, $trans_tbl);*/
+}
+
+
+/**
+ * Genera un log di attivita'
  *
  * Aggiunge al file <i>/var/log/log.php</i> una riga che contiene
  * la data e l'ora di produzione della segnalazione di log, la zona
- * di origine e una descrizione dell'attività effettuata.
+ * di origine e una descrizione dell'attivita' effettuata.
  *
  * @author Simone Vellei <simone_vellei@users.sourceforge.net>
  * @since 2.5.4
@@ -678,7 +698,7 @@ function fnlog($zone, $txt){
 /**
  * Mostra le informazioni sul copyright di un modulo
  *
- * Crea un link da cui è possibile visualizzare una finestra popup
+ * Crea un link da cui e' possibile visualizzare una finestra popup
  * con informazioni dettagliate sul copyright del modulo corrente.
  *
  * @author Simone Vellei <simone_vellei@users.sourceforge.net>
@@ -701,20 +721,20 @@ function module_copyright($modulo, $versione, $autore, $email, $homepage, $licen
 	$licenza  = getparam($licenza,  PAR_NULL, SAN_FLAT);
 
 	// preview link
-	echo "<br><div style=\"text-align:right\"><a href='javascript:;' onclick='copyrightshow();' title='Copyright info'>Copyright &copy; <b>$modulo</b></a></div><br>";
+	echo "<br /><div align='right'><a href='javascript:;' onclick='copyrightshow();' title='Copyright info'>Copyright &copy; <b>$modulo</b></a></div><br />";
 	// preview box
 	echo "<div id='fncopyright'>";
-	echo "<p class=\"centeredDiv\"><b>Copyright informations</b></p>Module developed for the <b><a href='http://flatnuke.sf.net'>Flatnuke</a></b> CMS<br><br>";
-	echo "<b>Module name</b>: $modulo<br><b>Version</b>: $versione<br><b>License</b>: $licenza<br>";
-	echo "<b>Author</b>: $autore<br><b>E-mail</b>: <a href='mailto:$email'>".str_replace("%20"," ",$email)."</a><br><b>Home page</b>: <a href='$homepage' target='_blank' title='$homepage'>$homepage</a> <br>";
-	echo "<p class=\"centeredDiv\"><b><a href='javascript:;' onclick='copyrightshow();'>Close</a></b></p></div>";
+	echo "<p align='center'><b>Copyright informations</b></p>Module developed for the <b><a href='http://flatnuke.sf.net'>Flatnuke</a></b> CMS<br /><br />";
+	echo "<b>Module name</b>: $modulo<br /><b>Version</b>: $versione<br /><b>License</b>: $licenza<br />";
+	echo "<b>Author</b>: $autore<br /><b>E-mail</b>: <a href='mailto:$email'>".str_replace("%20"," ",$email)."</a><br /><b>Home page</b>: <a href='$homepage' target='_blank' title='$homepage'>$homepage</a> <br />";
+	echo "<p align='center'><b><a href='javascript:;' onclick='copyrightshow();'>Close</a></b></p></div>";
 }
 
 
 /**
  * Gestione tag per codice html
  *
- * Rimpiazza gli pseudo-tag ([b], [i], ecc.) con i tag html
+ * Rimpiazza i pseudo-tag ([b], [i], ecc) con i tag html)
  *
  * @author Simone Vellei <simone_vellei@users.sourceforge.net>
  * @author Marco Segato <segatom@users.sourceforge.net> | 20050916: Unificato la funzione per l'uso nel sito e nel forum
@@ -724,13 +744,13 @@ function module_copyright($modulo, $versione, $autore, $email, $homepage, $licen
  * @param string $where Riferimento alla root per l'esecuzione del codice: 'home' per le news, 'forum' per il forum
  * @return string Codice HTML
  */
-function tag2html($string) {
+function tag2html($string, $where) {
 	// verifico provenienza della chiamata e adatto i richiami alle directories
 	$string=getparam($string,PAR_NULL,SAN_NULL);
-// 	$where=getparam($where,PAR_NULL,SAN_FLAT);
+	$where=getparam($where,PAR_NULL,SAN_FLAT);
 
 	$prepath="forum/";
-	// solo l'amministratore può usare codice HTML
+	// solo l'amministratore puo' usare codice HTML
 	//da Flatnuke 3.0 la funzione tag2html viene usata in fase di visualizzazione
 	//e non in fase di salvataggio. Dunque il controllo sul livello dell'utente
 	//e sul codice da salvare avviene al di fuori di questa funzione
@@ -740,10 +760,10 @@ function tag2html($string) {
 // 		$string = str_replace(">", "&gt;", $string);
 // 	}
 	// formatting fixes
-	$string = str_replace("&lt;br/&gt;", "<br>", $string);
-	$string = str_replace("&lt;br /&gt;", "<br>", $string);
-	$string = str_replace("&lt;br&gt;", "<br>", $string);
-	$string = str_replace("<br>", "<br>", $string);
+	$string = str_replace("&lt;br/&gt;", "<br />", $string);
+	$string = str_replace("&lt;br /&gt;", "<br />", $string);
+	$string = str_replace("&lt;br&gt;", "<br />", $string);
+	$string = str_replace("<br>", "<br />", $string);
 	$string = str_replace("&#91;", "[", $string);
 	$string = str_replace("&#93;", "]", $string);
 	$string = str_replace("|", "", $string);
@@ -770,7 +790,7 @@ function tag2html($string) {
 	$string = str_replace("[sboing]", "<img src='".$prepath."emoticon/sboing.png' alt=':sboing:' />", $string);
 
 	// formattazione testo
-	$string = str_replace("\n", "<br>", $string);
+	$string = str_replace("\n", "<br />", $string);
 	$string = str_replace("\r", "", $string);
 	$string = str_replace("[b]", "<b>", $string);
 	$string = str_replace("[u]", "<u>", $string);
@@ -780,7 +800,7 @@ function tag2html($string) {
 	$string = str_replace("[/i]", "</i>", $string);
 	$string = str_replace("[strike]","<span style=\"text-decoration : line-through;\">",$string);
 	$string = str_replace("[/strike]","</span>",$string);
-	$string = preg_replace("/\[quote\=(.+?)\]/s",'<blockquote><b><a href="index.php?mod=none_Login&amp;action=viewprofile&amp;user=$1" title="'._VIEW_USERPROFILE.'">$1</a> '._HASCRITTO.':</b><br>',$string);
+	$string = preg_replace("/\[quote\=(.+?)\]/s",'<blockquote><b><a href="index.php?mod=none_Login&amp;action=viewprofile&amp;user=$1" title="'._VIEW_USERPROFILE.'">$1</a> '._HASCRITTO.':</b><br />',$string);
 	$string = str_replace("[quote]", "<blockquote>", $string);
 	$string = str_replace("[/quote]", "</blockquote>", $string);
 	$string = str_replace("[code]", "<pre>", $string);
@@ -841,18 +861,18 @@ function tag2html($string) {
 	$string = str_replace("[/size]", "</span>", $string);
 
 	//elenchi
-	$string = str_replace("[ol]<br>", "<ol>", $string);
+	$string = str_replace("[ol]<br />", "<ol>", $string);
 	$string = str_replace("[ol]", "<ol>", $string);
 	$string = str_replace("[/ol]", "</ol>", $string);
 	$string = str_replace("[*]", "<li>", $string);
 	//per risolvere il problema dell'"a capo"
 	/* deprecated: PHP 5.3 upgrade
-	$string = eregi_replace("\[\/\*\]\<br>", "</li>", $string);
+	$string = eregi_replace("\[\/\*\]\<br />", "</li>", $string);
 	$string = eregi_replace("\[\/\*\]\n", "</li>", $string);*/
 	$string = preg_replace("/\[\/\*\]\<br \/>/i", "</li>", $string);
 	$string = preg_replace("/\[\/\*\]\n/i", "</li>", $string);
 	$string = str_replace("[/*]", "</li>", $string);
-	$string = str_replace("[ul]<br>", "<ul>", $string);
+	$string = str_replace("[ul]<br />", "<ul>", $string);
 	$string = str_replace("[ul]", "<ul>", $string);
 	$string = str_replace("[/ul]", "</ul>", $string);
 
@@ -914,7 +934,7 @@ function tag2html($string) {
 				if (stristr($url, "youtube.com") == FALSE) {
 					continue;
 				} else {
-					$link = preg_replace("/.+?youtube.com.+v=([a-zA-Z0-9]*).*/s",'<iframe class="youtube-player" width="430" height="259" src="http://www.youtube.com/embed/$1" frame></iframe>',$url);
+					$link = preg_replace("/.+?youtube.com.+v=([a-zA-Z0-9]*).*/s",'<iframe class="youtube-player" width="430" height="259" src="http://www.youtube.com/embed/$1" frameborder="0"></iframe>',$url);
 				}
 				$string=str_replace("[youtube]".$url."[/youtube]", $link, $string);
 			}
@@ -959,50 +979,50 @@ function bbcodes_panel($area, $where, $what) {
 	// stampo la parte di pannello selezionata
 	switch($what) {
 		case "emoticons":
-		?><a href="javascript:void(0)" onclick="javascript:insertTags('[:)]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title=":)"><img src="<?php echo $prepath?>emoticon/01.png"  alt="Happy" /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[:(]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title=":("><img src="<?php echo $prepath?>emoticon/02.png"  alt="Triste"  /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[:o]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title=":o"><img src="<?php echo $prepath?>emoticon/03.png"  alt="sorpresa" /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[:p]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title=":p"><img src="<?php echo $prepath?>emoticon/04.png"  alt="linguaccia"  /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[:D]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title=":D"><img src="<?php echo $prepath?>emoticon/05.png"  alt="risata" /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[:!]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title=":!"><img src="<?php echo $prepath?>emoticon/06.png"  alt="indifferente"  /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[:O]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title=":O"><img src="<?php echo $prepath?>emoticon/07.png"  alt="sbalordito"  /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[8)]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="8)"><img src="<?php echo $prepath?>emoticon/08.png"  alt="fighetto"  /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[;)]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title=";)"><img src="<?php echo $prepath?>emoticon/09.png"  alt="occhiolino" /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[rolleyes]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="rolleyes"><img src="<?php echo $prepath?>emoticon/rolleyes.png"  alt="rolleyes" /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[eh]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="eh"><img src="<?php echo $prepath?>emoticon/eh.png"  alt="eh" /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[neutral]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="neutral"><img src="<?php echo $prepath?>emoticon/neutral.png"  alt="neutral"  /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[:x]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="mad"><img src="<?php echo $prepath?>emoticon/mad.png"  alt="mad"  /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[O:)]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="angel"><img src="<?php echo $prepath?>emoticon/angel.png"  alt="angel"  /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[evil]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="evil"><img src="<?php echo $prepath?>emoticon/evil.png"  alt="evil" /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[idea]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="idea"><img src="<?php echo $prepath?>emoticon/idea.png"  alt="idea"  /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[bier]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="bier"><img src="<?php echo $prepath?>emoticon/bier.png"  alt="bier"  /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[whistle]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="whistle"><img src="<?php echo $prepath?>emoticon/whistle.png"  alt="whistle" /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[flower]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="flower"><img src="<?php echo $prepath?>emoticon/flower.png"  alt="flower"  /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[sboing]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="sboing"><img src="<?php echo $prepath?>emoticon/sboing.png"  alt="sboing" /></a><?php
+		?><a href="javascript:void(0)" onclick="javascript:insertTags('[:)]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title=":)"><img src="<?php echo $prepath?>emoticon/01.png" border="0" alt="Happy" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[:(]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title=":("><img src="<?php echo $prepath?>emoticon/02.png" border="0" alt="Triste"  /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[:o]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title=":o"><img src="<?php echo $prepath?>emoticon/03.png" border="0" alt="sorpresa" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[:p]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title=":p"><img src="<?php echo $prepath?>emoticon/04.png" border="0" alt="linguaccia"  /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[:D]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title=":D"><img src="<?php echo $prepath?>emoticon/05.png" border="0" alt="risata" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[:!]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title=":!"><img src="<?php echo $prepath?>emoticon/06.png" border="0" alt="indifferente"  /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[:O]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title=":O"><img src="<?php echo $prepath?>emoticon/07.png" border="0" alt="sbalordito"  /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[8)]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="8)"><img src="<?php echo $prepath?>emoticon/08.png" border="0" alt="fighetto"  /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[;)]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title=";)"><img src="<?php echo $prepath?>emoticon/09.png" border="0" alt="occhiolino" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[rolleyes]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="rolleyes"><img src="<?php echo $prepath?>emoticon/rolleyes.png" border="0" alt="rolleyes" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[eh]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="eh"><img src="<?php echo $prepath?>emoticon/eh.png" border="0" alt="eh" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[neutral]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="neutral"><img src="<?php echo $prepath?>emoticon/neutral.png" border="0" alt="neutral"  /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[:x]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="mad"><img src="<?php echo $prepath?>emoticon/mad.png" border="0" alt="mad"  /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[O:)]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="angel"><img src="<?php echo $prepath?>emoticon/angel.png" border="0" alt="angel"  /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[evil]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="evil"><img src="<?php echo $prepath?>emoticon/evil.png" border="0" alt="evil" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[idea]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="idea"><img src="<?php echo $prepath?>emoticon/idea.png" border="0" alt="idea"  /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[bier]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="bier"><img src="<?php echo $prepath?>emoticon/bier.png" border="0" alt="bier"  /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[whistle]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="whistle"><img src="<?php echo $prepath?>emoticon/whistle.png" border="0" alt="whistle" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[flower]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="flower"><img src="<?php echo $prepath?>emoticon/flower.png" border="0" alt="flower"  /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[sboing]', '', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="sboing"><img src="<?php echo $prepath?>emoticon/sboing.png" border="0" alt="sboing" /></a><?php
 		break;
 
 		case "formatting":
 		?>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[b]', '[/b]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="bold"><img src="<?php echo $prepath?>emoticon/bold.png"  alt="bold" title="bold" /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[i]', '[/i]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="italic"><img src="<?php echo $prepath?>emoticon/italic.png"  alt="italic" title="italic" /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[u]', '[/u]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="underline"><img src="<?php echo $prepath?>emoticon/underline.png"  alt="underscore" title="underscore" /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[strike]', '[/strike]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="strike"><img src="<?php echo $prepath?>emoticon/strike.png"  alt="strike" title="strike" /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[left]', '[/left]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="left"><img src="<?php echo $prepath?>emoticon/left.png"  alt="left" title="left" /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[center]', '[/center]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="center"><img src="<?php echo $prepath?>emoticon/center.png"  alt="center" title="center" /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[right]', '[/right]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="right"><img src="<?php echo $prepath?>emoticon/right.png"  alt="right" title="right" /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[justify]', '[/justify]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="justify"><img src="<?php echo $prepath?>emoticon/justify.png"  alt="justify" title="justify" /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[quote]', '[/quote]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="quote"><img src="<?php echo $prepath?>emoticon/quote.png"  alt="quote" title="quote" /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[code]', '[/code]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="quote"><img src="<?php echo $prepath?>emoticon/code.png"  alt="code" title="code" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[b]', '[/b]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="bold"><img src="<?php echo $prepath?>emoticon/bold.png" border="0" alt="bold" title="bold" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[i]', '[/i]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="italic"><img src="<?php echo $prepath?>emoticon/italic.png" border="0" alt="italic" title="italic" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[u]', '[/u]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="underline"><img src="<?php echo $prepath?>emoticon/underline.png" border="0" alt="underscore" title="underscore" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[strike]', '[/strike]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="strike"><img src="<?php echo $prepath?>emoticon/strike.png" border="0" alt="strike" title="strike" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[left]', '[/left]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="left"><img src="<?php echo $prepath?>emoticon/left.png" border="0" alt="left" title="left" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[center]', '[/center]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="center"><img src="<?php echo $prepath?>emoticon/center.png" border="0" alt="center" title="center" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[right]', '[/right]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="right"><img src="<?php echo $prepath?>emoticon/right.png" border="0" alt="right" title="right" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[justify]', '[/justify]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="justify"><img src="<?php echo $prepath?>emoticon/justify.png" border="0" alt="justify" title="justify" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[quote]', '[/quote]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="quote"><img src="<?php echo $prepath?>emoticon/quote.png" border="0" alt="quote" title="quote" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[code]', '[/code]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="quote"><img src="<?php echo $prepath?>emoticon/code.png" border="0" alt="code" title="code" /></a>
 		<?php if (_FN_IS_ADMIN){ ?>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[img]', '[/img]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="image"><img src="<?php echo $prepath?>emoticon/image.png"  alt="image" title="image" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[img]', '[/img]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="image"><img src="<?php echo $prepath?>emoticon/image.png" border="0" alt="image" title="image" /></a>
 		<?php }//fine if immagini
 		if (!_FN_IS_GUEST){
 		?>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[mail]', '[/mail]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="mail"><img src="<?php echo $prepath?>emoticon/mail.png"  alt="mail" title="mail" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[mail]', '[/mail]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="mail"><img src="<?php echo $prepath?>emoticon/mail.png" border="0" alt="mail" title="mail" /></a>
 		<?php }//fine if mail ?>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[url]', '[/url]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="url"><img src="<?php echo $prepath?>emoticon/url.png"  alt="url" title="url" /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[wp lang=<?php echo $lang?>]', '[/wp]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="wikipedia page"><img src="<?php echo $prepath?>emoticon/wikipedia.png"  alt="wikipedia" title="wikipedia" /></a>
-		<br>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[url]', '[/url]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="url"><img src="<?php echo $prepath?>emoticon/url.png" border="0" alt="url" title="url" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[wp lang=<?php echo $lang?>]', '[/wp]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="wikipedia page"><img src="<?php echo $prepath?>emoticon/wikipedia.png" border="0" alt="wikipedia" title="wikipedia" /></a>
+		<br />
 		<select name="<?php echo $area?>fontsize" onchange="javascript:insertTags('[size=' + this.form.<?php echo $area?>fontsize.options[this.form.<?php echo $area?>fontsize.selectedIndex].value + ']', '[/size]', '<?php echo $area?>'); this.form.<?php echo $area?>fontsize.selectedIndex=0;" >
 			<option value="" selected="selected" disabled="disabled"><?php echo _SIZE?></option>
 			<option value="50%" >50%</option>
@@ -1011,17 +1031,17 @@ function bbcodes_panel($area, $where, $what) {
 			<option value="150%" >150%</option>
 			<option value="200%" >200%</option>
 		</select>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[red]', '[/red]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="red"><img src="<?php echo $prepath?>emoticon/red.png"  alt="red" title="red" /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[green]', '[/green]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="green"><img src="<?php echo $prepath?>emoticon/green.png"  alt="green" title="green" /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[blue]', '[/blue]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="blue"><img src="<?php echo $prepath?>emoticon/blue.png"  alt="blue" title="blue" /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[pink]', '[/pink]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="pink"><img src="<?php echo $prepath?>emoticon/pink.png"  alt="pink" title="pink" /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[yellow]', '[/yellow]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()"  title="yellow"><img src="<?php echo $prepath?>emoticon/yellow.png"  alt="yellow" title="yellow" /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[cyan]', '[/cyan]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="cyan"><img src="<?php echo $prepath?>emoticon/cyan.png"  alt="cyan" title="cyan" /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[ol]\n[*][/*]\n[*][/*]\n[*][/*]\n', '[/ol]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="olist"><img src="<?php echo $prepath?>emoticon/olist.png"  alt="olist" title="olist" /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[ul]\n[*][/*]\n[*][/*]\n[*][/*]\n', '[/ul]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="ulist"><img src="forum/emoticon/ulist.png"  alt="ulist" title="ulist" /></a>
-		<a href="javascript:void(0)" onclick="javascript:insertTags('[youtube]', '[/youtube]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="url"><img src="<?php echo $prepath?>emoticon/youtube.png"  alt="youtube" title="youtube" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[red]', '[/red]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="red"><img src="<?php echo $prepath?>emoticon/red.png" border="0" alt="red" title="red" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[green]', '[/green]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="green"><img src="<?php echo $prepath?>emoticon/green.png" border="0" alt="green" title="green" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[blue]', '[/blue]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="blue"><img src="<?php echo $prepath?>emoticon/blue.png" border="0" alt="blue" title="blue" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[pink]', '[/pink]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="pink"><img src="<?php echo $prepath?>emoticon/pink.png" border="0" alt="pink" title="pink" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[yellow]', '[/yellow]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()"  title="yellow"><img src="<?php echo $prepath?>emoticon/yellow.png" border="0" alt="yellow" title="yellow" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[cyan]', '[/cyan]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="cyan"><img src="<?php echo $prepath?>emoticon/cyan.png" border="0" alt="cyan" title="cyan" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[ol]\n[*][/*]\n[*][/*]\n[*][/*]\n', '[/ol]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="olist"><img src="<?php echo $prepath?>emoticon/olist.png" border="0" alt="olist" title="olist" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[ul]\n[*][/*]\n[*][/*]\n[*][/*]\n', '[/ul]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="ulist"><img src="forum/emoticon/ulist.png" border="0" alt="ulist" title="ulist" /></a>
+		<a href="javascript:void(0)" onclick="javascript:insertTags('[youtube]', '[/youtube]', '<?php echo $area?>')" onmouseover="document.getElementsByName('<?php echo $area?>')[0].focus()" title="url"><img src="<?php echo $prepath?>emoticon/youtube.png" border="0" alt="youtube" title="youtube" /></a>
 		<?php
-		echo "<a href=\"#\" onclick=\"Helpwindow=window.open('forum/help.php','Help','toolbar=no,location=no,directories=no,status=yes,menubar=no,scrollbars=yes,resizable=yes,width=700,height=600,left=200,top=100')\"><img src=\"forum/emoticon/help.png\" alt=\"help\" title=\"help\" /></a>";
+		echo "<a href=\"#\" onclick=\"Helpwindow=window.open('forum/help.php','Help','toolbar=no,location=no,directories=no,status=yes,menubar=no,scrollbars=yes,resizable=yes,width=700,height=600,left=200,top=100')\"><img src=\"forum/emoticon/help.png\" border=\"0\" alt=\"help\" title=\"help\" /></a>";
 		break;
 
 		case "images":
@@ -1074,8 +1094,8 @@ function html2tag($text,$strip_tags=FALSE){
 	$text = preg_replace("/<\/pre>/i","[/code]",$text);
 	$text = preg_replace("/<blockquote>/i","[quote]",$text);
 	$text = preg_replace("/<\/blockquote>/i","[/quote]",$text);
-	$text = preg_replace("/<div style='margin-left:1.5em;'><hr><i>/i","[quote]",$text);
-	$text = preg_replace("/<hr><\/div>/i","[/quote]",$text);
+	$text = preg_replace("/<div style='margin-left:1.5em;'><hr noshade \/><i>/i","[quote]",$text);
+	$text = preg_replace("/<hr noshade \/><\/div>/i","[/quote]",$text);
 	$text = preg_replace("/<b>/i","[b]",$text);
 	$text = preg_replace("/<\/b>/i","[/b]",$text);
 	$text = preg_replace("/<strong>/i","[b]",$text);
@@ -1191,9 +1211,9 @@ function html2tag($text,$strip_tags=FALSE){
 }
 
 /**
- * Verifica se l'utente è amministratore
+ * Verifica se l'utente e' amministratore
  *
- * Funzione che verifica se l'utente che sta visualizzando la pagina è
+ * Funzione che verifica se l'utente che sta visualizzando la pagina e'
  * in possesso o meno delle credenziali di amministratore del sito.
  *
  * @author Aldo Boccacci <zorba_@tin.it>
@@ -1214,15 +1234,15 @@ function is_admin(){
 
 
 /**
- * Restituisce TRUE se il visitatore è un utente regolarmente loggato
+ * Restituisce TRUE se il visitatore e' un utente regolarmente loggato
  *
- * Funzione che restituisce TRUE se il visitatore collegato al portale è un utente regolarmente
+ * Funzione che restituisce TRUE se il visitatore collegato al portale e' un utente regolarmente
  * registrato. Restituisce FALSE in caso contrario
  *
  * @author Aldo Boccacci <zorba_@tin.it>
  * @since 2.5.8
  *
- * @return TRUE se l'utente collegato è un utente normale, FALSE se è un ospite o un amministratore
+ * @return TRUE se l'utente collegato e' un utente normale, FALSE se e' un ospite o un amministratore
  */
 function is_user(){
 	$myforum = getparam("myforum", PAR_COOKIE, SAN_FLAT);
@@ -1238,15 +1258,15 @@ function is_user(){
 
 
 /**
- * Restituisce TRUE se l'utente collegato è un ospite non loggato
+ * Restituisce TRUE se l'utente collegato e' un ospite non loggato
  *
- * Questa funzione restituisce TRUE se il visitatore collegato al sito è un semplice ospite.
+ * Questa funzione restituisce TRUE se il visitatore collegato al sito e' un semplice ospite.
  * Restituisce FALSE se si tratta di un utente o un amministratore regolarmente loggati.
  *
  * @author Aldo Boccacci <zorba_@tin.it>
  * @since 2.5.8
  *
- * @return TRUE se l'utente collegato è un ospite, FALSE se è un utente normale o un amministratore
+ * @return TRUE se l'utente collegato e' un ospite, FALSE se e' un utente normale o un amministratore
  */
 function is_guest(){
 	if (is_admin() or is_user())
@@ -1259,7 +1279,7 @@ function is_guest(){
  * Restituisce lo username dell'utente collegato (se valido)
  *
  * Funzione che restituisce lo username dell'utente collegato al portale. (se valido e regolarmente loggato)
- * Se l'utente collegato è in realtà un ospite o se non è regolarmente loggato restituisce
+ * Se l'utente collegato e' in realta' un ospite o se non e' regolarmente loggato restituisce
  * una stringa vuota.
  *
  * @author Aldo Boccacci <zorba_@tin.it>
@@ -1279,7 +1299,7 @@ function get_username(){
 
 
 /**
- * Restistuisce TRUE se l'utente collegato può vedere la sezione specificata da $mod
+ * Restistuisce TRUE se l'utente collegato puo' vedere la sezione specificata da $mod
  *
  * Questa funzione restituisce TRUE se l'utente collegato al portale ha i permessi per visualizzare la sezione
  * richiesta.
@@ -1290,8 +1310,8 @@ function get_username(){
  *
  * @param string $mod  il mod della sezione di cui verificare i permessi di visione
  * @param string $user l'utente di cui verificare i permessi. Se non viene specificato questo parametro,
- *                     o se la stringa è vuota si verifica l'utente attualmente collegato al portale
- * @return TRUE se l'utente può vedere la sezione, FALSE in caso contrario
+ *                     o se la stringa e' vuota si verifica l'utente attualmente collegato al portale
+ * @return TRUE se l'utente puo' vedere la sezione, FALSE in caso contrario
  */
 function user_can_view_section($mod,$user=""){
 	$mod = getparam($mod,PAR_NULL,SAN_NULL);
@@ -1309,15 +1329,15 @@ function user_can_view_section($mod,$user=""){
 	$userlevel = _FN_USERLEVEL;
 
 	if ($userlevel=="10") return TRUE;
-	//sarà settata a true se viene rispettato il livello
+	//sara' settata a true se viene rispettato il livello
 	$level_ok = "";
-	//sarà settata true se viene rispettato il nome utente
+	//sara' settata true se viene rispettato il nome utente
 	$user_ok ="";
 
 
-	//se non esistono n il file view.php né il file level.php
+	//se non esistono ne' il file view.php ne' il file level.php
 	//e la funzione load_user_view_permissions() restituisce NULL
-	//allora non esistono restrizioni alla visione e l'utente può visualizzare
+	//allora non esistono restrizioni alla visione e l'utente puo' visualizzare
 	//la sezione indicata da $mod
 	if (!file_exists("sections/$mod/view.php") and !file_exists("sections/$mod/level.php")) return true;
 
@@ -1343,7 +1363,7 @@ function user_can_view_section($mod,$user=""){
 
 
 /**
- * Restistuisce TRUE se l'utente collegato può vedere la sezione specificata da $mod
+ * Restistuisce TRUE se l'utente collegato puo' vedere la sezione specificata da $mod
  *
  * Questa funzione verifica se l'utente collegato ha i permessi di scrittura nella sezione
  * passata come parametro.
@@ -1356,9 +1376,9 @@ function user_can_view_section($mod,$user=""){
  *
  * @param string $mod  il mod della sezione di cui verificare i permessi di scrittura
  * @param string $user l'utente di cui verificare i permessi. Se non viene specificato questo parametro,
- *                     o se la stringa è vuota si verifica l'utente attualmente collegato al portale
- * @return TRUE se l'utente può modificare la sezione, FALSE in caso contrario
- * NOTA: attualmente restituisce TRUE soltanto se l'utente interessato è un amministratore
+ *                     o se la stringa e' vuota si verifica l'utente attualmente collegato al portale
+ * @return TRUE se l'utente puo' modificare la sezione, FALSE in caso contrario
+ * NOTA: attualmente restituisce TRUE soltanto se l'utente interessato e' un amministratore
  */
 function user_can_edit_section($mod,$user=""){
 	$mod = getparam($mod,PAR_NULL,SAN_FLAT);
@@ -1417,7 +1437,7 @@ function get_access_key($mod){
  * carica il profilo dell'utente specificato
  *
  * Carica il profilo dell'utente specificato e restituisce un array con i dati.
- * La struttura dell'array restituito è:
+ * La struttura dell'array restituito e':
  *   $userprofile['password'] = la password codificata in md5 dell'utente
  *   $userprofile['name']     = il nome scelto dal'utente
  *   $userprofile['mail']     = l'indirizzo e-mail specificato
@@ -1432,7 +1452,7 @@ function get_access_key($mod){
  *   $userprofile['regmail']  = la mail utilizzata per registrarsi sul portale
  *   $userprofile['lastedit'] = la data di ultima modifica del profilo
  *   $userprofile['lasteditby'] = l'utente che ha fatto l'ultima modifica al profilo
- *   $userprofile['sign']     = la firma che sarà accodata ai messaggi
+ *   $userprofile['sign']     = la firma che sara' accodata ai messaggi
  *   $userprofile['jabber']   = il nome-utente jabber
  *   $userprofile['skype']    = il nome-utente skype
  *   $userprofile['icq']      = il contatto icq
@@ -1543,7 +1563,7 @@ function load_user_profile_old($user, $mail_activation=0){
  * carica il profilo dell'utente specificato
  *
  * Carica il profilo dell'utente specificato e restituisce un array con i dati.
- * La struttura dell'array restituito è:
+ * La struttura dell'array restituito e':
  *   $userprofile['password'] = la password codificata in md5 dell'utente
  *   $userprofile['name']     = il nome scelto dal'utente
  *   $userprofile['mail']     = l'indirizzo e-mail specificato
@@ -1558,7 +1578,7 @@ function load_user_profile_old($user, $mail_activation=0){
  *   $userprofile['regmail']  = la mail utilizzata per registrarsi sul portale
  *   $userprofile['lastedit'] = la data di ultima modifica del profilo
  *   $userprofile['lasteditby'] = l'utente che ha fatto l'ultima modifica al profilo
- *   $userprofile['sign']     = la firma che sarà accodata ai messaggi
+ *   $userprofile['sign']     = la firma che sara' accodata ai messaggi
  *   $userprofile['jabber']   = il nome-utente jabber
  *   $userprofile['skype']    = il nome-utente skype
  *   $userprofile['icq']      = il contatto icq
@@ -1593,7 +1613,9 @@ function load_user_profile($user, $mail_activation=0){
 	$userprofile = array();
 	if (file_exists($filetoload)){
 	$string = get_file($filetoload);
+	$string = preg_replace("/^<\?exit\(1\)\;\?>\n/","",$string);
 	$string = preg_replace("/^<\?php exit\(1\)\;\?>\n/","",$string);
+	$string = preg_replace("/^<\?xml version\=\'1\.0\'\?>\n/","<?xml version='1.0' encoding='ISO-8859-1'?>",$string);
 		if (function_exists("simplexml_load_string"))
 			$xml = @simplexml_load_string($string);
 		else $xml=FALSE;
@@ -1601,7 +1623,7 @@ function load_user_profile($user, $mail_activation=0){
 			return load_user_profile_old($user);
 		}
 		//la password
-		$password = trim(strip_tags($xml->password));
+		$password = trim(strip_tags(utf8_decode($xml->password)));
 		if (ctype_alnum($password)){
 			$userprofile['password'] = $password;
 		} else {
@@ -1609,54 +1631,54 @@ function load_user_profile($user, $mail_activation=0){
 			die("md5 password is not valid!");
 		}
 		//il nome
-		$userprofile['name'] = strip_tags($xml->name);
+		$userprofile['name'] = strip_tags(utf8_decode($xml->name));
 		//la mail
-		$userprofile['mail'] = strip_tags($xml->mail);
+		$userprofile['mail'] = strip_tags(utf8_decode($xml->mail));
 		//home page
-		$homepage = strip_tags($xml->homepage);
+		$homepage = strip_tags(utf8_decode($xml->homepage));
 		if (!preg_match("/^http\:\/\//s",$homepage) and $homepage!="")
 			$homepage = "http://".$homepage;
 		$userprofile['homepage'] = $homepage;
 		//lavoro
-		$userprofile['work'] = strip_tags($xml->work);
+		$userprofile['work'] = strip_tags(utf8_decode($xml->work));
 		//provenienza
-		$userprofile['from'] = strip_tags($xml->from);
+		$userprofile['from'] = strip_tags(utf8_decode($xml->from));
 		//avatar
-		$userprofile['avatar'] = strip_tags($xml->avatar);
+		$userprofile['avatar'] = strip_tags(utf8_decode($xml->avatar));
 		//avatar
-		$userprofile['hiddenmail'] = strip_tags($xml->hiddenmail);
+		$userprofile['hiddenmail'] = strip_tags(utf8_decode($xml->hiddenmail));
 		if (!preg_match("/0|1/",$userprofile['hiddenmail']))
 			$userprofile['hiddenmail'] = "1";
 		//regdate
-		$userprofile['regdate'] = strip_tags($xml->regdate);
+		$userprofile['regdate'] = strip_tags(utf8_decode($xml->regdate));
 		if (!check_var($userprofile['regdate'],"digit"))
 			$userprofile['regdate'] = "0";
 		//regcode
-		$userprofile['regcode'] = strip_tags($xml->regcode);
+		$userprofile['regcode'] = strip_tags(utf8_decode($xml->regcode));
 		if (!check_var($userprofile['regcode'],"digit"))
 			$userprofile['regcode'] = "0";
 		//la mail utilizzata per registrarsi
-		$userprofile['regmail'] = strip_tags($xml->regmail);
+		$userprofile['regmail'] = strip_tags(utf8_decode($xml->regmail));
 		//lastedit
-		$userprofile['lastedit'] = strip_tags($xml->lastedit);
+		$userprofile['lastedit'] = strip_tags(utf8_decode($xml->lastedit));
 		if (!check_var($userprofile['lastedit'],"digit"))
 			$userprofile['lastedit'] = "0";
 		//lasteditby
-		$userprofile['lasteditby'] = strip_tags($xml->lasteditby);
+		$userprofile['lasteditby'] = strip_tags(utf8_decode($xml->lasteditby));
 		if (!is_alphanumeric($userprofile['lasteditby']))
 			$userprofile['lasteditby'] = "";
 		//firma (ora bbcode)
-		$userprofile['sign'] = strip_tags($xml->sign);
+		$userprofile['sign'] = strip_tags(utf8_decode($xml->sign));
 		//jabber
-		$userprofile['jabber'] = strip_tags($xml->jabber);
+		$userprofile['jabber'] = strip_tags(utf8_decode($xml->jabber));
 		//skype
-		$userprofile['skype'] = strip_tags($xml->skype);
+		$userprofile['skype'] = strip_tags(utf8_decode($xml->skype));
 		//icq
-		$userprofile['icq'] = strip_tags($xml->icq);
+		$userprofile['icq'] = strip_tags(utf8_decode($xml->icq));
 		//msn
-		$userprofile['msn'] = strip_tags($xml->msn);
+		$userprofile['msn'] = strip_tags(utf8_decode($xml->msn));
 		//presentazione utente
-		$presentation = strip_tags($xml->presentation);
+		$presentation = strip_tags(utf8_decode($xml->presentation));
 		$presentation = strip_tags($presentation);
 		if (strlen($presentation)<500) {
 			$presentation = str_replace("[img]","",$presentation);
@@ -1666,7 +1688,7 @@ function load_user_profile($user, $mail_activation=0){
 		else $userprofile['presentation']="";
 
 		//livello
-		$check_level = strip_tags($xml->level);
+		$check_level = strip_tags(utf8_decode($xml->level));
 		if (ctype_digit($check_level) and ($check_level>=0) and ($check_level<=10)){
 			$userprofile['level'] = $check_level;
 		} else $userprofile['level'] = "-1";
@@ -1758,7 +1780,7 @@ function save_user_profile($user, $data_array,$mail_activation=0){
 		$clean_data['name'] = str_replace("\r","",$clean_data['name']);
 		if (is_spam($clean_data['name'],"words",TRUE)){
 			echo "<div align=\"center\"><b>"._FNOME."</b> "._ISSPAM;
-			echo "<br><br><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
+			echo "<br /><br /><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
 			die();
 		}
 	}
@@ -1772,7 +1794,7 @@ function save_user_profile($user, $data_array,$mail_activation=0){
 		//Spam check
 		if (is_spam($clean_data['mail'],"emails")){
 			echo "<div align=\"center\"><b>"._FEMAIL."</b> "._ISSPAM;
-			echo "<br><br><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
+			echo "<br /><br /><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
 			die();
 		}
 	}
@@ -1786,7 +1808,7 @@ function save_user_profile($user, $data_array,$mail_activation=0){
 		//Spam check
 		if (is_spam($clean_data['regmail'],"emails")){
 			echo "<div align=\"center\"><b>"._FEMAIL."</b> "._ISSPAM;
-			echo "<br><br><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
+			echo "<br /><br /><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
 			die();
 		}
 	}
@@ -1801,7 +1823,7 @@ function save_user_profile($user, $data_array,$mail_activation=0){
 		//Spam check
 		if (is_spam($clean_data['homepage'],"words",TRUE)){
 			echo "<div align=\"center\"><b>"._FHOME."</b> "._ISSPAM;
-			echo "<br><br><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
+			echo "<br /><br /><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
 			die();
 		}
 	}
@@ -1817,7 +1839,7 @@ function save_user_profile($user, $data_array,$mail_activation=0){
 		//Spam check
 		if (is_spam($clean_data['work'],"words",TRUE)){
 			echo "<div align=\"center\"><b>"._FPROFES."</b> "._ISSPAM;
-			echo "<br><br><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
+			echo "<br /><br /><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
 			die();
 		}
 	}
@@ -1833,7 +1855,7 @@ function save_user_profile($user, $data_array,$mail_activation=0){
 		//Spam check
 		if (is_spam($clean_data['from'],"words",TRUE)){
 			echo "<div align=\"center\"><b>"._FPROV."</b> "._ISSPAM;
-			echo "<br><br><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
+			echo "<br /><br /><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
 			die();
 		}
 	}
@@ -1853,7 +1875,7 @@ function save_user_profile($user, $data_array,$mail_activation=0){
 			//Spam check
 			if (is_spam($clean_data['avatar'],"words",TRUE)){
 				echo "<div align=\"center\"><b>"._FAVAT."</b> "._ISSPAM;
-				echo "<br><br><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
+				echo "<br /><br /><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
 					die();
 			}
 		}
@@ -1919,7 +1941,7 @@ function save_user_profile($user, $data_array,$mail_activation=0){
 		//Spam check
 		if (is_spam($clean_data['sign'],"words",TRUE)){
 			echo "<div align=\"center\"><b>"._FFIRMA."</b> "._ISSPAM;
-			echo "<br><br><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
+			echo "<br /><br /><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
 			die();
 		}
 	}
@@ -1933,7 +1955,7 @@ function save_user_profile($user, $data_array,$mail_activation=0){
 		//Spam check
 		if (is_spam($clean_data['jabber'],"words",TRUE)){
 			echo "<div align=\"center\"><b>Jabber</b> "._ISSPAM;
-			echo "<br><br><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
+			echo "<br /><br /><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
 			die();
 		}
 	} else $clean_data['jabber'] = "";
@@ -1945,7 +1967,7 @@ function save_user_profile($user, $data_array,$mail_activation=0){
 		//Spam check
 		if (is_spam($clean_data['skype'],"words",TRUE)){
 			echo "<div align=\"center\"><b>Skype</b> "._ISSPAM;
-			echo "<br><br><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
+			echo "<br /><br /><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
 			die();
 		}
 	} else $clean_data['skype'] = "";
@@ -1957,7 +1979,7 @@ function save_user_profile($user, $data_array,$mail_activation=0){
 		//Spam check
 		if (is_spam($clean_data['icq'],"words",TRUE)){
 			echo "<div align=\"center\"><b>Icq</b> "._ISSPAM;
-			echo "<br><br><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
+			echo "<br /><br /><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
 			die();
 		}
 	} else $clean_data['icq'] = "";
@@ -1969,7 +1991,7 @@ function save_user_profile($user, $data_array,$mail_activation=0){
 		//Spam check
 		if (is_spam($clean_data['msn'],"words",TRUE)){
 			echo "<div align=\"center\"><b>Msn</b> "._ISSPAM;
-			echo "<br><br><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
+			echo "<br /><br /><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
 			die();
 		}
 	} else $clean_data['msn'] = "";
@@ -1981,7 +2003,7 @@ function save_user_profile($user, $data_array,$mail_activation=0){
 			//Spam check
 			if (is_spam($clean_data['presentation'],"words",TRUE)){
 				echo "<div align=\"center\"><b>"._FNPRESENTATION."</b> "._ISSPAM;
-				echo "<br><br><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
+				echo "<br /><br /><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
 				die();
 			}
 		}
@@ -2030,11 +2052,11 @@ function save_user_profile($user, $data_array,$mail_activation=0){
 		die("data passed to the function save_user_profile contains php tags!");
 	}
 
-	//se è prevista l'attivazione via mail salvo il tutto nella cartella dedicata
+	//se e' prevista l'attivazione via mail salvo il tutto nella cartella dedicata
 	if ($mail_activation==1)
 		$userfile = fopen(get_waiting_users_dir()."/$user.php","w");
 	else $userfile = fopen(get_fn_dir("users")."/$user.php","w");
-	if (fwrite($userfile,"<?php exit(1);?>\n<?xml version='1.0' encoding='UTF-8'?>\n$xmlstring")){ // ISO-8859-1 to UTF-8
+	if (fwrite($userfile,"<?php exit(1);?>\n<?xml version='1.0' encoding='ISO-8859-1'?>\n$xmlstring")){
 		fnlog("save_user_profile", "$addr||".get_username()."||Saved profile of the user $user");
 	}
 	fclose($userfile);
@@ -2047,7 +2069,7 @@ function save_user_profile($user, $data_array,$mail_activation=0){
  *
  * Restituisce un array contenente alcuni link e stringhe che possono essere
  * utilizzati per stampare il footer del sito.
- * La struttura dell'array restituito è:
+ * La struttura dell'array restituito e':
  * $ret_strings['img_fn']   = immagine con link al sito di Flatnuke
  * $ret_strings['img_w3c']  = immagine con link al sito di validazione HTML
  * $ret_strings['img_css']  = immagine con link al sito di validazione CSS
@@ -2079,22 +2101,22 @@ function get_footer_array(){
 		$img_mail = "themes/$theme/images/validate/email.png";
 	} else $img_mail = "images/validate/email.png";
 	$ret_strings['img_fn'] = "<a href=\"http://www.flatnuke.org/\" target=\"_blank\" title=\"FlatNuke\">";
-	$ret_strings['img_fn'] .= "<img class=\"footerimg\" src=\"$img_fn\" alt=\"FlatNuke\" /></a>";
+	$ret_strings['img_fn'] .= "<img align=\"middle\" border=\"0\" src=\"$img_fn\" alt=\"FlatNuke\" /></a>";
 	$ret_strings['img_w3c'] = "<a href=\"http://validator.w3.org/check/referer\" target=\"_blank\" title=\"Valid HTML 4.01!\">";
-	$ret_strings['img_w3c'] .= "<img class=\"footerimg\" src=\"$img_w3c\" alt=\"Valid HTML 4.01!\" /></a>";
+	$ret_strings['img_w3c'] .= "<img align=\"middle\" border=\"0\" src=\"$img_w3c\" alt=\"Valid HTML 4.01!\" /></a>";
 	$ret_strings['img_css'] = "<a href=\"http://jigsaw.w3.org/css-validator/check/referer\" target=\"_blank\" title=\"Valid CSS!\">";
-	$ret_strings['img_css'] .= "<img class=\"footerimg\" src=\"$img_css\" alt=\"Valid CSS!\" /></a>";
+	$ret_strings['img_css'] .= "<img align=\"middle\" border=\"0\" src=\"$img_css\" alt=\"Valid CSS!\" /></a>";
 	$ret_strings['img_rss'] = "<a href=\""._FN_VAR_DIR."/backend.xml\" target=\"_blank\" title=\"Get RSS 2.0 Feed\">";
-	$ret_strings['img_rss'] .= "<img class=\"footerimg\" src=\"$img_rss\" alt=\"Get RSS 2.0 Feed\" /></a>";
+	$ret_strings['img_rss'] .= "<img align=\"middle\" border=\"0\" src=\"$img_rss\" alt=\"Get RSS 2.0 Feed\" /></a>";
 	global $admin_mail;
 	if ($admin_mail!="" and check_mail($admin_mail)){
 		if (is_dir("sections/none_Email")){
 			$ret_strings['img_mail'] = "<a href=\"index.php?mod=none_Email\" title=\""._GOTOSECTION.": Email\">";
-			$ret_strings['img_mail'] .= "<img src=\"$img_mail\" alt=\"Mail me!\" /></a>";
+			$ret_strings['img_mail'] .= "<img align=\"middle\" border=\"0\" src=\"$img_mail\" alt=\"Mail me!\" /></a>";
 		}
 		else {
 			$ret_strings['img_mail'] = "<a href=\"mailto:$admin_mail\" title=\"Site admin: ".$admin."\">";
-			$ret_strings['img_mail'] .= "<img src=\"$img_mail\" alt=\"Mail me!\" /></a>";
+			$ret_strings['img_mail'] .= "<img align=\"middle\" border=\"0\" src=\"$img_mail\" alt=\"Mail me!\" /></a>";
 		}
 	}
 	else $ret_strings['img_mail'] ="";
@@ -2166,7 +2188,7 @@ function print_subsections($mod){
 			if (get_access_key($section."/".$modlist[$i])!=""){
 				echo " accesskey=\"".get_access_key($section."/".$modlist[$i])."\"";
 			}
-			echo ">$tmp</a><br>";
+			echo ">$tmp</a><br />";
 		}
 		// print files
 		for ($i=0;$i<count($fileslist);$i++){
@@ -2176,10 +2198,10 @@ function print_subsections($mod){
 			} else if (preg_match("/\.txt$/i",$fileslist[$i])){
 				echo "<img src=\"images/mime/kde/text.png\" alt=\"-\">&nbsp;";
 			}
-			echo "<a href=\"index.php?mod=".rawurlencodepath($section)."&amp;file=".$fileslist[$i]."\" title=\""._GOTOFILE." ".$fileslist[$i]."\">".$fileslist[$i]."</a><br>";
+			echo "<a href=\"index.php?mod=".rawurlencodepath($section)."&amp;file=".$fileslist[$i]."\" title=\""._GOTOFILE." ".$fileslist[$i]."\">".$fileslist[$i]."</a><br />";
 		}
 		CloseTable();
-		echo "<br>";
+		echo "<br />";
 	}
 }
 
@@ -2211,7 +2233,7 @@ function list_users(){
 }
 
 /**
- * Restituisce TRUE se il nome utente è già stato scelto,
+ * Restituisce TRUE se il nome utente � gi� stato scelto,
  * FALSE in caso contrario
  *
  * @param string $username il nome utente da controllare
@@ -2376,7 +2398,7 @@ function save_user_edit_permissions($mod,$users){
 	if (preg_match("/\<\?/",$string) or preg_match("/\?\>/",$string))
 		die(_NONPUOI);
 
-	fnwrite("sections/$mod/edit.php","<?xml version='1.0' encoding='UTF-8'?>\n".$string,"w",array("nonull"));
+	fnwrite("sections/$mod/edit.php","<?xml version='1.0'?>\n".$string,"w",array("nonull"));
 	fnlog("Section manage","$addr||".get_username()."||Save edit permission for section ".strip_tags($mod));
 }
 
@@ -2430,7 +2452,7 @@ function save_user_view_permissions($mod,$users){
 	if (preg_match("/\<\?/",$string) or preg_match("/\?\>/",$string))
 		die(_NONPUOI);
 
-	fnwrite("sections/$mod/view.php","<?xml version='1.0' encoding='UTF-8'?>\n".$string,"w",array("nonull"));
+	fnwrite("sections/$mod/view.php","<?xml version='1.0'?>\n".$string,"w",array("nonull"));
 	fnlog("Section manage","$addr||".get_username()."||Save edit permission for section ".strip_tags($mod));
 }
 
@@ -2475,7 +2497,7 @@ function get_waiting_users_dir(){
 		if (!file_exists(_FN_USERS_DIR."/$random")){
 			fn_mkdir(_FN_USERS_DIR."/$random",0777);
 			fnwrite(_FN_USERS_DIR."/index.html"," ","w",array());
-			fnwrite(_FN_VAR_DIR."/waitingusersdir.php","<?xml version='1.0' encoding='UTF-8'?>
+			fnwrite(_FN_VAR_DIR."/waitingusersdir.php","<?xml version='1.0'?>
 	<waitingusersdir>$random</waitingusersdir>","w",array("nonull"));
 		}
 
@@ -2517,7 +2539,7 @@ function list_users_emails(){
 /**
  * Restituisce un array con le email utilizzate per l'attivazione dei profili utente
  *
- * @param int $waitingusers se impostato a 0 restituisce le mail degli utenti già registrati,
+ * @param int $waitingusers se impostato a 0 restituisce le mail degli utenti gia' registrati,
  *            se impostata a 1 restituisce le email degli utenti in attesa di validazione
  * @author Aldo Boccacci
  * @since 2.7
@@ -2572,10 +2594,10 @@ function list_waiting_users(){
 
 
 /**
- * Funzione che controlla la validità di un indirizzo e-mail
+ * Funzione che controlla la validita' di un indirizzo e-mail
  *
  * @param string $mail la mail da controllare
- * @return TRUE se la mail è valida o FALSE in caso contrario
+ * @return TRUE se la mail e' valida o FALSE in caso contrario
  * @author Aldo Boccacci
  * @since 2.7
  */
@@ -2586,9 +2608,9 @@ function check_mail($mail){
 
 
 /**
- * Controlla la validità di un nome utente
+ * Controlla la validita' di un nome utente
  * @param string $username la mail da controllare
- * @return TRUE se il nome utente è valido o FALSE in caso contrario
+ * @return TRUE se il nome utente e' valido o FALSE in caso contrario
  * @author Aldo Boccacci
  * @since 2.7
  *
@@ -2647,19 +2669,19 @@ function rename_section(){
 
 	if (!is_dir(get_fn_dir("sections")."/$fnsectpath/$fnoldsectname")){
 		echo "<div style=\"text-align: center;\">"._THEDIR." <b>$fnsectpath/$fnoldsectname</b> "._DOESNTEXISTS."!";
-		echo "<br><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></dir>";
+		echo "<br /><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></dir>";
 		return;
 	}
 
 	if (!is_writable(get_fn_dir("sections")."/$fnsectpath/$fnoldsectname")){
 		echo _FIG_ALERTNOTWR.": ".strip_tags("$fnsectpath/$fnoldsectname");
-		echo "<br><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a>";
+		echo "<br /><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a>";
 		return;
 	}
 
 	if (is_dir(get_fn_dir("sections")."/$fnsectpath/$fnnewsectname")){
 		echo "<div style=\"text-align: center;\">"._THEDIR." <b>$fnsectpath/$fnnewsectname</b> "._ALREADYEXISTS."!";
-		echo "<br><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
+		echo "<br /><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
 		return;
 	}
 
@@ -2668,7 +2690,7 @@ function rename_section(){
 			save_news_sections_list(list_news_sections());
 			rebuild_proposed_news_list();
 		echo "<div style=\"text-align: center;\"><b>"._FNSECTIONRENAMED."</b>";
-		echo "<br><a href=\"index.php?mod=$fnsectpath/$fnnewsectname\" title=\""._GOTOSECTION."\">"._GOTOSECTION." <b>$fnnewsectname</b></a></div>";
+		echo "<br /><a href=\"index.php?mod=$fnsectpath/$fnnewsectname\" title=\""._GOTOSECTION."\">"._GOTOSECTION." <b>$fnnewsectname</b></a></div>";
 		fnlog("Section manage","$addr||".get_username()."||Section ".strip_tags($fnoldsectname)." renamed in ".strip_tags($fnnewsectname));
 	}
 }
@@ -2688,7 +2710,7 @@ function create_sect_interface($mod){
 	$sectname = "";
 	$sectname = basename($urldecodedmod);
 	?>
-	<script type="text/javascript">
+	<script type="text/javascript" language="javascript">
 	function validate_sect_form()
 		{
 			if(document.getElementById('fnnewsectname').value=='')
@@ -2718,7 +2740,7 @@ function create_sect_interface($mod){
 		<option value=\"forum\">Forum</option>
 		<option value=\"gallery\">Gallery</option>
 		<option value=\"news\">News</option>";
-	echo "</select><br><br>";
+	echo "</select><br /><br />";
 	echo "<input type=\"submit\" name=\"fnok\" value=\""._CREATE."\" />";
 	echo "</form>";
 }
@@ -2748,26 +2770,26 @@ function create_section(){
 
 	if (!is_writable(get_fn_dir("sections")."/$fnsectpath")){
 		echo _FIG_ALERTNOTWR.": ".strip_tags($fnsectpath);
-		echo "<br><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a>";
+		echo "<br /><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a>";
 		return;
 	}
 
 	if (!is_dir(get_fn_dir("sections")."/$fnsectpath")){
 		echo _THEDIR." <b>$fnsectpath</b> "._DOESNTEXISTS."!";
-		echo "<br><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a>";
+		echo "<br /><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a>";
 		return;
 	}
 	if (is_dir(get_fn_dir("sections")."/$fnsectpath/$fnnewsectname") or
 		file_exists(get_fn_dir("sections")."/$fnsectpath/$fnnewsectname")){
 		echo _THEDIR." <b>$fnnewsectname</b> "._ALREADYEXISTS."!";
-		echo "<br><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a>";
+		echo "<br /><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a>";
 		return;
 	}
 
 	if (fn_mkdir(get_fn_dir("sections")."/$fnsectpath/$fnnewsectname",0777)){
 		fnwrite(get_fn_dir("sections")."/$fnsectpath/$fnnewsectname/section.php"," ","w",array());
 		echo "<div style=\"text-align: center;\"><b>"._FNSECTIONCREATED."</b>";
-		echo "<br><a href=\"index.php?mod=".rawurlencode($fnsectpath."/".$fnnewsectname)."\" title=\""._GOTOSECTION."\">"._GOTOSECTION." <b>$fnnewsectname</b></a></div>";
+		echo "<br /><a href=\"index.php?mod=".rawurlencode($fnsectpath."/".$fnnewsectname)."\" title=\""._GOTOSECTION."\">"._GOTOSECTION." <b>$fnnewsectname</b></a></div>";
 		fnlog("Section manage","$addr||".get_username()."||Section created: ".strip_tags("$fnsectpath/$fnnewsectname"));
 
 		if ($fnsecttype=="forum"){
@@ -2807,7 +2829,7 @@ function delete_sect_interface($mod){
 	if (!check_path($decodedmod,"","false")) fndie("\$mod is not valid!",__FILE__,__LINE__);
 	$shownmod= preg_replace("/^\//s","",$decodedmod);
 	$shownmod = preg_replace("/^[0-9][0-9]_/s","",$shownmod);
-	echo _FNDELETESECTION.": <b>$shownmod</b><br><br>";
+	echo _FNDELETESECTION.": <b>$shownmod</b><br /><br />";
 
 	echo "<form action=\"index.php\" method=\"POST\">";
 	echo "<input type=\"hidden\" readonly name=\"fnaction\" value=\"fndeletesect\" />";
@@ -2837,13 +2859,13 @@ function delete_section(){
 
 	if (!is_dir(get_fn_dir("sections")."/$updir")){
 		echo _THEDIR." <b>$updir</b> "._DOESNTEXISTS."!";
-		echo "<br><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a>";
+		echo "<br /><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a>";
 		return;
 	}
 
 	if (!is_writable(get_fn_dir("sections")."/$updir")){
 		echo _FIG_ALERTNOTWR.": ".strip_tags($updir);
-		echo "<br><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a>";
+		echo "<br /><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a>";
 		return;
 	}
 
@@ -2859,14 +2881,14 @@ function delete_section(){
 	if (count($subdirs)!=0){
 		$shownmod= preg_replace("/^\//s","",$fnsectpath);
 		$shownmod = preg_replace("/^[0-9][0-9]_/s","",$shownmod);
-		echo "<b>"._THESECTION." $fnsectpath "._ISNTEMPTY."!</b><br><br>";
+		echo "<b>"._THESECTION." $fnsectpath "._ISNTEMPTY."!</b><br /><br />";
 
-		echo _FNDELETESECTION.": <b>$shownmod</b><br><br>";
+		echo _FNDELETESECTION.": <b>$shownmod</b><br /><br />";
 
 		echo "<form action=\"index.php\" method=\"POST\">";
 		echo "<input type=\"hidden\" readonly name=\"fnaction\" value=\"fnerasesect\" />";
 		echo "<input type=\"hidden\" readonly name=\"fnsectpath\" value=\"$fnsectpath\" />
-		<input type=\"checkbox\" name=\"confirmdelete\" id=\"confirmdelete\" value=\"true\">"._CONFIRM."<br><br>
+		<input type=\"checkbox\" name=\"confirmdelete\" id=\"confirmdelete\" value=\"true\">"._CONFIRM."<br /><br />
 		<input type=\"submit\" name=\"fnok\" value=\""._FNDELETESECTION."\" />";
 		echo "</form>";
 
@@ -2885,21 +2907,21 @@ function delete_section(){
 			}
 		}
 
-		echo "<br>";
+		echo "<br />";
 		echo "<h3>"._CONTENT.":</h3>";
 		//if there aren't dirs return
 		if (count($dirs)!=0){
-			echo "<b>"._FDSUBDIRS."</b>: <br>";
+			echo "<b>"._FDSUBDIRS."</b>: <br />";
 			foreach ($dirs as $dir){
 				echo "<img src=\"themes/$theme/images/subsection.png\" alt=\"Subsection\">&nbsp;".basename($dir);
 				if (!is_writable("sections/$fnsectpath/$dir")) echo " <span style=\"color : #ff0000;\">("._FIG_ALERTNOTWR."!)</span>";
-				echo "<br>";
+				echo "<br />";
 			}
 		}
 		//if there aren't files return
 		if (count($files)==0) return;
-		echo "<br>";
-		echo "<b>Files</b>: <br>";
+		echo "<br />";
+		echo "<b>Files</b>: <br />";
 		//for each file
 		foreach ($files as $file){
 			//if is a Flatnuke system file
@@ -2918,13 +2940,13 @@ function delete_section(){
 			echo getIcon($ext,$icon_style)."&nbsp;$file";
 			if (!is_writable("sections/$fnsectpath/$file"))
 				echo " <span style=\"color : #ff0000;\">("._NOTWRITABLE."!)</span>";
-			echo "<br>";
+			echo "<br />";
 		}
 
 		return;
 	}
 
-	//carico l'elenco dei tags che sarà poi eliminato se la sezione verrà effettivamente
+	//carico l'elenco dei tags che sar� poi eliminato se la sezione verr� effettivamente
 	//rimossa
 	$tags_list = load_tags_list($fnsectpath);
 	$tags_list = array_keys($tags_list);
@@ -2938,12 +2960,11 @@ function delete_section(){
 
 		//e tolgo i tag dalla lista generale
 		remove_tags_from_tags_list($tags_list);
-		// la lista dei tag della sezione verrà eliminata con la sezione
 
 		echo "<div style=\"text-align: center;\"><b>"._FNSECTIONDELETED."</b>";
 		if ($updir==".")
-			echo "<br><br><a href=\"index.php\" title=\"Home page\">Home page</a></div>";
-		else echo "<br><br><a href=\"index.php?mod=$updir\" title=\""._GOTOSECTION." $updir\">"._GOTOSECTION." $updir</a></div>";
+			echo "<br /><br /><a href=\"index.php\" title=\"Home page\">Home page</a></div>";
+		else echo "<br /><br /><a href=\"index.php?mod=$updir\" title=\""._GOTOSECTION." $updir\">"._GOTOSECTION." $updir</a></div>";
 
 		fnlog("Section manage","$addr||".get_username()."||Deleted dir $fnsectpath");
 	}
@@ -2954,7 +2975,7 @@ function delete_section(){
 }
 
 /**
- * Funzione che si occupa di eliminare una sezione senza controllare se è vuota o meno
+ * Funzione che si occupa di eliminare una sezione senza controllare se � vuota o meno
  *
  * @author Aldo Boccacci
  * @since 2.7
@@ -2971,8 +2992,8 @@ function erase_section(){
 
 	if ($confirmdelete!="true"){
 		echo "<div style=\"text-align: center;\">";
-		echo "<br><b>"._DELETESECTNOCONFIRM."</b>";
-		echo "<br><br><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
+		echo "<br /><b>"._DELETESECTNOCONFIRM."</b>";
+		echo "<br /><br /><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
 		return;
 	}
 
@@ -2983,17 +3004,17 @@ function erase_section(){
 
 	if (!is_dir(get_fn_dir("sections")."/$updir")){
 		echo _THEDIR." <b>$updir</b> "._DOESNTEXISTS."!";
-		echo "<br><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a>";
+		echo "<br /><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a>";
 		return;
 	}
 
 	if (!is_writable(get_fn_dir("sections")."/$updir")){
 		echo _FIG_ALERTNOTWR.": ".strip_tags($updir);
-		echo "<br><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a>";
+		echo "<br /><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a>";
 		return;
 	}
 
-	//carico l'elenco dei tags che sarà poi eliminato se la sezione verrà effettivamente
+	//carico l'elenco dei tags che sar� poi eliminato se la sezione verr� effettivamente
 	//rimossa
 	$tags_list = load_tags_list($fnsectpath);
 
@@ -3003,15 +3024,13 @@ function erase_section(){
 		if ($is_news_dir)
 			save_news_sections_list(list_news_sections());
 		rebuild_proposed_news_list();
-
 		//e tolgo i tag dalla lista generale
 		remove_section_tags_from_tags_list($tags_list);
-		// la lista tags della sezione viene eliminata con la sezione
 
 		echo "<div style=\"text-align: center;\"><b>"._FNSECTIONDELETED."</b>";
 		if ($updir==".")
-			echo "<br><br><a href=\"index.php\" title=\"Home page\">Home page</a></div>";
-		else echo "<br><br><a href=\"index.php?mod=$updir\" title=\""._GOTOSECTION." $updir\">"._GOTOSECTION." $updir</a></div>";
+			echo "<br /><br /><a href=\"index.php\" title=\"Home page\">Home page</a></div>";
+		else echo "<br /><br /><a href=\"index.php?mod=$updir\" title=\""._GOTOSECTION." $updir\">"._GOTOSECTION." $updir</a></div>";
 
 		fnlog("Section manage","$addr||".get_username()."||Deleted dir $fnsectpath");
 	}
@@ -3036,7 +3055,7 @@ function create_file_interface($mod){
 	$sectname = "";
 	$sectname = basename($mod);
 
-	echo "<b>"._FNCREATEFILE.":</b><br>";
+	echo "<b>"._FNCREATEFILE.":</b><br />";
 	echo "<form action=\"index.php\" method=\"POST\">";
 	echo "<input type=\"hidden\" readonly name=\"fnaction\" value=\"fncreatefile\" />";
 	echo "<input type=\"hidden\" readonly name=\"fnsectpath\" value=\"".rawurlencodepath($mod)."\" />";
@@ -3075,20 +3094,20 @@ function create_file(){
 
 	if (!is_writable(get_fn_dir("sections")."/$fnsectpath")){
 		echo _FIG_ALERTNOTWR.": ".strip_tags($fnsectpath);
-		echo "<br><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a>";
+		echo "<br /><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a>";
 		return;
 	}
 
 	if (file_exists(get_fn_dir("sections")."/$fnsectpath/$fnnewfilename")){
 		echo _ERROR.": "._THEFILE." <b>$fnnewfilename</b> "._ALREADYEXISTS;
-		echo "<br><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a>";
+		echo "<br /><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a>";
 		return;
 	}
 
 	fnwrite(get_fn_dir("sections")."/$fnsectpath/$fnnewfilename","text","w",array());
 	if (file_exists(get_fn_dir("sections")."/$fnsectpath/$fnnewfilename")){
 		echo "<div style=\"text-align: center;\"><b>"._FNFILECREATED."</b>";
-		echo "<br><a href=\"index.php?mod=$fnsectpath&amp;file=$fnnewfilename\" title=\""._GOTOFILE."\">"._GOTOFILE." <b>$fnnewfilename</b></a></div>";
+		echo "<br /><a href=\"index.php?mod=$fnsectpath&amp;file=$fnnewfilename\" title=\""._GOTOFILE."\">"._GOTOFILE." <b>$fnnewfilename</b></a></div>";
 		fnlog("Section manage","$addr||".get_username()."||File created: ".strip_tags("$fnsectpath/$fnnewfilename"));
 	}
 	else {
@@ -3110,7 +3129,7 @@ function delete_file_interface($file){
 	$file = getparam($file,PAR_NULL,SAN_FLAT);
 	$file = rawurldecode($file);
 	if (!check_path($file,"","true")) fndie("\$file is not valid!",__FILE__,__LINE__);
-	echo _FNDELETEFILE.": <b>$file</b><br><br>";
+	echo _FNDELETEFILE.": <b>$file</b><br /><br />";
 
 	echo "<form action=\"index.php\" method=\"POST\">";
 	echo "<input type=\"hidden\" readonly name=\"fnaction\" value=\"fndeletefile\" />";
@@ -3136,13 +3155,13 @@ function delete_file(){
 
 	if (!file_exists("sections/$fnfilepath")){
 		echo "<div style=\"text-align: center;\">"._THEFILE." <b>sections/$fnfilepath</b> "._DOESNTEXISTS;
-		echo "<br><br><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
+		echo "<br /><br /><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
 	}
 
 	if (is_writable("sections/$fnfilepath")){
 		if (unlink("sections/$fnfilepath")){
 			echo "<div style=\"text-align: center;\"><b>"._FNFILEDELETED."</b>";
-			echo "<br><br><a href=\"index.php?mod=$dir\" title=\""._GOTOSECTION." $dir\">"._GOTOSECTION." $dir</a></div>";
+			echo "<br /><br /><a href=\"index.php?mod=$dir\" title=\""._GOTOSECTION." $dir\">"._GOTOSECTION." $dir</a></div>";
 
 			fnlog("Section manage","$addr||".get_username()."||File sections/$fnfilepath deleted");
 		}
@@ -3152,7 +3171,7 @@ function delete_file(){
 	}
 	else {
 		echo "<div align=\"center\">"._THEFILE." <b>section/$fnfilepath</b> "._NOTWRITABLE;
-		echo "<br><br><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
+		echo "<br /><br /><a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
 	}
 }
 
@@ -3180,7 +3199,7 @@ function rename_file_interface($file){
 	$filename= "";
 	$filename = preg_replace("/\./".$pathinfo['extension']."$","",basename($file));
 
-	echo "<b>"._FNRENAMEFILE.":</b><br><br>";
+	echo "<b>"._FNRENAMEFILE.":</b><br /><br />";
 	echo "<form action=\"index.php\" method=\"POST\">";
 	echo "<input type=\"hidden\" readonly name=\"fnaction\" value=\"fnrenamefile\" />";
 	echo "<input type=\"hidden\" readonly name=\"fnoldfilename\" value=\"".rawurlencodepath($file)."\" />";
@@ -3227,25 +3246,25 @@ function fn_rename_file(){
 // 	print (get_fn_dir("sections")."/$fnfilepath"); die();
 	if (!is_dir(get_fn_dir("sections")."/$fnfilepath")){
 		echo _THEDIR." <b>$fnfilepath</b> "._DOESNTEXISTS."!";
-		echo "<br><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a>";
+		echo "<br /><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a>";
 		return;
 	}
 
 	if (!file_exists(get_fn_dir("sections")."/$fnoldfilename")){
 		echo "<div style=\"text-align: center;\">"._THEFILE." <b>$fnoldfilename</b> "._DOESNTEXISTS."!";
-		echo "<br><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
+		echo "<br /><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
 		return;
 	}
 
 	if (file_exists(get_fn_dir("sections")."/$fnfilepath/$fnnewfilename.$fnfileext")){
 		echo "<div style=\"text-align: center;\">"._THEFILE." <b>$fnnewfilename.$fnfileext</b> "._ALREADYEXISTS."!";
-		echo "<br><br><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
+		echo "<br /><br /><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
 		return;
 	}
 
 	if (rename(get_fn_dir("sections")."/$fnoldfilename",get_fn_dir("sections")."/$fnfilepath/$fnnewfilename.$fnfileext")){
 		echo "<div style=\"text-align: center;\"><b>"._FNFILERENAMED."</b>";
-		echo "<br><a href=\"index.php?mod=$fnfilepath&amp;file=$fnnewfilename.$fnfileext\" title=\""._GOTOFILE."\">"._GOTOFILE." <b>$fnnewfilename</b></a></div>";
+		echo "<br /><a href=\"index.php?mod=$fnfilepath&amp;file=$fnnewfilename.$fnfileext\" title=\""._GOTOFILE."\">"._GOTOFILE." <b>$fnnewfilename</b></a></div>";
 		fnlog("Section manage","$addr||".get_username()."||Section ".strip_tags($fnoldfilename)." renamed in ".strip_tags($fnnewfilename));
 	}
 }
@@ -3264,8 +3283,8 @@ function move_sect_interface($mod){
 	$mod = rawurldecode($mod);
 	if (!check_path($mod,"","false")) fndie("\$mod is not valid!",__FILE__,__LINE__);
 
-	echo _FNMOVESECTION.": <b>$mod</b><br><br>";
-	echo _FNCHOOSEDEST.":<br><br>";
+	echo _FNMOVESECTION.": <b>$mod</b><br /><br />";
+	echo _FNCHOOSEDEST.":<br /><br />";
 
 	//elenco le sezioni
 	include_once("include/filesystem/DeepDir.php");
@@ -3295,7 +3314,7 @@ function move_sect_interface($mod){
 		if (file_exists(get_fn_dir("sections")."/$sect/".basename($mod)) or is_dir(get_fn_dir("sections")."/$sect/".basename($mod))) echo " disabled=\"disabled\"";
 		echo ">$sect</option>";
 	}
-	echo "</select><br><br>";
+	echo "</select><br /><br />";
 
 	echo "<input type=\"submit\" name=\"fnok\" value=\""._FNMOVESECTION."\" />";
 	echo "</form>";
@@ -3327,18 +3346,18 @@ function move_section(){
 	if (file_exists("sections/$fnsectdest/".basename($fnsectpath))){
 		if (is_file("sections/$fnsectdest/".basename($fnsectpath))) {
 			echo "<div style=\"text-align: center;\">There is a file with the same name in the destination dir!";
-			echo "<br><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
+			echo "<br /><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
 			return;
 		}
 		else if (is_dir("sections/$fnsectdest/".basename($fnsectpath))) {
 			echo "<div style=\"text-align: center;\">"._THEDIR." <b>sections/$fnsectdest/".basename($fnsectpath)."</b> "._ALREADYEXISTS;
-			echo "<br><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
+			echo "<br /><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
 			return;
 		}
 	}
 
 	if (rename("sections/$fnsectpath","sections/$fnsectdest/".basename($fnsectpath))){
-		echo "<div style=\"text-align: center;\"><b>"._FNSECTIONMOVED."</b><br><br>";
+		echo "<div style=\"text-align: center;\"><b>"._FNSECTIONMOVED."</b><br /><br />";
 		echo "<a href=\"index.php?mod=".rawurlencodepath("$fnsectdest/".basename($fnsectpath))."\" title=\""._GOTOSECTION." ".basename($fnsectpath)."\">"._GOTOSECTION." ".basename($fnsectpath)."</a></div>";
 		fnlog("Section manage","$addr||".get_username()."||Section $fnsectpath moved to $fnsectdest");
 		if (file_exists("sections/$fnsectdest/".basename($fnsectpath)."/news"))
@@ -3365,8 +3384,8 @@ function fn_move_file_interface($file){
 	$file = rawurldecode($file);
 	if (!check_path($file,"","true")) fn_die("MOVEFILE","\$file is not valid!",__FILE__,__LINE__);
 
-	echo _FNMOVEFILE.": <b>$file</b><br><br>";
-	echo _FNCHOOSEDEST.":<br><br>";
+	echo _FNMOVEFILE.": <b>$file</b><br /><br />";
+	echo _FNCHOOSEDEST.":<br /><br />";
 
 	//elenco le sezioni
 	include_once("include/filesystem/DeepDir.php");
@@ -3392,7 +3411,7 @@ function fn_move_file_interface($file){
 		if (file_exists(get_fn_dir("sections")."/$sect/".basename($file)) or is_dir(get_fn_dir("sections")."/$sect/".basename($file))) echo " disabled=\"disabled\"";
 		echo ">$sect</option>";
 	}
-	echo "</select><br><br>";
+	echo "</select><br /><br />";
 	echo "<input type=\"submit\" name=\"fnok\" value=\""._FNMOVEFILE."\" />";
 	echo "</form>";
 }
@@ -3423,18 +3442,18 @@ function fn_move_file(){
 	if (file_exists("sections/$fnsectdest/".basename($fnfilepath))){
 		if (is_dir("sections/$fnsectdest/".basename($fnsectpath))) {
 			echo "<div style=\"text-align: center;\">There is a file with the same name in the destination dir!";
-			echo "<br><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
+			echo "<br /><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
 			return;
 		}
 		else if (is_file("sections/$fnsectdest/".basename($fnsectpath))) {
 			echo "<div style=\"text-align: center;\">"._THEFILE." <b>sections/$fnsectdest/".basename($fnsectpath)."</b> "._ALREADYEXISTS;
-			echo "<br><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
+			echo "<br /><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
 			return;
 		}
 	}
 
 	if (rename("sections/$fnfilepath","sections/$fnsectdest/".basename($fnfilepath))){
-		echo "<div style=\"text-align: center;\"><b>"._FNFILEMOVED."</b><br><br>";
+		echo "<div style=\"text-align: center;\"><b>"._FNFILEMOVED."</b><br /><br />";
 		echo "<a href=\"index.php?mod=".rawurlencodepath("$fnsectdest")."&amp;file=".rawurlencode(basename($fnfilepath))."\" title=\""._GOTOFILE." ".basename($fnfilepath)."\">"._GOTOFILE." ".basename($fnfilepath)."</a></div>";
 		fnlog("Section manage","$addr||".get_username()."||File $fnfilepath successfully moved to $fnsectdest");
 	}
@@ -3446,7 +3465,7 @@ function fn_move_file(){
 
 
 /**
- * Interfaccia che permette di confermare la volontà di dare all'utente selezionato il permesso
+ * Interfaccia che permette di confermare la volonta' di dare all'utente selezionato il permesso
  * di modificare la sezione specificata nel form.
  *
  * @author Aldo Boccacci
@@ -3458,7 +3477,7 @@ function fn_add_edit_perm_confirm(){
 	$user = getparam("fnadduseredit",PAR_POST,SAN_FLAT);
 
 	if ($user=="---") {
-		echo "<div align=\"center\"><b>"._FNCHOOSEUSER."</b><br><br>";
+		echo "<div align=\"center\"><b>"._FNCHOOSEUSER."</b><br /><br />";
 		echo "<a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
 		return;
 	}
@@ -3467,12 +3486,12 @@ function fn_add_edit_perm_confirm(){
 	if (!check_username($user)) fn_die("FNADDUSERVIEWPERM","\$user is not valid!",__FILE__,__LINE__);
 
 	if (!is_dir(get_fn_dir("sections")."/$mod")) fn_die("FNADDUSERVIEWPERM","\$mod is not a valid directory!",__FILE__,__LINE__);
-	echo "<div align=\"center\"><b>"._ATTENTION."!</b><br><br>";
+	echo "<div align=\"center\"><b>"._ATTENTION."!</b><br /><br />";
 	echo _FNEDITALLOW1." <b>$user</b> "._FNEDITALLOW2." <b>$mod</b>?";
 	echo "<form action=\"index.php\" method=\"post\">
 	<input type=\"hidden\" name=\"mod\" value=\"".rawurlencodepath($mod)."\">
 	<input type=\"hidden\" name=\"user\" value=\"$user\">
-	<input type=\"hidden\" name=\"fnaction\" value=\"fnaddusereditsectperm\"><br>
+	<input type=\"hidden\" name=\"fnaction\" value=\"fnaddusereditsectperm\"><br />
 	<input type=\"submit\" value=\"OK (!)\" />
 	<input type=\"button\" value=\""._CANCEL."\" onclick=\"javascript:history.back();\" />
 	</form>
@@ -3495,7 +3514,7 @@ function fn_add_user_edit_perm(){
 	$user = getparam("user",PAR_POST,SAN_FLAT);
 
 	if ($user=="---") {
-		echo "<div align=\"center\"><b>"._FNCHOOSEUSER."</b><br><br>";
+		echo "<div align=\"center\"><b>"._FNCHOOSEUSER."</b><br /><br />";
 		echo "<a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
 		return;
 	}
@@ -3517,7 +3536,7 @@ function fn_add_user_edit_perm(){
 		protect_file(get_fn_dir("sections")."/$mod/section.php");
 
 		echo "<div align=\"center\">";
-		echo  _FNUSERADDED.": <b>$user</b><br><br>";
+		echo  _FNUSERADDED.": <b>$user</b><br /><br />";
 		echo "<a href=\"index.php?mod=".rawurlencodepath($mod)."\" title=\""._GOTOSECTION.": ".rawurlencodepath($mod)."\">"._GOTOSECTION.": <b>$mod</b></a>";
 		echo "</div>";
 		echo "<meta http-equiv=\"Refresh\" content=\"1; URL=index.php?mod=".rawurlencodepath($mod)."\" >";
@@ -3542,7 +3561,7 @@ function fn_remove_user_edit_perm(){
 	$user = getparam("fnremoveuseredit",PAR_POST,SAN_FLAT);
 
 	if ($user=="---") {
-		echo "<div align=\"center\"><b>"._FNCHOOSEUSER."</b><br><br>";
+		echo "<div align=\"center\"><b>"._FNCHOOSEUSER."</b><br /><br />";
 		echo "<a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
 		return;
 	}
@@ -3565,7 +3584,7 @@ function fn_remove_user_edit_perm(){
 		save_user_edit_permissions($mod,$newperms);
 		fnlog("Section manage","$addr||".get_username()."||Removed permission in section $mod for user $user ");
 		echo "<div align=\"center\">";
-		echo  _FNUSERREMOVED.": <b>$user</b><br><br>";
+		echo  _FNUSERREMOVED.": <b>$user</b><br /><br />";
 		echo "<a href=\"index.php?mod=".rawurlencodepath($mod)."\" title=\""._GOTOSECTION.": ".rawurlencodepath($mod)."\">"._GOTOSECTION.": <b>$mod</b></a>";
 		echo "</div>";
 		echo "<meta http-equiv=\"Refresh\" content=\"1; URL=index.php?mod=".rawurlencodepath($mod)."\" >";
@@ -3590,7 +3609,7 @@ function fn_add_user_view_perm(){
 	$user = getparam("fnadduser",PAR_POST,SAN_FLAT);
 
 	if ($user=="---") {
-		echo "<div align=\"center\"><b>"._FNCHOOSEUSER."</b><br><br>";
+		echo "<div align=\"center\"><b>"._FNCHOOSEUSER."</b><br /><br />";
 		echo "<a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
 		return;
 	}
@@ -3612,7 +3631,7 @@ function fn_add_user_view_perm(){
 		protect_file(get_fn_dir("sections")."/$mod/section.php");
 
 		echo "<div align=\"center\">";
-		echo  _FNUSERADDED.": <b>$user</b><br><br>";
+		echo  _FNUSERADDED.": <b>$user</b><br /><br />";
 		echo "<a href=\"index.php?mod=".rawurlencodepath($mod)."\" title=\""._GOTOSECTION.": ".rawurlencodepath($mod)."\">"._GOTOSECTION.": <b>$mod</b></a>";
 		echo "</div>";
 		echo "<meta http-equiv=\"Refresh\" content=\"1; URL=index.php?mod=".rawurlencodepath($mod)."\" >";
@@ -3637,7 +3656,7 @@ function fn_remove_user_view_perm(){
 	$user = getparam("fnremoveuser",PAR_POST,SAN_FLAT);
 
 	if ($user=="---") {
-		echo "<div align=\"center\"><b>"._FNCHOOSEUSER."</b><br><br>";
+		echo "<div align=\"center\"><b>"._FNCHOOSEUSER."</b><br /><br />";
 		echo "<a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
 		return;
 	}
@@ -3660,7 +3679,7 @@ function fn_remove_user_view_perm(){
 		save_user_view_permissions($mod,$newperms);
 		fnlog("Section manage","$addr||".get_username()."||Removed view permission in section $mod for user $user ");
 		echo "<div align=\"center\">";
-		echo  _FNUSERREMOVED.": <b>$user</b><br><br>";
+		echo  _FNUSERREMOVED.": <b>$user</b><br /><br />";
 		echo "<a href=\"index.php?mod=".rawurlencodepath($mod)."\" title=\""._GOTOSECTION.": ".rawurlencodepath($mod)."\">"._GOTOSECTION.": <b>$mod</b></a>";
 		echo "</div>";
 		echo "<meta http-equiv=\"Refresh\" content=\"1; URL=index.php?mod=".rawurlencodepath($mod)."\" >";
@@ -3690,7 +3709,7 @@ function choose_sect_type_interface($mod){
 	}
 	$modshow = preg_replace("/\/\//s","/",$mod);
 	$modshow = preg_replace("/^\//s","",$modshow);
-	echo "<b>".strip_tags($modshow)."</b>: cambia il tipo di sezione<br><br>";
+	echo "<b>".strip_tags($modshow)."</b>: cambia il tipo di sezione<br /><br />";
 	echo "<form action=\"index.php\" method=\"post\">";
 	echo "<input type=\"hidden\" readonly name=\"fnaction\" value=\"fnchangesecttype\" />";
 	echo "<input type=\"hidden\" readonly name=\"fnsectpath\" value=\"".rawurlencodepath($mod)."\" />";
@@ -3716,7 +3735,7 @@ function choose_sect_type_interface($mod){
 		if (file_exists(get_fn_dir("sections")."/$mod/news"))
 			echo " selected=\"selected\"";
 		echo ">News</option>";
-	echo "</select><br><br>";
+	echo "</select><br /><br />";
 	echo "<input type=\"submit\" name=\"fnok\" value=\"OK\" />";
 	echo "</form>";
 }
@@ -3740,19 +3759,19 @@ function change_section_type(){
 
 	if (!file_exists(get_fn_dir("sections")."/$fnsectpath")){
 		echo "<div style=\"text-align:center;\"><b>"._ATTENTION."</b>: "._THEDIR." ".strip_tags($fnsectpath)." "._DOESNTEXISTS."!";
-		echo "<br><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
+		echo "<br /><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
 		return;
 	}
 
 	if (!is_dir(get_fn_dir("sections")."/$fnsectpath")){
 		echo "<div style=\"text-align:center;\"><b>"._ATTENTION."</b>: ".strip_tags($fnsectpath)." "._ISNOTADIR."!";
-		echo "<br><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
+		echo "<br /><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
 		return;
 	}
 
 	if (!is_writable(get_fn_dir("sections")."/$fnsectpath")){
 		echo "<div style=\"text-align:center;\"><b>"._ATTENTION."</b>: "._THEDIR." ".strip_tags($fnsectpath)." "._NOTWRITABLE."!";
-		echo "<br><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
+		echo "<br /><a href=\"javascript:history.back();\">&lt;&lt; "._INDIETRO."</a></div>";
 		return;
 	}
 	//gestisce lui la scrittura e gli errori
@@ -3760,7 +3779,7 @@ function change_section_type(){
 	rebuild_proposed_news_list();
 	$fnsectpathshow = preg_replace("/\/\//s","/",$fnsectpath);
 	$fnsectpathshow = preg_replace("/^\//s","",$fnsectpathshow);
-	echo "<br><div style=\"text-align:center;\"><a href=\"index.php?mod=".
+	echo "<br /><div style=\"text-align:center;\"><a href=\"index.php?mod=".
 		rawurlencodepath($fnsectpath)."\" title=\""._GOTOSECTION.": ".
 		rawurlencodepath($fnsectpath)."\">"._GOTOSECTION." <b>$fnsectpathshow</b></a></div>";
 }
@@ -3788,7 +3807,7 @@ function section_admin_panel(){
 	echo "<input type=\"button\" value=\""._MANAGESECTION."\" onclick=\"ShowHideDiv('sectadminpanel');\" />";
 	echo "<div id=\"sectadminpanel\" style=\"display:none;\" >";
 	echo "<fieldset title=\""._FNMANAGESECTTITLE."\"><legend><b>"._MANAGESECTION."</b></legend>";
-	echo "<i>"._MANAGESECTNOTE."</i><br><br>";
+	echo "<i>"._MANAGESECTNOTE."</i><br /><br />";
 
 	if ($file==""){
 		if(is_writable("sections/$mod/section.php") and !fn_is_system_dir($mod)){
@@ -3937,7 +3956,7 @@ function section_admin_panel(){
 				if ($count!=0) echo ", ";
 				echo "<a href=\"index.php?mod=none_Login&amp;action=viewprofile&amp;user=".$usersperms[$count]."\" title=\""._VIEW_USERPROFILE."\">".$usersperms[$count]."</a>";
 			}
-			echo "<br><br>";
+			echo "<br /><br />";
 		}
 
 		//aggiungi/togli utenti
@@ -3956,7 +3975,7 @@ function section_admin_panel(){
 			echo "<option>".$allusers[$count]."</option>";
 		}
 		echo "</select>";
-		echo "</form><br>";
+		echo "</form><br />";
 
 		echo "<form action='index.php' method='post'>
 		<input type='hidden' name='fnaction' value='fnremoveusersectperm' />
@@ -3973,7 +3992,7 @@ function section_admin_panel(){
 			echo "<option>".$usersperms[$count]."</option>";
 		}
 		echo "</select>";
-		echo "</form><br>";
+		echo "</form><br />";
 
 		// manage section's level
 		$level = getsectlevel($mod);
@@ -4014,7 +4033,7 @@ function section_admin_panel(){
 				if ($count!=0) echo ", ";
 				echo "<a href=\"index.php?mod=none_Login&amp;action=viewprofile&amp;user=".$usersperms[$count]."\" title=\""._VIEW_USERPROFILE."\">".$usersperms[$count]."</a>";
 			}
-			echo "<br><br>";
+			echo "<br /><br />";
 		}
 
 		//aggiungi/togli utenti
@@ -4034,7 +4053,7 @@ function section_admin_panel(){
 			echo "<option>".$allusers[$count]."</option>";
 		}
 		echo "</select>";
-		echo "</form><br>";
+		echo "</form><br />";
 
 		echo "<form action='index.php' method='post'>
 		<input type='hidden' name='fnaction' value='fnremoveusereditsectperm' />
@@ -4051,7 +4070,7 @@ function section_admin_panel(){
 			echo "<option>".$usersperms[$count]."</option>";
 		}
 		echo "</select>";
-		echo "</form><br>";
+		echo "</form><br />";
 		echo "</fieldset>";
 	}
 
@@ -4061,7 +4080,7 @@ function section_admin_panel(){
 
 
 /**
- * Questa funzione mostra il pulsante modifica se l'utente è abilitato a modificare la sezione corrente
+ * Questa funzione mostra il pulsante modifica se l'utente e' abilitato a modificare la sezione corrente
  *
  * @author Aldo Boccacci
  * @since 2.7
@@ -4146,7 +4165,7 @@ function section_user_edit_panel(){
 
 
 /**
- * Questa funzione restituisce TRUE se il $mod passato come parametro è una sezione protetta del sistema
+ * Questa funzione restituisce TRUE se il $mod passato come parametro e' una sezione protetta del sistema
  * che non deve essere rinominata/eliminata/spostata/modificata
  *
  * @param string $mod il $mod della sezione da verificare
@@ -4183,7 +4202,7 @@ function protect_file($path){
 	$string = '<?php
 	if (preg_match("/'.basename($path).'/",$_SERVER[\'PHP_SELF\'])) die();
 ?>';
-	//solo se il file non contiene già il codice di controllo...lo aggiungo!
+	//solo se il file non contiene gia' il codice di controllo...lo aggiungo!
 	if (!preg_match("/\<\?.*preg_match\(.*die().*\?\>/",$text)){
 		fnwrite($path, $string.$text,"w",array("nonull"));
 	}
@@ -4210,9 +4229,9 @@ function get_unprotected_text($text_protected){
  * Purifica la stringa passata e la restituisce una volta eliminati tutti i codici non esplicitamente permessi
  *
  * @param string $text il testo da purificare
- * @param string $mode la modalità di purificazione:
- * 		 admin: se l'utente è admin (attualmente non usata)
- * 		 user: è permesso un numero minore di tag html
+ * @param string $mode la modalita' di purificazione:
+ * 		 admin: se l'utente e' admin (attualmente non usata)
+ * 		 user: e' permesso un numero minore di tag html
  * @author Aldo Boccacci
  * @since 2.7
  */
@@ -4235,7 +4254,7 @@ function fn_purge_html_string($text,$mode="user"){
  * Imposta il tipo di sezione da visualizzare
  *
  * @param string $mod il mod della sezione da impostare
- * @param string $type il tipo di sezione. Può essere: standard, download, downloadsection, forum, gallery
+ * @param string $type il tipo di sezione. Puo' essere: standard, download, downloadsection, forum, gallery
  *
  * @author Aldo Boccacci
  * @since 2.7
@@ -4254,7 +4273,7 @@ function set_section_type($mod,$type){
 	@unlink("sections/$mod/news");
 
 	if ($type=="standard"){
-		//ho già rimosso tutto più sopra
+		//ho gia' rimosso tutto piu' sopra
 		fnlog("Section manage","$addr||".get_username()."||The section ".strip_tags("$mod")." now is standard");
 	}
 	else if ($type=="forum"){
@@ -4362,7 +4381,7 @@ function fn_textarea($type,$text,$options){
 			array( 'Source','-','Save','NewPage','DocProps','Preview','Print','-','Templates' ),
 			array( 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo'),
 			array( 'Find','Replace','-','SelectAll','-','SpellChecker', 'Scayt'),
-// 			Non metto i form perché tendenzialmente non utilizzati in Flatnuke
+// 			Non metto i form perch� tendenzialmente non utilizzati in Flatnuke
 // 			array('Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton','HiddenField'),
 // 			array(	'/'),
 			array('Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat'),
@@ -4407,12 +4426,12 @@ include_once("include/plugins/editors/FCKeditor/fckeditor.php");
 }
 
 /**
- * Se magic_quotes_gpc è settato a On restituisce la stringa
+ * Se magic_quotes_gpc � settato a On restituisce la stringa
  * passata con stripslashes()
  *
  * @author Aldo Boccacci
  * @since 3.0
- * @return la stringa passata con stripslashes se magic_quotes_gpc è settato a On
+ * @return la stringa passata con stripslashes se magic_quotes_gpc � settato a On
  *
  */
 function fn_stripslashes($string){
@@ -4429,9 +4448,6 @@ function fn_stripslashes($string){
  * @param string $title il titolo (non viene utilizzato da tutti i siti)
  * @author Aldo Boccacci
  * @since 3.0.1
- * Edited by Alfredo Cosco (05/2014): 
- * valid HTML5 $link
- * 
  */
 function create_social_links($link,$title){
 	// you can redefine create_social_links() function
@@ -4445,8 +4461,6 @@ function create_social_links($link,$title){
 	$link  = strip_tags(stripslashes($link));
 	$title = str_replace(" &raquo;", ":", $title);
 	$title = urlencode(strip_tags(stripslashes($title)));
-	// link validation
-	$link  = str_replace("&", "&amp;", $link);
 	// build URL
 	$protocol = (isset($_SERVER['HTTPS']) AND $_SERVER['HTTPS']=="on") ? ("https://") : ("http://");
 	$link     = $protocol.$link;
@@ -4454,13 +4468,13 @@ function create_social_links($link,$title){
 	$social = "";
 	// share content with Facebook
 	if (file_exists("images/social/facebook.png"))
-		$social = "<a href=\"http://www.facebook.com/share.php?u=$link&amp;t='$title'\" title=\"Facebook\" target=\"_blank\"><i class=\"fa fa-facebook-square fa-2x\"></i></a>&nbsp;";
+		$social = "<a href=\"http://www.facebook.com/share.php?u=$link&amp;t='$title'\" title=\"Facebook\" target=\"_blank\"><img src=\"images/social/facebook.png\" alt=\"Facebook\"></a>";
 	// share content with Twitter
 	if (file_exists("images/social/twitter.png"))
-		$social .= "<a href=\"https://twitter.com/home?status=$title%20-%20$link\" title=\"Twitter\" target=\"_blank\"><i class=\"fa fa-twitter-square fa-2x\"></i></a>&nbsp;";
+		$social .= "<a href=\"https://twitter.com/home?status=$title%20-%20$link\" title=\"Twitter\" target=\"_blank\"><img src=\"images/social/twitter.png\" alt=\"Twitter\" ></a>";
 	// share content with LinkedIn
 	if (file_exists("images/social/linkedin.png"))
-		$social .= "<a href=\"https://www.linkedin.com/shareArticle?summary=$title&amp;url=$link&amp;source=$link&amp;title=$title&amp;mini=true\" title=\"LinkedIn\" target=\"_blank\"><i class=\"fa fa-linkedin-square fa-2x\"></i></a>&nbsp;";
+		$social .= "<a href=\"https://www.linkedin.com/shareArticle?summary=$title&amp;url=$link&amp;source=$link&amp;title=$title&amp;mini=true\" title=\"LinkedIn\" target=\"_blank\"><img src=\"images/social/linkedin.png\" alt=\"LinkedIn\"></a>";
 	// share content with Google+
 	if (file_exists("images/social/google.png")) {
 		$social .= "<script type=\"text/javascript\">document.write(' <g:plusone annotation=\"none\"><\/g:plusone>');</script>";

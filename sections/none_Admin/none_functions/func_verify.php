@@ -135,7 +135,7 @@ function fncc_savepoll() {
 	$commenti = get_xml_element("commenti",$file_xml);
 	$commento = get_xml_array("commento",$commenti);
 	// build new file
-	$file_xml = "<?xml version='1.0' encoding='UTF-8'?>\n<sondaggio>\n";
+	$file_xml = "<?xml version='1.0'?>\n<sondaggio>\n";
 	$file_xml .= "\t<attivo>$fp_stato</attivo>\n";
 	$file_xml .= "\t<domanda>$salva_domanda</domanda>\n";
 	$file_xml .= "\t<opzioni>\n";
@@ -184,7 +184,7 @@ function fncc_archpoll() {
 	// save actual poll in the archive directory
 	copy($sondaggio_file_dati, $percorso_vecchi."/".time().".xml");
 	// build new poll
-	$new_poll = "<?xml version='1.0' encoding='UTF-8'?>\n<sondaggio>\n\t<attivo>n</attivo>\n\t<domanda>"._FP_NUOVOSONDAGGIO."</domanda>\n\t<opzioni>\n";
+	$new_poll = "<?xml version='1.0'?>\n<sondaggio>\n\t<attivo>n</attivo>\n\t<domanda>"._FP_NUOVOSONDAGGIO."</domanda>\n\t<opzioni>\n";
 	for($i=1; $i<4; $i++) {
 		$new_poll .= "\t\t<opzione>\n\t\t\t<testo>"._FP_OPZIONE."$i</testo>\n\t\t\t<voto>$i</voto>\n\t\t</opzione>\n";
 	}
@@ -419,7 +419,7 @@ function fncc_cleanlog() {
 	// write the new file
 	$ip = getparam("REMOTE_ADDR", PAR_SERVER, SAN_NULL);
 	if(is_admin()) {
-		fnwrite(get_fn_dir("var")."/log/".$logfile.".php", "<?php exit(1);?>\n", "wb");
+		fnwrite($logfile, "<?php exit(1);?>\n", "wb");
 		fnlog("Site maintenance", "$ip||".get_username()."||Log $logfile cleaned.");
 	} else {
 		fnlog("Security", "$ip||".get_username()."||Tried to clean the file $logfile.");

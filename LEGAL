@@ -35,12 +35,12 @@ alcune piccole modifiche di un carattere (ad esempio "Flat-Nuke", "Flat Nuke",
 ecc.) che si riferiscono allo stesso programma: "flatnuke".
 
 flatnuke ha un copyright e una nota di copyright. Se vuoi utilizzarlo devi
-lasciare intatta la nota di fondo. Questa procedura Ã¨ in accordo con i termini
-della licenza con cui Ã¨ rilasciato: GNU/GPL. Se rimuovi questa nota di
+lasciare intatta la nota di fondo. Questa procedura è in accordo con i termini
+della licenza con cui è rilasciato: GNU/GPL. Se rimuovi questa nota di
 copyright stai violando la licenza copyright/copyleft.
 (http://www.gnu.org/licenses/gpl-violation.it.html)
 
-flatnuke Ã¨ "software libero" puoi modificarlo in accordo con i termini della
+flatnuke è "software libero" puoi modificarlo in accordo con i termini della
 sua licenza di distribuzione (GNU/GPL). Se vuoi modificare flatnuke o se vuoi
 utilizzare una versione modificata di flatnuke, devi lasciare intatta la nota
 di fondo e un chiaro riferimento all'autore originale, altrimenti stai violando
@@ -49,7 +49,7 @@ la licenza copyright/copyleft.
 
 Se sei un bravo programmatore e vuoi iniziare un "fork" di flatnuke, per favore
 scegli un nome coerente. Scegliendo nomi come "flatnuke+", "flatnuke++",
-"flatnuke-abc", "flatnukeX", ecc...confondi gli utenti finali. Questo Ã¨ un
+"flatnuke-abc", "flatnukeX", ecc...confondi gli utenti finali. Questo è un
 suggerimento, non un'imposizione.
 
 Per maggiori informazioni sulla licenza di distribuzione leggi il file COPYING.

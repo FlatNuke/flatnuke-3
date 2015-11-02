@@ -34,7 +34,7 @@ function delete_news($section,$news){
 				remove_tags_from_tags_list($data['tags']);
 				//rimuovo i tag dall'elenco della sezione
 				remove_tags_from_tags_list($data['tags'],$section);
-				echo "<br><div style=\"text-align: center\">"._THENEWS." <b>".$data['title']."</b> "._NEWSDELETED.".<br><br><a href=\"index.php$modstring\">"._RETURN."</a></div>";
+				echo "<br /><div style=\"text-align: center\">"._THENEWS." <b>".$data['title']."</b> "._NEWSDELETED.".<br /><br /><a href=\"index.php$modstring\">"._RETURN."</a></div>";
 				flatnews_logf("DELETE: the news ".$data['title']." in the section ".strip_tags($section)." was deleted");
 				//creo il feed rss della sezione
 				create_feed($section);
@@ -43,7 +43,7 @@ function delete_news($section,$news){
 			}
 		}
 		else {
-			echo "<div style=\"text-align: center\">"._NEWSNOTDELETED." ".$data['title']." "._NEWSNOTDELETED2.". "._FDCHECKPERM.".<br><br><a href=\"index.php$modstring\">"._RETURN."</a></div>";
+			echo "<div style=\"text-align: center\">"._NEWSNOTDELETED." ".$data['title']." "._NEWSNOTDELETED2.". "._FDCHECKPERM.".<br /><br /><a href=\"index.php$modstring\">"._RETURN."</a></div>";
 
 			flatnews_logf("DELETE: the file ".strip_tags($news)." in the section ".strip_tags($section)." is not writable",__LINE__,__FILE__);
 		}
@@ -71,18 +71,18 @@ function delete_proposed_news($section,$news){
 		$data = load_news_header($section,$news);
 		if (is_writable($newsfile)){
 			if (unlink($newsfile)){
-				echo "<div style=\"text-align: center\"><b>"._THENEWS." ".$data['title']."</b> "._NEWSDELETED.".<br><br><a href=\"index.php$modstring\" title=\""._GOTOSECTION."\">"._GOTOSECTION."</a></div>";
+				echo "<div style=\"text-align: center\"><b>"._THENEWS." ".$data['title']."</b> "._NEWSDELETED.".<br /><br /><a href=\"index.php$modstring\" title=\""._GOTOSECTION."\">"._GOTOSECTION."</a></div>";
 				//aggiorno la lista delle news proposte dagli utenti
 				save_proposed_news_list(load_proposed_news_list());
 				$count = count(load_proposed_news_list());
 				if ($count>0){
-					echo "<br><br><a href=\"index.php?$modstring"."&amp;action=manageproposednews\" title=\""._SEGNNOTIZIE."\">&lt;&lt; "._MANAGEOTHERPROPOSEDNEWS.". ($count)</a>";
+					echo "<br /><br /><a href=\"index.php?$modstring"."&amp;action=manageproposednews\" title=\""._SEGNNOTIZIE."\">&lt;&lt; "._MANAGEOTHERPROPOSEDNEWS.". ($count)</a>";
 				}
 				flatnews_logf("DELETE: the proposed news ".strip_tags($news)." in the section ".strip_tags($section)." was deleted");
 			}
 		}
 		else {
-			echo "<div style=\"text-align: center\">"._NEWSNOTDELETED." $news "._NEWSNOTDELETED2.". "._FDCHECKPERM.".<br><br><a href=\"index.php$modstring\">"._RETURN."</a></div>";
+			echo "<div style=\"text-align: center\">"._NEWSNOTDELETED." $news "._NEWSNOTDELETED2.". "._FDCHECKPERM.".<br /><br /><a href=\"index.php$modstring\">"._RETURN."</a></div>";
 
 			flatnews_logf("DELETE: the file ".strip_tags($news)." in the section ".strip_tags($section)." is not writable",__LINE__,__FILE__);
 		}
@@ -107,7 +107,7 @@ function delete_news_interface($section,$news){
 
 	$data = load_news($section,$news);
 
-	echo "<br><div style=\"text-align: center\">"._DELETENEWSALERT." <b>".$data['title']."</b> ";
+	echo "<br /><div style=\"text-align: center\">"._DELETENEWSALERT." <b>".$data['title']."</b> ";
 	if ($section=="none_News" or $section=="") echo _INHOMEPAGE;
 	else echo _INTHESECT." <b>".strip_tags($section);
 	echo "</b>?";
@@ -115,7 +115,7 @@ function delete_news_interface($section,$news){
 	echo "<input type=\"hidden\" name=\"newsaction\" readonly=\"readonly\" value=\"deletenews\" />";
 	echo "<input type=\"hidden\" name=\"section\" readonly=\"readonly\" value=\"".rawurlencodepath($section)."\" />";
 	echo "<input type=\"hidden\" name=\"news\" readonly=\"readonly\" value=\"$news\" />";
-	echo "<br><br><input type=\"submit\" name=\"fnok\" value=\""._ELIMINA."\" />";
+	echo "<br /><br /><input type=\"submit\" name=\"fnok\" value=\""._ELIMINA."\" />";
 	echo "</form></div>";
 }
 
@@ -145,13 +145,13 @@ function edit_comment_interface($section,$news,$comment){
 	<input type=\"hidden\" name=\"number\" value=\"$comment\" />
 	<input type=\"hidden\" name=\"fnmod\" value=\""._FN_MOD."\" />";
 	// bbcodes panel
-	bbcodes_panel("newscomment", "home", "formatting"); echo "<br>";
-	bbcodes_panel("newscomment", "home", "emoticons"); echo "<br>";
-	bbcodes_panel("newscomment","home","images"); echo "<br>";
+	bbcodes_panel("newscomment", "home", "formatting"); echo "<br />";
+	bbcodes_panel("newscomment", "home", "emoticons"); echo "<br />";
+	bbcodes_panel("newscomment","home","images"); echo "<br />";
 
-	echo "<textarea cols=\"50\" rows=\"20\" name=\"newscomment\" id=\"newscomment\" style=\"width: 95%\" >".$newsdata['comments'][$commentindex]['cmpost']."</textarea><br><br>
+	echo "<textarea cols=\"50\" rows=\"20\" name=\"newscomment\" id=\"newscomment\" style=\"width: 95%\" >".$newsdata['comments'][$commentindex]['cmpost']."</textarea><br /><br />
 	<input type=\"submit\" value=\""._FINVIA."\" />
-	</form><br>";
+	</form><br />";
 	view_news($section,$news);
 
 }
@@ -181,15 +181,13 @@ function save_news_admin(){
 
 	$newsfile = get_news_file($section,$news);
 	if (is_file($newsfile)) {
-		$new = false;
 		$data = load_news($section,$news);
-		// rimuovo i tag dalla lista globale, saranno riaggiunti al salvataggio con eventuali modifiche
 		remove_tags_from_tags_list($data['tags']);
-		// rimuovo i tag dalla lista della sezione, saranno riaggiunti al salvataggio con eventuali modifiche
 		remove_tags_from_tags_list($data['tags'],$section);
+		$new = false;
 	} else {
-		$new = true;
 		$data = array();
+		$new = true;
 	}
 
 	// print_r($_POST);
@@ -198,17 +196,17 @@ function save_news_admin(){
 	$data['category'] = getparam("news_category",PAR_POST,SAN_FLAT);
 	$data['header'] = getparam("news_header",PAR_POST,SAN_NULL);
 	$data['body'] = getparam("news_body",PAR_POST,SAN_NULL);
-	//se Ã¨ in uso un editor visuale elimino tutti gli \n per evitare che vengano convertiti
-	//in <br> in fase di visualizzazione
+	//se è in uso un editor visuale elimino tutti gli \n per evitare che vengano convertiti
+	//in <br /> in fase di visualizzazione
 	//Con la funzione preg_replace_callback riesco a sostituire i \n presenti all'interno di
-	//<pre></pre> con degli <br> prima della sostituzione di tutti gli \n successivi
-	//MODIFICATO INTEGRALMENTE QUESTO CODICE PERCHÃˆ NON COMPATIBILE CON PHP 5.2
+	//<pre></pre> con degli <br /> prima della sostituzione di tutti gli \n successivi
+	//MODIFICATO INTEGRALMENTE QUESTO CODICE PERCHÈ NON COMPATIBILE CON PHP 5.2
 	//MODIFICATO SENZA USARE LA FUNZIONE CALLBACK
 	if (($news_editor=="ckeditor" AND file_exists("include/plugins/editors/ckeditor/ckeditor.php"))
 		or ($news_editor=="fckeditor" AND file_exists("include/plugins/editors/FCKeditor/fckeditor.php"))){
 			preg_match_all("/<pre>(.+?)<\/pre>/s",$data['header'],$prematch);
 			for ($countreplace=0;$countreplace<count($prematch[0]);$countreplace++){
-				$replace = preg_replace("/\n/","<br>",$prematch[0][$countreplace]);
+				$replace = preg_replace("/\n/","<br />",$prematch[0][$countreplace]);
 				$replace = preg_replace("/\r/s","",$replace);
 				$data['header'] = preg_replace("/".preg_quote($prematch[0][$countreplace],'/')."/s",$replace,$data['header']);
 	// 			$data['header'] = preg_replace("/\r/s","",$data['header']);
@@ -217,9 +215,9 @@ function save_news_admin(){
 	// 		echo "FINALE:";
 	// 		print_r($data['header']);
 	// 		die();
-	//	CODICE RIMOSSO PERCHÃˆ NON COMPATIBILE CON PHP 5.2
+	//	CODICE RIMOSSO PERCHÈ NON COMPATIBILE CON PHP 5.2
 	// 	$data['header'] = preg_replace_callback("/<pre>(.+?)<\/pre>/s",function ($match) {
-	// 	return "<pre>".preg_replace("/\n/","<br>",$match[1])."</pre>";}, $data['header']);
+	// 	return "<pre>".preg_replace("/\n/","<br />",$match[1])."</pre>";}, $data['header']);
 	//	Al termine di tutto rimuovo gli a capo
 		$data['header'] = preg_replace("/\n/s","",$data['header']);
 		$data['header'] = preg_replace("/\r/s","",$data['header']);
@@ -229,13 +227,13 @@ function save_news_admin(){
 		or ($news_editor=="fckeditor" AND file_exists("include/plugins/editors/FCKeditor/fckeditor.php"))){
 			preg_match_all("/<pre>(.+?)<\/pre>/s",$data['body'],$prematch);
 			for ($countreplace=0;$countreplace<count($prematch[0]);$countreplace++){
-				$replace = preg_replace("/\n/","<br>",$prematch[0][$countreplace]);
+				$replace = preg_replace("/\n/","<br />",$prematch[0][$countreplace]);
 				$replace = preg_replace("/\r/s","",$replace);
 				$data['body'] = preg_replace("/".preg_quote($prematch[0][$countreplace],'/')."/s",$replace,$data['body']);
 	// 			$data['body'] = preg_replace("/\r/s","",$data['body']);
 			}
 	// 	$data['body'] = preg_replace_callback("/<pre>(.+?)<\/pre>/s",function ($match) {
-	// 	return "<pre>".preg_replace("/\n/","<br>",$match[1])."</pre>";}, $data['body']);
+	// 	return "<pre>".preg_replace("/\n/","<br />",$match[1])."</pre>";}, $data['body']);
 		$data['body'] = preg_replace("/\n/s","",$data['body']);
 		$data['body'] = preg_replace("/\r/s","",$data['body']);
 	}
@@ -245,7 +243,7 @@ function save_news_admin(){
 		$data['lasteditby'] = _FN_USERNAME;
 		$data['lastedit'] = time();
 	} else {
-		//Ã¨ una nuova news
+		//è una nuova news
 		$data['by'] = _FN_USERNAME;
 		$data['date'] = $news;
 	}
@@ -257,7 +255,7 @@ function save_news_admin(){
 
 	//salvo la news
 	save_news($section,$news,$data);
-	//aggiungo i tag all'elenco globale
+	//aggiungo i tag
 	add_tags_in_tags_list($data['tags']);
 	//aggiungo i tag nella lista della sezione
 	add_tags_in_tags_list($data['tags'],$section);
@@ -305,10 +303,10 @@ function delete_comment($section,$news,$comment){
 	else {
 		unset($data['comments'][$comment]);
 		save_news($section,$news,$data);
-		echo "<div style=\"text-align: center\"><b>"._COMMENTDELETED."!</b><br>";
+		echo "<div style=\"text-align: center\"><b>"._COMMENTDELETED."!</b><br />";
 // 		echo "</div>";
 		//ritorno
-		echo "<meta http-equiv=\"Refresh\" content=\"1; URL=index.php?$modstring"."action=viewnews&amp;news=$news\"><br><a href=\"index.php?$modstring"."action=viewnews&amp;news=$news\" title=\""._RETURN."\">"._RETURN."</a></div>";
+		echo "<meta http-equiv=\"Refresh\" content=\"1; URL=index.php?$modstring"."action=viewnews&amp;news=$news\"><br /><a href=\"index.php?$modstring"."action=viewnews&amp;news=$news\" title=\""._RETURN."\">"._RETURN."</a></div>";
 		flatnews_logf("DELETE COMMENT: comment $comment deleted in the news $news in the section $section");
 	}
 }
@@ -342,9 +340,9 @@ function news_edit_comment($section,$news,$number,$comment){
 		$data['comments'][$number]['cmlastedit'] = time();
 	}
 	else {
-		echo "<div style=\"text-align: center;\"><b>"._ERROR."! "._COMMENTNOTEXISTS."!</b><br>";
+		echo "<div style=\"text-align: center;\"><b>"._ERROR."! "._COMMENTNOTEXISTS."!</b><br />";
 		//ritorno
-		echo "<meta http-equiv=\"Refresh\" content=\"1; URL=index.php?$modstring"."action=viewnews&amp;news=$news\"><br><a href=\"index.php?$modstring"."action=viewnews&amp;news=$news\" title=\""._RETURN."\">"._RETURN."</a></div>";
+		echo "<meta http-equiv=\"Refresh\" content=\"1; URL=index.php?$modstring"."action=viewnews&amp;news=$news\"><br /><a href=\"index.php?$modstring"."action=viewnews&amp;news=$news\" title=\""._RETURN."\">"._RETURN."</a></div>";
 
 		flatnews_logf("EDIT COMMENT: comment $number doesn't exists in the news $news in the section $section");
 
@@ -352,9 +350,9 @@ function news_edit_comment($section,$news,$number,$comment){
 
 	save_news($section,$news,$data);
 
-	echo "<div style=\"text-align: center;\"><b>"._COMMENT_EDITED.".</b><br>";
+	echo "<div style=\"text-align: center;\"><b>"._COMMENT_EDITED.".</b><br />";
 	//ritorno
-	echo "<meta http-equiv=\"Refresh\" content=\"1; URL=index.php?$modstring"."action=viewnews&amp;news=$news\"><br><a href=\"index.php?$modstring"."action=viewnews&amp;news=$news\" title=\""._RETURN."\">"._RETURN."</a></div>";
+	echo "<meta http-equiv=\"Refresh\" content=\"1; URL=index.php?$modstring"."action=viewnews&amp;news=$news\"><br /><a href=\"index.php?$modstring"."action=viewnews&amp;news=$news\" title=\""._RETURN."\">"._RETURN."</a></div>";
 
 	flatnews_logf("EDIT COMMENT: comment $number doesn't exists in the news $news in the section $section");
 }
@@ -386,7 +384,7 @@ function set_news_ontop($section,$news,$ontop){
 				$modstring="";
 				if (_FN_MOD!="") $modstring = "?mod="._FN_MOD;
 
-				echo "<div align=\"center\"><b>"._NEWSONTOP."</b>.<br><br><a href=\"index.php$modstring\" >"._RETURN."</a>
+				echo "<div align=\"center\"><b>"._NEWSONTOP."</b>.<br /><br /><a href=\"index.php$modstring\" >"._RETURN."</a>
 				</div>";
 				echo "<meta http-equiv=\"Refresh\" content=\"1; URL=index.php$modstring\" >";
 			}
@@ -399,7 +397,7 @@ function set_news_ontop($section,$news,$ontop){
 				$modstring="";
 				if (_FN_MOD!="") $modstring = "?mod="._FN_MOD;
 
-				echo "<div align=\"center\"><b>"._NEWSNORMAL."</b>.<br><br><a href=\"index.php$modstring\" >"._RETURN."</a>
+				echo "<div align=\"center\"><b>"._NEWSNORMAL."</b>.<br /><br /><a href=\"index.php$modstring\" >"._RETURN."</a>
 				</div>";
 				echo "<meta http-equiv=\"Refresh\" content=\"1; URL=index.php$modstring\" >";
 			}
@@ -443,7 +441,7 @@ function hide_news($section,$news,$hide){
 				$modstring="";
 				if (_FN_MOD!="") $modstring = "?mod="._FN_MOD;
 
-				echo "<div align=\"center\"><b>"._NEWSHIDDEN.".</b><br><br><a href=\"index.php$modstring\" >"._RETURN."</a>
+				echo "<div align=\"center\"><b>"._NEWSHIDDEN.".</b><br /><br /><a href=\"index.php$modstring\" >"._RETURN."</a>
 				</div>";
 				echo "<meta http-equiv=\"Refresh\" content=\"1; URL=index.php$modstring\" >";
 			}
@@ -456,7 +454,7 @@ function hide_news($section,$news,$hide){
 				$modstring="";
 				if (_FN_MOD!="") $modstring = "?mod="._FN_MOD;
 
-				echo "<div align=\"center\"><b>"._NEWSSHOWN.".</b><br><br><a href=\"index.php$modstring\" >"._RETURN."</a>
+				echo "<div align=\"center\"><b>"._NEWSSHOWN.".</b><br /><br /><a href=\"index.php$modstring\" >"._RETURN."</a>
 				</div>";
 				echo "<meta http-equiv=\"Refresh\" content=\"1; URL=index.php$modstring\" >";
 			}
@@ -477,7 +475,7 @@ function hide_news($section,$news,$hide){
 function manage_proposed_news_interface(){
 	$proposednewslist = load_proposed_news_list();
 	if (count($proposednewslist)==0){
-		echo "<div align=\"center\"><b>"._NOPUBNEWS.".</b><br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a></div>";
+		echo "<div align=\"center\"><b>"._NOPUBNEWS.".</b><br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a></div>";
 	}
 
 
@@ -488,7 +486,7 @@ function manage_proposed_news_interface(){
 		if (!in_array($section,$key))
 			$key[]=$section;
 // 		$data = load_news($proposednewslist[$n]['section'],$proposednewslist[$n]['news']);
-// 		echo "Â» ";
+// 		echo "» ";
 	}
 
 	for ($n=0;$n<count($ordered);$n++){
@@ -498,7 +496,7 @@ function manage_proposed_news_interface(){
 		else echo "<h2>$currentkey</h2>";
 		for ($i=0;$i<count($ordered[$currentkey]);$i++){
 			$data = load_news($currentkey,$ordered[$currentkey][$i],TRUE);
-			echo "Â» <a href=\"index.php?mod=$currentkey&amp;action=viewproposednews&amp;section=$currentkey&amp;news=".$ordered[$currentkey][$i]."\" title=\""._FLEGGI."\">".$data['title']."</a> by ".$data['by']."<br/>";
+			echo "» <a href=\"index.php?mod=$currentkey&amp;action=viewproposednews&amp;section=$currentkey&amp;news=".$ordered[$currentkey][$i]."\" title=\""._FLEGGI."\">".$data['title']."</a> by ".$data['by']."<br/>";
 		}
 	}
 // print_r($ordered);
@@ -525,7 +523,7 @@ function publish_proposed_news($section,$news){
 		flatnews_die("The news ".strip_tags($news)." in the section ".strip_tags($section)." doesn't exists!",__FILE__,__LINE__);
 
 	if (!is_writable(get_news_dir($section))){
-		echo "<div align=\"center\"><b>"._THESECTION." ".strip_tags($section)." "._FDNOTWRITE.".</b> "._FDCHECKPERM.".<br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a></div>";
+		echo "<div align=\"center\"><b>"._THESECTION." ".strip_tags($section)." "._FDNOTWRITE.".</b> "._FDCHECKPERM.".<br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a></div>";
 		return;
 	}
 
@@ -536,13 +534,11 @@ function publish_proposed_news($section,$news){
 
 	//controllo se riesco a pubblicare la news
 	if (rename($proposednewsfile,$newsfile)){
+		//aggiungo i tag alla lista
 		$data = load_news_header($section,$news);
-		//aggiungo i tag alla lista generale
 		add_tags_in_tags_list($data['tags']);
-		//aggiungo i tag alla lista della sezione
-		add_tags_in_tags_list($data['tags'],$section);
 
-		echo "<div align=\"center\"><b>"._THENEWS." ".strip_tags($news)."  "._NEWSPUBLISHED." ".strip_tags($section)."</b>.<br><br>";
+		echo "<div align=\"center\"><b>"._THENEWS." ".strip_tags($news)."  "._NEWSPUBLISHED." ".strip_tags($section)."</b>.<br /><br />";
 
 		echo "<a href=\"index.php?$modstring\"><b>"._GOTOSECTION."</b></a> | <a href=\"index.php?$modstring&amp;action=viewnews&amp;news=$news\"><b>"._READNEWS."</b></a>";
 
@@ -566,14 +562,14 @@ function publish_proposed_news($section,$news){
 		//controllo se ci sono ancora news da approvare
 		$count = count(load_proposed_news_list());
 		if ($count>0){
-			//se sÃ¬, stampo i link per amministrarle
-			echo "<br><br><a href=\"index.php?$modstring"."&amp;action=manageproposednews\" title=\""._SEGNNOTIZIE."\">"._MANAGEOTHERPROPOSEDNEWS.". ($count)</a>";
+			//se sì, stampo i link per amministrarle
+			echo "<br /><br /><a href=\"index.php?$modstring"."&amp;action=manageproposednews\" title=\""._SEGNNOTIZIE."\">"._MANAGEOTHERPROPOSEDNEWS.". ($count)</a>";
 		}
 		echo "</div>";
 	}
 	else {
 		//se non riesco a pubblicare la news stampo un avviso
-		echo "<div align=\"center\"><br><br>"._NOTPOSSIBLEPUBLISHNEWS.".";
+		echo "<div align=\"center\"><br /><br />"._NOTPOSSIBLEPUBLISHNEWS.".";
 		$count = count(load_proposed_news_list());
 		if ($count>0){
 			echo "<a href=\"index.php?$modstring"."&amp;action=manageproposednews\" title=\""._SEGNNOTIZIE."\">&lt;&lt; "._MANAGEOTHERPROPOSEDNEWS.". ($count)</a></div>";
@@ -597,7 +593,7 @@ function move_news_interface($section,$news){
 	$mod = _FN_MOD;
 	$news_sections = load_news_sections_list();
 	if (count($news_sections)<2){
-		echo "<div align=\"center\"><b>"._NOOTHERNEWSSECT."</b><br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a></div>";
+		echo "<div align=\"center\"><b>"._NOOTHERNEWSSECT."</b><br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a></div>";
 		return;
 	}
 	$data = load_news($section,$news);
@@ -611,7 +607,7 @@ function move_news_interface($section,$news){
 	echo "<input type=\"hidden\" name=\"section\" readonly=\"readonly\" value=\"$section\" />";
 	echo "<input type=\"hidden\" name=\"news\" readonly=\"readonly\" value=\"$news\" />";
 	echo "Sposta la notizia <b>".$data['title']."</b>:";
-	echo "<br><br><select name=\"destsection\">";
+	echo "<br /><br /><select name=\"destsection\">";
 	echo "<option selected=\"selected\" disabled=\"disabled\">"._FNCHOOSEDEST."</option>";
 	$destsection="";
 	foreach ($news_sections as $destsection){
@@ -624,13 +620,13 @@ function move_news_interface($section,$news){
 			if (!file_exists($destpath."/".get_news_file($news)))
 				if ($destsection!=$section)
 					echo "<option value=\"".rawurlencodepath($destsection)."\">$destsectionshow</option>";
-				//se Ã¨ la cartella di partenza non mostro nulla
+				//se è la cartella di partenza non mostro nulla
 // 				else echo "<option disabled=\"disabled\" selected=\"selected\">$destsectionshow</option>";
 		}
 		else echo "<option disabled=\"disabled\" title=\""._FIG_ALERTNOTWR."\">$destsectionshow</option>";
 	}
 	echo "</select>";
-	echo "<br><br><input type=\"submit\" name=\"ffok\" value=\""._MOVE."\" />";
+	echo "<br /><br /><input type=\"submit\" name=\"ffok\" value=\""._MOVE."\" />";
 	echo "</form>";
 }
 
@@ -689,7 +685,6 @@ function move_news($section,$news,$destsection){
 		remove_tags_from_tags_list($newsdata['tags'],$section);
 		//aggiungo i tags alla sezione di arrivo
 		add_tags_in_tags_list($newsdata['tags'],$destsection);
-		// i tags globali restano invariati
 	}
 	else{
 		echo "<div style=\"align: center;\"><b>".NEWSNOTMOVED."!</b>";

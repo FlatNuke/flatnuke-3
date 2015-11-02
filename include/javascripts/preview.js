@@ -19,9 +19,9 @@ function news_preview() {
 	// header
 	if (getElement("news_header").value != "") {
 		head = replace_tags(getElement("news_header").value);
-		getElement("fnpreview").innerHTML += head + "<br><br>";
+		getElement("fnpreview").innerHTML += head + "<br /><br />";
 	} else {
-		getElement("fnpreview").innerHTML += "&nbsp;<br><br>";
+		getElement("fnpreview").innerHTML += "&nbsp;<br /><br />";
 	}
 	// body
 	if (getElement("news_body").value != "") {
@@ -38,7 +38,7 @@ function forum_preview() {
 	myclose += "<a href='javascript:;' style='text-decoration:none;' onclick='prevshow();'><b>X</b></a></div>";
 	// title
 	if (getElement("ffsubj").value != "") {
-	    getElement("fnpreview").innerHTML = myclose + "<b style=\"border-bottom: 1px solid;\">" + getElement("ffsubj").value + "</b><br><br>";
+	    getElement("fnpreview").innerHTML = myclose + "<b style=\"border-bottom: 1px solid;\">" + getElement("ffsubj").value + "</b><br /><br />";
 	} else {
 		getElement("fnpreview").innerHTML = myclose + "&nbsp;"
 	}

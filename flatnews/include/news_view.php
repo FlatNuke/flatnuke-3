@@ -51,13 +51,13 @@ function view_news_header($section,$news){
 				$ntitle = $data['title'];
 	} else $ntitle = "<img src=\"themes/$theme/images/news.png\" alt=\"News\" />&nbsp;".$data['title'];
 
-	//controllo se √® nascosta
+	//controllo se Ë nascosta
 	if (news_is_hidden($news))
 		$ntitle = "<span style=\"color : #ff0000; text-decoration : line-through;\">$ntitle</span>";
-	//se la news √® in evidenza metto un'icona accanto al titolo
+	//se la news Ë in evidenza metto un'icona accanto al titolo
 	$ontopstring="";
 	if (news_is_ontop($news))
-		$ontopstring = _ICONONTOP."&nbsp;";
+		$ontopstring = "<img src='forum/icons/ontop.png' alt='Ontop' />&nbsp;";
 	//se esiste uso la nuova funzione per aprire le news in home
 	if (function_exists("OpenNewsHeader"))
 		OpenNewsHeader($ontopstring.$ntitle);
@@ -65,10 +65,10 @@ function view_news_header($section,$news){
 	$w3c_title = _ARGOMENTO.": ".preg_replace("/\.png$|\.gif$|\.jpeg$|\.jpg$/i","",$data['category']);
 	echo "<a href=\"index.php?mod=none_Search&amp;where=news&amp;category=".$data['category']."\">";
 	if(file_exists("images/news/".$data['category'])) {
-		echo "<img src=\"images/news/".$data['category']."\" style='padding-left:10px;padding-bottom:10px;float:right;' alt=\"$w3c_title\" title=\"$w3c_title\" />";
+		echo "<img src=\"images/news/".$data['category']."\" style='padding-left:10px;padding-bottom:10px' border=\"0\" alt=\"$w3c_title\" title=\"$w3c_title\" align=\"right\" />";
 	}
 	else if ($data['category']=="nonews.png")
-		echo "<img src=\"images/nonews.png\" style='padding-left:10px;padding-bottom:10px; float:right' alt=\"$w3c_title\" title=\"$w3c_title\" />";
+		echo "<img src=\"images/nonews.png\" style='padding-left:10px;padding-bottom:10px' border=\"0\" alt=\"$w3c_title\" title=\"$w3c_title\" align=\"right\" />";
 	else echo "<div style='text-align:right;padding-left:10px;padding-bottom:10px;'>$w3c_title</div>";
 	echo "</a>";
 	//se ci sono dei tag da mostrare
@@ -82,20 +82,13 @@ function view_news_header($section,$news){
 					echo ",";
 			}
 		}
-		echo "<br><br>";
+		echo "<br /><br />";
 	}
-// 	echo "<br>";
+// 	echo "<br />";
 // 	if (count($data['tags'])>0)
 // 		echo "<div style=\" height: auto !important;height: 30px; min-height: 30px;\">";
 // 	else echo "<div style=\" height: auto !important;height: 60px; min-height: 60px;\">";
-	echo stripslashes(tag2html($data['header']));
-
-	//creo i link per i siti sociali
-	echo "<div class='social-links' style='text-align:right;margin-left:10px;margin-bottom:10px;/*border:1px;border-left-style: solid; border-bottom-style: solid;border-color: #d5d6d7;*/'>";
-// 	echo "<div class='social-links'>";
-	create_social_links($_SERVER["SERVER_NAME"].$_SERVER['REQUEST_URI']."?action=viewnews&news=".$news,_FN_TITLE.": ".$data['title']);
-	echo "</div>";
-
+	echo stripslashes(tag2html($data['header'],"home"));
 // 	echo "</div>";
 	create_footer_news($section,$news,$data);
 	if (function_exists("CloseNewsHeader"))
@@ -180,7 +173,7 @@ function view_news_section($section){
 	if (($mod!="" or ($mod!="none_News" and _FN_MOD!=""))
 		and file_exists(_FN_SECTIONS_DIR."/".$mod."/feed.xml"))
 	echo "<div style=\"text-align:right;margin:5px 0 5px 0;\">
-		<a href=\""._FN_SECTIONS_DIR."/".$mod."/feed.xml\" target=\"_blank\" title=\"News feed\"><img src=\"images/rss.png\" alt=\"News feed\" height=\"32\" width=\"32\"/></a>
+		<a href=\""._FN_SECTIONS_DIR."/".$mod."/feed.xml\" target=\"_blank\" title=\"News feed\"><img border=\"0\" src=\"images/rss.png\" alt=\"News feed\" height=\"32\" width=\"32\"/></a>
 	</div>";
 }
 
@@ -195,7 +188,7 @@ function view_news_section($section){
  * @since 0.1
  *
  */
-function view_news($section, $news, $proposed=FALSE){
+function view_news($section, $news,$proposed=FALSE){
 	$section = getparam($section,PAR_NULL,SAN_FLAT);
 	$news = getparam($news,PAR_NULL,SAN_FLAT);
 	$proposed = getparam($proposed,PAR_NULL,SAN_FLAT);
@@ -203,7 +196,7 @@ function view_news($section, $news, $proposed=FALSE){
 		$proposed = FALSE;
 		flatnews_logf("\$proposed must be boolean!",__FILE__,__LINE__);
 	}
-	//se $proposed √® settato a TRUE carico il file dalla cartella dei file proposti
+	//se $proposed Ë settato a TRUE carico il file dalla cartella dei file proposti
 	if ($proposed==TRUE)
 		$newsfile = get_proposed_news_file($section,$news);
 	else $newsfile = get_news_file($section,$news);
@@ -215,7 +208,7 @@ function view_news($section, $news, $proposed=FALSE){
 	if (!user_can_view_news($section,$news)) {
 		global $theme;
 		OpenTable("");
-		print("<div class=\"centeredDiv\"><b>"._NOLEVELSECT."</b></div><br><br>");
+		print("<div align='center'><b>"._NOLEVELSECT."</b></div><br /><br />");
 		if (file_exists("themes/$theme/fn_denied.php")) {
 			include(stripslashes("themes/$theme/fn_denied.php"));
 		} else {
@@ -237,7 +230,7 @@ function view_news($section, $news, $proposed=FALSE){
 	$news    = getparam($news,     PAR_NULL,   SAN_FLAT);
 	// check if the news really exists
 	if(!file_exists($newsfile)) {
-		print("<div class=\"centeredDiv\"><b>"._NORESULT."</b></div>");
+		print("<div align='center'><b>"._NORESULT."</b></div>");
 		return;
 	}
 	// add 1 visit to the news (if you aren't admin or moderator)
@@ -251,30 +244,29 @@ function view_news($section, $news, $proposed=FALSE){
 	// print news
 	if (preg_match("/^hide_/i",$news))
 		$title = "<span style=\"color : #ff0000; text-decoration : line-through;\">$title</span>";
-	//controllo se la news √® nascosta
+	//controllo se la news Ë nascosta
 	if(defined('_THEME_VER')) {
 		if(_THEME_VER > 0){
 			//se esiste uso la nuova funzione per aprire le news
 			if (function_exists("OpenNews"))
-				OpenNews(news_is_ontop($news) ? _ICONONTOP."&nbsp;".$title : _ICONREAD."&nbsp;".$title);
-			else OpenTableTitle(news_is_ontop($news) ? _ICONONTOP."&nbsp;".$title : _ICONREAD."&nbsp;".$title);
+				OpenNews($title);
+			else OpenTableTitle($title);
 		}
-	}
-	else {
+	} else {
 		//se esiste uso la nuova funzione per aprire le news
 		if (function_exists("OpenNews"))
-			OpenNews(news_is_ontop($news) ? _ICONONTOP."&nbsp;".$title : _ICONREAD."&nbsp;".$title);
-		else OpenTableTitle(news_is_ontop($news) ? _ICONONTOP."&nbsp;".$title : _ICONREAD."&nbsp;".$title);
+			OpenNews($title);
+		else OpenTableTitle("<img src='themes/$theme/images/read.png' alt='Read' />&nbsp;".$title);
 
 	}
 	// topic
 	$w3c_title = _ARGOMENTO.": ".preg_replace("/\.png$|\.gif$|\.jpeg$|\.jpg$/i","",$category);
 	echo "<a href=\"index.php?mod=none_Search&amp;where=news&amp;category=".$data['category']."\">";
 	if(file_exists("images/news/".$data['category'])) {
-		echo "<img src=\"images/news/".$data['category']."\" alt=\"$w3c_title\" title=\"$w3c_title\" style=\"float:right\" />";
+		echo "<img src=\"images/news/".$data['category']."\" border=\"0\" alt=\"$w3c_title\" title=\"$w3c_title\" align=\"right\" />";
 	}
 	else if ($data['category']=="nonews.png")
-		echo "<img src=\"images/nonews.png\" alt=\"$w3c_title\" title=\"$w3c_title\" style=\"float:right\" />";
+		echo "<img src=\"images/nonews.png\" border=\"0\" alt=\"$w3c_title\" title=\"$w3c_title\" align=\"right\" />";
 	else echo "<div style='text-align:right;padding-bottom:5px;'>$w3c_title</div>";
 	echo "</a>";
 	//se ci sono dei tag da mostrare
@@ -289,10 +281,10 @@ function view_news($section, $news, $proposed=FALSE){
 			}
 		}
 	}
-echo "<br><br>";
+echo "<br /><br />";
 
 
-	print stripslashes(tag2html($header))."<br><br>".stripslashes(tag2html($body));
+	print stripslashes(tag2html($header,"home"))."<br /><br />".stripslashes(tag2html($body,"home"));
 	echo "<div class='social-links' style='text-align:right;margin-left:10px;margin-bottom:10px;/*border:1px;
 border-left-style: solid; border-bottom-style: solid;border-color: #d5d6d7;*/'>";
 // 	echo "<div class='social-links'>";
@@ -301,7 +293,7 @@ border-left-style: solid; border-bottom-style: solid;border-color: #d5d6d7;*/'>"
 	// footer
 	echo "<div class='footnews'>\n";
 	$news_link = get_news_link_array($section,$news,$data);
-	echo $news_link['news_infos']."<br>";
+	echo $news_link['news_infos']."<br />";
 	if ($proposed==FALSE){
 		echo $news_link['link_comment']." ";
 		echo $news_link['link_print']." ";
@@ -320,13 +312,13 @@ border-left-style: solid; border-bottom-style: solid;border-color: #d5d6d7;*/'>"
 			$modstringpost="";
 			if (_FN_MOD!="") $modstringpost = "?mod="._FN_MOD;
 			else $modstringpost = "?mod=none_News";
-			echo "<div align=\"center\"><br><form action=\"index.php$modstringpost\" method=\"POST\">
+			echo "<div align=\"center\"><br /><form action=\"index.php$modstringpost\" method=\"POST\">
 			<input type=\"hidden\" name=\"newsaction\" value=\"publishproposednews\" readonly=\"readonly\">
 			<input type=\"hidden\" name=\"section\" value=\"$section\" readonly=\"readonly\">
 			<input type=\"hidden\" name=\"news\" value=\"$news\" readonly=\"readonly\">
 			<input type=\"SUBMIT\" value=\""._FDPUBLISH."\"></form></div>";
 
-			echo "<div align=\"center\"><br><form action=\"index.php$modstringpost\" method=\"POST\">
+			echo "<div align=\"center\"><br /><form action=\"index.php$modstringpost\" method=\"POST\">
 			<input type=\"hidden\" name=\"newsaction\" value=\"deleteproposednews\" readonly=\"readonly\">
 			<input type=\"hidden\" name=\"section\" value=\"$section\" readonly=\"readonly\">
 			<input type=\"hidden\" name=\"news\" value=\"$news\" readonly=\"readonly\">
@@ -338,10 +330,10 @@ border-left-style: solid; border-bottom-style: solid;border-color: #d5d6d7;*/'>"
 	// comments
 	echo "<h3 id=\"comments\" >"._COMMENTI."</h3>";
 	echo $news_link['link_addcomment'];
-// 	echo "<a href=\"#addcomment\" title=\""._ADDCOMM."\">"._ADDCOMM."</a><br>";
+// 	echo "<a href=\"#addcomment\" title=\""._ADDCOMM."\">"._ADDCOMM."</a><br />";
 	$comments=$data['comments'];
 	for($count_comment=0;$count_comment<count($comments);$count_comment++){
-		print "<br>";
+		print "<br />";
 		$user=$comments[$count_comment]['cmby'];
 		print "<div class='comment' style='height: auto !important;height: 100px; min-height: 100px;'>";
 		// avatar into the comment
@@ -351,11 +343,11 @@ border-left-style: solid; border-bottom-style: solid;border-color: #d5d6d7;*/'>"
 			$img=$userdata['avatar'];
 			if($img!=""){
 				if(!stristr($img,"http://"))
-					echo "<img src='forum/".$img."' alt='avatar' class=\"avatar\" />";
+					echo "<img src='forum/".$img."' alt='avatar' border='0' align='left' hspace='10' vspace='5' style='max-width:100px' />";
 				else
-					echo "<img src='".$img."' alt='avatar' class=\"avatar\" />";
-			} else echo "<img src='forum/images/blank.png' alt='avatar' class=\"avatar\" />";
-		} else echo "<img src='forum/images/blank.png' alt='avatar' class=\"avatar\" />";
+					echo "<img src='".$img."' alt='avatar' border='0' align='left' hspace='10' vspace='5' style='max-width:100px' />";
+			} else echo "<img src='forum/images/blank.png' alt='avatar' border='0' align='left' hspace='10' vspace='5' style='max-width:100px' />";
+		} else echo "<img src='forum/images/blank.png' alt='avatar' border='0' align='left' hspace='10' vspace='5' style='max-width:100px' />";
 		// comment author
 		if (trim($user!="")){
 			if (file_exists(_FN_USERS_DIR."/$user.php"))
@@ -374,7 +366,7 @@ border-left-style: solid; border-bottom-style: solid;border-color: #d5d6d7;*/'>"
 			$date_comment = date(" Y - ",$date_comment+(3600*$fuso_orario)).date("H:",$date_comment+(3600*$fuso_orario)).date("i",$date_comment+(3600*$fuso_orario));
 		}
 		else $date_comment = "/";
-		echo "$date_comment<br><br>";
+		echo "$date_comment<br /><br />";
 
 		//edit?
 		if ($comments[$count_comment]['cmlastedit']!=""){
@@ -389,27 +381,29 @@ border-left-style: solid; border-bottom-style: solid;border-color: #d5d6d7;*/'>"
 			else $date_comment = "/";
 			echo "$date_comment";
 
-			echo ")</i><br><br>";
+			echo ")</i><br /><br />";
 		}
 		// comment
-		print stripslashes(tag2html($comments[$count_comment]['cmpost']));
-
+		print stripslashes(tag2html($comments[$count_comment]['cmpost'],"home"));
 		// link to manage the current comment
 		if(_FN_IS_ADMIN or _FN_IS_NEWS_MODERATOR) {
 			echo "<div style='margin-top:0.5em;text-align:right;'>";
-			echo "<a href=\"index.php?";
+			echo "<img src=\"themes/$theme/images/modify.png\" alt=\"Modify\" />&nbsp;<a href=\"index.php?";
+
 			if ($mod!="") echo "mod=$mod&amp;";
-			echo "action=editcommentinterface&amp;news=$news&amp;comment=".($count_comment+1)."\" title='"._MODIFICA."'>"._ICONMODIFY._MODIFICA."</a>";
+
+			echo  "action=editcommentinterface&amp;news=$news&amp;comment=".($count_comment+1)."\" title='"._MODIFICA."'>"._MODIFICA."</a>&nbsp;";
+			echo "<img src='themes/$theme/images/delete.png' alt='Delete comment' /> ";
 			$delcomment_param = "&amp;file=news/$news.xml&amp;comment_date=".$comments[$count_comment]['cmdate'];
-			echo "&nbsp;<a href='#' onclick=\"check('index.php?$modstring"."action=deletecomment&amp;news=$news&amp;comment=".($count_comment+1)."')\" title='"._ELIMINA."'>"._ICONDELETE._ELIMINA."</a>";
+			echo "<a href='#' onclick=\"check('index.php?$modstring"."action=deletecomment&amp;news=$news&amp;comment=".($count_comment+1)."')\" title='"._ELIMINA."'>"._ELIMINA."</a>";
 			echo "</div>";
 		}
 		print "</div>";
 	}
 	//se ci sono commenti stampo il link anche alla fine
 	if (count($comments)>0)
-		echo "<br>".$news_link['link_addcomment'];
-	echo "<br><hr>";
+		echo "<br />".$news_link['link_addcomment'];
+	echo "<br /><hr noshade='noshade' size='1' />";
 
 	// search previous and next news
 	if (_FN_IS_ADMIN or _FN_IS_NEWS_MODERATOR)
@@ -427,21 +421,21 @@ border-left-style: solid; border-bottom-style: solid;border-color: #d5d6d7;*/'>"
 	if($key+1 > count($newslist)-1)
 		$next = _NONEXTNEWS;
 	else $next = "<a href='index.php?$modstring"."action=viewnews&amp;news=".str_replace(".php","",$newslist[$key+1])."' title='"._NEXTNEWS."'>"._NEXTNEWS." &#187;</a>";
-	echo "<div class=\"centeredDiv\">$prev | $next</div>";
+	echo "<div align='center'>$prev | $next</div>";
 
-	//reimposto l'array per visualizzare prima le notizie pi√π recenti
+	//reimposto l'array per visualizzare prima le notizie pi˘ recenti
 	rsort($newslist);
 	// list of last news about the same topic
-	echo "<hr><b>"._RELATEDNEWSLAST."</b><br><br>";
+	echo "<hr noshade='noshade' size='1' /><b>"._RELATEDNEWSLAST."</b><br /><br />";
 	include("include/search/01_News.php");
 	$no_result=TRUE;
 	$user = _FN_USERNAME;
 	$arrayok=array();
 	for ($i=0;$i<count($newslist);$i++){
-		//se ci sono pi√π di 300 news interrompo per motivi di prestazioni
+		//se ci sono pi˘ di 300 news interrompo per motivi di prestazioni
 		if ($i>300) break;
-		//non devo controllare i permessi di visione perch√® se ne occupa una
-		//volta sola la funzione load_news_list pi√π sopra
+		//non devo controllare i permessi di visione perchË se ne occupa una
+		//volta sola la funzione load_news_list pi˘ sopra
 // 		if (!user_can_view_news($section,$news,$user,FALSE))
 // 		continue;
 // 		riscrivo il codice per cercare la categoria per esteso in modo
@@ -472,13 +466,13 @@ border-left-style: solid; border-bottom-style: solid;border-color: #d5d6d7;*/'>"
 
 	// link to read all the news for the same topic
 	$category=$data['category'];
-	echo "<hr>";
-	echo "<b>"._RELATEDNEWSALL."</b><div><div style='margin:1em'>";
+	echo "<hr noshade='noshade' size='1' />";
+	echo "<b>"._RELATEDNEWSALL."</b><center><div style='margin:1em'>";
 	echo "<a href='index.php?mod=none_Search&amp;where=news&amp;category=$category' title='$w3c_title'>";
 	if ($category=="nonews.png")
-		echo "<img src='images/$category' alt='$category' style=\"border:0\" /></a>";
-	else echo "<img src='images/news/$category' alt='$category' style=\"border:0\" /></a>";
-	echo "</div></div>";
+		echo "<img src='images/$category' border='0' alt='$category' /></a>";
+	else echo "<img src='images/news/$category' border='0' alt='$category' /></a>";
+	echo "</div></center>";
 	//se esiste uso la nuova funzione per chiudere le news
 	if (function_exists("CloseNews"))
 		CloseNews();
@@ -511,20 +505,20 @@ function create_footer_news($section,$news,$data){
 // 	layout fix by ZEBDEMON
 	echo "<div class='footnews' style=\"clear: both;\">\n";
 	$news_link = get_news_link_array($section,$news,$data);
-	echo $news_link['news_infos']."<br>";
+	echo $news_link['news_infos']."<br />";
 	//only if there is a body
-	//Al momento non √® possibile nascondere il link "leggi tutto"
-	//perch√® non vi √® un titolo cliccabile alternativo per leggere
+	//Al momento non Ë possibile nascondere il link "leggi tutto"
+	//perchË non vi Ë un titolo cliccabile alternativo per leggere
 	//la news
 // 	if (trim($data['body'])!="")
 		echo $news_link['link_read']." ";
 	echo $news_link['link_comment']." ";
 	echo $news_link['link_print']." ";
 	if (_FN_IS_ADMIN or _FN_IS_NEWS_MODERATOR) {
-// 		echo "<br><div style=\"text-align: left;\">";
+// 		echo "<br /><div style=\"text-align: left;\">";
 		echo $news_link['link_modify']." ";
 		echo $news_link['link_delete']." ";
-// 		echo "<br>";
+// 		echo "<br />";
 		if (news_is_ontop($news)) echo $news_link['link_normal']." ";
 		else echo $news_link['link_ontop']." ";
 		if (news_is_hidden($news)) echo $news_link['link_show']." ";
@@ -545,14 +539,13 @@ function create_footer_news($section,$news,$data){
  *
  * Restituisce un array contenente alcuni link che possono essere utilizzati
  * per accedere alle funzioni di gestione delle news.
- * La struttura dell'array restituito √®:
- * $ret_strings['news_infos']      = data di pubblicazione della news e numero di letture
- * $ret_strings['link_read']       = link per leggere la news completa
- * $ret_strings['link_addcomment'] = link per visualizzare form dei commenti alla news
- * $ret_strings['link_comment']    = link per commentare la news
- * $ret_strings['link_print']      = link per stampare la news
- * $ret_strings['link_modify']     = link per modificare la news (solo amministratori)
- * $ret_strings['link_delete']     = link per eliminare la news (solo amministratori)
+ * La struttura dell'array restituito e':
+ * $ret_strings['news_infos']   = data di pubblicazione della news e numero di letture
+ * $ret_strings['link_read']    = link per leggere la news completa
+ * $ret_strings['link_comment'] = link per commentare la news
+ * $ret_strings['link_print']   = link per stampare la news
+ * $ret_strings['link_modify']  = link per modificare la news (solo amministratori)
+ * $ret_strings['link_delete']  = link per eliminare la news (solo amministratori)
  *
  * @author Simone Vellei <simone_vellei@users.sourceforge.net>
  * @author Aldo Boccacci
@@ -570,7 +563,7 @@ function get_news_link_array($section,$news,$newsdata=""){
 // 	if (!check_path($newsfile,_FN_SECTIONS_DIR,TRUE)) flatnews_die("\$newsfile is not valid!".strip_tags($newsfile),__FILE__,__LINE__);
 
 // 	if (!is_file($newsfile)) return NULL;
-	//√® doppia per eliminare anche le doppie occorrenze come "top_hide_"
+	//Ë doppia per eliminare anche le doppie occorrenze come "top_hide_"
 	$newstime = get_news_time($news);
 // 	if (!user_can_view_news($section,$news)) return;
 
@@ -602,6 +595,14 @@ function get_news_link_array($section,$news,$newsdata=""){
 	// news title
 	$title = $data['title'];
 	$title = str_replace("\"","&quot;",$title);
+	// accesskey COMMENTATO PERCH» INFLUISCE TROPPO SULLE PRESTAZIONI
+// 	$newsarray = list_news_fast($section);
+// 	$keyarray = array();
+// 	$accesscounter = 1;
+// 	foreach ($newsarray as $newsfile){
+// 		$keyarray[$newsfile] = $accesscounter;
+// 		$accesscounter++;
+// 	}
 
 	$modstring="";
 	$mod = _FN_MOD;
@@ -610,48 +611,48 @@ function get_news_link_array($section,$news,$newsdata=""){
 	}
 
 	// link to read the full news
-	$ret_strings['link_read'] = "<a href='".CleanString($title).".".$news."' title=\""._FLEGGI." news: $title\">"._ICONREAD._LEGGITUTTO."</a>";
-//vecchio link  $ret_strings['link_read'] = "<a href='index.php?$modstring"."action=viewnews&amp;news=$news' title=\""._FLEGGI." news: $title\">"._ICONREAD._LEGGITUTTO."</a>";
-
+	$ret_strings['link_read'] = "<img src='themes/$theme/images/read.png' alt='Read' />&nbsp;";
+	$ret_strings['link_read'] .= "<a href='index.php?$modstring"."action=viewnews&amp;news=$news' title=\""._FLEGGI." news: $title\"";
+	//COMMENTATO PER LA PERDITA NELLE PRESTAZIONI
+// 	if ($keyarray[$news]>0 AND $keyarray[$news]<10)
+// 		$ret_strings['link_read'] .= " accesskey='".$keyarray[$news]."'";
+	$ret_strings['link_read'] .= "><b>"._LEGGITUTTO."</b></a>";
 	// link to comment the news
-	$ret_strings['link_addcomment'] = "<a href='index.php?$modstring"."action=addcommentinterface&amp;news=$news' title=\""._ADDCOMM." news: $title\">"._ICONCOMMENT."&nbsp;"._ADDCOMM."</a><br>";
-
+	$ret_strings['link_addcomment'] = "<img src='themes/$theme/images/comment.png' alt='Comment' />&nbsp;";
+	$ret_strings['link_addcomment'] .= "<a href='index.php?$modstring"."action=addcommentinterface&amp;news=$news' title=\""._ADDCOMM." news: $title\">"._ADDCOMM."</a><br />";
 	// link to view comments of the news
-	$ret_strings['link_comment'] = "<a href='index.php?$modstring"."action=viewnews&amp;news=$news#comments' title=\""._VIEWCOMMENTS." news: $title\">"._ICONCOMMENT;
-
+	$ret_strings['link_comment'] = "<img src='themes/$theme/images/comment.png' alt='Comment' />&nbsp;";
+	$ret_strings['link_comment'] .= "<a href='index.php?$modstring"."action=viewnews&amp;news=$news#comments' title=\""._VIEWCOMMENTS." news: $title\">";
 	$commenti = count($data['comments']);
 	if($commenti == 0)
-		$ret_strings['link_comment'] .= _COMMENTI."?";
+		$ret_strings['link_comment'] .= _COMMENTI."?</a>";
 	else
-		$ret_strings['link_comment'] .= "<b>"._COMMENTI."($commenti)</b>";
-	$ret_strings['link_comment'] .= "</a>";
-
+		$ret_strings['link_comment'] .= _COMMENTI." ($commenti)</a>";
 	// link to print the news
-	$ret_strings['link_print'] = "<a href='print.php?$modstring"."news=$news' target='new' title=\""._STAMPA." news: $title\">"._ICONPRINT._STAMPA."</a>";
-
-	// administration functions
+	$ret_strings['link_print'] = "<img src='themes/$theme/images/print.png' alt='Print' />&nbsp;";
+	$ret_strings['link_print'] .= "<a href='print.php?$modstring"."news=$news' target='new' title=\""._STAMPA." news: $title\">"._STAMPA."</a>";
 	if(_FN_IS_ADMIN or _FN_IS_NEWS_MODERATOR) {
-
 		// link to modify the news
-		$ret_strings['link_modify'] = "<a href='index.php?$modstring"."action=editnewsinterface&amp;news=$news' title=\""._EDITNEWS.": $title\">"._ICONMODIFY._MODIFICA."</a>";
-
+		$ret_strings['link_modify'] = "<img src='themes/$theme/images/modify.png' alt='Modify' />&nbsp;";
+		$ret_strings['link_modify'] .= "<a href='index.php?$modstring"."action=editnewsinterface&amp;news=$news' title=\""._EDITNEWS.": $title\">"._MODIFICA."</a>";
 		// link to delete the news
-		$ret_strings['link_delete'] = "<a href='index.php?$modstring"."action=deletenewsinterface&amp;news=$news' title=\""._DELETENEWS.": $title\">"._ICONDELETE._ELIMINA."</a>";
-
+		$ret_strings['link_delete'] = "<img src='themes/$theme/images/delete.png' alt='Delete' />&nbsp;";
+		$ret_strings['link_delete'] .= "<a href='index.php?$modstring"."action=deletenewsinterface&amp;news=$news' title=\""._DELETENEWS.": $title\">"._ELIMINA."</a>";
 		// link to hide the news
-		$ret_strings['link_hide'] = "<a href='index.php?$modstring"."action=hidenews&amp;news=$news' title=\""._HIDE." news: $title\">"._ICONHIDE._HIDE."</a>";
-
+		$ret_strings['link_hide'] = "<img src='forum/icons/hide.png' alt='Hide' />&nbsp;";
+		$ret_strings['link_hide'] .= "<a href='index.php?$modstring"."action=hidenews&amp;news=$news' title=\""._HIDE." news: $title\">"._HIDE."</a>";
 		// link to un-hide the news
-		$ret_strings['link_show'] = "<a href='index.php?$modstring"."action=shownews&amp;news=$news' title=\""._SHOW." news: $title\">"._ICONSHOW._SHOW."</a>";
-
+		$ret_strings['link_show'] = "<img src='forum/icons/show.png' alt='Show' />&nbsp;";
+		$ret_strings['link_show'] .= "<a href='index.php?$modstring"."action=shownews&amp;news=$news' title=\""._SHOW." news: $title\">"._SHOW."</a>";
 		// link to set on top the news
-		$ret_strings['link_ontop'] = "<a href='index.php?$modstring"."action=ontopnews&amp;news=$news' title=\""._STICKYNEWS.": $title\">"._ICONONTOP._STICKY."</a>";
-
+		$ret_strings['link_ontop'] = "<img src='forum/icons/ontop.png' alt='Ontop' />&nbsp;";
+		$ret_strings['link_ontop'] .= "<a href='index.php?$modstring"."action=ontopnews&amp;news=$news' title=\""._STICKYNEWS.": $title\">"._STICKY."</a>";
 		// link to hide the news
-		$ret_strings['link_normal'] = "<a href='index.php?$modstring"."action=normalnews&amp;news=$news' title=\""._UNSTICKYNEWS.": $title\">"._ICONNORMAL._NORMAL."</a>";
-
+		$ret_strings['link_normal'] = "<img src='forum/icons/normal.png' alt='Normal' />&nbsp;";
+		$ret_strings['link_normal'] .= "<a href='index.php?$modstring"."action=normalnews&amp;news=$news' title=\""._UNSTICKYNEWS.": $title\">"._NORMAL."</a>";
 		// link to move the news
-		$ret_strings['link_move'] = "<a href='index.php?$modstring"."action=movenewsinterface&amp;news=$news' title=\""._MOVENEWS.": $title\">"._ICONMOVE._MOVE."</a>";
+		$ret_strings['link_move'] = "<img src='forum/icons/move.png' alt='Move' />&nbsp;";
+		$ret_strings['link_move'] .= "<a href='index.php?$modstring"."action=movenewsinterface&amp;news=$news' title=\""._MOVENEWS.": $title\">"._MOVE."</a>";
 	}
 
 	return($ret_strings);
@@ -684,7 +685,7 @@ function add_comment_interface($section,$news){
 		OpenTableTitle(_ADDCOMM);
 	if((_FN_USERNAME!="") or ($guestcomment==1)){
 		?>
-		<script type="text/javascript">
+		<script type="text/javascript" language="javascript">
 	function validate_comment_form()
 		{
 			if(document.getElementById('newscomment').value=='')
@@ -716,10 +717,10 @@ function add_comment_interface($section,$news){
 		<input type=\"hidden\" name=\"news\" value=\"$news\" />
 		<input type=\"hidden\" name=\"fnmod\" value=\""._FN_MOD."\" />";
 		// bbcodes panel
-		bbcodes_panel("newscomment", "home", "formatting"); echo "<br>";
-		bbcodes_panel("newscomment", "home", "emoticons"); echo "<br>";
-		bbcodes_panel("newscomment","home","images"); echo "<br>";
-		echo "<textarea cols=\"50\" rows=\"20\" name=\"newscomment\" id=\"newscomment\" style=\"width: 95%\" ></textarea><br><br>";
+		bbcodes_panel("newscomment", "home", "formatting"); echo "<br />";
+		bbcodes_panel("newscomment", "home", "emoticons"); echo "<br />";
+		bbcodes_panel("newscomment","home","images"); echo "<br />";
+		echo "<textarea cols=\"50\" rows=\"20\" name=\"newscomment\" id=\"newscomment\" style=\"width: 95%\" ></textarea><br /><br />";
 
 		//se sono un guest
 		if(_FN_IS_GUEST){
@@ -730,12 +731,12 @@ function add_comment_interface($section,$news){
 
 		}
 		echo "<input type=\"submit\" value=\""._FINVIA."\" />
-		</form><br>";
+		</form><br />";
 		view_news($section,$news);
 	}
 	else{
 		print "<div style=\"text-align: center;\">"._DEVIREG." <b>".$sitename."</b> "._DEVIREG2;
-		echo "<br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a></div>";
+		echo "<br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a></div>";
 	}
 	if ($mod!="" and $mod!="none_News")
 		CloseTableTitle();
@@ -747,7 +748,7 @@ function add_comment_interface($section,$news){
  *
  * @param string $section la sezione contenente la news
  * @param string $news la news
- * @param string $mode la modalit√†: "edit", "new", "editmoderator","newmoderator", "propose"
+ * @param string $mode la modalit‡: "edit", "new", "editmoderator","newmoderator", "propose"
  * @author Marco Segato <segatom@users.sourceforge.net>
  * @author Aldo Boccacci
  */
@@ -768,7 +769,7 @@ function edit_news_interface($section,$news,$mode) {
 
 	global $guestnews,$sitename;
 	if ($mode=="propose" and _FN_IS_GUEST and $guestnews==0){
-		echo "<div style=\"text-align: center;\">"._DEVIREG." <b>\"$sitename\"</b>"._DEVIREG3."<br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a></div>";
+		echo "<div style=\"text-align: center;\">"._DEVIREG." <b>\"$sitename\"</b>"._DEVIREG3."<br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a></div>";
 		return;
 	}
 	$modstring="";
@@ -791,8 +792,8 @@ function edit_news_interface($section,$news,$mode) {
 		$edit_tags   = $newsdata['tags'];
 	} else {
 		// report a news with Flatnuke-Fast-News
-		$reftitle = stripslashes(getparam("reftitle", PAR_GET, SAN_FLAT));
-		$refbody  = stripslashes(getparam("refbody",  PAR_GET, SAN_FLAT));
+		$reftitle = utf8_decode(stripslashes(getparam("reftitle", PAR_GET, SAN_FLAT)));
+		$refbody  = utf8_decode(stripslashes(getparam("refbody",  PAR_GET, SAN_FLAT)));
 		$refurl   = getparam("refurl", PAR_GET, SAN_FLAT);
 	}
 	$mod = _FN_MOD;
@@ -803,7 +804,7 @@ function edit_news_interface($section,$news,$mode) {
 			OpenTableTitle(_EDITNEWS);
 	}
 	?>
-		<script type="text/javascript">
+		<script type="text/javascript" language="javascript">
 	function validate_news()
 		{
 			if(document.getElementById('news_title').value=='')
@@ -814,7 +815,7 @@ function edit_news_interface($section,$news,$mode) {
 					return false;
 				}
 			<?php
-			//questo controllo javascript sembra avere problemi se √®
+			//questo controllo javascript sembra avere problemi se Ë
 			//utilizzato un editor visuale come FCKEditor
 // 			global $news_editor;
 			if ($mode=="propose"){
@@ -848,11 +849,11 @@ function edit_news_interface($section,$news,$mode) {
 
 	// print html form to write the news
 	echo "<form action=\"index.php$modstring\" method=\"post\" onsubmit=\"return validate_news()\">";
-	?><b><?php echo _TITNOTIZIA ?></b><br>
-	<input type="text" id="news_title" name="news_title" style="width:100%" value="<?php echo $reftitle ?>" /><br><br>
-	<b><?php echo _ARGOMENTO ?></b><br>
+	?><b><?php echo _TITNOTIZIA ?></b><br />
+	<input type="text" id="news_title" name="news_title" style="width:100%" value="<?php echo $reftitle ?>" /><br /><br />
+	<b><?php echo _ARGOMENTO ?></b><br />
 	<?php $print_cat = ($edit_cat=="" or $edit_cat=="nonews.png") ? ("images/nonews.png") : ("images/news/$edit_cat"); ?>
-	<img id="category_icon" src="<?php echo $print_cat?>" alt="Category" /><br>
+	<img id="category_icon" name="category_icon" src="<?php echo $print_cat?>" border="0" alt="Category" /><br />
 	<select style="max-width:100%" id="news_category" name="news_category" onchange="document.category_icon.src='images/news/'+this.options[this.selectedIndex].value"><?php
 		// list topic arguments
 		echo "\n<option value=\"../nonews\"> --- </option>\n";
@@ -872,9 +873,9 @@ function edit_news_interface($section,$news,$mode) {
 			if($edit_cat == $icon_array[$i]) echo " selected=\"selected\"";
 			echo ">".str_replace("_"," ", preg_replace("/\..*/","",$icon_array[$i]))."</option>\n";
 		}
-	echo "</select><br><br>";
+	echo "</select><br /><br />";
 
-	echo "<b>Tags</b><br>";
+	echo "<b>Tags</b><br />";
 	//barra per inserire nuovi tag con un click
 	$alltags = load_tags_list();
 	$tags = array();
@@ -891,7 +892,7 @@ function edit_news_interface($section,$news,$mode) {
 		echo "<a href=\"javascript:void(0)\" onclick=\"javascript:insertTag('".$tags[$n]."', 'news_tags')\"  title=\""._INSERTTAG.": ".$tags[$n]."\">".$tags[$n]."</a>";
 		if ($n<(count($tags)-1))
 			echo ", ";
-		else echo "<br>";
+		else echo "<br />";
 	}
 	if (count($tags)>0)
 		echo "</span>";
@@ -902,7 +903,7 @@ function edit_news_interface($section,$news,$mode) {
 			if ($n!=(count($edit_tags)-1)) echo ", ";
 		}
 	}
-	echo "\"><br><br>";
+	echo "\"><br /><br />";
 	//il controllo sulla variabile $mode serve per evitare che venga stampato FCKeditor o ckeditor se la
 	//news viene proposta da un utente comune (gli utenti comuni non possono proporre news
 	//contenenti html per motivi di sicurezza)
@@ -911,61 +912,61 @@ function edit_news_interface($section,$news,$mode) {
 		if(isset($refbody) AND $refbody != "") {
 			$text = "$refbody\n\nLink: <a href=\"$refurl\">$refurl</a>";	// Flatnuke-Fast-News link
 		} else $text = "$edit_header";	// edit old news
-		echo "<b>"._INTMESSAGGIO."</b><br>";
+		echo "<b>"._INTMESSAGGIO."</b><br />";
 		// fckeditor panel news HEADER
-		fn_textarea("fckeditor",tag2html($text),array("allow_php"=>TRUE,"BasePath"=>"include/plugins/editors/FCKeditor/", "Width"=>"100%","Height"=>"400","name"=>"news_header","id"=>"news_header","rows"=>"20","style"=>"width: 100%"));
+		fn_textarea("fckeditor",tag2html($text,"home"),array("allow_php"=>TRUE,"BasePath"=>"include/plugins/editors/FCKeditor/", "Width"=>"100%","Height"=>"400","name"=>"news_header","id"=>"news_header","rows"=>"20","style"=>"width: 100%"));
 		// fckeditor panel news BODY
-		echo "<b>"._CORPOMESSAGGIO."</b><br>";
-		fn_textarea("fckeditor",tag2html($edit_body),array("allow_php"=>TRUE,"BasePath"=>"include/plugins/editors/FCKeditor/", "Width"=>"100%","Height"=>"400","name"=>"news_body","id"=>"news_body","rows"=>"20","style"=>"width: 100%"));
+		echo "<b>"._CORPOMESSAGGIO."</b><br />";
+		fn_textarea("fckeditor",tag2html($edit_body,"home"),array("allow_php"=>TRUE,"BasePath"=>"include/plugins/editors/FCKeditor/", "Width"=>"100%","Height"=>"400","name"=>"news_body","id"=>"news_body","rows"=>"20","style"=>"width: 100%"));
 	}
 	else if ($news_editor=="ckeditor" AND file_exists("include/plugins/editors/ckeditor/ckeditor.php") AND $mode!="propose" AND (_FN_IS_ADMIN or _FN_IS_NEWS_MODERATOR)) {
 		$fck_installed = TRUE;
 		if(isset($refbody) AND $refbody != "") {
 			$text = "$refbody\n\nLink: <a href=\"$refurl\">$refurl</a>";	// Flatnuke-Fast-News link
 		} else $text = "$edit_header";	// edit old news
-		echo "<b>"._INTMESSAGGIO."</b><br>";
+		echo "<b>"._INTMESSAGGIO."</b><br />";
 		// fckeditor panel news HEADER
-		fn_textarea("ckeditor",tag2html($text),array("allow_php"=>TRUE,"BasePath"=>"include/plugins/editors/ckeditor/", "Width"=>"100%","Height"=>"400","name"=>"news_header","id"=>"news_header","rows"=>"20","style"=>"width: 100%"));
+		fn_textarea("ckeditor",tag2html($text,"home"),array("allow_php"=>TRUE,"BasePath"=>"include/plugins/editors/ckeditor/", "Width"=>"100%","Height"=>"400","name"=>"news_header","id"=>"news_header","rows"=>"20","style"=>"width: 100%"));
 		// fckeditor panel news BODY
-		echo "<b>"._CORPOMESSAGGIO."</b><br>";
-		fn_textarea("ckeditor",tag2html($edit_body),array("allow_php"=>TRUE,"BasePath"=>"include/plugins/editors/ckeditor/", "Width"=>"100%","Height"=>"400","name"=>"news_body","id"=>"news_body","rows"=>"20","style"=>"width: 100%"));
+		echo "<b>"._CORPOMESSAGGIO."</b><br />";
+		fn_textarea("ckeditor",tag2html($edit_body,"home"),array("allow_php"=>TRUE,"BasePath"=>"include/plugins/editors/ckeditor/", "Width"=>"100%","Height"=>"400","name"=>"news_body","id"=>"news_body","rows"=>"20","style"=>"width: 100%"));
 
 	}
 	else {
 		$fck_installed = FALSE;
 		// bbcodes panel news HEADER
-		bbcodes_panel("news_header", "home", "formatting"); echo "<br>";
-		bbcodes_panel("news_header", "home", "emoticons"); echo "<br>";
-		bbcodes_panel("news_header", "home", "images"); echo "<br>";
-		echo "<b>"._INTMESSAGGIO."</b><br>";
-		echo "<textarea id='news_header' rows='20' style='width:100%;' name='news_header'>";
+		bbcodes_panel("news_header", "home", "formatting"); echo "<br />";
+		bbcodes_panel("news_header", "home", "emoticons"); echo "<br />";
+		bbcodes_panel("news_header", "home", "images"); echo "<br />";
+		echo "<b>"._INTMESSAGGIO."</b><br />";
+		echo "<textarea id='news_header' rows='20' cols='' style='width:100%;' name='news_header'>";
 		if(isset($refbody) AND $refbody != "") {
 			echo "$refbody\n\nLink: <a href=\"$refurl\">$refurl</a>";	// Flatnuke-Fast-News link
 		} else echo html2tag($edit_header);	// edit old news
-		echo "</textarea>\n<br><br>";
+		echo "</textarea>\n<br /><br />";
 		// bbcodes panel news BODY
-		bbcodes_panel("news_body", "home", "formatting"); echo "<br>";
-		bbcodes_panel("news_body", "home", "emoticons"); echo "<br>";
-		bbcodes_panel("news_body", "home", "images"); echo "<br>";
-		echo "<b>"._CORPOMESSAGGIO."</b><br>";
-		echo "<textarea id='news_body' rows='20' style='width:100%;' name='news_body'>".html2tag($edit_body)."</textarea>\n";
+		bbcodes_panel("news_body", "home", "formatting"); echo "<br />";
+		bbcodes_panel("news_body", "home", "emoticons"); echo "<br />";
+		bbcodes_panel("news_body", "home", "images"); echo "<br />";
+		echo "<b>"._CORPOMESSAGGIO."</b><br />";
+		echo "<textarea id='news_body' rows='20' cols='' style='width:100%;' name='news_body'>".html2tag($edit_body)."</textarea>\n";
 	}
 
 	// submit buttons
-	// innanzitutto controllo quale azione andr√† compiuta
+	// innanzitutto controllo quale azione andr‡ compiuta
 	if ($mode=="propose")
 		echo "<input type=\"hidden\" name=\"newsaction\" value=\"saveproposednews\" />";
 	else echo "<input type=\"hidden\" name=\"newsaction\" value=\"savenews\" />";
 
 	if ($mode=="add"){
-		echo "<br><br><img src='forum/icons/hide.png' alt='Hide' />&nbsp;<input type=\"checkbox\" name=\"hidden\" value=\"hidden\">"._FDHIDE." news<br><br>";
-		echo "<img src='forum/icons/ontop.png' alt='On top' />&nbsp;<input type=\"checkbox\" name=\"ontop\" value=\"ontop\">"._STICKY." news<br><br>";
+		echo "<br /><br /><img src='forum/icons/hide.png' alt='Hide' />&nbsp;<input type=\"checkbox\" name=\"hidden\" value=\"hidden\">"._FDHIDE." news<br /><br />";
+		echo "<img src='forum/icons/ontop.png' alt='On top' />&nbsp;<input type=\"checkbox\" name=\"ontop\" value=\"ontop\">"._STICKY." news<br /><br />";
 	}
 
 	?>
 	<input type="hidden" name="news" value="<?php echo $news?>" />
 	<input type="hidden" name="section" value="<?php echo $section?>" />
-<!-- 	<input type="hidden" name="rewrite" value="<?php //echo $rewrite?>" /><br><br> -->
+<!-- 	<input type="hidden" name="rewrite" value="<?php //echo $rewrite?>" /><br /><br /> -->
 	<?php
 	//se devo proporre una notizia e sono un guest
 	if($mode=="propose" and _FN_IS_GUEST){
@@ -976,7 +977,7 @@ function edit_news_interface($section,$news,$mode) {
 	}
 	?>
 	<input type="submit" value="<?php echo _INSNOTIZIA?>" /><?php
-	//rimosso il pulsante di anteprima perch√® non funziona a partire da Flatnuke 3.0
+	//rimosso il pulsante di anteprima perchË non funziona a partire da Flatnuke 3.0
 	//DA SISTEMARE
 // 	if (!$fck_installed) {
 // 		echo "&nbsp;<input type=\"button\" value=\""._ANTEPRIMA."\" onclick='ShowHideDiv(\"fnpreview\");' />";
@@ -985,7 +986,7 @@ function edit_news_interface($section,$news,$mode) {
 
 	// preview news with bbcodes
 	if (!$fck_installed) {
-		?><script type="text/javascript">
+		?><script language="javascript" type="text/javascript">
 			getElement("news_title").onkeyup     = news_preview;
 			getElement("news_title").onmousemove = news_preview;
 			getElement("news_header").onkeyup      = news_preview;
@@ -994,7 +995,7 @@ function edit_news_interface($section,$news,$mode) {
 			getElement("news_body").onmousemove  = news_preview;
 			news_preview();
 		</script>
-		<br><div id="fnpreview"></div><?php
+		<br /><div id="fnpreview"></div><?php
 	}
 
 	//TOLGO FLATNUKE FAST-NEWS
@@ -1004,7 +1005,7 @@ function edit_news_interface($section,$news,$mode) {
 	$dn = DirName($_SERVER['PHP_SELF'])."/";
 	$dn = str_replace("//", "/", $dn);
 	$siteurl = "$protocol".$_SERVER["HTTP_HOST"]."$dn";
-	echo "<br>"._FASTNEWSSTR."<br><a href=\"javascript:if(navigator.userAgent.indexOf('Safari') >= 0){Q=getSelection();}else{Q=document.selection?document.selection.createRange().text:document.getSelection();}location.href='".$siteurl."index.php?mod=none_Admin&amp;op=fnccnews&amp;refbody='+encodeURIComponent(Q)+'&amp;refurl='+encodeURIComponent(location.href)+'&amp;reftitle='+encodeURIComponent(document.title);\">$sitename &raquo; Flatnuke Fast News</a>";
+	echo "<br />"._FASTNEWSSTR."<br /><a href=\"javascript:if(navigator.userAgent.indexOf('Safari') >= 0){Q=getSelection();}else{Q=document.selection?document.selection.createRange().text:document.getSelection();}location.href='".$siteurl."index.php?mod=none_Admin&amp;op=fnccnews&amp;refbody='+encodeURIComponent(Q)+'&amp;refurl='+encodeURIComponent(location.href)+'&amp;reftitle='+encodeURIComponent(document.title);\">$sitename &raquo; Flatnuke Fast News</a>";
 	*/
 	//FINE FLATNUKE FAST-NEWS
 
@@ -1094,7 +1095,7 @@ function show_related_news($section, $news_array){
 	if (count($news_array)>0){
 		for ($i=0;$i<count($news_array);$i++){
 			$data = load_news_header($section,$news_array[$i]);
-			echo "<a href=\"index.php?$modstring"."action=viewnews&amp;news=".$news_array[$i]."\" title=\"visualizza news\">"._ICONREAD."&nbsp;".$data['title']."</a> (".date("d/m/Y - H:i", get_news_time($news_array[$i])).", "._LETTO.$data['reads']." "._VOLTE.")<br>";
+			echo "<img src=\"themes/$theme/images/read.png\" alt=\"News\" />&nbsp;<a href=\"index.php?$modstring"."action=viewnews&amp;news=".$news_array[$i]."\" title=\"visualizza news\">".$data['title']."</a> (".date("d/m/Y - H:i", get_news_time($news_array[$i])).", "._LETTO.$data['reads']." "._VOLTE.")<br />";
 		}
 	}
 }

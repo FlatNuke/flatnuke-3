@@ -1,13 +1,10 @@
 <?php
+
 /*
  * Print forms to manage Flatnuke general configuration
  *
  * @author Marco Segato <segatom@users.sourceforge.net>
- * @author Alfredo Cosco <orazio.nelson@gmail.com>
- * @version 20140511 
- * 
- * Bootstrap compatible, form redesigned with tabs, introduced helpers for the form
- * 
+ * @version 20090918
  */
 function fncc_generalconf() {
 	// security conversions
@@ -15,7 +12,7 @@ function fncc_generalconf() {
 	// check file existance
 	$file = "config.php";
 	if(file_exists($file)) {
-		
+		echo "<form action=\"index.php?mod=$mod\" method=\"post\">";
 		// scan configuration file to find all settings
 		$settings  = array();
 		$conf_file = file($file);
@@ -64,204 +61,207 @@ function fncc_generalconf() {
 		}
 		if($language_num>0) {
 			sort($languages_array);
-		}
-			//print_r($languages_array);	//-> TEST
-		//open the form
-/**
- * Print the General Configuration page
- * 1)	Prepare data for the form data series: mainly arrays
- * 2)	Print the html
- * 3)	Add last changes with jQuery/Javascript
- * **/
- 
- // 1)	Prepare data for the form data series: mainly arrays
- 
-	//languages array
-	foreach ($languages_array as $mylanguage) {
-		$mylanguage = preg_replace("/^languages\//i","",$mylanguage);
-		$mylanguage = str_replace(".php","",$mylanguage);
-		//$checked = ($settings['lang'] == $mylanguage) ? ("checked") : ("");
-		$label="<img src='images/languages/$mylanguage.png' alt='$mylanguage' title='$mylanguage' />";
-		$langs[$mylanguage]=$label;
-		}
-	
-	//themes array
-	foreach ($themes_array as $mytheme) {
-		$mytheme = preg_replace("/^".get_fn_dir("themes")."\//","",$mytheme);
-		$screenshot = (file_exists(get_fn_dir("themes")."/$mytheme/screenshot.png")) ? (get_fn_dir("themes")."/$mytheme/screenshot.png") : (get_fn_dir("sections")."/$mod/none_images/no_preview.png");
-		
-		$mythemes[$mytheme]="<img class=\"img-thumbnail\" src=\"".$screenshot."\" alt=\"".$mytheme."\">";
-		}
-
-	//registration radio labels array: no/yes/mail
-	$reguserlabels=array('_FNCC_NO','_FNCC_YES','_FEMAIL');
-	
-	//news editors (bbcode, fckeditor,ckeditor)
-	$editors=array("bbcode"=>"bbcode","fckeditor"=>"FCKeditor","ckeditor"=>"CKeditor");
-
-// 2)	Print the HTML
+		}	//print_r($languages_array);	//-> TEST
 		?>
-
-		<?php
-		//open the form			
-		//fncc_generic_form_open('fnccconf-form');
-		echo build_fnajax_link($mod, "", "fn_adminpanel", "post", "fnccconf-form");
-		
-		?>
-		<!-- Nav tabs -->
-		<ul class="nav nav-tabs">
-		  <li class="active"><a href="#siteinfo" data-toggle="tab">Site info</a></li>
-		  <li><a href="#admin" data-toggle="tab">Admin</a></li>
-		  <li><a href="#users" data-toggle="tab">Users</a></li>
-		  <li><a href="#news" data-toggle="tab">News</a></li>
-		  <li><a href="#forum" data-toggle="tab">Forum</a></li>
-		</ul>
-		<div class="tab-content">
-		  <div class="tab-pane fade in active" id="siteinfo">		
-			<?php 
-			//site name field
-			echo fncc_input_text('sitename',$settings['sitename'],'100');
-			//site description field
-			echo fncc_input_text('sitedescription',$settings['sitedescription'],'500');
-			//keywords field
-			echo fncc_input_text('keywords',$settings['keywords'],'1500');
-			//language field			
-			echo fncc_input_radio('lang',$settings['lang'],$langs);
-			//theme field shows selectable themes
-			echo fncc_input_radio('theme',$settings['theme'],$mythemes);	
-			?>		
-		  </div>
-		  <div class="tab-pane fade" id="admin">
-			<?php 
-			// admin name
-			echo fncc_input_text('admin',$settings['admin'],'100');
-			//admin mail
-			echo fncc_input_text('admin_mail',$settings['admin_mail'],'100','email'); 
-			//home section
-			echo fncc_input_text('home_section',$settings['home_section'],'100');			
-			//time zone
-			echo fncc_input_text('fuso_orario',$settings['fuso_orario'],'4');
-			//maintenance status
-			echo fncc_input_radio('maintenance',$settings['maintenance']);
-			?>				  
-		  </div>
-		  <div class="tab-pane fade" id="users">
-			<?php
-			//registration no/yes/mail
-			echo fncc_input_radio('reguser',$settings['reguser'],$reguserlabels);		
-			//remember login
-			echo fncc_input_radio('remember_login',$settings['remember_login']);		
-			// guest can add news
-			echo fncc_input_radio('guestnews',$settings['guestnews']);
-			//guest can add comments
-			echo fncc_input_radio('guestcomment',$settings['guestcomment']);
-				?> 
-		  </div>
-		  <div class="tab-pane fade" id="news">
-			<?php
-			//news per page
-			echo fncc_input_number('newspp',$settings['newspp'],'3',$range=array(1,999));			
-			//news editors (bbcode, fckeditor,ckeditor)
-			echo fncc_input_radio('news_editor',$settings['news_editor'],$editors);
-			//news moderators
-			echo fncc_input_text('news_moderators',$settings['news_moderators'],'500');
-			?>
-		  </div>	  
-		  <div class="tab-pane fade" id="forum">
-			  <?php
-			  //forum topic per page
-			  echo fncc_input_number('topicperpage',$settings['topicperpage'],'3',$range=array(1,999));
-			  //forum post per page
-			  echo fncc_input_number('postperpage',$settings['postperpage'],'3',$range=array(1,999));
-			  //memeber per page
-			  echo fncc_input_number('memberperpage',$settings['memberperpage'],'3',$range=array(1,999));
-			  //forum moderators list
-			  echo fncc_input_text('forum_moderators',$settings['forum_moderators'],'500');
-			  ?>	  
-		  </div>
+		<div style="margin-bottom:1em;">
+			<label for="sitename"><?php echo _FNCC_CONFSITENAME?></label><br />
+			<input type="text" name="sitename" id="sitename" style="width:100%;" maxlength="100" value="<?php echo $settings['sitename']?>" />
 		</div>
-		<input type="hidden" name="conf_mod" value="modgeneralconf">
-		<input type="hidden" name="conf_file" value="<?php echo $file?>">
-		<div class="clearfix"></div>
-		<div class="form-actions">
+		<div style="margin-bottom:1em;">
+			<label for="sitedescription"><?php echo _FNCC_CONFSITEDESCRIPTION?></label><br />
+			<input type="text" name="sitedescription" id="sitedescription" style="width:100%;" maxlength="500" value="<?php echo $settings['sitedescription']?>" />
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="keywords"><?php echo _FNCC_CONFKEYWORDS?></label><br />
+			<input type="text" name="keywords" id="keywords" style="width:100%;" maxlength="1500" value="<?php echo $settings['keywords']?>" />
+		</div>
+		<div style="margin-bottom:1em;">
+			<div style="float:left;width:100%">
+			<label for="theme"><?php echo _FNCC_CONFTHEME?></label>
+			<ul><?php
+			// print the list of selectable themes
+			foreach ($themes_array as $mytheme) {
+				echo "<li style=\"margin:5px;float:left;display:block;\">\n";
+				$mytheme = preg_replace("/^".get_fn_dir("themes")."\//","",$mytheme);
+				$screenshot = (file_exists(get_fn_dir("themes")."/$mytheme/screenshot.png")) ? (get_fn_dir("themes")."/$mytheme/screenshot.png") : (get_fn_dir("sections")."/$mod/none_images/no_preview.png");
+				echo "<img src=\"$screenshot\" style='border:1px solid #000;max-width:130px;max-height:98px;' alt=\"$mytheme\" />\n";
+				$checked = ($settings['theme'] == $mytheme) ? ("checked='checked'") : ("");
+				echo "<br /><input type='radio' $checked name='theme' id='theme' value=\"$mytheme\" /> $mytheme</li>\n";
+			}
+			?></ul>
+			</div>
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="newspp"><?php echo _FNCC_CONFNEWSPP?></label><br />
+			<input type="text" name="newspp" id="newspp" style="width:100%;" maxlength="3" value="<?php echo $settings['newspp']?>" />
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="admin"><?php echo _FNCC_CONFADMIN?></label><br />
+			<input type="text" name="admin" id="admin" style="width:100%;" maxlength="100" value="<?php echo $settings['admin']?>" />
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="admin_mail"><?php echo _FNCC_CONFADMINMAIL?></label><br />
+			<input type="text" name="admin_mail" id="admin_mail" style="width:100%;" maxlength="100" value="<?php echo $settings['admin_mail']?>" /><br /><i>(<?php echo _FNCC_CONFADMINMAIL_CONTACT;?>)</i>
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="lang"><?php echo _FNCC_CONFLANG?></label><br /><?php
+			// print the list of available languages
+			foreach ($languages_array as $mylanguage) {
+				$mylanguage = preg_replace("/^languages\//i","",$mylanguage);
+				$mylanguage = str_replace(".php","",$mylanguage);
+				$checked = ($settings['lang'] == $mylanguage) ? ("checked='checked'") : ("");
+				echo "<input type='radio' $checked name='lang' id='lang' value='$mylanguage' /><img src='images/languages/$mylanguage.png' alt='$mylanguage' title='$mylanguage' />&nbsp;&nbsp;";
+			}
+		?></div>
+		<div style="margin-bottom:1em;">
+			<label for="reguser"><?php echo _FNCC_CONFREGUSER?></label><br /><?php
+			$reguser_sel0 = "";
+			$reguser_sel1 = "";
+			$reguser_sel2 = "";
+			switch($settings['reguser']) {
+				case 0: $reguser_sel0 = "checked='checked'"; break;
+				case 1: $reguser_sel1 = "checked='checked'"; break;
+				case 2: $reguser_sel2 = "checked='checked'"; break;
+			}
+			?><input type="radio" name="reguser" id="reguser" value="0" <?php echo $reguser_sel0?> /><?php echo _FNCC_NO?>
+			<input type="radio" name="reguser" id="reguser" value="1" <?php echo $reguser_sel1?> /><?php echo _FNCC_YES?>
+			<input type="radio" name="reguser" id="reguser" value="2" <?php echo $reguser_sel2?> /><?php echo _FEMAIL?>
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="guestnews"><?php echo _FNCC_CONFGUESTNEWS?></label><br /><?php
+			$guestnews_sel0 = "";
+			$guestnews_sel1 = "";
+			switch($settings['guestnews']) {
+				case 0: $guestnews_sel0 = "checked='checked'"; break;
+				case 1: $guestnews_sel1 = "checked='checked'"; break;
+			}
+			?><input type="radio" name="guestnews" id="guestnews" value="0" <?php echo $guestnews_sel0?> /><?php echo _FNCC_NO?>
+			<input type="radio" name="guestnews" id="guestnews" value="1" <?php echo $guestnews_sel1?> /><?php echo _FNCC_YES?>
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="guestcomment"><?php echo _FNCC_CONFGUESTCOMMENT?></label><br /><?php
+			$guestcomment_sel0 = "";
+			$guestcomment_sel1 = "";
+			switch($settings['guestcomment']) {
+				case 0: $guestcomment_sel0 = "checked='checked'"; break;
+				case 1: $guestcomment_sel1 = "checked='checked'"; break;
+			}
+			?><input type="radio" name="guestcomment" id="guestcomment" value="0" <?php echo $guestcomment_sel0?> /><?php echo _FNCC_NO?>
+			<input type="radio" name="guestcomment" id="guestcomment" value="1" <?php echo $guestcomment_sel1?> /><?php echo _FNCC_YES?>
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="newseditor"><?php echo _FNCC_NEWSEDITOR?></label><br /><?php
+			if ($settings['news_editor']=="fckeditor") $news_editor = "fckeditor";
+			else if ($settings['news_editor']=="ckeditor") $news_editor = "ckeditor";
+			else $news_editor = "bbcode";
+			$bbcode_selected="";
+			$fckeditor_selected="";
+			$ckeditor_selected="";
+
+			switch($news_editor) {
+				case "bbcode": $bbcode_selected = "checked='checked'"; break;
+				case "fckeditor": $fckeditor_selected = "checked='checked'"; break;
+				case "ckeditor": $ckeditor_selected = "checked='checked'"; break;
+			}
+			?><input type="radio" name="newseditor" id="newseditor" value="bbcode" <?php
+			if (!file_exists("include/plugins/editors/FCKeditor/fckeditor.php")){
+				echo "checked='checked'";
+			}
+			else echo $bbcode_selected
+			?> />bbcode
+			<input type="radio" name="newseditor" id="newseditor" value="fckeditor"
+			<?php
+			if (file_exists("include/plugins/editors/FCKeditor/fckeditor.php")){
+				echo $fckeditor_selected;
+			}
+			else {
+				echo "disabled='disabled'";
+			}
+			?> />FCKEditor
+			<input type="radio" name="newseditor" id="newseditor" value="ckeditor"
+			<?php
+			if (file_exists("include/plugins/editors/ckeditor/ckeditor.php")){
+				echo $ckeditor_selected;
+			}
+			else {
+				echo "disabled='disabled'";
+			}
+			?> />CKEditor
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="news_moderators"><?php echo _FNCC_CONFNEWSMODERATORS?></label><br />
+			<input type="text" name="news_moderators" id="news_moderators" style="width:100%;" maxlength="500" value="<?php echo $settings['news_moderators']?>" />
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="remember_login"><?php echo _FNCC_CONFREMEMBERLOGIN?></label><br /><?php
+			$remember_login_sel0 = "";
+			$remember_login_sel1 = "";
+			switch($settings['remember_login']) {
+				case 0: $remember_login_sel0 = "checked='checked'"; break;
+				case 1: $remember_login_sel1 = "checked='checked'"; break;
+			}
+			?><input type="radio" name="remember_login" id="remember_login" value="0" <?php echo $remember_login_sel0?> /><?php echo _FNCC_NO?>
+			<input type="radio" name="remember_login" id="remember_login" value="1" <?php echo $remember_login_sel1?> /><?php echo _FNCC_YES?>
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="fuso_orario"><?php echo _FUSO?> (1h 30m = 1,5):</label><br />
+			<input type="text" name="fuso_orario" id="fuso_orario" style="width:100%;" maxlength="4" value="<?php echo $settings['fuso_orario']?>" />
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="maintenance"><?php echo _FNCC_CONFMAINTENANCE?></label><br /><?php
+			$maintenance_sel0 = "";
+			$maintenance_sel1 = "";
+			switch($settings['maintenance']) {
+				case 0: $maintenance_sel0 = "checked='checked'"; break;
+				case 1: $maintenance_sel1 = "checked='checked'"; break;
+			}
+			?><input type="radio" name="maintenance" id="maintenance" value="0" <?php echo $maintenance_sel0?> /><?php echo _FNCC_NO?>
+			<input type="radio" name="maintenance" id="maintenance" value="1" <?php echo $maintenance_sel1?> /><?php echo _FNCC_YES?>
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="home_section"><?php echo _FNCC_CONFHOMESECTION?></label><br />
+			<input type="text" name="home_section" id="home_section" style="width:100%;" maxlength="100" value="<?php echo $settings['home_section']?>" />
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="topicperpage"><?php echo _FNCC_CONFTOPICPERPAGE?></label><br />
+			<input type="text" name="topicperpage" id="topicperpage" style="width:100%;" maxlength="3" value="<?php echo $settings['topicperpage']?>" />
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="postperpage"><?php echo _FNCC_CONFPOSTPERPAGE?></label><br />
+			<input type="text" name="postperpage" id="postperpage" style="width:100%;" maxlength="3" value="<?php echo $settings['postperpage']?>" />
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="memberperpage"><?php echo _FNCC_CONFMEMBERPERPAGE?></label><br />
+			<input type="text" name="memberperpage" id="memberperpage" style="width:100%;" maxlength="3" value="<?php echo $settings['memberperpage']?>" />
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="forum_moderators"><?php echo _FNCC_CONFFORUMMODERATORS?></label><br />
+			<input type="text" name="forum_moderators" id="forum_moderators" style="width:100%;" maxlength="500" value="<?php echo $settings['forum_moderators']?>" />
+		</div>
+		<input type="hidden" name="conf_mod" value="modgeneralconf" />
+		<input type="hidden" name="conf_file" value="<?php echo $file?>" />
 		<?php
 		// check writing permissions
 		if(is_writeable($file))	{
-			?>
-			<p class="text-danger">
-				<?php echo _FNCC_WARNINGDOC?>
-			</p>
-			<input id="fncc_conf_submit" type="submit" class="btn btn-primary" value="<?php echo _MODIFICA?>">
-			<?php
+			?><div align="center" style="font-weight:bold;">
+				<?php echo _FNCC_WARNINGDOC?><br /><br /><input type="submit" value="<?php echo _MODIFICA?>" />
+			</div><?php
 		} else {
-			?><p class="text-danger">
+			?><div align="center" style="font-weight:bold;font-color:red;">
 				<?php echo _FNCC_WARNINGRIGHTS?>
-			</p><?php
+			</div><?php
 		}
-		?>
-		</div>
-		</form>
-
-<!--3)	Add last changes with jQuery/Javascript-->
-    	<script>
-		$("#fnccconf-form").data('toggle','validator');
-		$("#fnccconf-form").validator();
-		//trasform keywords list in tags
-		$('#keywords').tokenfield();
-
-		//DOM changes for the theme field
-		$( "#form-theme > label:first" ).after( '<div class="clearfix"></div>' );
-		
-		$('input[name="theme"]:visible').each(function() {
-			var t = $(this).attr('value');
-			$(this).after(t+ '<div class="clearfix"></div>' );
-		});	
-
-		//add help block to admin mail field
-		$( "#form-admin_mail" ).append( '<p class="help-block">(<?php echo _FNCC_CONFADMINMAIL_CONTACT;?>)</p>' );	
-		
-		//render disabled radio for fckeditor and ckeditor if they are not installed
-		$.ajax({
-		url:'include/plugins/editors/FCKeditor/fckeditor.php',
-		type:'HEAD',
-		error:
-		function(){
-			$('input:radio[name="news_editor"][value="fckeditor"]').prop('disabled', true);
-		},
-		//success:function(){alert('yes');}
-		});
-		
-		$.ajax({
-		url:'include/plugins/editors/ckeditor/ckeditor.php',
-		type:'HEAD',
-		error:
-		function(){
-			$('input:radio[name="news_editor"][value="ckeditor"]').prop('disabled', true);
-		},
-		//success:function(){alert('yes');}
-		});
-				
-		</script>
-		<?php
-	} else echo "<p class=\"text-danger\">"._FNCC_WARNINGNOFILE."</p>";
-	?>
-		
-	<?php
+		?></form><?php
+	} else echo "<div align='center' style='font-weight:bold;font-color:red;'>"._FNCC_WARNINGNOFILE."</div>";
 }
 
 /*
  * Read configuration files and print them ready to be managed
- * 
+ *
  * @author Marco Segato <segatom@users.sourceforge.net>
  * @version 20080726
  *
  * @param	string	$file	File name to modify
- * 
- * @author Alfedo Cosco 
- * @version 20140511
- * 
- * @changelog 2014 embedded Codemirror (http://codemirror.net/) as html,css, php editor
- * 
  */
 function fncc_editconffile($file) {
 	// security conversions
@@ -271,12 +271,7 @@ function fncc_editconffile($file) {
 	if (!preg_match("/^fckeditor$|^bbcode$/i", $news_editor)) $news_editor = "bbcode";
 	// check file existance
 	if(file_exists($file)) {
-		
-		//open the form
-		//fncc_generic_form_open();
-		echo build_fnajax_link($mod, "", "fn_adminpanel", "post", "fncc-edit-form");
-
-		echo "<div class=\"form-group\">";
+		echo "<form action=\"index.php?mod=$mod\" method=\"post\">";
 		// manage MOTD file with FCKeditor
 		if ($file==get_fn_dir("var")."/motd.php" AND $news_editor=="fckeditor" AND file_exists("include/plugins/editors/FCKeditor/fckeditor.php")) {
 			include("include/plugins/editors/FCKeditor/fckeditor.php");
@@ -288,47 +283,27 @@ function fncc_editconffile($file) {
 			$oFCKeditor->ToolbarSet = "Default";
 			$oFCKeditor->Create();
 		} else {
-			$ext = pathinfo($file, PATHINFO_EXTENSION);
-			if($ext=='php') {$mode="application/x-httpd-php";}
-			elseif($ext=='css'){$mode="text/css";}
-			
 			// manage standard files or FCKeditor is disabled
-			echo "<textarea name='conf_body' class=\"form-control\" id=\"fncc-edit-".$ext."\" rows=\"25\">";
+			echo "<textarea rows='20' style='width:100%;' name='conf_body'>";
 			echo htmlspecialchars(file_get_contents($file));
 			echo "</textarea>";
-			?>
-			<script src="<?php echo get_fn_dir("sections")."/$mod/none_js"?>/codemirror/codemirror-compressed.js"></script>	
-			<script>
-				var editor = CodeMirror.fromTextArea(document.getElementById("fncc-edit-<?php echo $ext;?>"), {
-				lineNumbers: true,
-				mode: "<?php echo $mode;?>",
-				matchBrackets: true,
-				lineWrapping: true
-				});
-				editor.setSize('98%', 450);
-			</script>
-			<?php
 		}
-		?>
-		</div>
-		<input type="hidden" name="conf_mod" value="modbodyfile">
-		<input type="hidden" name="conf_file" value="<?php echo $file?>">
+		?><br /><br />
+		<input type="hidden" name="conf_mod" value="modbodyfile" />
+		<input type="hidden" name="conf_file" value="<?php echo $file?>" />
 		<?php
 		// check writing permissions
 		if(is_writeable($file))	{
-			?><p class="text-danger">
-				<?php echo _FNCC_WARNINGDOC?>
-			</p>
-			<input type="submit" value="<?php echo _MODIFICA?>" class="btn btn-primary" />
-			<?php
+			?><div align="center" style="font-weight:bold;">
+				<?php echo _FNCC_WARNINGDOC?><br /><br /><input type="submit" value="<?php echo _MODIFICA?>" />
+			</div><?php
 		} else {
-			?><p class="text-danger">
+			?><div align="center" style="font-weight:bold;font-color:red;">
 				<?php echo _FNCC_WARNINGRIGHTS?>
-			</p><?php
+			</div><?php
 		}
-		?></form>
-		<?php
-	} else echo "<div class=\"txt-warning\">"._FNCC_WARNINGNOFILE."</div>";
+		?></form><?php
+	} else echo "<div align='center' style'font-weight:bold;font-color:red;'>"._FNCC_WARNINGNOFILE."</div>";
 }
 
 /*
@@ -336,10 +311,6 @@ function fncc_editconffile($file) {
  *
  * @author Marco Segato <segatom@users.sourceforge.net>
  * @version 20100101
- * 
- * @author Alfredo Cosco <orazio.nelson@gmail.com
- * @version 20140514 - structured to work with bootstrap and dataTables, add more poll options dinamically
- *  
  */
 function fncc_editpoll() {
 	// security conversions
@@ -352,101 +323,52 @@ function fncc_editpoll() {
 	$opzioni  = get_xml_element("opzioni",$file_xml);
 	$opzione  = get_xml_array("opzione",$opzioni);
 	// print html form
-	
-	//open the form
-	//fncc_generic_form_open();
-	echo build_fnajax_link($mod, "", "fn_adminpanel", "post", "fncc-edit-form");
-	
-	//poll status: open/closed
-	$pollstatuslabels=array('n'=>'_FP_CHIUSO','y'=>'_FP_APERTO');
-	echo fncc_input_radio('fp_stato',$attivo,$pollstatuslabels);
+	echo "<form action=\"index.php?mod=$mod\" method=\"post\">";
+	// poll status: open/closed
+	echo "<div style='margin-bottom:1em;'>"._FP_STATOSONDAGGIO;
+	if($attivo=="y") {
+		echo "<input type='radio' name='fp_stato' value='y' checked='checked' />"._FP_APERTO;
+		echo "<input type='radio' name='fp_stato' value='n' />"._FP_CHIUSO;
+	} else {
+		echo "<input type='radio' name='fp_stato' value='y' />"._FP_APERTO;
+		echo "<input type='radio' name='fp_stato' value='n' checked='checked' />"._FP_CHIUSO;
+	}
+	echo "</div>";
 	// poll argument
-	echo fncc_input_text('salva_domanda',get_xml_element("domanda",$file_xml),'200');
+	echo "<div style='margin-bottom:1em;'>"._FP_DOMANDASONDAGGIO.": ";
+	echo "<input type='text' name='salva_domanda' value='".get_xml_element("domanda",$file_xml)."' style='width:60%;' />";
+	echo "</div>";
+	// instructions
+	echo "<div align='justify' style='margin-bottom:1em;'>"._FP_ISTRUZIONIMODIFICA."</div>";
 	// poll options
-	?>
-	
-	<div class="form-group">
-		<div class="table-responsive">
-			<p class="help-block"><?php echo _FP_ISTRUZIONIMODIFICA?></p>
-			<button class="btn btn-success" id="addRow" type="button">Aggiungi un'opzione</button>
-	<?php
-	echo "<table class=\"table table-striped table-bordered table-hover\" id=\"dataTables-editpoll\">";
-	echo "<thead>
-			<tr>
-			<th>Num.</th>
-			<th>Option</th>
-			<th>"._FP_VOTI."</th>
-			</tr>
-		</thead><tbody>";
-
-
+	echo "<table width='70%'><tbody>";
 	for($n=0; $n<count($opzione); $n++) {	// print possible answers and votes (max 20)
-		echo "<tr>";
-		echo "<td>"; echo $n+1; echo "</td>";
-		echo "<td><input class=\"form-control\" type='text' name='salva_opzioni[]' value='".get_xml_element("testo",$opzione[$n])."'></td>";
-		echo "<td><input class=\"form-control\" type='text' name='salva_voti[]' value='".get_xml_element("voto",$opzione[$n])."'></td>";
+		echo "<tr width='100%'>";
+		echo "<td align='right'>"; echo $n+1; echo "</td>";
+		echo "<td><input type='text' name='salva_opzioni[]' value='".get_xml_element("testo",$opzione[$n])."' /></td>";
+		echo "<td>"._FP_VOTI."</td>";
+		echo "<td><input type='text' name='salva_voti[]' value='".get_xml_element("voto",$opzione[$n])."' /></td>";
 		echo "</tr>";
 	}
-
+	for($n=count($opzione); $n<20; $n++) {	// print empty options
+		echo "<tr width='100%'>";
+		echo "<td align='right'>"; echo $n+1; echo "</td>";
+		echo "<td><input type='text' name='salva_opzioni[]' value='' /></td>";
+		echo "<td>"._FP_VOTI."</td>";
+		echo "<td><input type='text' name='salva_voti[]' value='' /></td>";
+		echo "</tr>";
+	}
 	echo "</tbody></table>";
 	// save poll configuration
-	?>
-		</div><!--table-responsive-->
-	</div>
-	
-	<div class="form-group">	
-			<input type="hidden" name="conf_mod" value="savepoll">
-			<input class="btn btn-primary" type="submit" value="<?php echo _FP_MODIFICA?>">
-	</div>
-	
-	</form>
-	<?php
+	?><br />
+	<input type="hidden" name="conf_mod" value="savepoll" />
+	<center><input type="submit" value="<?php echo _FP_MODIFICA?>" /></center>
+	</form><?php
 	// archive poll
-	//open the form
-	//fncc_generic_form_open();
-	echo build_fnajax_link($mod, "", "fn_adminpanel", "post", "fncc-archive-form");
-	?>
-	<div class="form-group">
-
-			<input type="hidden" name="conf_mod" value="archpoll">
-			<input class="btn btn-danger" type="submit" value="<?php echo _FP_CHIUDIARCHIVIA?>">
-
-	</div>
+	echo "<form action=\"index.php?mod=$mod\" method=\"post\">";
+	?><input type="hidden" name="conf_mod" value="archpoll" />
+	<center><input type="submit" value="<?php echo _FP_CHIUDIARCHIVIA?>" /></center>
 	</form>
-	<!-- the javascript-->
-
-	<script>
-    $(document).ready(function() {
-        $('#dataTables-editpoll').dataTable({
-		"searching": false,
-		"paging":   false,
-        "ordering": false,
-        "info":     false
-			});
-    });
-
-    $(document).ready(function() {
-    var t = $('#dataTables-editpoll').DataTable();
-    var counter = 4;
- 
-	var tstring = '<input class="form-control" type="text" name="salva_opzioni[]" value="">';
-	var cstring = '<input class="form-control" type="text" name="salva_voti[]" value="">';
-	
-    $('#addRow').on( 'click', function () {
-        t.row.add( [
-            counter,
-            tstring,
-            cstring
-        ] ).draw();
- 
-        counter++;
-    } );
- 
-    // Automatically add a first row of data
-    $('#addRow').click();
-	} );
-    
-    </script>
 	<?php
 }
 
@@ -455,10 +377,6 @@ function fncc_editpoll() {
  *
  * @author Marco Segato <segatom@users.sourceforge.net>
  * @version 20080607
- * 
- * @author Alfredo Cosco <orazio.nelson@gmail.com
- * @version 20140514 - structured to work with bootstrap 
- * 
  */
 function fncc_fdplusconf() {
 	// security conversions
@@ -466,6 +384,7 @@ function fncc_fdplusconf() {
 	// check file existance
 	$file = "download/fdconfig.php";
 	if(file_exists($file)) {
+		echo "<form action=\"index.php?mod=$mod\" method=\"post\">";
 		// scan configuration file to find all settings
 		$settings  = array();
 		$conf_file = file($file);
@@ -499,121 +418,168 @@ function fncc_fdplusconf() {
 		if($icons_num>0) {
 			sort($icons_array);
 		}	//print_r($icons_array);	//-> TEST
-		
-		
-/**
- * Print the page
- * 1)	Prepare data for the form data series: mainly arrays
- * 2)	Print the html
- * 3)	Add last changes with jQuery/Javascript
- * **/
-		
-// 1)	Prepare data for the form data series: mainly arrays
-		//Icons labels array
-		foreach ($icons_array as $myicon) {
-			$myicon = preg_replace("/^images\/mime\//i","",$myicon);
-			$myicons[$myicon]=$myicon;
-		}
-		
-// 2)	Print the HTML
-		//open the form
-		//fncc_generic_form_open();
-		echo build_fnajax_link($mod, "", "fn_adminpanel", "post", "fncc-fdp-form");
 		?>
-
-		<ul class="nav nav-tabs">
-		  <li class="active"><a href="#base" data-toggle="tab">Base settings</a></li>
-		  <li><a href="#layout" data-toggle="tab">Layout settings</a></li>
-		  <li><a href="#advanced" data-toggle="tab">Advanced Settings</a></li>
-		  <li><a href="#permissions" data-toggle="tab">Users Permissions</a></li>
-		</ul>
-		<div class="tab-content">
-		  <div class="tab-pane fade in active" id="base">
-			<?php
-			//extensions
-			echo fncc_input_text('extensions',$settings['extensions'],'300');
-			//maxfilesize
-			echo fncc_input_number('maxFileSize',$settings['maxFileSize'],'9',array(1,2000000),true);
-			// new file time
-			echo fncc_input_number('newfiletime',$settings['newfiletime'],'4',array(1,2000),true);
-			// print the list of available mime icon sets
-			echo fncc_input_radio('icon_style',$settings['icon_style'],$myicons);
-			//screenshots extension
-			echo fncc_input_text('extscreenshot',$settings['extscreenshot'],'4');
-			//VOTE
-			echo fncc_input_radio('defaultvoteon',$settings['defaultvoteon']);
-			?>
-		  </div>
-		  <div class="tab-pane fade" id="layout">
-			<?php
-			//SHOW UPLOADER
-			echo fncc_input_radio('showuploader',$settings['showuploader']);
-			//SHOW DNL LINK
-			echo fncc_input_radio('showdownloadlink',$settings['showdownloadlink']);
-			//SHOW FILES LIST
-			echo fncc_input_radio('overview_show_files',$settings['overview_show_files']);
-			//SHOW SUMMARY
-			echo fncc_input_radio('section_show_header',$settings['section_show_header']);
-			?>	
-		  </div>
-		  <div class="tab-pane fade" id="advanced">	
-			<?php
-			//signature estension
-			echo fncc_input_text('extsig',$settings['extsig'],'4');
-			//MD5
-			echo fncc_input_radio('automd5',$settings['automd5']);
-			//SHA1
-			echo fncc_input_radio('autosha1',$settings['autosha1']);
-			//ENABLE WEB ADMIN
-			echo fncc_input_radio('enable_admin_options',$settings['enable_admin_options']);
-			//User file limit
-			echo fncc_input_number('userfilelimit',$settings['userfilelimit'],'4',array(1,2000));
-			//USER WAITING FILE
-			echo fncc_input_text('userwaitingfile',$settings['userwaitingfile'],'100');		
-			?>
-		  </div>
-		  <div class="tab-pane fade" id="permissions">	
-			<?php
-			//other admins
-			echo fncc_input_text('admins',$settings['admins'],'200');
-			//User max file size
-			echo fncc_input_number('usermaxFileSize',$settings['usermaxFileSize'],'9',array(1,1000000),true);
-			//BLACKLISTED
-			echo fncc_input_text('userblacklist',$settings['userblacklist'],'500');
-			//Min level users allowed
-			echo fncc_select('minlevel',$settings['minlevel'],range(0,10));
-			?>
-		  </div>
+		<div style="margin-bottom:1em;">
+			<label for="extensions"><?php echo _FNCC_FDPEXTENSIONS?></label><br />
+			<input type="text" name="extensions" id="extensions" style="width:100%;" maxlength="300" value="<?php echo $settings['extensions']?>" />
 		</div>
-
-		<input type="hidden" name="conf_mod" value="moddownconf">
-		<input type="hidden" name="conf_file" value="<?php echo $file?>">
-		<div class="clearfix"></div>
-		<div class="form-group">
+		<div style="margin-bottom:1em;">
+			<label for="maxFileSize"><?php echo _FNCC_FDPMAXFILESIZE?></label><br />
+			<input type="text" name="maxFileSize" id="maxFileSize" style="width:100%;" maxlength="500" value="<?php echo $settings['maxFileSize']?>" />
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="icon_style"><?php echo _FNCC_FDPICONSTYLE?></label><br /><?php
+			// print the list of available mime icon sets
+			foreach ($icons_array as $myicon) {
+				$myicon = preg_replace("/^images\/mime\//i","",$myicon);
+				$checked = ($settings['icon_style'] == $myicon) ? ("checked='checked'") : ("");
+				echo "<input type='radio' $checked name='icon_style' id='icon_style' value='$myicon' />$myicon&nbsp;&nbsp;";
+			}
+		?></div>
+		<div style="margin-bottom:1em;">
+			<label for="newfiletime"><?php echo _FNCC_FDPNEWFILETIME?></label><br />
+			<input type="text" name="newfiletime" id="newfiletime" style="width:100%;" maxlength="1500" value="<?php echo $settings['newfiletime']?>" />
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="automd5"><?php echo _FNCC_FDPAUTOMD5?></label><br /><?php
+			$automd5_sel0 = "";
+			$automd5_sel1 = "";
+			switch($settings['automd5']) {
+				case 0: $automd5_sel0 = "checked='checked'"; break;
+				case 1: $automd5_sel1 = "checked='checked'"; break;
+			}
+			?><input type="radio" name="automd5" id="automd5" value="0" <?php echo $automd5_sel0?> /><?php echo _FNCC_NO?>
+			<input type="radio" name="automd5" id="automd5" value="1" <?php echo $automd5_sel1?> /><?php echo _FNCC_YES?>
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="autosha1"><?php echo _FNCC_FDPAUTOSHA1?></label><br /><?php
+			$autosha1_sel0 = "";
+			$autosha1_sel1 = "";
+			switch($settings['autosha1']) {
+				case 0: $autosha1_sel0 = "checked='checked'"; break;
+				case 1: $autosha1_sel1 = "checked='checked'"; break;
+			}
+			?><input type="radio" name="autosha1" id="autosha1" value="0" <?php echo $autosha1_sel0?> /><?php echo _FNCC_NO?>
+			<input type="radio" name="autosha1" id="autosha1" value="1" <?php echo $autosha1_sel1?> /><?php echo _FNCC_YES?>
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="showuploader"><?php echo _FNCC_FDPSHOWUPLOADER?></label><br /><?php
+			$showuploader_sel0 = "";
+			$showuploader_sel1 = "";
+			switch($settings['showuploader']) {
+				case 0: $showuploader_sel0 = "checked='checked'"; break;
+				case 1: $showuploader_sel1 = "checked='checked'"; break;
+			}
+			?><input type="radio" name="showuploader" id="showuploader" value="0" <?php echo $showuploader_sel0?> /><?php echo _FNCC_NO?>
+			<input type="radio" name="showuploader" id="showuploader" value="1" <?php echo $showuploader_sel1?> /><?php echo _FNCC_YES?>
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="extsig"><?php echo _FNCC_FDPGPG?></label><br />
+			<input type="text" name="extsig" id="extsig" style="width:100%;" maxlength="4" value="<?php echo $settings['extsig']?>" />
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="extscreenshot"><?php echo _FNCC_FDPSCREENSHOTS?></label><br />
+			<input type="text" name="extscreenshot" id="extscreenshot" style="width:100%;" maxlength="4" value="<?php echo $settings['extscreenshot']?>" />
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="admins"><?php echo _FNCC_FDPADMINS?></label><br />
+			<input type="text" name="admins" id="admins" style="width:100%;" maxlength="200" value="<?php echo $settings['admins']?>" />
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="enable_admin_options"><?php echo _FNCC_FDPADMINOPTOK?></label><br /><?php
+			$enable_admin_options_sel0 = "";
+			$enable_admin_options_sel1 = "";
+			switch($settings['enable_admin_options']) {
+				case 0: $enable_admin_options_sel0 = "checked='checked'"; break;
+				case 1: $enable_admin_options_sel1 = "checked='checked'"; break;
+			}
+			?><input type="radio" name="enable_admin_options" id="enable_admin_options" value="0" <?php echo $enable_admin_options_sel0?> /><?php echo _FNCC_NO?>
+			<input type="radio" name="enable_admin_options" id="enable_admin_options" value="1" <?php echo $enable_admin_options_sel1?> /><?php echo _FNCC_YES?>
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="showdownloadlink"><?php echo _FNCC_FDPSHOWLINK?></label><br /><?php
+			$showdownloadlink_sel0 = "";
+			$showdownloadlink_sel1 = "";
+			switch($settings['showdownloadlink']) {
+				case 0: $showdownloadlink_sel0 = "checked='checked'"; break;
+				case 1: $showdownloadlink_sel1 = "checked='checked'"; break;
+			}
+			?><input type="radio" name="showdownloadlink" id="showdownloadlink" value="0" <?php echo $showdownloadlink_sel0?> /><?php echo _FNCC_NO?>
+			<input type="radio" name="showdownloadlink" id="showdownloadlink" value="1" <?php echo $showdownloadlink_sel1?> /><?php echo _FNCC_YES?>
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="overview_show_files"><?php echo _FNCC_FDPFILELIST?></label><br /><?php
+			$overview_show_files_sel0 = "";
+			$overview_show_files_sel1 = "";
+			switch($settings['overview_show_files']) {
+				case 0: $overview_show_files_sel0 = "checked='checked'"; break;
+				case 1: $overview_show_files_sel1 = "checked='checked'"; break;
+			}
+			?><input type="radio" name="overview_show_files" id="overview_show_files" value="0" <?php echo $overview_show_files_sel0?> /><?php echo _FNCC_NO?>
+			<input type="radio" name="overview_show_files" id="overview_show_files" value="1" <?php echo $overview_show_files_sel1?> /><?php echo _FNCC_YES?>
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="section_show_header"><?php echo _FNCC_FDPSUMMARY?></label><br /><?php
+			$section_show_header_sel0 = "";
+			$section_show_header_sel1 = "";
+			switch($settings['section_show_header']) {
+				case 0: $section_show_header_sel0 = "checked='checked'"; break;
+				case 1: $section_show_header_sel1 = "checked='checked'"; break;
+			}
+			?><input type="radio" name="section_show_header" id="section_show_header" value="0" <?php echo $section_show_header_sel0?> /><?php echo _FNCC_NO?>
+			<input type="radio" name="section_show_header" id="section_show_header" value="1" <?php echo $section_show_header_sel1?> /><?php echo _FNCC_YES?>
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="defaultvoteon"><?php echo _FNCC_FDPVOTE?></label><br /><?php
+			$defaultvoteon_sel0 = "";
+			$defaultvoteon_sel1 = "";
+			switch($settings['defaultvoteon']) {
+				case 0: $defaultvoteon_sel0 = "checked='checked'"; break;
+				case 1: $defaultvoteon_sel1 = "checked='checked'"; break;
+			}
+			?><input type="radio" name="defaultvoteon" id="defaultvoteon" value="0" <?php echo $defaultvoteon_sel0?> /><?php echo _FNCC_NO?>
+			<input type="radio" name="defaultvoteon" id="defaultvoteon" value="1" <?php echo $defaultvoteon_sel1?> /><?php echo _FNCC_YES?>
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="usermaxFileSize"><?php echo _FNCC_FDPMAXUSERSIZE?></label><br />
+			<input type="text" name="usermaxFileSize" id="usermaxFileSize" style="width:100%;" maxlength="500" value="<?php echo $settings['usermaxFileSize']?>" />
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="userfilelimit"><?php echo _FNCC_FDPNUMWAITING?></label><br />
+			<input type="text" name="userfilelimit" id="userfilelimit" style="width:100%;" maxlength="500" value="<?php echo $settings['userfilelimit']?>" />
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="userwaitingfile"><?php echo _FNCC_FDPFILEWAITING?></label><br />
+			<input type="text" name="userwaitingfile" id="userwaitingfile" style="width:100%;" maxlength="500" value="<?php echo $settings['userwaitingfile']?>" readonly="readonly" />
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="userblacklist"><?php echo _FNCC_FDPBLACKLIST?></label><br />
+			<input type="text" name="userblacklist" id="userblacklist" style="width:100%;" maxlength="500" value="<?php echo $settings['userblacklist']?>" />
+		</div>
+		<div style="margin-bottom:1em;">
+			<label for="minlevel"><?php echo _FNCC_FDPMINLEVEL?></label><br />
+			<select name="minlevel" id="minlevel"><?php
+				for($i=0;$i<=10;$i++) {
+					$selected = ($settings['minlevel']==$i) ? ("selected='selected'") : ("");
+					echo "<option value='$i' $selected>$i</option>";
+				}
+			?></select>
+		</div>
+		<input type="hidden" name="conf_mod" value="moddownconf" />
+		<input type="hidden" name="conf_file" value="<?php echo $file?>" />
 		<?php
 		// check writing permissions
 		if(is_writeable($file))	{
-			?><p class="text-danger">
-				<?php echo _FNCC_WARNINGDOC?>
-			  </p>
-			  <input type="submit" class="btn btn-primary" value="<?php echo _MODIFICA?>">
-			<?php
+			?><div align="center" style="font-weight:bold;">
+				<?php echo _FNCC_WARNINGDOC?><br /><br /><input type="submit" value="<?php echo _MODIFICA?>" />
+			</div><?php
 		} else {
-			?><p class="text-danger">
+			?><div align="center" style="font-weight:bold;font-color:red;">
 				<?php echo _FNCC_WARNINGRIGHTS?>
-			</p><?php
+			</div><?php
 		}
-		?>
-		</div>
-		</form>
-<!--3)	Add last changes with jQuery/Javascript-->
-		<script>
-			$('#extensions').tokenfield();
-			$('#userwaitingfile').prop('readonly', true);
-			$('#minlevel').css('width','auto');	
-		</script>
-		<?php
-	} else echo "<p class=\"text-danger\">"._FNCC_WARNINGNOFILE."</p>";
+		?></form><?php
+	} else echo "<div align='center' style='font-weight:bold;font-color:red;'>"._FNCC_WARNINGNOFILE."</div>";
 }
 
 /*
@@ -622,10 +588,6 @@ function fncc_fdplusconf() {
  *
  * @author Marco Segato <segatom@users.sourceforge.net>
  * @version 20130216
- * 
- * @author Alfredo Cosco <orazio.nelson@gmail.com
- * @version 20140514 - added dataTables themes and functionalities
- * 
  */
 function fncc_userslist() {
 	// security conversions
@@ -644,37 +606,67 @@ function fncc_userslist() {
 			"time"  => filemtime(get_fn_dir("users")."/".$users[$i].".php")+(3600*$fuso_orario))
 		);
 	}	//echo "<pre>";print_r($members);echo "</pre>";	//-> TEST
-	
-	echo "<table class=\"table table-striped table-bordered table-hover\" id=\"dataTables-userslist\">";
-	echo "<thead><tr></tr>";
-		echo "<th>Id</td>";
-		echo "<th>"._NOMEUTENTE."</th>";
-		echo "<th> "._LEVEL."</th>";
-		echo "<th> "._FNCC_CHANGEDATE."</th>";
-	echo "</tr></thead><tbody>";
+	// sort the array as chosen
+	if(count($members)>0) {
+		switch($order) {
+			case "name_a":
+				sort ($members); // ascending by name
+			break;
+			case "name_d":
+				rsort ($members); // descending name
+			break;
+			case "level_a":
+				usort($members, create_function('$a, $b', "return strnatcasecmp(\$a['level'], \$b['level']);")); // ascending by level
+			break;
+			case "level_d":
+				usort($members, create_function('$a, $b', "return strnatcasecmp(\$a['level'], \$b['level']);")); // descending by level
+				$members = array_reverse($members, FALSE);
+			break;
+			case "time_a":
+				usort($members, create_function('$a, $b', "return strnatcasecmp(\$a['time'], \$b['time']);")); // ascending by time
+			break;
+			case "time_d":
+				usort($members, create_function('$a, $b', "return strnatcasecmp(\$a['time'], \$b['time']);")); // descending by time
+				$members = array_reverse($members, FALSE);
+			break;
+			default: sort ($members);
+		}
+	}
+	// print links to order the list
+	$ord_name_a  = build_fnajax_link($mod, "&amp;op=fnccmembers&amp;order=name_a", "fn_adminpanel", "get");
+	$ord_name_d  = build_fnajax_link($mod, "&amp;op=fnccmembers&amp;order=name_d", "fn_adminpanel", "get");
+	$ord_level_a = build_fnajax_link($mod, "&amp;op=fnccmembers&amp;order=level_a", "fn_adminpanel", "get");
+	$ord_level_d = build_fnajax_link($mod, "&amp;op=fnccmembers&amp;order=level_d", "fn_adminpanel", "get");
+	$ord_time_a  = build_fnajax_link($mod, "&amp;op=fnccmembers&amp;order=time_a", "fn_adminpanel", "get");
+	$ord_time_d  = build_fnajax_link($mod, "&amp;op=fnccmembers&amp;order=time_d", "fn_adminpanel", "get");
+	// print the list of the members
+	$style_h  = " style=\"border:1px solid;border-collapse:collapse;font-weight:bold;text-align:center;\"";
+	$style_c  = " style=\"border-bottom:1px solid;padding-left:1.5em;";
+	$style_cm = " style=\"border-bottom:1px solid;text-align:center;";
+	echo "<table cellspacing='0' cellpadding='0' style='width:70%'><tbody>";
+	echo "<tr>";
+		echo "<td ".$style_h.">Id</td>";
+		echo "<td ".$style_h.">$ord_name_a&#8595;</a> "._NOMEUTENTE." $ord_name_d&#8593;</a></td>";
+		echo "<td ".$style_h.">$ord_level_a&#8595;</a> "._LEVEL." $ord_level_d&#8593;</a></td>";
+		echo "<td ".$style_h.">$ord_time_a&#8595;</a> "._FNCC_CHANGEDATE." $ord_time_d&#8593;</a></td>";
+	echo "</tr>";
 	for($i=0; $i<count($members); $i++) {
 		$style_r = ($members[$i]['level']==10) ? ("style=\"font-weight:bold;\"") : ("");
-		echo "<tr>";
-		echo "<td>".($i+1)."</td>";
+		echo "<tr ".$style_r.">";
+		echo "<td ".$style_cm."\">".($i+1)."</td>";
 		$member = str_replace(".php", "", $members[$i]['name']);
-		echo "<td><a href=\"index.php?mod=none_Login&amp;action=viewprofile&amp;user=$member\" title=\""._VIEW_USERPROFILE." $member\">$member</a></td>";
+		echo "<td $style_c\"><a href=\"index.php?mod=none_Login&amp;action=viewprofile&amp;user=$member\" title=\""._VIEW_USERPROFILE." $member\">$member</a></td>";
 		// print image 'new.gif' if userprofile has been modified within 1 week
 		if(time()-$members[$i]['time']<$time_fresh*3600) {
 			$img_fresh = "<img src='images/mime/new.gif' alt='new' />";
 		} else {
 			$img_fresh = "";
 		}
-		echo "<td>".$members[$i]['level']."</td>";
-		echo "<td>".date(" d.m.Y, H:i:s", $members[$i]['time'])." $img_fresh</td>";
+		echo "<td  ".$style_cm."\">".$members[$i]['level']."</td>";
+		echo "<td  ".$style_cm."\">".date(" d.m.Y, H:i:s", $members[$i]['time'])." $img_fresh</td>";
 		echo "</tr>";
 	}
-	?></tbody></table>
-		<script>
-		$(document).ready(function() {
-        $('#dataTables-userslist').dataTable();
-        });
-		</script>
-	<?php
+	?></tbody></table><?php
 }
 
 /*
@@ -682,149 +674,121 @@ function fncc_userslist() {
  *
  * @author Marco Segato <segatom@users.sourceforge.net>
  * @version 20070716
- * 
- * @author Alfredo Cosco <orazio.nelson@gmail.com>
- * @version 20140514 - structured to work with bootstrap and validator
- *  
  */
 function fncc_newuserprofile() {
 	global $reguser, $action;
 	// security conversions
 	$mod   = getparam("mod", PAR_GET, SAN_FLAT);
 	// print fields to fill
-	//open the form
-	//fncc_generic_form_open();
-	echo build_fnajax_link($mod, "", "fn_adminpanel", "post", "fncc-newuser-form");
-	?>
-	<!-- Nav tabs -->
-	<ul class="nav nav-tabs">
-		<li class="active"><a href="#fn-basic-um" data-toggle="tab">Base settings</a></li>
-		<li><a href="#fn-advanced-um" data-toggle="tab">Advanced settings</a></li>
-	</ul>
-	<div class="tab-content">
-		<div class="tab-pane fade in active" id="fn-basic-um">
-			<?php
-			echo fncc_input_text('nome',NULL,'100');
-			echo fncc_input_text('regpass',NULL,'100','password');
-			echo fncc_input_text('reregpass',NULL,'100','password');
-			echo fncc_input_text('anag',NULL,'100');
-			echo fncc_input_text('email',NULL,'100','email');
-			echo fncc_select('level','0',range(0,10));
-			?>					
-		</div>
-		<div class="tab-pane fade" id="fn-advanced-um">			
-			<div class="panel panel-default" style="border:none; margin:0;">
-				<div class="panel-body" style="padding:0">
-					<div class="panel-group" id="accordion">
-						<div class="panel panel-info">
-							<div class="panel-heading">
-								<h4 class="panel-title">
-									<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="lead">Anagrafica</a>
-								</h4>
-							</div>
-							<div id="collapseOne" class="panel-collapse collapse in" style="height: auto;">
-								<div class="panel-body">
-									<?php
-									echo fncc_input_text('homep',NULL,'100','url');
-									echo fncc_input_text('prof',NULL,'100');
-									echo fncc_input_text('prov',NULL,'100');
-									?>
-								</div>
-							</div>
-						</div>
-						<div class="panel panel-success">
-							<div class="panel-heading">
-								<h4 class="panel-title">
-									<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed lead">Social</a>
-								</h4>
-							</div>
-							<div id="collapseTwo" class="panel-collapse collapse" style="height: 0px;">
-								<div class="panel-body">
-									<?php
-									echo fncc_input_text('jabber',NULL,'100');
-									echo fncc_input_text('skype',NULL,'100');
-									echo fncc_input_text('icq',NULL,'100');
-									echo fncc_input_text('msn',NULL,'100');
-									?>
-								</div>
-							</div>
-						</div>
-						<div class="panel panel-warning">
-							<div class="panel-heading">
-								<h4 class="panel-title">
-									<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="collapsed lead">Personalizzazione</a>
-								</h4>
-							</div>
-							<div id="collapseThree" class="panel-collapse collapse" style="height: 0px;">
-								<div class="panel-body">
-									<div class="form-group">
-										<div class="col-sm-2">
-											<label for="ava"><?php echo _FAVAT?></label>
-											<img name="avatar" src="forum/images/blank.png" alt="avatar" id="avatar" class="img-thumbnail">
-										</div>
-										<div class="col-sm-7">											
-										<select class="form-control" name="ava" onchange='document.avatar.src="forum/images/"+this.options[this.selectedIndex].value'>
-										<option value="blank.png">----</option><?php
-										$modlist = array();
-										$handle = opendir('forum/images');
-										while ($file = readdir($handle)) {
-											if (!( $file=="." or $file==".." )) {
-												array_push($modlist, $file);
-											}
-										}
-										closedir($handle);
-										if(count($modlist)>0)
-											sort($modlist);
-										for ($i=0; $i < sizeof($modlist); $i++) {
-											echo "<option value=\"$modlist[$i]\">$modlist[$i]</option>\n";
-										}
-										?></select>
-										<p class="help-block"><?php echo _FAVATREM?></p><?php
-										echo "<input type=\"text\" name=\"url_avatar\" class=\"form-control\">";
-									?>
-										</div>
-									</div>
-									<div class="clearfix" style="margin-bottom:1em;"></div>
-									<?php
-									echo fncc_textarea('firma',NULL);
-									echo fncc_textarea('presentation',NULL);
-									?>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- .panel-body -->
-			</div>
-			<!-- /.panel -->              
-		</div>
-	</div>
-	<input type="hidden" name="conf_mod" value="saveprofile">
-	<input type="submit" class="btn btn-primary" value="<?php echo _FINVIA?>">
-	
-	</form>
-	<script>
-	$('#fncc-newuser-form').data('toggle','validator');
-	$('#reregpass').data({
-		'match':'#regpass', 
-		"match-error":"Whoops, these don't match"}).after(' <div class="help-block with-errors"></div>');
-		
-	$("#fncc-newuser-form").validator();
-	//add help block and data-reguser attribute to email filed #form-email
-	$( "#form-email" ).append( '<p class="help-block">(Email address we can contact you on)</p>' ).data('reguser',<?php echo $reguser?>);
-	//set mail 'required' if registration is by mail
-	var reguser = $('#form-email').data('reguser');	
-	if(parseInt(reguser)==2) {$('#email').prop("required", true);
-	$('label[for="email"]').addClass('required');
-		}
-	
-	//set required fields
-	$('#nome, #regpass, #reregpass').prop("required", true);
-	// add .required class for labels, needs to add the *
-	$('label[for="nome"], label[for="regpass"], label[for="reregpass"]').addClass('required');
-		
-	</script>
-	<?php
+	echo "<form action=\"index.php?mod=$mod\" method=\"post\">";
+	$style1 = "font-style:bold; padding:0.2em;";
+	$style2 = "padding:0.2em;";
+	?><table width='70%' align='center' border='1' style="border-collapse:collapse">
+	<tbody>
+	<tr>
+		<td style="<?php echo $style1?>"><label for="nome"><b><span>*</span> <?php echo _NOMEUTENTE?></b></label></td>
+		<td style="<?php echo $style2?>"><input name="nome" type="text" id="nome"/></td>
+	</tr>
+	<tr>
+		<td style="<?php echo $style1?>"><label for="regpass"><b><span>*</span> <?php echo _PASSWORD?></b></label></td>
+		<td style="<?php echo $style2?>"><input name="regpass" type="password" id="regpass" /></td>
+	</tr>
+	<tr>
+		<td style="<?php echo $style1?>"><label for="reregpass"><b><span>*</span> <?php echo _PASSWORD?></b></label></td>
+		<td style="<?php echo $style2?>"><input name="reregpass" type="password" id="reregpass" /></td>
+	</tr>
+	<tr>
+		<td style="<?php echo $style1?>"><label for="anag"><?php echo _FNOME?></label></td>
+		<td style="<?php echo $style2?>"><input name="anag" type="text" id="anag" /></td>
+	</tr>
+	<tr>
+		<td style="<?php echo $style1?>"><label for="email"><?php
+			if ($reguser=="2" AND $action=="reguser") echo "<span>*</span>&nbsp;<b>";
+			echo _FEMAIL;
+			if ($reguser=="2" AND $action=="reguser") echo "</b>";
+		?></label></td>
+		<td style="<?php echo $style2?>"><input name="email" type="text" id="email" /></td>
+	</tr>
+	<tr>
+		<td style="<?php echo $style1?>"><label for="hiddenmail"><?php echo _HIDDENMAIL?></label></td>
+		<td style="<?php echo $style2?>"><input name="hiddenmail" type="checkbox" id="hiddenmail" /></td>
+	</tr>
+	<tr>
+		<td style="<?php echo $style1?>"><label for="homep"><?php echo _FHOME?></label></td>
+		<td style="<?php echo $style2?>"><input name="homep" type="text" id="homep" /></td>
+	</tr>
+	<tr>
+		<td style="<?php echo $style1?>"><label for="prof"><?php echo _FPROFES?></label></td>
+		<td style="<?php echo $style2?>"><input name="prof" type="text" id="prof" /></td>
+	</tr>
+	<tr>
+		<td style="<?php echo $style1?>"><label for="prov"><?php echo _FPROV?></label></td>
+		<td style="<?php echo $style2?>"><input name="prov" type="text" id="prov" /></td>
+	</tr>
+	<tr>
+		<td style="<?php echo $style1?>"><label for="jabber">Jabber / Google Talk</label></td>
+		<td style="<?php echo $style2?>"><input name="jabber" type="text" id="jabber" /></td>
+	</tr>
+	<tr>
+		<td style="<?php echo $style1?>"><label for="skype">Skype</label></td>
+		<td style="<?php echo $style2?>"><input name="skype" type="text" id="skype" /></td>
+	</tr>
+	<tr>
+		<td style="<?php echo $style1?>"><label for="icq">ICQ</label></td>
+		<td style="<?php echo $style2?>"><input name="icq" type="text" id="icq" /></td>
+	</tr>
+	<tr>
+		<td style="<?php echo $style1?>"><label for="msn">MSN</label></td>
+		<td style="<?php echo $style2?>"><input name="msn" type="text" id="msn" /></td>
+	</tr>
+	<tr>
+		<td style="<?php echo $style1?>"><label for="ava"><?php echo _FAVAT?></label></td>
+		<td style="<?php echo $style2?>">
+			<img name="avatar" src="forum/images/blank.png" alt="avatar" border="0" style="max-width:120px;" id="avatar" />
+			<br />
+			<select name="ava" onchange='document.avatar.src="forum/images/"+this.options[this.selectedIndex].value'>
+			<option value="blank.png">----</option><?php
+			$modlist = array();
+			$handle = opendir('forum/images');
+			while ($file = readdir($handle)) {
+				if (!( $file=="." or $file==".." )) {
+					array_push($modlist, $file);
+				}
+			}
+			closedir($handle);
+			if(count($modlist)>0)
+				sort($modlist);
+			for ($i=0; $i < sizeof($modlist); $i++) {
+				echo "<option value=\"$modlist[$i]\">$modlist[$i]</option>\n";
+			}
+			?></select><br /><br />
+			<?php echo _FAVATREM?>:<br /><?php
+			echo "<input type=\"text\" name=\"url_avatar\" />";
+		?></td>
+	</tr>
+	<tr>
+		<td style="<?php echo $style1?>"><label for="firma"><?php echo _FFIRMA?></label></td>
+		<td style="<?php echo $style2?>"><textarea name="firma" id="firma" rows="5" cols="23"></textarea></td>
+	</tr>
+	<tr>
+		<td style="<?php echo $style1?>"><label for="presentation"><?php echo _FNPRESENTATION?></label></td>
+		<td style="<?php echo $style2?>"><textarea name="presentation" id="presentation" rows="5" cols="23"></textarea></td>
+	</tr>
+	<tr>
+		<td style="<?php echo $style1?>"><label for="level"><?php echo _LEVEL?></label></td>
+		<td style="<?php echo $style2?>">
+			<select name="level" id="level"><?php
+				for($i=0; $i<11; $i++){
+					echo "<option value=\"$i\">$i</option>";
+				}
+			?></select>
+		</td>
+	</tr>
+	</tbody>
+	</table>
+	<div align="center" style="margin:1em;"><input type="submit" value="<?php echo _FINVIA?>" /></div>
+	<input type="hidden" name="conf_mod" value="saveprofile" />
+	</form><?php
 }
 
 /*
@@ -919,7 +883,7 @@ function fncc_listwaiting() {
 			$user_xml = load_user_profile($user, 1);	//echo "<pre>";print_r($user_xml);echo "</pre>"; //-> TEST
 			$detstyle1 = "float:left;height:2em;width:25%;";
 			$detstyle2 = "float:left;height:2em;width:60%;";
-			?><p><div><b><?php echo $user?></b></div></p>
+			?><p><center><b><?php echo $user?></b></center></p>
 			<div id='user_profile' style='width:85%;padding: 1em 0 0.5em 15%;border:1px dashed;'>
 			<div id='password' style='float:left;width:100%;'>
 				<div style='<?php echo $detstyle1?>'><?php echo _PASSWORD?></div>
@@ -935,7 +899,7 @@ function fncc_listwaiting() {
 			</div>
 			<div id='mail' style='float:left;width:100%;'>
 				<div style='<?php echo $detstyle1?>'><?php echo _HIDDENMAIL?></div>
-				<div style='<?php echo $detstyle2?>'><input id="hiddenmail" type="checkbox" disabled='disabled' <?php if ($user_xml['hiddenmail']=="1") echo "checked";?> /></div>
+				<div style='<?php echo $detstyle2?>'><input id="hiddenmail" type="checkbox" disabled='disabled' <?php if ($user_xml['hiddenmail']=="1") echo "checked='checked'";?> /></div>
 			</div>
 			<div id='homepage' style='float:left;width:100%;'>
 				<div style='<?php echo $detstyle1?>'><?php echo _FHOME?></div>
@@ -968,7 +932,7 @@ function fncc_listwaiting() {
 				<div style='<?php echo $detstyle1?>'><?php echo _FNCC_REGMAIL?></div>
 				<div style='float:left;height:2em;width:55%;margin-right:2px;'><input name='regmail' type='text' style='width:100%' value='<?php echo $user_xml['regmail']?>' /></div><?php
 				$url_mod = "<button type='submit' title=\""._FNCC_REGMAILDES."\">";
-				$url_mod .= "<img src='".get_fn_dir("sections")."/$mod/none_images/save.png' alt='save' style=\"border:0;\" />";
+				$url_mod .= "<img src='".get_fn_dir("sections")."/$mod/none_images/save.png' alt='save' border='0' />";
 				$url_mod .= "</button>\n";
 				?><div style='float:left'><?php echo $url_mod?></div>
 				</form>
@@ -983,7 +947,7 @@ function fncc_listwaiting() {
 				<div style='<?php echo $detstyle1?>'><?php echo _FNCC_REGCODE?></div>
 				<div style='float:left;height:2em;width:55%;margin-right:2px;'><input type='text' style='width:100%' disabled='disabled' value='<?php echo $user_xml['regcode']?>' /></div><?php
 				$url_reg = "<button type='submit' title=\""._FNCC_REGCODEDES."\">";
-				$url_reg .= "<img src='forum/icons/mail.png' alt='mail' style=\"border:0;\" />";
+				$url_reg .= "<img src='forum/icons/mail.png' alt='mail' border='0' />";
 				$url_reg .= "</button>\n";
 				?><div style='float:left'><?php echo $url_reg?></div>
 				</form>
@@ -1003,10 +967,6 @@ function fncc_listwaiting() {
  *
  * @author Marco Segato <segatom@users.sourceforge.net>
  * @version 20130216
- * 
- * @author Alfredo Cosco <orazio.nelson@gmail.com
- * @version 20140514 - structured to work with bootstrap, jquery
- *  
  */
 function fncc_managebackups() {
 	// security checks
@@ -1022,54 +982,34 @@ function fncc_managebackups() {
 		"site"    =>array("value"=>"./",                  			"desc"=>_FNCC_BACKUPSITE),
     );	//echo "<pre>";print_r($backup_array);echo "</pre>"; //-> TEST
 	// print html forms
-	
-	foreach($backup_array as $k => $tosave) {
-		echo build_fnajax_link($mod, "", "fn_adminpanel", "post", "form_tosave".$k);
-		?><!--form action="index.php?mod=<?php echo $mod ?>" method="post" role="form" style="padding-top:20px;padding-bottom:20px;"-->
-		<div class="form-group col-md-8">
-				<label class="col-md-5" for="tosave<?php echo $k;?>"><i class="fa fa-floppy-o fa-2x text-success"></i>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $tosave['desc']?></label>
-				<div class="col-md-2">
-				<input type="hidden" name="conf_mod" value="dobackup" />
-				<input type="hidden" name="tosave" value="<?php echo $tosave['value']?>" id="tosave<?php echo $k;?>">
-				<input type="submit" class="btn btn-success savers" value="<?php echo _FNCC_SAVE?>">
-				</div>
+	$icon = get_fn_dir("sections")."/$mod/none_images/floppy_unmount.png";
+	foreach($backup_array as $tosave) {
+		?><form action="index.php?mod=<?php echo $mod ?>" method="post">
+		<div style="float:left;width:100%;border-bottom:solid 1px;">
+			<div style="float:left;width:70%;padding:0.5em 0 0.5em 1em;">
+			<img src="<?php echo $icon?>" alt="backup" style="vertical-align:middle;margin-right:1em;"><?php echo $tosave['desc']?>
+			<input type="hidden" name="conf_mod" value="dobackup" />
+			<input type="hidden" name="tosave" value="<?php echo $tosave['value']?>" />
+			</div>
+			<div style="float:left;padding:1em 0 1em 0;">
+			<input type="submit" value="<?php echo _FNCC_SAVE?>" />
+			</div>
 		</div>
 		</form><?php
 	}
 	// print cancel form
 	echo build_fnajax_link($mod, "", "fn_adminpanel", "post", "form_cleanbackup");
-	?><div class="form-group col-md-8">	
-		<label class="col-md-5" for="bkup"><i class="fa fa-trash-o fa-2x text-warning"></i>
-		&nbsp;&nbsp;<?php echo _FNCC_DELBACKUP." (<span class=\"listbackups\">".count(fncc_listbackups())."</span>)"?>
-		</label>
-		<div class="col-md-2">
-		<input type="hidden" name="conf_mod" value="cleanbackup" id="bkup">
-		<input type="submit" class="btn btn-warning" value="<?php echo _ELIMINA?>">
+	?><div style="float:left;width:100%;padding-bottom:2em;">
+		<div style="float:left;width:70%;padding:0.5em 0 0.5em 1em;">
+		<img src="<?php echo get_fn_dir("sections")?>/<?php echo $mod?>/none_images/button_cancel.png" alt="canc" style="vertical-align:middle;padding-right:1em;">
+		<?php echo _FNCC_DELBACKUP." (".count(fncc_listbackups()).")"?>
+		</div>
+		<div style="float:left;padding:1em 0 1em 0;">
+		<input type="hidden" name="conf_mod" value="cleanbackup" />
+		<input type="submit" value="<?php echo _ELIMINA?>" />
 		</div>
 	</div>
-	</form>
-	<script>
-	$("form").not('#form_cleanbackup').on('submit', function() {
-		$('.listbackups').empty();
-		var fid = $(this).attr('id');
-		
-		$.post('<?php echo get_fn_dir("sections")."/$mod/none_functions/fncc_counters.php?mod=$mod&case=listbackups"?>', function(data) {
-		//alert(data);
-		$('.listbackups').text(parseInt(data)+1);
-		});
-		   //var $form = $(this);
-		$('#'+fid).find('label').css('opacity','.65');
-		$('#'+fid).find('input[type="submit"]').prop('disabled',true);	
-   });	
-   
-   $('#form_cleanbackup').on('submit', function(){
-		$('.listbackups').empty();	
-		$('.listbackups').text('0');	
-		$('input[type="submit"]').prop('disabled',false);	
-		$('form').find('label').css('opacity','1');	
-		});
-	</script>
-	<?php
+	</form><?php
 }
 
 /*
@@ -1077,18 +1017,17 @@ function fncc_managebackups() {
  *
  * @author Marco Segato <segatom@users.sourceforge.net>
  * @version 20130216
- * 
- * @author Alfredo Cosco <orazio.nelson@gmail.com
- * @version 20140514 - structured to work with bootstrap, log now are in TAB, tabs are dinamically loaded on demand 
- * 
  */
 function fncc_managelogs() {
 	// security checks
 	$mod = getparam("mod", PAR_GET, SAN_FLAT);
 	$log = getparam("log", PAR_GET, SAN_FLAT);
-
 	$rewrite     = "false";
-	
+	// load content of the log you choosed
+	if(isset($log) AND file_exists(get_fn_dir("var")."/log/$log.php")) {
+		$content = stripslashes(get_file(get_fn_dir("var")."/log/$log.php"));
+		$content = preg_replace("/^\<\?php exit\(1\);\?\>/","",$content);  // rimozione riga intestazione
+	}
 	// list of the log files
 	$logs_array = array();
 	$logs_dir = opendir(get_fn_dir("var")."/log");
@@ -1104,46 +1043,28 @@ function fncc_managelogs() {
 	} else {
 		sort($logs_array);
 	}
-	
-	?>
-	<ul id="log-tab" class="nav nav-tabs">	
-	<?php
-	for($i=0;$i<count($logs_array);$i++) {
-		echo "<li";
-		if($i==0) echo " class=\"active\"";
-		echo "><a href=\"#".$logs_array[$i]."\" class=\"".$logs_array[$i]."\" data-toggle=\"tab\">".$logs_array[$i]."</a></li>\n";
-	}
-	?>
-	</ul>
-	<div id="log-content" class="tab-content">
-	<?php
+	?><select style="max-width:100%" onchange="javascript:jQueryFNcall('<?php echo get_fn_dir("sections")?>/<?php echo $mod?>/section.php?mod=<?php echo $mod?>&amp;op=fncclogs&amp;log='+this.options[this.selectedIndex].value,'get','fn_adminpanel');"><?php
+		echo "\n<option value=\"\">---  "._FNCC_LOGLIST."  ---</option>\n";
 		for($i=0;$i<count($logs_array);$i++) {
-		echo "<div class=\"tab-pane fade in";
-		if($i==0) echo " active";
-		echo "\" id=\"".$logs_array[$i]."\"><textarea class=\"form-control\" name='log_content' readonly wrap='off' rows='20'></textarea></div>\n";
+			echo "<option value=\"$logs_array[$i]\"";
+			if($logs_array[$i]==$log) echo "selected=\"selected\"";
+			echo ">$logs_array[$i]</option>\n";
+		}
+	?></select><?php
+	// print html form (only if you chose a log)
+	if(trim($log)=="") {
+		return;
 	}
-	?>
-	</div>
-
-<?php
+	?><br /><br /><?php
+	echo "<textarea name='log_content' readonly='readonly' wrap='off' rows='20' style='width:100%;'>";
+	echo $content;
+	echo "</textarea>\n<br /><br />";
 	// delete button
-	echo build_fnajax_link($mod, "", "fn-adminpanel", "post", "form_cleanlog");
+	echo build_fnajax_link($mod, "", "fn_adminpanel", "post", "form_cleanlog");
 	?><input type="hidden" name="conf_mod" value="cleanlog" />
-	<input type="hidden" name="logfile" value="">
-	<input type="submit" class="form-control btn btn-warning" value="<?php echo _FNCC_CLEANLOG?>">
-	</form>
-	<script>
-	//jliyn: just load if you need
-	$('#log-tab a').click(function (e) {
-	e.preventDefault();
-	var key=$(this).attr('class');
-	$('#'+key).find('textarea').load('<?php echo get_fn_dir("sections")."/$mod/"?>none_functions/fncc_parse_log_content.php?file='+key);
-	$("#form_cleanlog").find('input[name="logfile"]').val(key);
-	});
-	$('div > .active').find('textarea').load('<?php echo get_fn_dir("sections")."/$mod/"?>none_functions/fncc_parse_log_content.php?file='+$('div > .active').attr('id'));
-	</script>
-	
-	<?php
+	<input type="hidden" name="logfile" value="<?php echo get_fn_dir("var")?>/log/<?php echo $log?>.php" />
+	<input type="submit" value="<?php echo _FNCC_CLEANLOG?>" />
+	</form><?php
 }
 
 /*
@@ -1151,10 +1072,6 @@ function fncc_managelogs() {
  *
  * @author Marco Segato <segatom@users.sourceforge.net>
  * @version 20130216
- * 
- * @author Alfredo Cosco <orazio.nelson@gmail.com>
- * @version 20140514 - structured to work with bootstrap, lists now are in TAB, tabs are dinamically loaded on demand 
- * 
  */
 function fncc_manageblacklists() {
 	// security checks
@@ -1165,7 +1082,6 @@ function fncc_manageblacklists() {
 	if(isset($list) AND file_exists("include/blacklists/$list.php")) {
 		$rewrite = $list;
 		$content = get_file("include/blacklists/$list.php");
-		
 	}
 	// list of the blacklist files
 	$lists_array = array();
@@ -1182,245 +1098,37 @@ function fncc_manageblacklists() {
 	} else {
 		sort($lists_array);
 	}
-	?>
-	<ul id="blacklist-tab" class="nav nav-tabs">	
-	<?php
-	for($i=0;$i<count($lists_array);$i++) {
-		echo "<li";
-		if($i==0) echo " class=\"active\"";
-		echo "><a href=\"#".$lists_array[$i]."\" class=\"".$lists_array[$i]."\" data-toggle=\"tab\">".$lists_array[$i]."</a></li>\n";
-	}
-	?>
-	</ul>
-	<div id="blacklist-content" class="tab-content">
-	<?php
+	?><select style="max-width:100%" onchange="javascript:jQueryFNcall('<?php echo get_fn_dir("sections")?>/<?php echo $mod?>/section.php?mod=<?php echo $mod?>&amp;op=fnccblacklists&amp;list='+this.options[this.selectedIndex].value,'get','fn_adminpanel');"><?php
+		echo "\n<option value=\"\">---  "._FNCC_MANAGEBLACKLISTS."  ---</option>\n";
 		for($i=0;$i<count($lists_array);$i++) {
-		echo "<div class=\"tab-pane fade in";
-		if($i==0) echo " active";
-		echo "\" id=\"".$lists_array[$i]."\">";
-		echo build_fnajax_link($mod, "", "fn-adminpanel", "post", "form-modblacklist-".$lists_array[$i]);
-		echo "\n<textarea class=\"form-control\" name='conf_body' wrap='off' rows='20'>";
-		echo "</textarea>\n";
-
-	if(is_writeable("include/blacklists/".$lists_array[$i].".php"))	{
-		?><div>
-			<p class="text-danger"><?php echo _FNCC_WARNINGDOC?></p>
+			echo "<option value=\"$lists_array[$i]\"";
+			if($lists_array[$i]==$list) echo "selected=\"selected\"";
+			echo ">$lists_array[$i]</option>\n";
+		}
+	?></select><?php
+	// print html form (only if you chose a blacklist)
+	if(trim($list)=="") {
+		return;
+	}
+	?><br /><br /><?php
+	echo build_fnajax_link($mod, "", "fn_adminpanel", "post", "form_modblacklist");
+	echo "<textarea name='conf_body' rows='20' style='width:100%;' wrap='off'>";
+	echo $content;
+	echo "</textarea>\n<br /><br />";
+	// check writing permissions
+	if(is_writeable("include/blacklists/$list.php"))	{
+		?><div align="center" style="font-weight:bold;">
+			<?php echo _FNCC_WARNINGDOC?><br /><br />
 			<input type="hidden" name="conf_mod" value="modblacklist" />
-			<input type="hidden" name="conf_file" value="include/blacklists/<?php echo $lists_array[$i]?>.php" />
-			<input type="submit" class="form-control btn btn-warning" value="<?php echo _MODIFICA?>" />
+			<input type="hidden" name="conf_file" value="include/blacklists/<?php echo $list?>.php" />
+			<input type="submit" value="<?php echo _MODIFICA?>" />
 		</div><?php
 	} else {
-		?><div>
-			<p class="text-danger"><?php echo _FNCC_WARNINGRIGHTS?></p>
+		?><div align="center" style="font-weight:bold;font-color:red;">
+			<?php echo _FNCC_WARNINGRIGHTS?>
 		</div><?php
 	}
-		
-		
-		echo "</form></div>";
-		
-	}
-	?>
-	</div>
-	<script>
-	//jliyn: just load if you need
-	$('#blacklist-tab a').click(function (e) {
-	e.preventDefault();
-	var key=$(this).attr('class');
-	$('#'+key).find('textarea').load('<?php echo get_fn_dir("sections")."/$mod/"?>none_functions/fncc_parse_blacklist_content.php?file='+key);
-	});
-	$('div > .active').find('textarea').load('<?php echo get_fn_dir("sections")."/$mod/"?>none_functions/fncc_parse_blacklist_content.php?file='+$('div > .active').attr('id'));
-	</script>
-	<?php
+	?></form><?php
 }
-
-/*
- * Helper:
- * Open the form in a html5 way
- * according to Bootstrap classes
- * 
- * DEPRECATED: USE jQueryfncall, this is just for testing 
- *
- * @author Alfredo Cosco <orazio.nelson@gmail.com>
- * @version 20140511
- * 
- * @param   string	  $fields_flow    Bootstrap option, can be: horizontal, inline, default 'null'
- */
-function fncc_generic_form_open($form_id, $fields_flow=null){
-	$mod  = getparam("mod", PAR_GET,  SAN_FLAT);
-	$fields_flow = getparam($fields_flow, PAR_NULL, SAN_FLAT);
-	if(strlen($fields_flow)>0){$flow_class=" class=\"form-".$fields_flow."\""; var_dump($fields_flow);}
-	else {$flow_class="";}
-	echo "<form id=\"".$form_id."\" method=\"post\" role=\"form\"".$flow_class.">";
-	}
-
-/*
- * Helper:
- * Add a generic input for types: text, email, password
- * according to Bootstrap classes
- *
- * @author Alfredo Cosco <orazio.nelson@gmail.com>
- * @version 20140511
- * 
- * @param   string	  $keyword	needs to create lang constant and fill-in input field attributes  
- * @param	string	  $value	fill-in value attribute, to not set a value use 'null' in arguments
- * @param	number	  $maxleght	fill-in the maxleght attribute
- */
-
-function fncc_input_text($keyword,$value=NULL,$maxlenght='64',$input_type='text'){
-	
-	$constant=constant("_FNCC_CONF".strtoupper($keyword));
-				
-	$pattern="<div class=\"form-group\" id=\"form-".$keyword."\">";
-	$pattern.="<label for=\"".$keyword."\">".$constant."</label>";
-	$pattern.="<input type=\"".$input_type."\" class=\"form-control\" name=\"".$keyword."\" id=\"".$keyword."\" maxlength=\"".$maxlenght."\" value=\"".$value."\">";
-	$pattern.="</div>";
-	
-	return $pattern;
-	}
-
-/*
- * Helper:
- * Add a generic input number
- * according to Bootstrap classes
- *
- * @author Alfredo Cosco <orazio.nelson@gmail.com>
- * @version 20140511
- * 
- * @param   string	$keyword	needs to create lang constant and fill-in input field attributes  
- * @param	string	$value		fill-in value attribute, to not set a value use 'null' in arguments
- * @param	number	$maxleght	fill-in the maxleght attribute
- * @param	array	$range		min and max values
- * @param	bool	$slider		add a slider if true, default is false
- */
-
-function fncc_input_number($keyword,$value=NULL,$maxlenght='6',$range,$slider=false){
-
-	$constant=constant("_FNCC_CONF".strtoupper($keyword));
-				
-	$pattern="<div class=\"form-group\" id=\"form-".$keyword."\">";
-	$pattern.="<label for=\"".$keyword."\">".$constant."</label>";
-	$pattern.="<input type=\"number\" class=\"form-control\" style=\"width:10em\" name=\"".$keyword."\" id=\"".$keyword."\" maxlength=\"".$maxlenght."\" min=\"".$range[0]."\" max=\"".$range[1]."\" value=\"".$value."\">";
-	$pattern.="</div>";
-		if($slider == true){
-         $pattern.="<script>$('#".$keyword."').add_slider('".$keyword."');</script>";
-		}
-	return $pattern;
-	}
-/*
- * Helper:
- * Add a select
- * according to Bootstrap classes
- *
- * @author Alfredo Cosco <orazio.nelson@gmail.com>
- * @version 20140511
- * 
- * @param   string	$keyword	needs to create lang constant and fill-in input field attributes  
- * @param	string	$value		the selected value, to not set a value use 'null' in arguments
- * @param	array	$values		values array for the select
- */
-function fncc_select($keyword,$value,$values)
-	{
-		$constant=constant("_FNCC_CONF".strtoupper($keyword));
-	$pattern="<div class=\"form-group\">";
-	$pattern.="<label for=\"".$keyword."\">".$constant."</label>";
-	$pattern.="<select name=\"".$keyword."\" id=\"".$keyword."\" class=\"form-control\">";
-	foreach($values as $k=>$v)
-		{
-		$selected = ($value==$v) ? ("selected") : ("");
-		$pattern.= "<option value=\"".$v."\" $selected>".$v."</option>";
-			}
-	$pattern.="</select>";
-	$pattern.="</div>";
-	return $pattern;
-	}
-
-/*
- * Helper:
- * Add a list of radio button
- * according to Bootstrap classes
- *
- * @author Alfredo Cosco <orazio.nelson@gmail.com>
- * @version 20140511
- * 
- * @param   string	$keyword	needs to create lang constant and fill-in input field attributes  
- * @param	string	$value		fill-in value attribute, to not set a value use 'null' in arguments
- * @values	array	$values		array(number=>'text constant for the label'). ZEROCONF: default is 0/1 - No/yes inputs	
- * 
- */
-function fncc_input_radio($keyword,$value,$values=NULL){
-
-	$constant=constant("_FNCC_CONF".strtoupper($keyword));
-		
-	$pattern="<div class=\"form-group\" id=\"form-".$keyword."\">";
-	$pattern.="<label for=\"".$keyword."\">".$constant."</label>";
-	
-	if(!isset($values)){
-		$pattern.="	<label class=\"radio-inline\">";
-		$pattern.="<input type=\"radio\" name=\"".$keyword."\" id=\"".$keyword."_0\" value=\"0\">";
-		$pattern.= _FNCC_NO;
-		$pattern.="	</label>";
-		$pattern.="	<label class=\"radio-inline\">";
-		$pattern.="<input type=\"radio\" name=\"".$keyword."\" id=\"".$keyword."_1\" value=\"1\">";
-		$pattern.= _FNCC_YES;
-		$pattern.="	</label>";
-		}
-	else {
-		foreach ($values as $k=>$v)
-			{
-			$pattern.="<label class=\"radio-inline\">";
-			$pattern.="<input type=\"radio\" name=\"".$keyword."\" id=\"".$keyword."_".$k."\" value=\"".$k."\">";
-				if (defined($v)) {
-				$pattern.= constant($v);
-				}
-				else {
-				$pattern.= $v;
-				}
-			$pattern.="	</label>";
-			}
-		}
-	$pattern.="</div>";
-	$pattern.= fncc_input_checked($keyword,$value);
-	return $pattern;	
-}
-
-/*
- * Helper:
- * according to settings creates a jquery call to define wich radio/checkbox has to be checked
- *
- * @author Alfredo Cosco <orazio.nelson@gmail.com>
- * @version 20140511
- * 
- * @param   string	  $keyword	the radio name  
- * @param	string	  $value	fill-in value attribute
- * @param	string	  $type		radio or checkbox
- */
-function fncc_input_checked($keyword,$value,$type='radio'){
-	$pattern="<script>";
-	$pattern.="$('input:".$type."[name=\"".$keyword."\"][value=\"".$value."\"]').prop('checked', true);";
-	$pattern.="</script>";
-	return $pattern;	
-}
-
-/*
- * Helper:
- * create a textarea
- *
- * @author Alfredo Cosco <orazio.nelson@gmail.com>
- * @version 20140511
- * 
- * @param   string	  $keyword	needs to create lang constant and fill-in field attributes  
- * @param	array	  $value	fill-in value attribute, to not set a value use 'null' in arguments
- * 
- */
-function fncc_textarea($keyword,$value=NULL){
-
-	$constant=constant("_FNCC_CONF".strtoupper($keyword));
-	 
-	$pattern="<div class=\"form-group\">";
-	$pattern.="<label for=\"".$keyword."\">".$constant."</label>";
-	$pattern.="<textarea name=\"".$keyword."\" class=\"form-control\" id=\"".$keyword."\" rows=\"6\"></textarea>";
-	$pattern.="</div>";
-	return $pattern;
-	}
 
 ?>

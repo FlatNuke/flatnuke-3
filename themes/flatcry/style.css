@@ -1,0 +1,502 @@
+
+/*---------------------------------
+  general page settings
+---------------------------------*/
+
+html, body {
+	background: #ffffff;
+	margin: 0;
+	padding: 0;
+	font-family: Verdana, Sans-Serif;
+	color: #000000;
+	text-align: center;
+}
+
+/*---------------------------------
+  logo
+---------------------------------*/
+
+#topmenu {
+	background: url("images/bg.png") repeat-x bottom;
+	width: 100%;
+	height: 84px;
+}
+
+#topleft {
+	float: left;
+	position: relative;
+	width: 90%;
+	font-size: 93%;
+	line-height: normal;
+	height: 84px;
+	
+}
+
+#topright {
+	float: left;
+	width: 10%;
+	height: 84px;
+	background: url("images/logo2.png") no-repeat top left;
+}
+
+#bann {
+	float: left;
+	width: 100%;
+	height: 25px;
+	background: url("images/bg2.png") repeat-x top;
+}
+
+#bann2 {
+	text-align: right;
+	font-size: 55%;
+	margin-right: 1em;
+}
+
+/*---------------------------------
+  menu
+---------------------------------*/
+
+
+#portalTabs {
+	float: left;
+	width: 100%;
+	font-size: 11px;
+	line-height: normal;
+}
+
+#portalTabs ul {
+	margin: 0;
+	padding: 5px 50px 0;
+	list-style: none;
+}
+
+#portalTabs li {
+	float: left;
+	background: url("images/left.png") no-repeat left top;
+	margin: 0;
+	padding: 0 0 0 9px;
+}
+
+#portalTabs li a {
+	float: left;
+	display: block;
+	background: url("images/right.png") no-repeat right top;
+	padding: 5px 15px 4px 6px;
+	text-decoration: none;
+	font-weight: bold;
+	color: #ffffff;
+	margin-right: 2px;
+}
+
+#portalTabs a {
+	float: none;
+}
+
+#portalTabs li.selected {
+	background-image: url("images/left_on.png");
+}
+
+#portalTabs li.selected a {
+	background-image: url("images/right_on.png");
+	color: #ffffff;
+	padding-bottom: 5px;
+}
+
+#portalTabs li a:hover { 
+	color: #000000;
+}
+
+/*---------------------------------
+  block menu
+---------------------------------*/
+
+.blockmenuc {
+	width: 100%;
+	list-style: none;
+	border-top: 5px solid #cccccc;
+	margin-bottom: 20px;
+}
+
+.blockmenu a {
+	display: block;
+	text-decoration: none;
+	padding: 2px 20px 2px;
+	line-height: 20px;
+	letter-spacing: 2px;
+	border-bottom: 1px solid #cccccc;
+	font-size: 10px;
+	font-weight: bold;
+	color: #000000;
+	background: url("images/bullet2.png") left no-repeat;
+	margin-top:1px;
+}
+
+.blockmenu a:hover {
+	color: #cc0000;
+	background: #ffeeee url("images/bullet3.png") left no-repeat;
+	text-decoration: none;
+	letter-spacing: 2px;
+	border-bottom: 1px solid #cccccc;
+	margin-top:1px;
+}
+
+.blockmenu .mysel a {
+	color: #bc0000;
+	font-weight: bold;
+	letter-spacing: 2px;
+	border-bottom: 1px solid #cccccc;
+	margin-top:1px;
+}
+
+/*---------------------------------
+  body structure
+---------------------------------*/
+
+#tema {
+	background: #ffffff;
+	width: 96%;
+	min-width: 500px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: left;
+}
+
+#outer {
+	width: auto;
+}
+
+#inner {
+	margin: 0;
+	width: 100%;
+}
+
+#leftbody,
+#rightbody {
+	width: 19%;
+	float: left;
+	position: relative;
+	margin-left: 2%;
+	display: inline;
+	margin-top: 20px;
+}
+
+#centerbody {
+	width: 52%;
+	float: left;
+	position: relative;
+	margin-left: 3%;
+	padding-right: 1%;
+	border-right: 1px solid #cccccc;
+	display: inline;
+}
+
+#centerbody_forum {
+	width: 72%;
+	float: left;
+	position: relative;
+	margin-left: 3%;
+	padding-right: 1%;
+	display: inline;
+
+}
+
+/*---------------------------------
+  blocks
+---------------------------------*/
+
+.block {
+	background: #efefef url("images/imgblock.png") no-repeat bottom right;
+	border-top: 5px solid #cccccc;
+	margin-bottom: 1em;
+}
+
+.blocktitle {
+	height: 25px;
+	margin-bottom: 5px;
+}
+
+.blocktitle .inside {
+	float: right;
+	padding: 0px;
+	margin: 0px;
+	width: 23px;
+	height: 25px;
+}
+	
+.blocktitle .title {
+	font-family: arial,sans-serif;
+	font-size: 16px;
+	font-weight: bold;
+	padding-top: 15px;
+	margin-left: 15px;
+	margin-right: 15px;
+	border-bottom: 1px solid #cc0000;
+	color: #cc0000;
+}
+
+.blockcontent {
+	margin: 3px;
+	color: #000000;
+	font-size: 11px;
+	padding: 15px;
+	padding-bottom:30px;
+}
+
+.blocktop {
+	border-top:1px solid #ffffff;
+	border-bottom:1px solid #cccccc;
+}
+
+/*---------------------------------
+  sections
+---------------------------------*/
+
+.section h1 {
+	padding-top: 3px;
+	width: 100%;
+	color: #cc0000;
+	font-size: 18px;
+	font-weight: bold;
+	font-family: Verdana, Sans-Serif;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #cc0000;
+	letter-spacing: 1px;
+}
+
+.section {
+	margin-top: 5px;
+	padding: 5px;
+	font-size: 12px;
+	text-align: justify;
+	color: #000000;
+}
+
+.section span {
+	font-size: 100%;
+}
+
+.sectioncontent {
+	width: 100%;
+}
+
+/*---------------------------------
+  flatnuke elements
+---------------------------------*/
+
+.motd {
+	width: auto;
+	font-size: 11px;
+	padding:5px;
+	border-top:1px solid #cccccc;
+	text-align: justify;
+	background:#efefef url("images/imgblock.png") no-repeat bottom right;
+}
+
+.comment {
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-color: #d5d6d7;
+}
+
+.footnews {
+	margin-top: 15px;
+	padding: 5px;
+	font-size: 11px;
+	border-top: 1px solid #cccccc;
+}
+
+.footnews a:link {
+	color: #686868;
+}
+
+.footnews a:active {
+	color: #686868;
+}
+.footnews a:visited {
+	color: #686868;
+}
+
+.footnews a:hover {
+	color: #0072ff;
+}
+
+#footer {
+	color: #000000;
+	width: 100%;
+	min-width: 500px;
+	text-align: center;
+	font-size: 10px;
+	background: url("images/bg3.png") repeat-x top;
+	margin-top: 2px;
+	padding-top: 20px;
+	padding-bottom: 10px;
+}
+
+/*---------------------------------
+  common html elements
+---------------------------------*/
+
+font {
+	font-size: 11px;
+}
+
+a:visited, a:link, a:active {
+	text-decoration: none;
+	color: #686868;
+}
+
+a:hover {
+	text-decoration: underline;
+	color: #0072ff;
+}
+
+td, th {
+	font-size: 11px;
+}
+
+table {
+	font-size: 100%;
+}
+
+img {
+	border: none;
+}
+
+hr {
+	height: 1px;
+	color: #ccc;
+	background-color: transparent;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	padding: 1px;
+	text-align: left;
+	font-weight: bold;
+	font-size: 11px;
+	color: #696969;
+}
+
+ul {
+	line-height: 1.5em;
+	list-style-type: square;
+	list-style-image: url("images/bullet.png");
+}
+
+ol {
+	line-height: 1.5em;
+	margin: 0.5em 0 0 2em;
+	padding: 0;
+}
+
+ul a, ol a {
+	text-decoration: underline;
+}
+
+li {
+	margin-bottom: 0px;
+}
+
+dt {
+	font-weight: bold;
+}
+
+dt a {
+	text-decoration: underline;
+}
+
+dd {
+	line-height: 1.5em;
+	margin-bottom: 1em;
+}
+dd a {
+	text-decoration: underline;
+}
+
+dd.link a {
+	text-decoration: none;
+	color: Black;
+}
+
+fieldset {
+	border: 1px solid #cccccc;
+	margin: 2em 0em 1em 0em;
+	padding: 1em 0em;
+}
+
+legend {
+	background: White;
+	padding: 0.5em;
+}
+
+form {
+	border: none;
+	margin: 0;
+}
+
+textarea {
+	border: 1px solid #cccccc;
+	color: Black;
+	background-color: #ffffff;
+	width: 100%;
+	padding: 1px;
+	font: 1em Verdana, Sans-Serif;
+}
+
+input {
+	border: 1px solid #cccccc;
+	background-color:#ffffff;
+	font-family: Verdana, Sans-Serif;
+}
+
+select {
+	border: 1px solid #000;
+	font-size: 12px;
+	font-family: Verdana, Sans-Serif;
+}
+
+abbr, acronym, .explain {
+	border-bottom: 1px dotted Black;
+	color: Black;
+	background-color: transparent;
+	cursor: help;
+}
+
+q {
+	font-family: Verdana, Sans-Serif;
+	font-style: italic;
+	font-size: 120%;
+	background-color: #ccc;
+}
+
+blockquote {
+	font-family: Verdana, Sans-Serif;
+	padding: 1em 1em 1em 3em;
+	background: #eeeeee url("images/quote.png") top left no-repeat;
+	color: #696969;
+}
+
+code, pre {
+	font-size: 90%;
+	padding: 1em;
+	border: 1px dashed #2f6fab;
+	color: #000000;
+	background-color: #f9f9f9;
+}
+
+.netscape4 {
+	display: none;
+}
+
+.clr {
+	clear: both;
+}
+
+.noul {
+	margin: 0;
+	padding: 0 0 0 0;
+	list-style: none;
+	list-style-type: none;
+	list-style-image: none;
+}
+
+

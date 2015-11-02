@@ -33,7 +33,7 @@ if(fd_is_admin()){
 }
 
 else {
-//se l'utente non Ã¨ loggato come admin incremento il contatore
+//se l'utente non è loggato come admin incremento il contatore
 	$track_count++;
 }
 
@@ -107,9 +107,9 @@ if(!preg_match("/[^(\x20-\x7F)]*/",urldecode($url))){
 }
 else{
 	echo "<div style=\"text-align: center;\">
-	Il download dovrebbe partire automaticamente.<br>
-	In caso contrario cliccate sul seguente collegamento:<br>
-	<a href=\"".rawurlencodepath($url)."\">".basename($url)."</a><br><br>
+	Il download dovrebbe partire automaticamente.<br />
+	In caso contrario cliccate sul seguente collegamento:<br />
+	<a href=\"".rawurlencodepath($url)."\">".basename($url)."</a><br /><br />
 	<b><a href=\"javascript:history.back()\">"._FDARCHIVERETURN."</a></b>
 	</div>";
 

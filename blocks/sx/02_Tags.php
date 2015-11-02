@@ -1,38 +1,34 @@
 <?php 
 include_once("flatnews/include/news_functions.php");
 
-/* INIZIO CONFIGURAZIONE */
-
-// numero massimo di tag da mostrare oltre il quale vengono tagliati i tag meno utilizzati
-// (0 = nessun limite ai tag da mostrare)
-$taglimit = 0;
-
-// Valori:
-// size: i tag piÃ¹ utilizzati hanno dimensione maggiore (default)
-// list: i tag sono mostrati in un elenco con a fianco il numero di utilizzi
-$tags_show = "size";
-
-// Valori:
-// ab: mostra i tag in ordine alfabetico (default)
-// 12: mostra i tag dal piÃ¹ utilizzato a scendere
-$sort_tags = "ab";
-
-/* FINE CONFIGURAZIONE */
-
-$tagssection = "none_News"; // set default news section
-
-if (file_exists(_FN_SECTIONS_DIR."/".get_mod()."/news")) // if in a news section...
-	$tagssection=get_mod(); // ... store current section instead
-
-if (!file_exists(_FN_SECTIONS_DIR."/".$tagssection."/tags_list.php")){ // search tags_list of current news section
+$tagssection = ""; // create empty variable for current section
+if (file_exists(get_fn_dir("sections")."/".get_mod()."/tags_list.php")) // if there's tags_list of current... section
+	$tagssection=get_mod(); // ... store current section
+elseif (!file_exists(_FN_VAR_DIR."/news/tags_list.php")){ // else, search tags_list of none_News
 	echo "Tag non presenti"; // localization needed
 	return;
 }
 
+//CONFIGURAZIONE
 
-$tags = load_tags_list($tagssection);
+//numero massimo di tag da mostrare oltre il quale vengono tagliati i tag meno utilizzati
+//(0 = nessun limite ai tag da mostrare)
+$taglimit = 0;
 
-// Questo codice Ã¨ parzialmente tratto da Wordpress 2.2
+//Valori:
+//size: i tag più utilizzati hanno dimensione maggiore (default)
+//list: i tag sono mostrati in un elenco con a fianco il numero di utilizzi
+$tags_show = "size";
+
+//Valori:
+//ab: mostra i tag in ordine alfabetico (default)
+//12: mostra i tag dal più utilizzato a scendere
+$sort_tags = "ab";
+
+//FINE CONFIGURAZIONE
+$tags = load_tags_list($tagssection); // if there's tags_list for current section, use this
+
+// Questo codice è parzialmente tratto da Wordpress 2.2
 // WP CODE
 	$largest = 25;
 	$smallest = 8;
@@ -47,13 +43,13 @@ $tags = load_tags_list($tagssection);
 	$font_spread = $largest - $smallest;
 	if ( $font_spread < 0 )
 		$font_spread = 1;
-	//il +1 al denominatore Ã¨ stato aggiunto per evitare di avere caratteri
+	//il +1 al denominatore è stato aggiunto per evitare di avere caratteri
 	//troppo grandi
 	$font_step = $font_spread / ($spread+1);
 //FINE WP CODE
-//se il numero di tag Ã¨ superiore al limite impostato
+//se il numero di tag è superiore al limite impostato
 if (count($tags)>$taglimit AND $taglimit!=0){
-	//ordino l'array dal value piÃ¹ grande al piÃ¹ piccolo
+	//ordino l'array dal value più grande al più piccolo
 	//(senza perdere l'associazione con la kay)
 	arsort($tags);
 	$tagcount=0;
@@ -72,7 +68,7 @@ if (count($tags)>$taglimit AND $taglimit!=0){
 	//riordino sul nome dei tag
 	ksort($tags);
 }
-//se Ã¨ impostato l'ordinamento secondo il numero di utilizzi eseguo un asort
+//se è impostato l'ordinamento secondo il numero di utilizzi eseguo un asort
 if ($sort_tags=="12")
 	arsort($tags);
 
@@ -83,7 +79,7 @@ foreach ($tags as $tag => $count){
 		if ($tags_show=="list"){
 			if (strlen($tag)>11) $tagshow=substr($tag,0,8)."...";
 			else $tagshow = $tag;
-			echo "&#187;&nbsp;<a href=\"index.php?mod=none_Search&amp;where=news&amp;tags=$tag\" title=\"$tag: $count  news\">$tagshow ($count)</a><br>";
+			echo "&#187;&nbsp;<a href=\"index.php?mod=none_Search&amp;where=news&amp;tags=$tag\" title=\"$tag: $count  news\">$tagshow ($count)</a><br />";
 		}
 		else {
 			if ($fontsize> 25) $fontsize=25;

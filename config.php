@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 /************************************************************************/
 /* FlatNuke - Flat Text Based Content Management System                 */
@@ -22,20 +22,20 @@ $sitedescription = "This is my personal website powered by Flatnuke technology";
 # Keywords del sito
 $keywords = "News, news, New, new, Technology, technology, Headlines, headlines, Nuke, nuke, FlatNuke, flatnuke, Geek, geek, Geeks, geeks, Hacker, hacker, Hackers, hackers, Linux, linux, Software, software, Download, download, Downloads, downloads, Free, FREE, free, Community, community, Forum, forum, Forums, forums, Bulletin, bulletin, Board, board, Boards, boards, PHP, php, Survey, survey, Kernel, kernel, Comment, comment, Comments, comments, Portal, portal, ODP, odp, Open, open, Open Source, OpenSource, Opensource, opensource, open source, Free Software, FreeSoftware, Freesoftware, free software, GNU, gnu, GPL, gpl, License, license, Unix, UNIX, *nix, unix, MySQL, mysql, SQL, sql, Database, DataBase, Blogs, blogs, Blog, blog, database, Mandrake, mandrake, Red Hat, RedHat, red hat, Slackware, slackware, SUSE, SuSE, suse, Debian, debian, Gnome, GNOME, gnome, Kde, KDE, kde, Enlightenment, enlightenment, Intercative, interactive, Programming, programming, Extreme, extreme, Game, game, Games, games, Web Site, web site, Weblog, WebLog, weblog, Guru, GURU, guru";
 # Tema preferito
-$theme = "fnluke";
+$theme = "flatcry";
 # News per pagina
 $newspp="9";
 # Nome Admin
 $admin="Me";
 # Admin mail
-$admin_mail = "";
+$admin_mail="xxx@xxx.xxx";
 # lingua (it, en, es, fr, ..)
 $lang="it";
-# Ã¨ possibile registrarsi (1=VERO,0=FALSO,2=REGISTRAZIONE CON CONVALIDA VIA MAIL)
+# è possibile registrarsi (1=VERO,0=FALSO,2=REGISTRAZIONE CON CONVALIDA VIA MAIL)
 $reguser=1;
-# un utente non registrato puÃ² segnalare le news (1=VERO,0=FALSO)
+# un utente non registrato può segnalare le news (1=VERO,0=FALSO)
 $guestnews=1;
-# un utente non registrato puÃ² inserire i commenti (1=VERO,0=FALSO)
+# un utente non registrato può inserire i commenti (1=VERO,0=FALSO)
 $guestcomment=1;
 # Memorizzare i cookies dell'utente autenticato (1=VERO,0=FALSO)
 $remember_login=0;

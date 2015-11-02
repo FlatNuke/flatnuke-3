@@ -70,10 +70,10 @@ function show_fd_result($files){
 	//se non ho trovato niente...
 	if ($where!="allsite"){
 		if (count($files)==0){
-			echo _NORESULT."<br><a href=\"javascript:history.back();\" title=\""._INDIETRO."\">&lt;&lt; "._INDIETRO."</a>";
+			echo _NORESULT."<br /><a href=\"javascript:history.back();\" title=\""._INDIETRO."\">&lt;&lt; "._INDIETRO."</a>";
 
 		}
-		else echo "<br><b>"._FP_RISULTATI.":</b><br><br>";
+		else echo "<br /><b>"._FP_RISULTATI.":</b><br /><br />";
 	}
 	else {
 		echo "<h4>Download:</h4>";
@@ -91,7 +91,7 @@ function show_fd_result($files){
 		$ext = get_file_extension($file);
 		include "download/fdconfig.php";
 		echo getIcon($ext,$icon_style);
-		echo "<a href=\"index.php?mod=".rawurlencodepath($tempmod)."#".create_id(basename($file))."\"title=\""._FDDOWNLOADFILE.basename($file)."\">".basename($file)."</a><br>";
+		echo "<a href=\"index.php?mod=".rawurlencodepath($tempmod)."#".create_id(basename($file))."\"title=\""._FDDOWNLOADFILE.basename($file)."\">".basename($file)."</a><br />";
 	}
 }
 
@@ -130,7 +130,7 @@ function search_list_fd_files($dirbase){
 		if (preg_match("/\.description$/i",$file)){
 			if (user_can_view_fdfile(preg_replace("/.description$/i","",$file)))
 			$files[] = $file;
-// 			echo "$file<br>";
+// 			echo "$file<br />";
 		}
 
 	}
@@ -142,8 +142,8 @@ function search_list_fd_files($dirbase){
  * Cerca la stringa $string nei file $files
  * @param string $string la stringa da cercare
  * @param array $files l'array di file in cui cercare la stringa
- * @param string $method il metodo di ricerca. PuÃ² essere "OR" oppure "AND"
- * @return un array con i percorsi dei file in cui Ã¨ stata trovata la stringa
+ * @param string $method il metodo di ricerca. Può essere "OR" oppure "AND"
+ * @return un array con i percorsi dei file in cui è stata trovata la stringa
  */
 function find_fd_files($string,$files,$method){
 	$string=getparam($string,PAR_NULL,SAN_FLAT);
@@ -196,7 +196,7 @@ function user_can_view_fdfile($file,$user=""){
 		return FALSE;
 	}
 
-	//se il file Ã¨ nascosto
+	//se il file è nascosto
 	if ($description['hide']=="true" and getlevel($user,"home")!="10"){
 		return FALSE;
 	}
@@ -206,7 +206,7 @@ function user_can_view_fdfile($file,$user=""){
 		return FALSE;
 	}
 
-	//se Ã¨ tutto ok...
+	//se è tutto ok...
 	return TRUE;
 
 }

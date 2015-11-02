@@ -24,7 +24,7 @@ $GLOBALS['search_plugins_dir'] = $search_plugins_dir;
 $search_section = "none_Search";
 
 ?>
-	<script type="text/javascript">
+	<script type="text/javascript" language="javascript">
 	function validate_search_block()
 		{
 			if(document.getElementById('findblock').value=='')

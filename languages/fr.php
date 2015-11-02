@@ -12,7 +12,7 @@ $mesi = array("Janvier","F&eacute;vrier","Mars","Avril","Mai","Juin","Juillet","
 $GLOBALS['giorni'] = $giorni;
 $GLOBALS['mesi'] = $mesi;
 
-define("_CHARSET","UTF-8"); // ISO-8859-1 to UTF-8
+define("_CHARSET","ISO-8859-1");
 define("_CERCA","Recherche");
 define("_CERCASTR","Rechercher dans:");
 define("_ALLSITE","Tout le site");
@@ -124,7 +124,6 @@ define("_FUTENTE","Utilisateur");
 define("_FMESS","Message");
 define("_FNUOVOMESS","Nouveau message");
 define("_FOGG","Sujet");
-define("_FCREATOP","Create new thread"); // need translation
 define("_FTOPOK","Sujet cre&eacute;e");
 define("_FLEGGI","Lire");
 define("_FMESSOK","Message envoy&eacute;");
@@ -135,12 +134,12 @@ define("_SCON","inconnu");
 define("_FGUIDA","Aide");
 define("_FUTENTI","utilisateurs enregistr&eacute;s");
 define("_FDELUTENTE","Effacer utilisateur");
-define("_REG_AGREEMENT_TERMS","Les administrateurs et mod&#8217;rateurs de ce forum s&#8217;efforceront de supprimer ou &#8217;diter tous les messages &agrave; caract&egrave;re r&#8217;pr&#8217;hensible aussi rapidement que possible. Toutefois, il leur est impossible de passer en revue tous les messages. Vous admettez donc que tous les messages post&eacute;s sur ces forums expriment la vue et opinion de leurs auteurs respectifs, et non pas des administrateurs, ou mod&eacute;rateurs, ou webmasters (except&eacute; les messages post&eacute;s par eux-m&ecirc;me) et par cons&eacute;quent ne peuvent pas &ecirc;tre tenus pour responsables.<br><br>Vous consentez &agrave; ne pas poster de messages injurieux, obsc&egrave;nes, vulgaires, diffamatoires, mena&ccedil;ants, sexuels ou tout autre message qui violeraient les lois applicables. Le faire peut vous conduire &agrave; &ecirc;tre banni imm&eacute;diatement de fa&ccedil;on permanente (et votre fournisseur d&#8217;acc&egrave;s &agrave; internet en sera inform&eacute;). L&#8217;adresse IP de chaque message est enregistr&eacute;e afin d&#8217;aider &agrave; faire respecter ces conditions. Vous &ecirc;tes d&#8217;accord sur le fait que le webmestre, l&#8217;administrateur et les mod&eacute;rateurs de ce forum ont le droit de supprimer, &eacute;diter, d&eacute;placer ou verrouiller n&#8217;importe quel sujet de discussion &agrave; tout moment. En tant qu&#8217;utilisateur, vous &ecirc;tes d&#8217;accord sur
-le fait que toutes les informations que vous donnerez ci-apr&egrave;s seront stock&eacute;es dans une base de donn&eacute;es. Cependant, ces informations ne seront divulgu&eacute;es &agrave; aucune tierce personne ou soci&eacute;t&eacute; sans votre accord. Le webmestre, l&#8217;administrateur, et les mod&eacute;rateurs ne peuvent pas &ecirc;tre tenus pour responsables si une tentative de piratage informatique conduit &agrave; l&#8217;acc&egrave;s de ces donn&eacute;es.<br><br>Ce forum uti
-lise les cookies pour stocker des informations sur votre ordinateur. Ces cookies ne contiendront aucune information que vous aurez entr&eacute; ci-apr&egrave;s; ils servent uniquement &agrave; am&eacute;liorer le confort d&#8217;utilisation. L&#8217;adresse e-mail est uniquement utilis&eacute;e afin de confirmer les d&eacute;tails de votre enregistrement ainsi que votre mot de passe (et aussi pour vous envoyer un nouveau mot de passe dans le cas o&uacute; vous l&#8217;oublieriez).<br><br>En vous enregistrant, vous vous portez garant du fait d&#8217;&ecirc;tre en accord avec le r&eacute;glement ci-dessus."); // taken & modified from PhpBB (http://www.phpbb.com/)
+define("_REG_AGREEMENT_TERMS","Les administrateurs et mod&#8217;rateurs de ce forum s&#8217;efforceront de supprimer ou &#8217;diter tous les messages &agrave; caract&egrave;re r&#8217;pr&#8217;hensible aussi rapidement que possible. Toutefois, il leur est impossible de passer en revue tous les messages. Vous admettez donc que tous les messages post&eacute;s sur ces forums expriment la vue et opinion de leurs auteurs respectifs, et non pas des administrateurs, ou mod&eacute;rateurs, ou webmasters (except&eacute; les messages post&eacute;s par eux-m&ecirc;me) et par cons&eacute;quent ne peuvent pas &ecirc;tre tenus pour responsables.<br /><br />Vous consentez &agrave; ne pas poster de messages injurieux, obsc&egrave;nes, vulgaires, diffamatoires, mena&ccedil;ants, sexuels ou tout autre message qui violeraient les lois applicables. Le faire peut vous conduire &agrave; &ecirc;tre banni imm&eacute;diatement de fa&ccedil;on permanente (et votre fournisseur d&#8217;acc&egrave;s &agrave; internet en sera inform&eacute;). L&#8217;adresse IP de chaque message est enregistr&eacute;e afin d&#8217;aider &agrave; faire respecter ces conditions. Vous &ecirc;tes d&#8217;accord sur le fait que le webmestre, l&#8217;administrateur et les mod&eacute;rateurs de ce forum ont le droit de supprimer, &eacute;diter, d&eacute;placer ou verrouiller n&#8217;importe quel sujet de discussion &agrave; tout moment. En tant qu&#8217;utilisateur, vous &ecirc;tes d&#8217;accord sur
+le fait que toutes les informations que vous donnerez ci-apr&egrave;s seront stock&eacute;es dans une base de donn&eacute;es. Cependant, ces informations ne seront divulgu&eacute;es &agrave; aucune tierce personne ou soci&eacute;t&eacute; sans votre accord. Le webmestre, l&#8217;administrateur, et les mod&eacute;rateurs ne peuvent pas &ecirc;tre tenus pour responsables si une tentative de piratage informatique conduit &agrave; l&#8217;acc&egrave;s de ces donn&eacute;es.<br /><br />Ce forum uti
+lise les cookies pour stocker des informations sur votre ordinateur. Ces cookies ne contiendront aucune information que vous aurez entr&eacute; ci-apr&egrave;s; ils servent uniquement &agrave; am&eacute;liorer le confort d&#8217;utilisation. L&#8217;adresse e-mail est uniquement utilis&eacute;e afin de confirmer les d&eacute;tails de votre enregistrement ainsi que votre mot de passe (et aussi pour vous envoyer un nouveau mot de passe dans le cas o&uacute; vous l&#8217;oublieriez).<br /><br />En vous enregistrant, vous vous portez garant du fait d&#8217;&ecirc;tre en accord avec le r&eacute;glement ci-dessus."); // taken & modified from PhpBB (http://www.phpbb.com/)
 define("_LEGAL","Logiciel libre distribu&eacute; sous licence GNU General Public License.");
 define("_NOPUBNEWS","Il n&#8217;y a pas d&#8217;articles signal&eacute;s");
-define("_MOTDMESS","<h1>Hello, FlatNuke!</h1><br><p>Compl&eacute;tez la configuration de votre nouveau site en cliquant sur \"<a href=\"index.php?mod=none_Admin\">Administrer le site Web</a>\"dans le bloc de connexion.<br>Pour d&eacute;couvrir toutes les fonctionnalit&eacute;s de votre nouveau CMS, lisez le fichier <a href=\"README\" target=\"_blank\">README</a> et inscrivez-vous au forum <a href=\"http://flatnuke.org\" target=\"_blank\">http://flatnuke.org</a>.</p>");
+define("_MOTDMESS","F&eacute;licitations pour avoir install&eacute; <b>FlatNuke</ b>, un CMS (Content Management System) qui n&#8217;utilise pas des bases de donn&eacute;es, s&#8217;appuyant uniquement sur des fichiers texte (d&#8217;o&ugrave; le nom).<br />Compl&eacute;tez la configuration de votre nouveau site en cliquant sur \"<a href=\"index.php?mod=none_Admin\">Administrer le site Web</a>\"dans le bloc de connexion.<br />Pour d&eacute;couvrir toutes les fonctionnalit&eacute;s de votre nouveau CMS, lisez le fichier <a href=\"README\">README</a> et inscrivez-vous au forum <a href=\"http://www.flatnuke.org\">flatnuke.org</a>.");
 define("_LEVEL","Niveau");
 define("_NOLEVELSECT","Vous n&#8217;avez pas la permission de voyer cette section ");
 define("_SICURO","Vous &ecirc;tes s&ucirc;r de faire &ccedil;a?");
@@ -291,11 +290,11 @@ define("_GROUPRENAMED","Le groupe a &eacute;t&eacute; renomm&eacute;!");
 define("_DOESNTEXISTS","n&#8217;existe pas!");
 define("_ATTENTION","Attention");
 define("_DELETEGROUPALERT1","Voulez-vous vraiment supprimer le groupe");
-define("_DELETEGROUPALERT2","Si vous souhaitez supprimer le groupe vous devez v&eacute;rifier le formulaire ci-dessous et cliquer sur le bouton OK.<br><b>Attention:</b> le groupe ne sera supprim&eacute; que s&#8217;il ne contient aucun argument.");
+define("_DELETEGROUPALERT2","Si vous souhaitez supprimer le groupe vous devez v&eacute;rifier le formulaire ci-dessous et cliquer sur le bouton OK.<br /><b>Attention:</b> le groupe ne sera supprim&eacute; que s&#8217;il ne contient aucun argument.");
 define("_DELETEGROUPALERT3","Supprimer d&eacute;finitivement le groupe");
 define("_DELETEGROUPNOCONFIRM","Si vous voulez supprimer le groupe vous avez &agrave; cocher la case dans la page pr&eacute;c&eacute;dente.");
 define("_DELETEGROUPOK","Groupe supprim&eacute; avec succ&egrave;s!");
-define("_GROUPNOTEMPTY","n&#8217;est pas vide et contient un ou plusieurs arguments.<br>Vous devrez supprimer ou d&eacute;placer les arguments avant d&#8217;essayer de supprimer le groupe.");
+define("_GROUPNOTEMPTY","n&#8217;est pas vide et contient un ou plusieurs arguments.<br />Vous devrez supprimer ou d&eacute;placer les arguments avant d&#8217;essayer de supprimer le groupe.");
 define("_ARGUMENTGROUP","Choisissez un groupe pour l&#8217;argument");
 define("_ARGUMENTNAME","Choisissez le nom de l&#8217;argument");
 define("_ARGUMENTLEVEL","S&eacute;lectionnez un niveau");
@@ -321,7 +320,7 @@ define("_ARGUMENTUNLOCKED","Argument d&eacute;verrouill&eacute;");
 define("_ARGALREADYUNLOCKED","L&#8217;argument &eacute;tait d&eacute;j&agrave; d&eacute;verrouill&eacute;");
 define("_DELETEARGUMENT1","Voulez-vous vraiment supprimer l&#8217;argument");
 define("_DELETEARGUMENT2","du groupe");
-define("_DELETEARGUMENT3","Si vous voulez faire cela v&eacute;rifier l&#8217;actuelle case ci-dessous et appuyez sur le bouton OK.<br><b>Attention</b>: tous les sujets contenus seront supprim&eacute;s!");
+define("_DELETEARGUMENT3","Si vous voulez faire cela v&eacute;rifier l&#8217;actuelle case ci-dessous et appuyez sur le bouton OK.<br /><b>Attention</b>: tous les sujets contenus seront supprim&eacute;s!");
 define("_DELETEARGUMENT","supprimer l&#8217;argument");
 define("_ARGUMENTDELETED","Argument supprim&eacute; avec succ&egrave;s");
 define("_DIRNOTDELETED","Il &eacute;tait impossible de supprimer le r&eacute;pertoire");
@@ -420,7 +419,7 @@ define("_FNPRESENTATION","Pr&eacute;sentation");
 
 // 2.7.1
 define("_NEWPWDSTRING","Mot de passe perdu");
-define("_NEWPWDFORM","<b>R&eacute;cup&eacute;rer mot de passe</b>:<br><br>Pour r&eacute;cup&eacute;rer votre mot de passe, fournir l&#8217;adresse e-mail que vous avez associ&eacute; &agrave; votre compte membre et cliquez sur le bouton Soumettre.<br>L&#8217;e-mail contiendra &eacute;galement votre NOUVEAU mot de passe.<br>Pr&ecirc;tez attention sur le fait que vous ne serez pas en mesure d&#8217;utiliser votre nouveau mot de passe avant de valider la demande; de m&ecirc;me, sans validation, vous devez encore utiliser l&#8217;ancien mot de passe.");
+define("_NEWPWDFORM","<b>R&eacute;cup&eacute;rer mot de passe</b>:<br /><br />Pour r&eacute;cup&eacute;rer votre mot de passe, fournir l&#8217;adresse e-mail que vous avez associ&eacute; &agrave; votre compte membre et cliquez sur le bouton Soumettre.<br />L&#8217;e-mail contiendra &eacute;galement votre NOUVEAU mot de passe.<br />Pr&ecirc;tez attention sur le fait que vous ne serez pas en mesure d&#8217;utiliser votre nouveau mot de passe avant de valider la demande; de m&ecirc;me, sans validation, vous devez encore utiliser l&#8217;ancien mot de passe.");
 define("_NEWPWDFROM","R&eacute;cup&eacute;rer mot de passe de:");
 define("_NEWPWDMAIL","Salut __USERNAME__,\n
 cet e-mail a &eacute;t&eacute; envoy&eacute; &agrave; vous de __SITEURL__ parce que quelqu&#8217;un a demand&eacute; de fournir un nouveau mot de passe de votre compte.\n
@@ -451,7 +450,7 @@ define("_FN_SETUP_RESULT","R&eacute;sultat");
 define("_FN_SETUP_RELOAD","Rafra&iacute;chir la page");
 define("_FN_SETUP_ADMINPROFILE","Profil de l&#8217;administrateur");
 define("_FN_SETUP_ADMINTXT","Pour administrer le site, vous devez cr&eacute;er un nouveau profil, le premier utilisateur enregistr&eacute; sera l&#8217;administrateur (il aura toutes les autorisations):");
-define("_FN_SETUP_END","F&eacute;licitations!<br>l&#8217;installation de FLATNUKE est termin&eacute;e!");
+define("_FN_SETUP_END","F&eacute;licitations!<br />l&#8217;installation de FLATNUKE est termin&eacute;e!");
 define("_STICKYNEWS","Nouvelle gluant");
 define("_UNSTICKYNEWS","Nouvelle normal");
 define("_SEARCHTAG","Rechercher la balise");

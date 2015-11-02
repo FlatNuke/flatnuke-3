@@ -153,7 +153,7 @@ define("_FDFILENOTSELECT","Datei&nbsp;ausw&auml;hlen!");
 //Alert
 define("_FDDESCTOOLONG","<b>ACHTUNG!</b>&nbsp;Beschreibung&nbsp;zu&nbsp;lang.");
 define("_FDNAMETOOLONG","<b>ACHTUNG!</b>&nbsp;Titel&nbsp;zu&nbsp;lang.");
-define("_FDREADONLYDIR","<b>ACHTUNG:</b>&nbsp;bitte&nbsp;Schreibrechte&nbsp;f&uuml;r&nbsp;dieses&nbsp;Verzeichnis&nbsp;&uuml;berpr&uuml;fen.");
+define("_FDREDONLYDIR","<b>ACHTUNG:</b>&nbsp;bitte&nbsp;Schreibrechte&nbsp;f&uuml;r&nbsp;dieses&nbsp;Verzeichnis&nbsp;&uuml;berpr&uuml;fen.");
 define("_FDERROR","<B>Fehler!</B>");
 
 //error

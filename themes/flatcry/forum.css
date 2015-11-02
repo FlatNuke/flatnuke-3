@@ -6,7 +6,6 @@
 	border-collapse: collapse;
 	border-width: 1px;
 	background-color: #efefef;
-	width:100%;
 }
 
 .forum-header-search,
@@ -23,29 +22,12 @@
 	padding:3px;
 }
 
-.forum-header-enter,
-.forum-header-help,
-.forum-header-members
-{
-text-align:center;
-}
-
 /* GROUP */
 .forum-group-table {
 	width: 100%;
 	border-collapse: collapse;
 	border: 1px solid #ffffff;
 	background-color: #efefef;
-	
-}
-
-.forum-group-table td {
-padding:15px;
-white-space:nowrap
-}
-
-.forum-header-edit-profile{
-text-align:center;
 }
 
 .forum-group-table tr:hover { 

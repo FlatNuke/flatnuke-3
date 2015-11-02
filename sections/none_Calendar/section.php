@@ -73,8 +73,9 @@ if(($aa!="" AND is_numeric($aa) AND $aa>(date("Y")-1000) AND $aa<(date("Y")+1000
 			$title  = $data['title'];
 			$reads  = $data['reads'];
 			$id     = str_replace(".xml","",$my_modlist[$i]);
-			echo "\n"._ICONREAD."&nbsp;<a href='index.php?mod=none_News&amp;action=viewnews&amp;news=$id' title='"._FLEGGI." news: $title'>$title</a>&nbsp;";
-			echo "(".date("d/m/Y - H:i",$id+(3600*$fuso_orario)).") "._LETTO." $reads "._VOLTE."<br>";
+			echo "\n<img src='themes/$theme/images/read.png' alt='Read' />&nbsp;";
+			echo "<a href='index.php?mod=none_News&amp;action=viewnews&amp;news=$id' title='"._FLEGGI." news: $title'>$title</a>&nbsp;";
+			echo "(".date("d/m/Y - H:i",$id+(3600*$fuso_orario)).") "._LETTO." $reads "._VOLTE."<br />";
 		}
 	}
 } else echo _NORESULT;

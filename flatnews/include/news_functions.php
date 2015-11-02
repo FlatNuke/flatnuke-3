@@ -18,7 +18,7 @@ function get_flatnews_version(){
  * Funzione di die() personalizzata per flatnews
  *
  * @param string $message il messaggio
- * @param string $file il file nel quale si Ã¨ manifestato l'errore
+ * @param string $file il file nel quale si è manifestato l'errore
  * @param string $line la linea dell'errore
  * @author Aldo Boccacci
  * @since 0.1
@@ -42,7 +42,7 @@ function flatnews_die($message="",$file="",$line=""){
  * Il messaggio viene formattato aggiungendo campi di interesse.
  *
  * @param string $message il messaggio da salvare
- * @param string $type il tipo di messaggio. PuÃ² essere lasciato vuoto o
+ * @param string $type il tipo di messaggio. Puo' essere lasciato vuoto o
  *               impostato a "ERROR"
  * @author Aldo Boccacci
  * @since 0.1
@@ -118,7 +118,7 @@ function load_news($section,$news,$proposed=FALSE){
 		$proposed = FALSE;
 		flatnews_logf("\$proposed must be boolean!",__FILE__,__LINE__);
 	}
-	//se $proposed Ã¨ settato a TRUE carico il file dalla cartella dei file proposti
+	//se $proposed è settato a TRUE carico il file dalla cartella dei file proposti
 	if ($proposed==TRUE)
 		$newsfile = get_proposed_news_file($section,$news);
 	else $newsfile = get_news_file($section,$news);
@@ -133,7 +133,7 @@ function load_news($section,$news,$proposed=FALSE){
 	$string = "";
 	$string = get_file($newsfile);
 
-	//CARICO LE PROPRIETÃ€ DELLA NEWS
+	//CARICO LE PROPRIETÀ DELLA NEWS
 
 	//titolo della news
 	$newstitle = "";
@@ -203,7 +203,7 @@ function load_news($section,$news,$proposed=FALSE){
 	else $data['lastedit'] = "";
 
 
-	//la news Ã¨ nascosta?
+	//la news è nascosta?
 // 	$newshidden = "false";
 // 	$newshidden = get_xml_element("hidden",$string);
 // 	if (check_var($newshidden,"boolean"))
@@ -324,18 +324,18 @@ function load_news_header($section,$news){
 		return load_news_header_old($section,$news);
 	}
 
-	//CARICO LE PROPRIETÃ€ DELLA NEWS
+	//CARICO LE PROPRIETÀ DELLA NEWS
 
 	//titolo della news
 	$newstitle = "";
-	$newstitle = $xml->title;
+	$newstitle = utf8_decode($xml->title);
 	if (check_var($newstitle,"text"))
 		$data['title'] = $newstitle;
 	else $data['title'] = "nonews.png";
 
 	//categoria news
 	$newscategory = "";
-	$newscategory = $xml->category;
+	$newscategory = utf8_decode($xml->category);
 	if (check_var($newscategory,"text"))
 		$data['category'] = $newscategory;
 	else $data['category'] = "";
@@ -362,7 +362,7 @@ function load_news_header($section,$news){
 
 	//letture news
 	$newsreads = "";
-	$newsreads = $xml->reads;
+	$newsreads = utf8_decode($xml->reads);
 	$newsreads=trim($newsreads);
 	if (check_var($newsreads,"digit"))
 		$data['reads'] = $newsreads;
@@ -370,7 +370,7 @@ function load_news_header($section,$news){
 
 	//categoria news
 	$newsby = "";
-	$newsby = $xml->by;
+	$newsby = utf8_decode($xml->by);
 	if (check_var($newsby,"text"))
 		$data['by'] = $newsby;
 	else $data['by'] = "";
@@ -383,14 +383,14 @@ function load_news_header($section,$news){
 	$data['date'] =$newsdate;
 	//autore ultima modifica
 	$newslasteditby = "";
-	$newslasteditby = $xml->lasteditby;
+	$newslasteditby = utf8_decode($xml->lasteditby);
 	if (check_var($newslasteditby,"text"))
 		$data['lasteditby'] = $newslasteditby;
 	else $data['lasteditby'] = "";
 
 	//data ultima modifica
 	$newslastedit = "";
-	$newslastedit = $xml->lastedit;
+	$newslastedit = utf8_decode($xml->lastedit);
 	if (check_var($newslastedit,"digit"))
 		$data['lastedit'] = $newslastedit;
 	else $data['lastedit'] = "";
@@ -399,14 +399,14 @@ function load_news_header($section,$news){
 
 	//livello della news
 	$newslevel = "";
-	$newslevel = $xml->level;
+	$newslevel = utf8_decode($xml->level);
 	if ($newslevel>-1 and $newslevel<11)
 		$data['level'] = $newslevel;
 	else $data['level'] = "-1";
 
 	//totale voti
 	$totalvote = "";
-	$totalvote = $xml->totalvote;
+	$totalvote = utf8_decode($xml->totalvote);
 	$totalvote=trim($totalvote);
 	if (check_var($totalvote,"digit"))
 		$data['totalvote'] = $totalvote;
@@ -414,7 +414,7 @@ function load_news_header($section,$news){
 
 	//punteggio totale dei voti
 	$totalscore = "";
-	$totalscore = $xml->totalscore;
+	$totalscore = utf8_decode($xml->totalscore);
 	$totalscore=trim($totalscore);
 	if (check_var($totalscore,"digit"))
 		$data['totalscore'] = $totalscore;
@@ -422,7 +422,7 @@ function load_news_header($section,$news){
 
 	//header della news
 	$newsheader = "";
-	$newsheader = $xml->header->asXML();
+	$newsheader = utf8_decode($xml->header->asXML());
 	$oktmp = preg_match("/\<header\>(.*?)\<\/header\>/s",$newsheader,$newsheader);
 	//i seguenti non funzionano a dovere...
 // 	$newsheader = str_replace("<header>","",$newsheader);
@@ -432,7 +432,7 @@ function load_news_header($section,$news){
 
 	//body della news
 	$newsbody = "";
-	$newsbody = $xml->body->asXML();
+	$newsbody = utf8_decode($xml->body->asXML());
 	$oktmp = preg_match("/\<body\>(.*?)\<\/body\>/s",$newsbody,$newsbody);
 
 	$data['body'] = (empty($newsbody[1])) ? ("") : ($newsbody[1]);
@@ -443,7 +443,7 @@ function load_news_header($section,$news){
 	$comments = $xml->comments;
 	foreach ($comments->comment as $comment){
 		$cmby = "";
-		$cmby = $comment->cmby;
+		$cmby = utf8_decode($comment->cmby);
 		if (check_var($cmby,"text"))
 			$data['comments'][]['cmby'] = $cmby;
 		else $data['comments'][]['cmby'] = "";
@@ -474,7 +474,7 @@ function load_news_header_old($section,$news){
 	$string = "";
 	$string = get_file($newsfile);
 
-	//CARICO LE PROPRIETÃ€ DELLA NEWS
+	//CARICO LE PROPRIETÀ DELLA NEWS
 
 	//titolo della news
 	$newstitle = "";
@@ -618,7 +618,7 @@ function get_news_tags($section,$news){
 	$string = "";
 	$string = get_file($newsfile);
 
-	//CARICO LE PROPRIETÃ€ DELLA NEWS
+	//CARICO LE PROPRIETÀ DELLA NEWS
 
 
 	//Tags
@@ -645,7 +645,7 @@ function get_news_tags($section,$news){
  * @param string $section la sezione contenente la news
  * @param string $news il numero identificativo della news
  * @param array $data l'array con tutti i dati della news
- * @param boolean $proposed indica se la news Ã¨ stata proposta da un utente
+ * @param boolean $proposed indica se la news è stata proposta da un utente
  * @author Aldo Boccacci
  * @since 0.1
  */
@@ -673,7 +673,7 @@ function save_news($section,$news,$data,$proposed=FALSE){
 	}
 	else $category = "nonews.png";
 
-	//evito che lo stesso tag venga inserito piÃ¹ di una volta
+	//evito che lo stesso tag venga inserito più di una volta
 	$tags_ok = array();
 	for ($ct=0;$ct<count($data['tags']);$ct++){
 		if (!in_array(trim($data['tags'][$ct]),$tags_ok)){
@@ -686,7 +686,7 @@ function save_news($section,$news,$data,$proposed=FALSE){
 	$tags ="";
 	if (isset($data['tags'])){
 		for ($count_tags=0;$count_tags<count($data['tags']);$count_tags++){
-			$tag = getparam(stripslashes(strip_tags($data['tags'][$count_tags])),PAR_NULL,SAN_HTML);
+			$tag = getparam(stripslashes(strip_tags($data['tags'][$count_tags])),PAR_NULL,SAN_PARA);
 // 			if ($count_tags<count($data['tags'])-1)
 				$tags .= "\t\t<tag>$tag</tag>\n";
 		}
@@ -873,7 +873,7 @@ function save_news($section,$news,$data,$proposed=FALSE){
 	$datastring .= "\n\t</comments>
 </news>";
 	if (preg_match("/\<\?/",$datastring) or preg_match("/\?\>/",$datastring)) fn_die("NEWS","\$datastring cannot contains php tags! ",__FILE__,__LINE__);
-	fnwrite($newsfile,"<?php die();?>\n<?xml version='1.0' encoding='UTF-8'?>\n".$datastring,"w",array("nonull")); // ISO8859-1 to UTF-8
+	fnwrite($newsfile,"<?php die();?>\n<?xml version='1.0' encoding='ISO8859-1'?>\n".$datastring,"w",array("nonull"));
 
 	//non salvo il log, altrimenti ad ogni visione si avrebbe una nuova entry nel logfile
 // 	flatnews_logf("news $news saved in section $section");
@@ -911,14 +911,14 @@ function get_news_category($section,$news){
 
 
 /**
- * restituisce true se la news Ã¨ nascosta e false se Ã¨ visibile dall'utente collegato
+ * restituisce true se la news è nascosta e false se è visibile dall'utente collegato
  *
  * @param string $section la sezione contenente la news
  * @param string $news la news da caricare (il nome del file senza percorso o estensione)
  * @param boolean $dochecks se impostato a TRUE esegue i controlli sulle variabili $section e $news
- *                (utile se abbiamo la certezza che i parametri sono giÃ  stati controllati
- *                in precedenza e dunque sono giÃ  sicuri)
- * @return TRUE se la news Ã¨ visibile FALSE in caso contrario
+ *                (utile se abbiamo la certezza che i parametri sono già stati controllati
+ *                in precedenza e dunque sono già sicuri)
+ * @return TRUE se la news è visibile FALSE in caso contrario
  * @author Aldo Boccacci
  * @since 0.1
  */
@@ -954,7 +954,7 @@ function user_can_view_news($section, $news,$user="",$dochecks=TRUE){
 	$string = "";
 	$string = get_file($newsfile);
 // 	return TRUE;
-	//la news Ã¨ nascosta?
+	//la news è nascosta?
 	$newshidden = "false";
 	$newshidden = get_xml_element("hidden",$string);
 	if (!check_var($newshidden,"boolean")) $newshidden = "false";
@@ -1137,16 +1137,24 @@ function list_newsold($section,$all=FALSE){
 }
 
 /**
- * Restituisce TRUE se l'utente passato come parametro Ã¨ un moderatore delle news.
+ * funzione temporanea per restiruire la cartella della news
+ * Non più usata, le news vengono salvate nella sezione
+ */
+function get_fn_dir_tmp(){
+return "var/news/";
+
+}
+
+/**
+ * Restituisce TRUE se l'utente passato come parametro è un moderatore delle news.
  * Se non vengono passati parametri viene valutato l'utente attualmente collegato
  * al portale.
  *
  * @param string $user l'utente di cui verificare i permessi
- * @return TRUE se l'utente Ã¨ un moderatore delle news, FALSE in caso contrario
+ * @return TRUE se l'utente è un moderatore delle news, FALSE in caso contrario
  * @author Aldo Boccacci
  */
 function is_news_moderator($user=""){
-	if (_FN_IS_ADMIN) return TRUE;
 	if (!check_username($user) and $user!="") return FALSE;
 	$user = trim($user);
 	if ($user==""){
@@ -1168,7 +1176,7 @@ return array();
 	$file = "";
 	$file = _FN_VAR_DIR."/news_moderators.php";
 	if (!file_exists($file)){
-		fnwrite($file, "<?xml version='1.0' encoding='UTF-8'?>","w",array("nonull"));
+		fnwrite($file, "<?xml version='1.0'?>","w",array("nonull"));
 		return FALSE;
 	}
 
@@ -1211,7 +1219,7 @@ function news_add_comment($section,$news,$post){
 	}
 
 	if ($post==""){
-		echo "<div style=\"text-align: center\"><b>The post is empty!</b><br></div>";
+		echo "<div style=\"text-align: center\"><b>The post is empty!</b><br /></div>";
 		echo "<a href=\"javascript:history.back()\">"._INDIETRO."</a>";
 		return;
 	}
@@ -1235,7 +1243,7 @@ function news_add_comment($section,$news,$post){
 
 			// back
 			?><div style="text-align:center;"><?php
-			echo "<br><b>"._CN_CODERROR."</b><br><br>";
+			echo "<br /><b>"._CN_CODERROR."</b><br /><br />";
 			echo "<a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a></div>";
 
 			return;
@@ -1245,7 +1253,7 @@ function news_add_comment($section,$news,$post){
 	if (is_spam($post,"words") AND !(_FN_IS_ADMIN OR _FN_IS_NEWS_MODERATOR)){
 		//only for print spam word alert
 		is_spam($post,"words",TRUE);
-		echo "<div style=\"text-align: center;\"><br><b>"._SPAMALERT."</b><br><br>";
+		echo "<div style=\"text-align: center;\"><br /><b>"._SPAMALERT."</b><br /><br />";
 		echo "<a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
 		return;
 	}
@@ -1268,7 +1276,7 @@ function news_add_comment($section,$news,$post){
 }
 
 /**
- * Incrementa di una unitÃ  il contatore di visione della news indicata come parametro
+ * Incrementa di una unità il contatore di visione della news indicata come parametro
  *
  * @param string $section la sezione contenente la news
  * @param string $news la news
@@ -1341,11 +1349,12 @@ function load_news_list($section,$all=FALSE){
 		foreach ($xmldata->news as $news){
 // 			echo $newslisttmp[$n];
 			$news = (string)$news;
+			$news = utf8_decode($news);
 			if ($all==TRUE){
 				$newslist[]=$news;
 			}
 			else {
-// 			if (user_can_view_news($section,$news,$user))
+// 				if (user_can_view_news($section,$news,$user))
 				if (!preg_match("/hide_/",$news))
 					$newslist[]=$news;
 			}
@@ -1377,7 +1386,7 @@ function save_news_list($section,$news_array=NULL){
 	}
 	$datastring .="\n</newslist>";
 	if (preg_match("/\<\?/",$datastring) or preg_match("/\?\>/",$datastring)) flatnews_die("\$datastring cannot contains php tags! ",__FILE__,__LINE__);
-	fnwrite(get_news_dir($section)."newslist.php","<?php die();?>\n<?xml version='1.0' encoding='UTF-8'?>\n".$datastring,"w",array("nonull"));
+	fnwrite(get_news_dir($section)."newslist.php","<?php die();?>\n<?xml version='1.0'?>\n".$datastring,"w",array("nonull"));
 // echo _FN_SECTIONS_DIR."/$section/none_newsdata/newslist.php";
 }
 
@@ -1402,10 +1411,10 @@ function get_news_time($news){
 }
 
 /**
- * Restituisce TRUE se la news Ã¨ nascosta, FALSE in caso contrario
+ * Restituisce TRUE se la news è nascosta, FALSE in caso contrario
  *
  * @param string $news la news
- * @return TRUE se Ã¨ nascosta, FALSE in caso contrario
+ * @return TRUE se è nascosta, FALSE in caso contrario
  */
 function news_is_hidden($news){
 	$news = getparam($news,PAR_NULL,SAN_FLAT);
@@ -1415,10 +1424,10 @@ function news_is_hidden($news){
 }
 
 /**
- * Restituisce TRUE se la news Ã¨ in evidenza, FALSE in caso contrario
+ * Restituisce TRUE se la news è in evidenza, FALSE in caso contrario
  *
  * @param string $news la news
- * @return TRUE se Ã¨ in evidenza, FALSE in caso contrario
+ * @return TRUE se è in evidenza, FALSE in caso contrario
  */
 function news_is_ontop($news){
 	$news = getparam($news,PAR_NULL,SAN_FLAT);
@@ -1440,7 +1449,7 @@ function save_proposed_news(){
 	if ($section=="") $section= "none_News";
 	$newsfile = get_news_file($section,$news);
 	if (file_exists($newsfile)){
-		//se il file esiste giÃ  devo aggiornare la data della news
+		//se il file esiste già devo aggiornare la data della news
 		//(improbabile ma possibile)
 		$news = time();
 	}
@@ -1463,7 +1472,7 @@ function save_proposed_news(){
 
 			// back or automatic redirect to the index after 2 seconds
 			?><div style="text-align:center;"><?php
-			echo "<br><b>"._CN_CODERROR."</b><br><br>";
+			echo "<br /><b>"._CN_CODERROR."</b><br /><br />";
 			echo "<a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a></div>";
 
 			return;
@@ -1472,7 +1481,7 @@ function save_proposed_news(){
 
 	$data = array();
 	$data['title'] = strip_tags(getparam("news_title",PAR_POST,SAN_FLAT));
-	$data['tags'] = split(",",strip_tags(getparam("news_tags",PAR_POST,SAN_HTML)));
+	$data['tags'] = split(",",strip_tags(getparam("news_tags",PAR_POST,SAN_PARA)));
 	$data['category'] = strip_tags(getparam("news_category",PAR_POST,SAN_FLAT));
 	$data['header'] = strip_tags(getparam("news_header",PAR_POST,SAN_FLAT));
 	$data['body'] = strip_tags(getparam("news_body",PAR_POST,SAN_FLAT));
@@ -1485,7 +1494,7 @@ function save_proposed_news(){
 		is_spam($data['header'],"words",TRUE);
 		//only for print spam word alert
 		is_spam($data['body'],"words",TRUE);
-		echo "<div style=\"text-align: center;\"><br><b>"._SPAMALERT."</b><br><br>";
+		echo "<div style=\"text-align: center;\"><br /><b>"._SPAMALERT."</b><br /><br />";
 		echo "<a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
 		return;
 	}
@@ -1493,7 +1502,7 @@ function save_proposed_news(){
 	if ((is_spam($data['category'],"words")) AND !(_FN_IS_ADMIN OR _FN_IS_NEWS_MODERATOR)){
 		//only for print spam word alert
 		is_spam($data['category'],"words",TRUE);
-		echo "<div style=\"text-align: center;\"><br><b>"._CATEGORYSPAM."</b><br><br>";
+		echo "<div style=\"text-align: center;\"><br /><b>"._CATEGORYSPAM."</b><br /><br />";
 		echo "<a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
 		return;
 	}
@@ -1501,7 +1510,7 @@ function save_proposed_news(){
 	if ((is_spam(getparam("news_tags",PAR_POST,SAN_FLAT),"words")) AND !(_FN_IS_ADMIN OR _FN_IS_NEWS_MODERATOR)){
 		//only for print spam word alert
 		is_spam(getparam("news_tags",PAR_POST,SAN_FLAT),"words",TRUE);
-		echo "<div style=\"text-align: center;\"><br><b>"._TAGSPAM."</b><br><br>";
+		echo "<div style=\"text-align: center;\"><br /><b>"._TAGSPAM."</b><br /><br />";
 		echo "<a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
 		return;
 	}
@@ -1509,14 +1518,14 @@ function save_proposed_news(){
 	if ((is_spam($data['title'],"words")) AND !(_FN_IS_ADMIN OR _FN_IS_NEWS_MODERATOR)){
 		//only for print spam word alert
 		is_spam($data['title'],"words",TRUE);
-		echo "<div style=\"text-align: center;\"><br><b>"._TITLESPAM."</b><br><br>";
+		echo "<div style=\"text-align: center;\"><br /><b>"._TITLESPAM."</b><br /><br />";
 		echo "<a href=\"javascript:history.back()\">"._INDIETRO."</a></div>";
 		return;
 	}
 
 	//salvo la news come "proposta"
 	save_news($section,$news,$data,TRUE);
-	echo "<br><div style=\" text-align: center;\"><b>"._NEWSSAVED."</b>. "._NEWSWAITING.".";
+	echo "<br /><div style=\" text-align: center;\"><b>"._NEWSSAVED."</b>. "._NEWSWAITING.".";
 
 	//permetto di ritornare
 	$modstring = "";
@@ -1524,7 +1533,7 @@ function save_proposed_news(){
 		$modstring = "";
 	else $modstring = "?mod=".rawurlencodepath($section);
 
-	echo "<br> <br><a href=\"index.php$modstring\"><b>"._GOTOSECTION."</b></a></div>";
+	echo "<br /> <br /><a href=\"index.php$modstring\"><b>"._GOTOSECTION."</b></a></div>";
 	add_news_in_proposed_news_list($section,$news);
 
 	flatnews_logf("News $news proposed in section $section");
@@ -1539,6 +1548,7 @@ function save_proposed_news(){
  * @author Aldo Boccacci
  */
 function get_proposed_news_dir($section){
+	$section = getparam($section,PAR_NULL,SAN_FLAT);
 
 	if (!is_dir(_FN_VAR_DIR."/news/")){
 		if (is_writable(_FN_VAR_DIR)){
@@ -1548,9 +1558,6 @@ function get_proposed_news_dir($section){
 		}
 		else flatnews_die("I'm not able to create the dir "._FN_VAR_DIR."/news/. Check permissions of the dir "._FN_VAR_DIR,__FILE__,__LINE__);
 	}
-
-	$section = getparam($section,PAR_NULL,SAN_FLAT);
-
 	$hiddenstring="";
 	//Se esiste restituisco il valore
 	if (file_exists(_FN_VAR_DIR."/news/proposed_news_dir.php")){
@@ -1599,20 +1606,23 @@ function load_proposed_news_list(){
 	if (file_exists(_FN_VAR_DIR."/news/proposed_news_list.php")){
 		$string = get_file(_FN_VAR_DIR."/news/proposed_news_list.php");
 		$string = preg_replace("/\<\?php die\(\);\?\>\n/","",$string);
-		$xmldata = new SimpleXMLElement($string);
-// 		print_r($xmldata);
-// 		echo count($xmldata->proposednewslist);
-		$n=0;
-		foreach ($xmldata->proposednews as $proposednews){
-			$section = (string)$proposednews->section;
-			$news = (string)$proposednews->news;
-			//controllo che la news esista effettivamente
-			if (!file_exists(get_proposed_news_file($section,$news)))
-				continue;
-			$data[$n]['section'] = $section;
-			$data[$n]['news'] = $news;
-			$n++;
-		}
+			$xmldata = new SimpleXMLElement($string);
+// 			print_r($xmldata);
+// 			echo count($xmldata->proposednewslist);
+			$n=0;
+			foreach ($xmldata->proposednews as $proposednews){
+				$section = (string)$proposednews->section;
+				$section = utf8_decode($section);
+				$news = (string)$proposednews->news;
+				$news = utf8_decode($news);
+				//controllo che la news esista effettivamente
+				if (!file_exists(get_proposed_news_file($section,$news)))
+					continue;
+
+				$data[$n]['section'] = $section;
+				$data[$n]['news'] = $news;
+				$n++;
+			}
 	}
 	else return array();
 // 	print_r($data);
@@ -1626,7 +1636,6 @@ function load_proposed_news_list(){
  * @author Aldo Boccacci
  */
 function save_proposed_news_list($news_array){
-
 	if (!is_array($news_array))
 		flatnews_die("\$news_array must be an array",__FILE__,__LINE__);
 
@@ -1638,7 +1647,6 @@ function save_proposed_news_list($news_array){
 		}
 		else flatnews_die("I'm not able to create the dir "._FN_VAR_DIR."/news/. Check permissions of the dir "._FN_VAR_DIR,__FILE__,__LINE__);
 	}
-
 // 	print_r($news_array);die();
 	$xmlstring = "<proposednewslist>";
 	for ($n=0; $n<count($news_array);$n++){
@@ -1655,7 +1663,7 @@ function save_proposed_news_list($news_array){
 	$xmlstring .= "\n</proposednewslist>";
 // 	print_r($xmlstring);die();
 	if (preg_match("/\<\?/",$xmlstring) or preg_match("/\?\>/",$xmlstring)) fn_die("\$xmlstring cannot contains php tags! ",__FILE__,__LINE__);
-	fnwrite(_FN_VAR_DIR."/news/proposed_news_list.php","<?php die();?>\n<?xml version='1.0' encoding='UTF-8'?>\n".$xmlstring,"w",array("nonull")); // ISO8859-1 to UTF-8
+	fnwrite(_FN_VAR_DIR."/news/proposed_news_list.php","<?php die();?>\n<?xml version='1.0' encoding='ISO8859-1'?>\n".$xmlstring,"w",array("nonull"));
 
 }
 
@@ -1679,7 +1687,7 @@ function add_news_in_proposed_news_list($section,$news){
 	$proposednewsarray = load_proposed_news_list();
 
 	$n = count($proposednewsarray);
-	//non Ã¨ necessario incrementare il contatore!
+	//non è necessario incrementare il contatore!
 // 	$n = $n+1;
 	$proposednewsarray[$n]['section'] = $section;
 	$proposednewsarray[$n]['news'] = $news;
@@ -1696,8 +1704,8 @@ function add_news_in_proposed_news_list($section,$news){
  */
 function rebuild_proposed_news_list(){
 	//deleting old entries
-	fnwrite("var/news/proposed_news_list.php", "<?xml version='1.0' encoding='UTF-8'?>
-<proposednewslist>\n</proposednewslist>","w",array("nonull")); // ISO8859-1 to UTF-8
+	fnwrite("var/news/proposed_news_list.php", "<?xml version='1.0' encoding='ISO8859-1'?>
+<proposednewslist>\n</proposednewslist>","w",array("nonull"));
 
 	//listing news sections
 	$news_sections = list_news_sections();
@@ -1731,18 +1739,19 @@ function load_news_sections_list(){
 	if (file_exists(_FN_VAR_DIR."/news/news_sections_list.php")){
 		$string = get_file(_FN_VAR_DIR."/news/news_sections_list.php");
 		$string = preg_replace("/\<\?php die\(\);\?>\n/","",$string);
-		$xmldata = new SimpleXMLElement($string);
+			$xmldata = new SimpleXMLElement($string);
 
-		foreach ($xmldata->section as $tmpsection){
-			$section = (string)$tmpsection;
-			$section = preg_replace("/^\//s","",$section);
-			$section = preg_replace("/\/$/s","",$section);
-			//controllo che la sezione esista effettivamente
-			if (!is_dir(_FN_SECTIONS_DIR."/$section"))
-				continue;
-			if (!in_array($section,$data))
-				$data[]= $section;
-		}
+			foreach ($xmldata->section as $tmpsection){
+				$section = (string)$tmpsection;
+				$section = utf8_decode($section);
+				$section = preg_replace("/^\//s","",$section);
+				$section = preg_replace("/\/$/s","",$section);
+				//controllo che la sezione esista effettivamente
+				if (!is_dir(_FN_SECTIONS_DIR."/$section"))
+					continue;
+				if (!in_array($section,$data))
+					$data[]= $section;
+			}
 	}
 	else {
 		$array = list_news_sections();
@@ -1759,10 +1768,8 @@ function load_news_sections_list(){
  * @author Aldo Boccacci
  */
 function save_news_sections_list($news_array){
-
 	if (!is_array($news_array))
 		flatnews_die("\$news_array must be an array",__FILE__,__LINE__);
-
 	if (!is_dir(_FN_VAR_DIR."/news/")){
 		if (is_writable(_FN_VAR_DIR)){
 			fn_mkdir(_FN_VAR_DIR."/news/",0777);
@@ -1786,7 +1793,7 @@ function save_news_sections_list($news_array){
 // 	print_r($xmlstring);die();
 	if (preg_match("/\<\?/",$xmlstring) or preg_match("/\?\>/",$xmlstring)) fn_die("\$xmlstring cannot contains php tags! ",__FILE__,__LINE__);
 
-	fnwrite(_FN_VAR_DIR."/news/news_sections_list.php","<?php die();?>\n<?xml version='1.0' encoding='UTF-8'?>\n".$xmlstring,"w",array("nonull")); // ISO8859-1 to UTF-8
+	fnwrite(_FN_VAR_DIR."/news/news_sections_list.php","<?php die();?>\n<?xml version='1.0' encoding='ISO8859-1'?>\n".$xmlstring,"w",array("nonull"));
 
 }
 
@@ -1841,18 +1848,15 @@ function list_news_sections(){
  * data[$tag]= 'numero occorrenze del tag'
  *
  * @param array $news_array l'array contenente l'elenco delle sezioni news
- * @param string $section se settata salva l'elenco nella sezione specificata anzichÃ¨
+ * @param string $section se settata salva l'elenco nella sezione specificata anzichè
  *               nell'elenco generale
  * @author Aldo Boccacci
  */
 function save_tags_list($tags_array,$section=""){
-
 	if (!is_array($tags_array))
 		flatnews_die("\$news_array must be an array",__FILE__,__LINE__);
-
 	if ($section!="" and !check_path($section,"","false"))
 		flatnews_die("\$section is not valid!",__FILE__,__LINE__);
-
 	if (!is_dir(_FN_VAR_DIR."/news/")){
 		if (is_writable(_FN_VAR_DIR)){
 			fn_mkdir(_FN_VAR_DIR."/news/",0777);
@@ -1864,101 +1868,92 @@ function save_tags_list($tags_array,$section=""){
 
 	//eseguo il sorting sulle keys
 	ksort($tags_array);
-
 	$xmlstring = "<tags>";
-
 	foreach ($tags_array as $tag => $count){
 		if ($count==0) continue;
 // 		echo "$tag: $count <br>";
-		$tag = getparam(strip_tags($tag),PAR_NULL,SAN_HTML);
+		$tag = getparam(strip_tags($tag),PAR_NULL,SAN_PARA);
 		if (trim($tag)=="") continue;
 		$count = strip_tags($count);
-		$xmlstring .= "\n\t<tag>\n\t\t<name>$tag</name>\n\t\t<count>$count</count>\n\t</tag>";
+		$xmlstring .= "\n\t<tag>
+		<name>$tag</name>
+		<count>$count</count>
+	</tag>";
 	}
-
 	$xmlstring .= "\n</tags>";
-
-	if (preg_match("/\<\?/",$xmlstring) or preg_match("/\?\>/",$xmlstring))
-		fn_die("\$xmlstring cannot contains php tags! ",__FILE__,__LINE__);
-
+// 	print_r($xmlstring);die();
+	if (preg_match("/\<\?/",$xmlstring) or preg_match("/\?\>/",$xmlstring)) fn_die("\$xmlstring cannot contains php tags! ",__FILE__,__LINE__);
+	$file = "";
 	if ($section!="")
 		$file = _FN_SECTIONS_DIR."/$section/tags_list.php";
-	else
-		$file = _FN_VAR_DIR."/news/tags_list.php";
-
-	fnwrite($file,"<?php die();?>\n<?xml version='1.0' encoding='UTF-8'?>\n".$xmlstring,"w",array("nonull")); // ISO8859-1 to UTF-8
+	else $file = _FN_VAR_DIR."/news/tags_list.php";
+	fnwrite($file,"<?php die();?>\n<?xml version='1.0' encoding='ISO8859-1'?>\n".$xmlstring,"w",array("nonull"));
 }
 
 /**
  * Carica l'elenco dei tag coi rispettivi contatori
  *
- * @param string $section se settata salva l'elenco nella sezione specificata anzichÃ¨
+ * @param string $section se settata salva l'elenco nella sezione specificata anzichè
  *               nell'elenco generale
  * @return un array contenente l'elenco dei tag e dei contatori corrispondenti
  * @author Aldo Boccacci
  */
 function load_tags_list($section=""){
-
 	if ($section!="" and !check_path($section,"","false"))
 		flatnews_die("\$section is not valid!",__FILE__,__LINE__);
-
+	$file = "";
 	if ($section!="")
 		$file = _FN_SECTIONS_DIR."/$section/tags_list.php";
-	else
-		$file = _FN_VAR_DIR."/news/tags_list.php";
-
+	else $file = _FN_VAR_DIR."/news/tags_list.php";
 	$data = array();
-
 	if (file_exists($file)){
 		$string = get_file($file);
 		$string = preg_replace("/\<\?php die\(\);\?>\n/","",$string);
 		if(preg_match("/<name>(.*?)<\/name>/i",$string,$tagout)>0) {
-			$string = str_replace("<name>$tagout[1]</name>","<name>".getparam($tagout[1],PAR_NULL,SAN_HTML)."</name>",$string); // sanitize
+			$string = str_replace("<name>$tagout[1]</name>","<name>".getparam($tagout[1],PAR_NULL,SAN_PARA)."</name>",$string); // sanitize
 		}
 		$xmldata = new SimpleXMLElement($string);
-
 		$n=0;
 		foreach ($xmldata->tag as $tag){
 			$name = (string) $tag->name;
+			$name = utf8_decode($name);
 			$count = (string) $tag->count;
+			$count = utf8_decode($count);
 
 			if($count>0) {	// discard old unused tags
 				//ATTENZIONE: controllare per eventuali problemi con caratteri
 				//speciali nelle key
 				if ($name!="")
-					$data[$name] = $count;
-	 			//$data[$n]['tag'] = $name;
-	 			//$data[$n]['count'] = $count;
+				$data[$name] = $count;
+ 				//$data[$n]['tag'] = $name;
+ 				//$data[$n]['count'] = $count;
 				$n++;
 			}
 		}
 	}
-	else
+	else {
 		return array();
-
+	}
 	return $data;
 }
 
 /**
- * Aggiunge gli elementi contenuti nell'array $tags all'elenco dei tag del portale, creando
- * o incrementando di un'unitÃ  il contatore. Viene effettuato un controllo per depurare
+ * Aggiunge gli elementi contenuti nell'array $tags nell'elenco dei tag del portale, creando
+ * o incrementando di un'unità il contatore. Viene effettuato un controllo per depurare
  * l'array da evenutali tag ripetuti
  *
- * @param string $section se settata salva l'elenco nella sezione specificata anzichÃ¨
+ * @param string $section se settata salva l'elenco nella sezione specificata anzichè
  *               nell'elenco generale
  * @param array $tags l'array contenente i tag da aggiungere alla lista
  * @author Aldo Boccacci
  */
 function add_tags_in_tags_list($tags_array,$section=""){
-
 	if (!is_array($tags_array))
 		flatnews_die("\$tags_array must be an array",__FILE__,__LINE__);
-
 	if ($section!="" and !check_path($section,"","false"))
 		flatnews_die("\$section is not valid!",__FILE__,__LINE__);
 
 	$arrayok = array();
-
 	for ($n=0;$n<count($tags_array);$n++){
 		$tag = trim(strip_tags($tags_array[$n]));
 		if (!in_array($tag,$arrayok))
@@ -1971,31 +1966,26 @@ function add_tags_in_tags_list($tags_array,$section=""){
 		$tag = $arrayok[$n];
 		if (isset($tags_list[$tag]))
 			$tags_list[$tag] = ($tags_list[$tag]+1);
-		else
-			$tags_list[$tag] = 1;
+		else $tags_list[$tag] =1;
 	}
-
 	save_tags_list($tags_list,$section);
 }
 
 /**
- * Rimuove gli elementi contenuti nell'array $tags_array dall'elenco dei tag del portale, rimuovendoli
- * o decrementando di un'unitÃ  il contatore. Viene effettuato un controllo per depurare
+ * Rimuove gli elementi contenuti nell'array $tags nell'elenco dei tag del portale, rimuovendoli
+ * o decrementando di un'unità il contatore. Viene effettuato un controllo per depurare
  * l'array da evenutali tag ripetuti
  *
- * @param string $section se settata salva l'elenco nella sezione specificata anzichÃ¨
+ * @param string $section se settata salva l'elenco nella sezione specificata anzichè
  *               nell'elenco generale
- * @param array $tags_array l'array contenente i tag da rimuovere dalla lista
+ * @param array $tags l'array contenente i tag da rimuovere dalla lista
  * @author Aldo Boccacci
  */
 function remove_section_tags_from_tags_list($tags_array,$section=""){
-
 	if (!is_array($tags_array))
 		flatnews_die("\$tags_array must be an array",__FILE__,__LINE__);
-
 	if ($section!="" and !check_path($section,"","false"))
 		flatnews_die("\$section is not valid!",__FILE__,__LINE__);
-
 	$arrayok = array();
 
 	while ($element = current($tags_array)){
@@ -2009,7 +1999,6 @@ function remove_section_tags_from_tags_list($tags_array,$section=""){
 
 	//se $section==0 carica l'elenco dei tag generale
 	$tags_list = load_tags_list($section);
-
 	while ($element = current($arrayok)){
 		$tag = key($arrayok);
 		$value = current($arrayok);
@@ -2020,36 +2009,30 @@ function remove_section_tags_from_tags_list($tags_array,$section=""){
 				$tags_list[$tag] = ($tags_list[$tag]-$value);
 			else unset($tags_list[$tag]);
 		}
-
 		next($arrayok);
 	}
-
 	save_tags_list($tags_list,$section);
 }
 
 
 /**
- * Rimuove gli elementi contenuti nell'array $tags_array dall'elenco dei tag del portale, rimuovendoli
+ * Rimuove gli elementi contenuti nell'array $tags nell'elenco dei tag del portale, rimuovendoli
  * o decrementando il contatore del numero indicato dall'array.
  * Viene effettuato un controllo per depurare l'array da evenutali tag ripetuti
  * Struttura dell'array:
  * $tags['tag1'] = $count1
  * $tags['tag2'] = $count2
- * @param string $section se settata salva l'elenco nella sezione specificata anzichÃ¨
+ * @param string $section se settata salva l'elenco nella sezione specificata anzichè
  *               nell'elenco generale
- * @param array $tags_array l'array contenente i tag da rimuovere dalla lista
+ * @param array $tags l'array contenente i tag da rimuovere dalla lista
  * @author Aldo Boccacci
  */
 function remove_tags_from_tags_list($tags_array,$section=""){
-
 	if (!is_array($tags_array))
 		flatnews_die("\$tags_array must be an array",__FILE__,__LINE__);
-
 	if ($section!="" and !check_path($section,"","false"))
 		flatnews_die("\$section is not valid!",__FILE__,__LINE__);
-
 	$arrayok = array();
-
 	for ($n=0;$n<count($tags_array);$n++){
 		$tag = trim(strip_tags($tags_array[$n]));
 		if (!in_array($tag,$arrayok))
@@ -2058,18 +2041,14 @@ function remove_tags_from_tags_list($tags_array,$section=""){
 
 	$tags_list = load_tags_list($section);
 // 	print_r($arrayok);die();
-
 	for ($n=0;$n<count($arrayok);$n++){
 		$tag = $arrayok[$n];
-
 		if (isset($tags_list[$tag])){
 			if ($tags_list[$tag]>0)
 				$tags_list[$tag] = ($tags_list[$tag]-1);
-			else
-				unset($tags_list[$tag]);
+			else unset($tags_list[$tag]);
 		}
 	}
-
 	save_tags_list($tags_list,$section);
 }
 
@@ -2177,8 +2156,8 @@ function create_feed($section){
 		if (news_is_hidden($news_list[$i])) continue;
 // 		print_r($news);
 		$item = new rssGenerator_item();
-		$item->title = tag2html($news['title']);
-		$item->description = $rss_feed->cdata(tag2html($news['header']));
+		$item->title = tag2html($news['title'],"home");
+		$item->description = $rss_feed->cdata(tag2html($news['header'],"home"));
 		$item->link = "$url?mod=$section&amp;action=viewnews&amp;news=".$news_list[$i];
 		$item->guid = "$url?mod=$section&amp;action=viewnews&amp;news=".$news_list[$i];
 // 		$item->author = $news['by'];
@@ -2252,8 +2231,8 @@ function create_general_feed(){
 		if (news_is_hidden($news_name)) continue;
 // 		print_r($news);
 		$item = new rssGenerator_item();
-		$item->title = tag2html($news['title']);
-		$item->description = $rss_feed->cdata(tag2html($news['header']));
+		$item->title = tag2html($news['title'],"home");
+		$item->description = $rss_feed->cdata(tag2html($news['header'],"home"));
 		$item->link = "$url?mod=$section&amp;action=viewnews&amp;news=".$news_name;
 		$item->guid = "$url?mod=$section&amp;action=viewnews&amp;news=".$news_name;
 // 		$item->author = $news['by'];
@@ -2264,43 +2243,4 @@ function create_general_feed(){
 
 	fnwrite(_FN_VAR_DIR."/backend.xml",$rss_feed->createFeed($rss_channel),"w");
 }
-
-/**
- * Ripulisce la stringa da caratteri speciali per poterla usare come permalink
- *
- * @param string $string il titolo della news da pulire
- * @return la stringa pulita da usare come permalink
- * @author dan
- * @since 4.0.0
- */
-function CleanString($string)
-{
-    $strResult = str_ireplace("Ã ", "a", $string);
-    $strResult  = str_ireplace("Ã¡", "a", $strResult);
-    $strResult =  str_ireplace("Ã¨", "e", $strResult);
-    $strResult =  str_ireplace("Ã©", "e", $strResult);
-    $strResult =  str_ireplace("Ã¬", "i", $strResult);
-    $strResult =  str_ireplace("Ã­", "i", $strResult);
-    $strResult =  str_ireplace("Ã²", "o", $strResult);
-    $strResult =  str_ireplace("Ã³", "o", $strResult);
-    $strResult =  str_ireplace("Ã¹", "u", $strResult);
-    $strResult =  str_ireplace("Ãº", "u", $strResult);
-    $strResult =  str_ireplace("Ã§", "c", $strResult);
-    $strResult =  str_ireplace("Ã¶", "o", $strResult);
-    $strResult =  str_ireplace("Ã»", "u", $strResult);
-    $strResult =  str_ireplace("Ãª", "e", $strResult);
-    $strResult =  str_ireplace("Ã¼", "u", $strResult);
-    $strResult =  str_ireplace("Ã«", "e", $strResult);
-    $strResult =  str_ireplace("Ã¤", "a", $strResult);
-    $strResult =  str_ireplace("'", "-", $strResult);
-
-    $strResult = preg_replace('/[^A-Za-z0-9 ]/', "", $strResult);
-    $strResult = trim($strResult);
-    $strResult =  preg_replace('/[ ]{2,}/', "-", $strResult);
-
-    $strResult = str_replace(" ", "-", $strResult);
-
-    return strtolower($strResult);
-}
-
 ?>

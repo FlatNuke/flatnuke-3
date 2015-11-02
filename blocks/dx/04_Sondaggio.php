@@ -49,23 +49,23 @@ if(!file_exists($mod3))					// directory flatpoll
  	}
 if(!file_exists($sondaggio_file_dati))			// file sondaggio
 	{ $file_w = fopen($sondaggio_file_dati, "w+");
-	//accesso modalit√† esclusiva
+	//accesso modalit‡ esclusiva
 	$sem = lock($sondaggio_file_dati);
-	fwrite($file_w,"<?xml version='1.0' encoding='UTF-8'?>\n<sondaggio>\n\t<attivo>n</attivo>\n\t<domanda>"._FP_NUOVOSONDAGGIO."</domanda>\n\t<opzioni>\n");
+	fwrite($file_w,"<?xml version='1.0'?>\n<sondaggio>\n\t<attivo>n</attivo>\n\t<domanda>"._FP_NUOVOSONDAGGIO."</domanda>\n\t<opzioni>\n");
 	for($riga=1; $riga<4; $riga++)
 		fwrite($file_w, "\t\t<opzione>\n\t\t\t<testo>"._FP_OPZIONE."$riga</testo>\n\t\t\t<voto>$riga</voto>\n\t\t</opzione>\n");
 	fwrite($file_w,"\t</opzioni>\n</sondaggio>\n");
-	// fine modalit√† esclusiva
+	// fine modalit‡ esclusiva
 	unlock($sem);
 	fclose($file_w);
 	//chmod($sondaggio_file_dati, 0777);
 	}
 if(!file_exists($sondaggio_ip_file))			// file IP
 	{ $file_w = fopen($sondaggio_ip_file, "w+");
-	//accesso modalit√† esclusiva
+	//accesso modalit‡ esclusiva
 	$sem = lock($sondaggio_file_dati);
-	fwrite($file_w,"<?xml version='1.0' encoding='UTF-8'?>\n");
-	// fine modalit√† esclusiva
+	fwrite($file_w,"<?xml version='1.0'?>\n");
+	// fine modalit‡ esclusiva
 	unlock($sem);
 	fclose($file_w);
 	//chmod($sondaggio_ip_file, 0777);
@@ -86,11 +86,11 @@ if(get_xml_element("attivo",$file_xml)=="y")
 	$opzione = get_xml_array("opzione",$opzioni);
 	for($n=0; $n<count($opzione); $n++)					// stampa radio buttons per opzioni di voto e pulsante voto
 		{ ?><input type="radio" name="risposta" value="<?php echo $n?>" alt="opzione<?php echo $n?>" id="opt<?php echo $n?>" /><?php
-		echo "<label for=\"opt$n\">".get_xml_element("testo",$opzione[$n])."</label><br>";
+		echo "<label for=\"opt$n\">".get_xml_element("testo",$opzione[$n])."</label><br />";
 		}
-	?><div style="text-align:center"><br><input type="submit" name="vota" value="<?php echo _FP_VOTA?>" /></div>
+	?><div align="center"><br /><input type="submit" name="vota" value="<?php echo _FP_VOTA?>" /></div>
 	</form>
-	<div style="text-align:center">
+	<div align="center">
 	[ <a href="index.php?mod=<?php echo $mod1?>&amp;risultati=1" title="<?php echo _FP_RISULTATI?>"><b><?php echo _FP_RISULTATI?></b></a>
 	| <a href="index.php?mod=<?php echo $mod2?>" title="<?php echo _FP_SONDAGGI?>"><b><?php echo _FP_SONDAGGI?></b></a> ]
 	</div><?php
@@ -100,9 +100,9 @@ if(get_xml_element("attivo",$file_xml)=="y")
 		$voti_tot += get_xml_element("voto",$opzione[$n]);
 	$commenti = get_xml_element("commenti",$file_xml);			// conteggio commenti
 	$commento = get_xml_array("commento",$commenti);
-	?><div style="text-align:center"><?php echo _FP_VOTI?>: <b><?php echo $voti_tot?></b> | <?php echo _FP_COMMENTI?>: <b><?php echo count($commento)?></b></div><?php
+	?><div align="center"><?php echo _FP_VOTI?>: <b><?php echo $voti_tot?></b> | <?php echo _FP_COMMENTI?>: <b><?php echo count($commento)?></b></div><?php
 	}
-// sondaggio non √® attivo
-else { ?><div style="text-align:center"><?php echo _FP_NOACTIVE?><br><a href="index.php?mod=<?php echo $mod2?>" title="<?php echo _FP_VECCHI?>"><?php echo _FP_VECCHI?></a></div><?php }
+// sondaggio non Ë attivo
+else { ?><div align="center"><?php echo _FP_NOACTIVE?><br /><a href="index.php?mod=<?php echo $mod2?>" title="<?php echo _FP_VECCHI?>"><?php echo _FP_VECCHI?></a></div><?php }
 
 ?>

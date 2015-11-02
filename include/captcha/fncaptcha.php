@@ -139,8 +139,8 @@ class fncaptcha {
 		} else {
 			$sec_image_code = $_SESSION['security_code'];
 		}
-		echo "<label for='$id'><b>"._CN_ANTISPAM."<br>\t"; printf($sec_image_code); echo "</b></label><br>\n
-			<input type='text' name='$name' id='$id' value='' /><br><br>";
+		echo "<b><label for='$id'>"._CN_ANTISPAM."<br />\t"; printf($sec_image_code); echo "</b></label><br />\n
+			<input type='text' name='$name' id='$id' value='' /><br /><br />";
 	}
 }
 ?>

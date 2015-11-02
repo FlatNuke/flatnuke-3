@@ -154,7 +154,7 @@ define("_FDFILENOTSELECT","Select a file!");
 //Alert
 define("_FDDESCTOOLONG","<b>Attention!</b> the description is too long.");
 define("_FDNAMETOOLONG","<b>Attention!</b> the title is too long.");
-define("_FDREADONLYDIR","<b>Attention:</b> check write permission of this directory.");
+define("_FDREDONLYDIR","<b>Attention:</b> check write permission of this directory.");
 define("_FDERROR","<B>Error!</B>");
 
 //error

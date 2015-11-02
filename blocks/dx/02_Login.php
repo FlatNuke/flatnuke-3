@@ -26,7 +26,7 @@ if(strstr($req,"myforum="))
 // user is not logged
 if(_FN_IS_GUEST) {
 	?>
-	<script type="text/javascript">
+	<script type="text/javascript" language="javascript">
 	function validatelogin()
 		{
 			if(document.getElementsByName('nome')[0].value=='')
@@ -47,32 +47,32 @@ if(_FN_IS_GUEST) {
 		}
 	</script>
 
-	<div style="text-align:center">
+	<div align="center">
 	<form action="index.php?mod=none_Login" method="post" onsubmit="return validatelogin()">
 	<input type="hidden" name="action" value="login" />
 	<input type="hidden" name="from" value="home" />
-	<label for="username"><?php echo _NOMEUTENTE ?>:</label><br>
+	<label for="username"><?php echo _NOMEUTENTE ?>:</label><br />
 	<?php //ho dovuto settare un timeout a causa di Firefox che altrimenti reimposta il valore
 	  //di default "Username" prima dell'invio
 	?>
-	<input type="text" name="nome" id="username" style="color:gray" value="Username" onfocus="
+	<input alt="username" name="nome" size="10" id="username" style="color:gray" value="Username" onfocus="
 	if (this.value=='Username'){this.value='';}
 	if (document.getElementsByName('logpassword')[0].value='********'){document.getElementsByName('logpassword')[0].value=''}"
 	onblur="if(this.value==''){setTimeout('document.getElementsByName(\'nome\')[0].value=\'Username\'',2000);}
-<?php 	//rimosso perchÃ© creava problemi quando, dopo aver scritto il nome utente, si usciva dalla
+<?php 	//rimosso perchè creava problemi quando, dopo aver scritto il nome utente, si usciva dalla
 	//casella di testo (rimetteva i pallini al posto della password)
 	//if(document.getElementsByName('logpassword')[0].value==''){setTimeout('document.getElementsByName(\'logpassword\')[0].value=\'********\'',2000);}
 ?>
-	" /><br>
-	<label for="password"><?php echo _PASSWORD ?>:</label><br>
-	<input name="logpassword" type="password" id="password" style="color:gray;" value="********" onfocus="javascript:this.value='';" /><br><?php
+	" /><br />
+	<label for="password"><?php echo _PASSWORD ?>:</label><br />
+	<input alt="password di accesso" name="logpassword" type="password" size="10" id="password" style="color:gray;" value="********" onfocus="javascript:this.value='';" /><br /><?php
 	// remember login checkbox
 	global $remember_login;
 	if($remember_login==1) {
 		echo "<div style=\"margin:1em;\"><label for=\"rememberlogin\">"._REMEMBERLOGIN."</label>";
-		echo "<input type=\"checkbox\" alt=\"remember_login\" name=\"rememberlogin\" id=\"rememberlogin\" /><br>";
+		echo "<input type=\"checkbox\" alt=\"remember_login\" name=\"rememberlogin\" id=\"rememberlogin\" /><br />";
 		echo "</div>";
-	} else echo "<br>";
+	} else echo "<br />";
 	// login button
 	?><input type="submit" value="<?php echo _LOGIN ?>" />
 	</form><?php
@@ -80,8 +80,8 @@ if(_FN_IS_GUEST) {
 	global $reguser;
 	if ($reguser=="1" or $reguser=="2"){
 		echo _NONREG
-		?><br><a href="index.php?mod=none_Login&amp;action=visreg" title="<?php echo _REGORA?>"><b><?php echo _REGORA?></b></a>
-                <br><a href="index.php?mod=none_Login&amp;action=passwordlost" title="<?php echo _NEWPWDSTRING?>"><b><?php echo _NEWPWDSTRING?></b></a><?php
+		?><br /><a href="index.php?mod=none_Login&amp;action=visreg" title="<?php echo _REGORA?>"><b><?php echo _REGORA?></b></a>
+                <br /><a href="index.php?mod=none_Login&amp;action=passwordlost" title="<?php echo _NEWPWDSTRING?>"><b><?php echo _NEWPWDSTRING?></b></a><?php
 	}
 	// load external code
 	echo "<div style='padding-left:0.5em;'>";
@@ -93,18 +93,18 @@ if(_FN_IS_GUEST) {
 elseif(_FN_IS_USER OR _FN_IS_ADMIN) {
 	// print user name
 	$username = _FN_USERNAME;
-	print _BENVENUTO." <b><a href='index.php?mod=none_Login&amp;action=viewprofile&amp;user=$username' title=\""._VIEW_USERPROFILE."\">$username</a></b>!<br><br>";
-	print "<div class=\"centeredDiv\">";
+	print _BENVENUTO." <b><a href='index.php?mod=none_Login&amp;action=viewprofile&amp;user=$username' title=\""._VIEW_USERPROFILE."\">$username</a></b>!<br /><br />";
+	print "<div align='center'>";
 	print "<a href='index.php?mod=none_Login&amp;action=viewprofile&amp;user=$username' title=\""._VIEW_USERPROFILE."\">";
 	// print avatar
 	$img = _FN_USERAVATAR;
 	if($img!="") {
 		if(!stristr($img,"http://"))
-			echo "<img src='forum/$img' alt='$username' style='max-width:95; border:0%' />";
-		else echo "<img src='$img' alt='$username' style='max-width:95%; border:0' />";
+			echo "<img src='forum/$img' alt='$username' border='0' style='max-width:95%' />";
+		else echo "<img src='$img' alt='$username' border='0' style='max-width:95%' />";
 	}
-	else echo "<img src='forum/images/blank.png' alt='$username' style='max-width:95%; border:0' />";
-	print "</a></div><br>";
+	else echo "<img src='forum/images/blank.png' alt='$username' border='0' style='max-width:95%' />";
+	print "</a></div><br />";
 	// print user level
 	$level = _FN_USERLEVEL;
 	if(!file_exists("themes/$theme/images/level_y.gif") OR !file_exists("themes/$theme/images/level_n.gif")) {
@@ -117,15 +117,15 @@ elseif(_FN_IS_USER OR _FN_IS_ADMIN) {
 	print "<div style='position:relative;float:left;width:30px;'>0</div>";
 	print "<div style='position:relative;float:right;width:30px;text-align:right;'>10</div>";
 	print "<div style='position:relative;margin-left:0px;margin-right:0px;text-align:center;'><b>"._LEVEL." $level</b></div>";
-	print "<div class=\"centeredDiv\">";
-	print "<hr>";
+	print "<div align='center'>";
+	print "<hr size='1' noshade width='100%' />";
 	for($i=0; $i<$level; $i++) {
 		print "<img src='$level_img_y' alt='level' />";
 	}
 	for($j=$i; $j<10; $j++) {
 		print "<img src='$level_img_n' alt='level' />";
 	}
-	print "<hr>";
+	print "<hr size='1' noshade width='100%' />";
 	print "</div>";
 	if (_FN_IS_NEWS_MODERATOR and !_FN_IS_ADMIN){
 		echo "<div style=\"padding-left:0.5em;\">";
@@ -140,7 +140,7 @@ elseif(_FN_IS_USER OR _FN_IS_ADMIN) {
 			if (_FN_MOD=="")
 				$modstring = "mod=none_News&amp;";
 			else $modstring = "mod="._FN_MOD."&amp;";
-			?><br>&#187;&nbsp;<b><a href="index.php?mod=none_News&amp;action=manageproposednews" title="<?php echo _SEGNNOTIZIE; ?>"><?php echo _SEGNNOTIZIE ?> (<?php echo count($proposednewsarray)?>)</a></b><?php
+			?><br />&#187;&nbsp;<b><a href="index.php?mod=none_News&amp;action=manageproposednews" title="<?php echo _SEGNNOTIZIE; ?>"><?php echo _SEGNNOTIZIE ?> (<?php echo count($proposednewsarray)?>)</a></b><?php
 		}
 		?>
 		</div>
@@ -153,7 +153,7 @@ elseif(_FN_IS_USER OR _FN_IS_ADMIN) {
 		<?php
 		global $home_section;
 		if ($home_section==""){
-			echo "<br>&#187;&nbsp;<a href=\"index.php?action=addnewsinterface\" title=\""._ADDNEWS."\">". _ADDNEWS." (Home&nbsp;page)</a>";
+			echo "<br />&#187;&nbsp;<a href=\"index.php?action=addnewsinterface\" title=\""._ADDNEWS."\">". _ADDNEWS." (Home&nbsp;page)</a>";
 		}
 		include_once("flatnews/include/news_functions.php");
 		$proposednewsarray=load_proposed_news_list();
@@ -162,18 +162,18 @@ elseif(_FN_IS_USER OR _FN_IS_ADMIN) {
 			if (_FN_MOD=="")
 				$modstring = "mod=none_News&amp;";
 			else $modstring = "mod="._FN_MOD."&amp;";
-			?><br>&#187;&nbsp;<b><a href="index.php?mod=none_News&amp;action=manageproposednews" title="<?php echo _SEGNNOTIZIE; ?>"><?php echo _SEGNNOTIZIE ?> (<?php echo count($proposednewsarray)?>)</a></b><?php
+			?><br />&#187;&nbsp;<b><a href="index.php?mod=none_News&amp;action=manageproposednews" title="<?php echo _SEGNNOTIZIE; ?>"><?php echo _SEGNNOTIZIE ?> (<?php echo count($proposednewsarray)?>)</a></b><?php
 		}
-		echo "<br>&#187;&nbsp;<a href=\"index.php?mod=fnnewsectinterface\" title=\""._FNCREATESECTION."\">"._FNCREATESECTION." (Home page)</a>";
+		echo "<br />&#187;&nbsp;<a href=\"index.php?from=flatnuke/index.php&amp;sect=&amp;fnfile=sections/&amp;mod=fnnewsectinterface\" title=\""._FNCREATESECTION."\">"._FNCREATESECTION." (Home page)</a>";
 		?></div>
-		<hr style="text-align:center; width:100%" /><?php
+		<hr size="1" noshade width="100%" align="center" /><?php
 	}
 	// load external code
 	echo "<div style='padding-left:0.5em;'>";
 	load_php_code("include/blocks/login");
 	echo "</div>";
 	// logout
-	echo "<div style=\"text-align:right\"><a href='index.php?mod=none_Login&amp;action=logout&amp;from=home' title=\""._LOGOUT."\"><b>"._LOGOUT."</b></a></div>";
+	echo "<div align='right'><a href='index.php?mod=none_Login&amp;action=logout&amp;from=home' title=\""._LOGOUT."\"><b>"._LOGOUT."</b></a></div>";
 }
 else echo "Cookie mismatch, please <a href='index.php?mod=none_Login&amp;action=logout&amp;from=home'>delete your cookies!</a>";
 ?>

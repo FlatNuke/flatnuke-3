@@ -22,10 +22,10 @@ License:	GNU General Public License 2
 	text-align: center;
 }
 
-/*.row {
+.row {
 	width: 100%;
 	float: left;
-}*/
+}
 
 .day, .blankDay, .currDay, .heading, .month {
 	width: 11%;

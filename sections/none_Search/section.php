@@ -68,10 +68,10 @@ else if (preg_match("/news/i",$whereget)){
 
 }
 else if ($where=="allsite"){
-
+	
 	$plugins = glob("$search_plugins_dir/*.php");
 	if (!$plugins) $plugins = array(); // glob may returns boolean false instead of an empty array on some systems
-
+	
 	foreach ($plugins as $plugin){
 		if (preg_match("/^none_/i",basename($plugin))) continue;
 		include_once($plugin);
@@ -98,8 +98,8 @@ else {
  * @since 2.5.8
  */
 function view_search_interface(){
-	?><br><br>
-	<script type="text/javascript">
+	?><br /><br />
+	<script type="text/javascript" language="javascript">
 	function validatesearch()
 		{
 			if(document.getElementById('findsect').value=='')
@@ -112,11 +112,11 @@ function view_search_interface(){
 			else return true;
 		}
 	</script>
-	<div style="text-align:center">
+	<div align="center">
 	<form id="search_section" action="javascript:jQueryFNcall('sections/none_Search/section.php','POST','search_results','search_section');" onsubmit="return validatesearch()">
 	<input type="hidden" name="mod" value="none_Search" />
 	<label for="findsect" ><?php echo _CERCA;?>:</label>
-	<input type="text" name="find" size="16" id="findsect" /><br><br>
+	<input type="text" name="find" size="16" id="findsect" /><br /><br />
 	<label for="wheresect"><?php echo _CERCASTR; ?></label>
 	<select name="where" id="wheresect">
 	<option value="allsite" selected="selected"><?php echo _ALLSITE; ?></option>
@@ -124,10 +124,10 @@ function view_search_interface(){
 	global $search_plugins_dir;
 	$plugin="";
 	$pathstring="";
-
+	
 	$plugins = glob("$search_plugins_dir/*.php");
 	if (!$plugins) $plugins = array(); // glob may returns boolean false instead of an empty array on some systems
-
+	
 	foreach ($plugins as $plugin){
 		$plugin_name ="";
 		$plugin_name = preg_replace("/\.php$/i","",basename($plugin));
@@ -136,10 +136,10 @@ function view_search_interface(){
 	}
 	//gestisci plugins
 	?>
-	</select><br><br><?php echo $pathstring; ?>
-	<input type="radio" value="AND" id="AND" name="method" checked /><label for="AND">AND</label>
-	<input type="radio" value="OR" id="OR" name="method" /><label for="OR">OR</label>
-	<br><br>
+	</select><br /><br /><?php echo $pathstring; ?>
+	<input type="radio" value="AND" id="AND" name="method" alt="AND search" checked="checked" /><label for="AND">AND</label>
+	<input type="radio" value="OR" id="OR" name="method" alt="OR search" /><label for="OR">OR</label>
+	<br /><br />
 	<input type="submit" value="<?php echo _CERCA?>" />
 	</form>
 	</div>
@@ -152,7 +152,7 @@ function view_search_interface(){
  * Questa funzione e' pensata per essere usata dai vari plugin
  * @param string $pattern la stringa da cercare
  * @param string $string la stringa in cui cercare
- * @param string $method il metodo di ricerca. Può essere "OR" oppure "AND"
+ * @param string $method il metodo di ricerca. Puo' essere "OR" oppure "AND"
  * @return TRUE se pattern viene trovato, FALSE in caso contrario
  * @author Aldo Boccacci
  * @since 2.5.8

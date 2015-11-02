@@ -4,10 +4,10 @@ Le icone utilizzate provengono dal progetto Autoindex (http://autoindex.sourcefo
 
 Il codice del metodo getIcon proviene quasi interamente dal progetto Autoindex precedentemente citato.
 
-La libreria DeepDir.php √® una versione modificata dell'originale di Ilya Nemihin (http://nemilya.elementalcms.org/).
+La libreria DeepDir.php Ë una versione modificata dell'originale di Ilya Nemihin (http://nemilya.elementalcms.org/).
 
 Si ringrazia in modo particolare Marco Segato (http://marcosegato.altervista.org/) per il supporto che ha dato a questo progetto fin dalla sua nascita.
 
 Traduzione tedesca di Bjoern Splinter <Insites@gmail.com>
 
-Un grazie va anche a Gotux (gotux.altervista.org) e a Danix (www.winpenpack.com) per l'attivit√† di testing su fd+0.7
+Un grazie va anche a Gotux (gotux.altervista.org) e a Danix (www.winpenpack.com) per l'attivit‡ di testing su fd+0.7

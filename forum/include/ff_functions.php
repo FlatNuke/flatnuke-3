@@ -32,7 +32,7 @@ include_once("download/include/fdfunctions.php");
  * Restituisce la root del forum
  *
  * Questa funzione restituisce il percorso della cartella principale del forum attivo.
- * (così diventa semplice definire dove deve trovarsi la root del forum)
+ * (cosi' diventa semplice definire dove deve trovarsi la root del forum)
  *
  * @return string il path della root del forum.
  * @since 0.1
@@ -165,7 +165,7 @@ function list_argument_topics($root,$group,$argument,$first_on_top="false",$show
 			foreach ($ntopics as $ntopic){
 				if (preg_match("/top_/",basename($ntopic))) continue;
 
-				//verifico se è nascosto
+				//verifico se e' nascosto
 				$topicdata = array();
 // 				$topicdata = load_topic_properties($ntopic);
 
@@ -212,7 +212,7 @@ function list_argument_topics($root,$group,$argument,$first_on_top="false",$show
 		$sortedtopics = array();
 		for ($count=0;$count<count($topics);$count++){
 			$topic = $topics[$count];
-			//controllo se è nascosto
+			//controllo se e' nascosto
 			$topicdata = array();
 // 			$topicdata = load_topic_properties($topic);
 			if ($show_hidden=="false" and preg_match("/hide_/",basename($topic)))
@@ -259,8 +259,8 @@ if (!check_path($root,get_forum_root(),"false")) ff_die("forum root is not valid
  * Struttura dell'array restituito:
  * $data['properties']['topictitle'] = il titolo del topic
  * $data['properties']['icon'] = l'icona associata al topic
- * $data['properties']['locked'] = indica se il topic è bloccato
- * $data['properties']['hide'] = indica se il topic è nascosto
+ * $data['properties']['locked'] = indica se il topic e' bloccato
+ * $data['properties']['hide'] = indica se il topic e' nascosto
  * $data['properties']['hits'] = indica il numero di letture del topic
  * $data['properties']['important'] = indica se il topic deve essere messo in rilievo
  * $data['properties']['postontop'] = indica se un post deve essere sempre visualizzato per primo
@@ -293,7 +293,7 @@ function load_topic($topicfile){
 	$string = get_file($topicfile);
 
 	global $theme;
-	//CARICO LE PROPRIETÀ DEL TOPIC
+	//CARICO LE PROPRIETA' DEL TOPIC
 	$properties = array();
 	$properties = ff_get_xml_element("properties",$string);
 
@@ -445,7 +445,7 @@ function fast_load_topic($topicfile){
 	$string = get_file($topicfile);
 
 	global $theme;
-	//CARICO LE PROPRIETÀ DEL TOPIC
+	//CARICO LE PROPRIETA' DEL TOPIC
 	$properties = array();
 	$properties = ff_get_xml_element("properties",$string);
 
@@ -527,13 +527,13 @@ function fast_load_topic($topicfile){
 }
 
 /**
- * Carica in un array multidimensionale il file xml con le proprietà del topic
+ * Carica in un array multidimensionale il file xml con le proprieta' del topic
  *
  * Struttura dell'array restituito:
  * $data['properties']['topictitle'] = il titolo del topic
  * $data['properties']['icon'] = l'icona associata al topic
- * $data['properties']['locked'] = indica se il topic è bloccato
- * $data['properties']['hide'] = indica se il topic è nascosto
+ * $data['properties']['locked'] = indica se il topic e' bloccato
+ * $data['properties']['hide'] = indica se il topic e' nascosto
  * $data['properties']['hits'] = indica il numero di letture del topic
  * $data['properties']['important'] = indica se il topic deve essere messo in rilievo
  * $data['properties']['postontop'] = indica se un post deve essere sempre visualizzato per primo
@@ -558,7 +558,7 @@ function load_topic_properties($topicfile){
 	$string = get_file($topicfile);
 
 	global $theme;
-	//CARICO LE PROPRIETÀ DEL TOPIC
+	//CARICO LE PROPRIETA' DEL TOPIC
 	$properties = array();
 	$properties = ff_get_xml_element("properties",$string);
 
@@ -802,7 +802,7 @@ function save_topic($topicfile,$data){
 		</post>";
 	}
 
-	//controllo se l'argomento è bloccato
+	//controllo se l'argomento e' bloccato
 	$dir ="";
 	$dir = dirname($topicfile);
 	if (file_exists("$dir/lock") and !_FN_IS_ADMIN and !is_forum_moderator()){
@@ -817,7 +817,7 @@ function save_topic($topicfile,$data){
 
 	$datastring .= "\n\t</posts>\n</forum>";
 	if (preg_match("/\<\?/",$datastring) or preg_match("/\?\>/",$datastring)) ff_die("\$datastring cannot contains php tags! ".__FILE__.": ".__LINE__);
-	fnwrite($topicfile,"<?xml version='1.0' encoding='UTF-8'?>\n".$datastring,"w",array("nonull"));
+	fnwrite($topicfile,"<?xml version='1.0'?>\n".$datastring,"w",array("nonull"));
 }
 
 
@@ -842,7 +842,7 @@ function ff_die($message="",$file="",$line=""){
 }
 
 /**
- * Carica le proprietà dell'argomento specificato
+ * Carica le proprieta' dell'argomento specificato
  *
  * $data['icon'] = l'icona associata all'argomento
  * $data['description'] = la descrizione dell'argomento
@@ -851,7 +851,7 @@ function ff_die($message="",$file="",$line=""){
  *
  * @param string $root la root del forum
  * @param string $argument il nome dell'argomento
- * @return un array con le proprietà
+ * @return un array con le proprieta'
  * @author Aldo Boccacci
  * @since 0.1
  */
@@ -908,7 +908,7 @@ function load_argument_props_old($root,$group,$argument){
 }
 
 /**
- * Carica le proprietà dell'argomento specificato
+ * Carica le proprieta' dell'argomento specificato
  *
  * $data['icon'] = l'icona associata all'argomento
  * $data['description'] = la descrizione dell'argomento
@@ -917,7 +917,7 @@ function load_argument_props_old($root,$group,$argument){
  *
  * @param string $root la root del forum
  * @param string $argument il nome dell'argomento
- * @return un array con le proprietà
+ * @return un array con le proprieta'
  * @author Aldo Boccacci
  * @since 0.1
  */
@@ -940,16 +940,16 @@ function load_argument_props($root,$group,$argument){
 			return load_argument_props_old($root,$group,$argument);
 		}
 
-		if (check_path(strip_tags($xml->icon),"","false") and strip_tags($xml->icon)!="")
-			$data['icon'] = strip_tags($xml->icon);
+		if (check_path(strip_tags(utf8_decode($xml->icon)),"","false") and strip_tags(utf8_decode($xml->icon))!="")
+			$data['icon'] = strip_tags(utf8_decode($xml->icon));
 		else $data['icon'] = "themes/$theme/images/section.png";
 
-		if (check_var(strip_tags($xml->description),"text"))
-			$data['description'] = strip_tags($xml->description);
+		if (check_var(strip_tags(utf8_decode($xml->description)),"text"))
+			$data['description'] = strip_tags(utf8_decode($xml->description));
 		else $data['description'] = "";
 
-		if (check_var(strip_tags($xml->level),"digit") or trim(strip_tags($xml->level))=="-1")
-			$data['level'] = strip_tags($xml->level);
+		if (check_var(strip_tags(utf8_decode($xml->level)),"digit") or trim(strip_tags(utf8_decode($xml->level)))=="-1")
+			$data['level'] = strip_tags(utf8_decode($xml->level));
 		else $data['level'] = "-1";
 		if ($data['level']!="-1" and ($data['level']<0 or $data['level']>10))
 			$data['level'] = "-1";
@@ -978,9 +978,9 @@ function load_argument_props($root,$group,$argument){
 }
 
 /**
- * Salva le proprietà dell'argomento
+ * Salva le proprieta' dell'argomento
  *
- * Salva le proprietà dell'argomento
+ * Salva le proprieta' dell'argomento
  *
  * @param string $root la root del forum
  * @param string $argument il nome dell'argomento
@@ -1042,35 +1042,33 @@ function save_argument_props($root,$group,$argument,$data){
 
 	if (preg_match("/\<\?/",$datastring) or preg_match("/\?\>/",$datastring)) ff_die("\$datastring cannot contains php tags! ".__FILE__.": ".__LINE__);
 
-	fnwrite("$root/$group/$argument/argument.php","<?xml version='1.0' encoding='UTF-8'?>\n".$datastring,"w",array("nonull"));
+	fnwrite("$root/$group/$argument/argument.php","<?xml version='1.0'?>\n".$datastring,"w",array("nonull"));
 
 }
 /**
  * L'interfaccia per operare sui post
- * Modalità consentite:
+ * Modalita' consentite:
  * - newtopic
  * - newpost
  * - editpost
  *
- * @param string mode la modalità dell'interfaccia
+ * @param string mode la modalita' dell'interfaccia
  * @param string $file il file contenente i dati del topic
  * @author Aldo Boccacci
  * @since 0.1
  */
 function edit_post_interface($mode,$file=""){
 	$mod = _FN_MOD;
-	$group = getparam("group",PAR_GET,SAN_FLAT);
 
+	$group = getparam("group",PAR_GET,SAN_FLAT);
 	if (!check_path($group,"","false"))
 		ff_die("\$group is not valid! (".strip_tags($group).")",__FILE__,__LINE__);
 
 	$argument = getparam("argument",PAR_GET,SAN_FLAT);
-
 	if (!check_path($argument,"","false"))
 		ff_die("\$argument is not valid! (".strip_tags($argument).")",__FILE__,__LINE__);
 
 	$post = getparam("quote",PAR_GET,SAN_FLAT);
-
 	if (!check_var($post,"digit"))
 		ff_die("\$post is not valid! (".strip_tags($post).")",__FILE__,__LINE__);
 
@@ -1084,53 +1082,45 @@ function edit_post_interface($mode,$file=""){
 	if ($mode=="newtopic") $ffaction="createnewtopic";
 	else if ($mode=="newpost") $ffaction="addpost";
 	else if ($mode=="editpost") $ffaction="edpost";
-	$subj ="";
 
+
+
+	$subj ="";
 	if ($mode=="newpost"){
 		$tmpdata = array();
 		$tmpdata = load_topic($file);
 		$latest="";
 		$latest = count($tmpdata['posts']);
-
 		if (!preg_match("/^Re: /i",$tmpdata['posts'][$latest-1]['postsubj'])){
 			$subj= "Re: ".$tmpdata['posts'][$latest-1]['postsubj'];
 		}
-
 		else $subj = $tmpdata['posts'][$latest-1]['postsubj'];
-
 	}
-
 	else if ($mode=="editpost"){
 		$tmpdata = array();
 		$tmpdata = load_topic($file);
 		$subj = $tmpdata['posts'][$post]['postsubj'];
+
 	}
 
 	$body="";
-
 	if ($mode=="newpost"){
-
 		if (isset($tmpdata['posts'][$post])){
 			$tmpdata = array();
 			$tmpdata = load_topic($file);
 			$body="[quote=".$tmpdata['posts'][$post]['poster']."]".
 				$tmpdata['posts'][$post]['postbody']."[/quote]";
 		}
-
 	}
-
 	else if ($mode=="editpost"){
-
 		if (isset($tmpdata['posts'][$post])){
 			$tmpdata = array();
 			$tmpdata = load_topic($file);
 			$body=$tmpdata['posts'][$post]['postbody'];
 		}
-
 	}
-
-	?>
-	<script type="text/javascript">
+		?>
+	<script type="text/javascript" language="javascript">
 	function validate_topic_form()
 		{
 			if(document.getElementById('ffsubj').value=='')
@@ -1153,37 +1143,30 @@ function edit_post_interface($mode,$file=""){
 	<?php
 	echo "<div align=\"center\">";
 	echo "<form action=\"index.php?mod=$mod\" method=\"post\" name=\"editpost\" onsubmit=\"return validate_topic_form()\">";
-
 	if (trim($file)!=""){
-		echo "<input type=\"hidden\" name=\"fftopic\" value=\"$file\" />";
+	echo "<input type=\"hidden\" name=\"fftopic\" value=\"$file\" />";
 	}
-
 	echo "<input type=\"hidden\" name=\"ffgroup\" value=\"$group\" />";
 	echo "<input type=\"hidden\" name=\"ffargument\" value=\"$argument\" />";
 	echo "<input type=\"hidden\" name=\"ffaction\" value=\"$ffaction\" />";
-
 	if ($mode=="editpost")
 		echo "<input type=\"hidden\" name=\"ffpost\" value=\"$post\" />";
-
-	echo "<table style=\"width:100%; text-align:center\">";
-
+	echo "<table width=\"100%\" align=\"center\">";
 	if ($mode=="newtopic")
 		echo "<tr><td colspan=\"2\" align=\"center\"><b>"._FNUOVOTOP."</b><br/><br/></td></tr>";
-
 	else if ($mode=="newpost")
 		echo "<tr><td colspan=\"2\" align=\"center\"><b>"._FNUOVOMESS."</b><br/><br/></td></tr>";
 
 	echo "<tr><td colspan=\"2\" align=\"center\">";
-	bbcodes_panel("ffbody", "home", "formatting"); echo "<br>";
+	bbcodes_panel("ffbody", "home", "formatting"); echo "<br />";
 	bbcodes_panel("ffbody", "home", "emoticons");
+
 	echo "</td></tr>";
-
 	//oggetto
-	echo "<tr><td>"._FOGG.":</td>";
-	echo "<td><input name=\"ffsubj\" id=\"ffsubj\" value=\"$subj\" tabindex=\"1\" /></td></tr>";
-
+	echo "<tr><td align=\"right\">"._FOGG.":</td>";
+	echo "<td><input name=\"ffsubj\" id=\"ffsubj\" value=\"$subj\" size=\"63\" tabindex=\"1\" /></td></tr>";
 	//corpo
-	echo "<tr><td>"._FMESS.":</td>";
+	echo "<tr><td align=\"right\" valign=\"top\">"._FMESS.":</td>";
 	echo "<td><textarea name=\"ffbody\" id=\"ffbody\" rows=\"18\" cols=\"63\" tabindex=\"2\" >$body</textarea></td>";
 	echo "<tr><td colspan=\"2\" align=\"center\"><br/>
 	<input type=\"submit\" value=\""._FINVIA."\" tabindex=\"3\" />&nbsp;&nbsp;
@@ -1198,13 +1181,14 @@ function edit_post_interface($mode,$file=""){
 		getElement("ffsubj").onmousemove = forum_preview;
 		getElement("ffbody").onkeyup      = forum_preview;
 		getElement("ffbody").onmousemove  = forum_preview;
+
 		forum_preview();
 	</script>
 	<div id="fnpreview"  style="overflow : auto;top: 15px; left: 15px; max-height: 90%; visibility: hidden; background-color: #F0F0F0; border: 2px solid; padding: 5px; border-top-color: #ffffff; border-left-color: #ffffff; border-bottom-color: #666666; border-right-color: #666666; width: 600px;"></div>
 	<?php
 
 	if ($mode!="newtopic")
-		forum_view_topic_thread(get_forum_root());
+	forum_view_topic_thread(get_forum_root());
 
 }
 
@@ -1262,11 +1246,11 @@ function create_new_topic($root){
 
 	if (!is_forum_moderator()){
 		if (is_spam($subj,"words",TRUE)) {
-			echo "<div style=\"text-align : center;\">"._TITLESPAM."<br><br><b><a href=\"javascript:history.back()\">"._INDIETRO."</a></b></div>";
+			echo "<div style=\"text-align : center;\">"._TITLESPAM."<br /><br /><b><a href=\"javascript:history.back()\">"._INDIETRO."</a></b></div>";
 			return;
 		}
 		if (is_spam($body,"words",TRUE)) {
-			echo "<div style=\"text-align : center;\">"._SPAMALERT."<br><br><b><a href=\"javascript:history.back()\">"._INDIETRO."</a></b></div>";
+			echo "<div style=\"text-align : center;\">"._SPAMALERT."<br /><br /><b><a href=\"javascript:history.back()\">"._INDIETRO."</a></b></div>";
 			return;
 		}
 	}
@@ -1299,9 +1283,8 @@ function create_new_topic($root){
 	update_topics_list($group,$argument);
 
 	fflogf("Created topic \"".strip_tags($subj)."\" -> file ".strip_tags("$root/$group/$argument/$time.ff.php"));
+
 	echo "<div align=\"center\">"._FTOPOK;
-	$_POST['fftopic'] = "$time.ff.php"; // impostazione nome parametro topic per alert_list_add
-	alert_list_add(); // sottoscrizione automatica in caso di nuova discussione
 	echo "<br/><br/><a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=$time.ff.php\">"._FLEGGI."</a></div>";
 echo "<meta http-equiv=\"Refresh\" content=\"1; URL=index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=$time.ff.php\" >";
 
@@ -1377,7 +1360,7 @@ function update_topic_hits($topicfile){
 
 
 /**
- * Restituisce TRUE se il topic specificato non è nascosto.
+ * Restituisce TRUE se il topic specificato non e' nascosto.
  *
  * @param string $topicfile il file contenente il topic
  * @since 0.1
@@ -1395,7 +1378,7 @@ function topic_is_visible($topicfile){
 }
 
 /**
- * Restituisce TRUE se il topic specificato non è bloccato.
+ * Restituisce TRUE se il topic specificato non e' bloccato.
  *
  * @param string $topicfile il file contenente il topic
  * @since 0.1
@@ -1404,7 +1387,7 @@ function topic_is_visible($topicfile){
 function topic_is_locked($topicfile){
 	if (!check_path($topicfile,"","true")) ff_die("\$topicfile is not valid!(".strip_tags($topicfile).")",__FILE__,__LINE__);
 
-	//prima controllo se è bloccato l'argomento
+	//prima controllo se e' bloccato l'argomento
 	$tmp = dirname($topicfile);
 	$argument = basename($tmp);
 	$tmp = dirname($tmp);
@@ -1542,17 +1525,17 @@ function add_post(){
 	if (file_exists($topicfile))
 	$data = load_topic($topicfile);
 
-	//se è bloccato
+	//se e' bloccato
 	if (!is_forum_moderator() and topic_is_locked($topicfile))
 		ff_die("Only admins and forum moderators can add posts to locked topics!");
 
 	if (!is_forum_moderator()){
 		if (is_spam($ffsubj,"words",TRUE)) {
-			echo "<div style=\"text-align : center;\">"._TITLESPAM."<br><br><b><a href=\"javascript:history.back()\">"._INDIETRO."</a></b></div>";
+			echo "<div style=\"text-align : center;\">"._TITLESPAM."<br /><br /><b><a href=\"javascript:history.back()\">"._INDIETRO."</a></b></div>";
 			return;
 		}
 		if (is_spam($ffbody,"words",TRUE)) {
-			echo "<div style=\"text-align : center;\">"._SPAMALERT."<br><br><b><a href=\"javascript:history.back()\">"._INDIETRO."</a></b></div>";
+			echo "<div style=\"text-align : center;\">"._SPAMALERT."<br /><br /><b><a href=\"javascript:history.back()\">"._INDIETRO."</a></b></div>";
 			return;
 		}
 	}
@@ -1565,13 +1548,14 @@ function add_post(){
 
 	$data['posts'][] = $newpost;
 	save_topic($topicfile,$data);
+
 	$data = load_topic($topicfile);
 	$pagescount = ceil(count($data['posts'])/$postperpage);
 
 	//avvisa gli utenti del nuovo post
 	email_alert($group,$argument,$topic);
 
-	//aggiorno le statistiche dell'argomento (se il topic non è nascosto!)
+	//aggiorno le statistiche dell'argomento (se il topic non e' nascosto!)
 	if (topic_is_visible($topicfile)){
 		$argumentstats = load_argument_stats($group,$argument);
 		$argumentstats['posts'] = ($argumentstats['posts']+1);
@@ -1585,8 +1569,6 @@ function add_post(){
 	//permetti di ritornare
 	echo "<div align=\"center\">";
 	echo _FMESSOK;
-	$_POST['fftopic'] = basename($topic); // impostazione nome parametro topic per alert_list_add
-	alert_list_add(); // sottoscrizione automatica in caso di aggiunta messaggio
 	echo "<br/><br/>";
 	echo "<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=$topic&amp;page=$pagescount\">"._FLEGGI."</a>";
 	echo "<meta http-equiv=\"Refresh\" content=\"1; URL=index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=$topic&amp;page=$pagescount\" ></div>";
@@ -1647,11 +1629,11 @@ function edit_post(){
 	//controllo spam
 	if (!is_forum_moderator()){
 		if (is_spam($ffsubj,"words",TRUE)) {
-			echo "<div style=\"text-align : center;\">"._TITLESPAM."<br><br><b><a href=\"javascript:history.back()\">"._INDIETRO."</a></b></div>";
+			echo "<div style=\"text-align : center;\">"._TITLESPAM."<br /><br /><b><a href=\"javascript:history.back()\">"._INDIETRO."</a></b></div>";
 			return;
 		}
 		if (is_spam($ffbody,"words",TRUE)) {
-			echo "<div style=\"text-align : center;\">"._SPAMALERT."<br><br><b><a href=\"javascript:history.back()\">"._INDIETRO."</a></b></div>";
+			echo "<div style=\"text-align : center;\">"._SPAMALERT."<br /><br /><b><a href=\"javascript:history.back()\">"._INDIETRO."</a></b></div>";
 			return;
 		}
 	}
@@ -1662,7 +1644,7 @@ function edit_post(){
 	if (file_exists($topicfile))
 	$data = load_topic($topicfile);
 
-	//se è bloccato
+	//se e' bloccato
 	if (!is_forum_moderator() and topic_is_locked($topicfile))
 		ff_die("Only admins and forum moderators can edit locked posts!");
 	if (!_FN_IS_ADMIN and (trim($data['posts'][$post]['poster'])!=_FN_USERNAME) and !is_forum_moderator()) ff_die("Only admins and owners can edit posts!",__FILE__,__LINE__);
@@ -1680,6 +1662,7 @@ function edit_post(){
 
 
 	save_topic($topicfile,$data);
+
 	$data = load_topic($topicfile);
 
 	fflogf("Edited post: \"".strip_tags($ffsubj)."\" in ".strip_tags($topicfile));
@@ -1687,8 +1670,6 @@ function edit_post(){
 	$pagescount = ceil(count($data['posts'])/$postperpage);
 	//permetti di ritornare
 	echo "<div align=\"center\">"._FMESSOK;
-	$_POST['fftopic'] = basename($topic); // impostazione nome parametro topic per alert_list_add
-	alert_list_add(); // sottoscrizione automatica in caso di modifica messaggio
 	echo "<br/><br/>";
 	echo "<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=$topic&amp;page=$pagescount\">"._FLEGGI."</a>";
 	echo "<meta http-equiv=\"Refresh\" content=\"1; URL=index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=$topic&amp;page=$pagescount\" >";
@@ -1696,7 +1677,7 @@ function edit_post(){
 }
 
 /**
- * Restituisce true se l'utente collegato può vedere l'argomento
+ * Restituisce true se l'utente collegato puo' vedere l'argomento
  *
  * @param string $root la root del forum
  * @param string $group il gruppo di riferimento
@@ -1735,40 +1716,34 @@ function user_can_view_argument($root,$group,$argument,$argumentdata=""){
  * @since 0.1
  */
 function alert_list_add(){
-
 	if (_FN_IS_GUEST) ff_die("Only users can do this!",__FILE__,__LINE__);
-
 	$group = getparam("ffgroup",PAR_POST,SAN_FLAT);
 	$argument = getparam("ffargument",PAR_POST,SAN_FLAT);
 	$topic = getparam("fftopic",PAR_POST,SAN_FLAT);
 	if (!check_path($group,"","false"))
 		ff_die("\$group is not valid! (".strip_tags($group).")",__FILE__,__LINE__);
-
 	if (!check_path($argument,"","false"))
 		ff_die("\$argument is not valid! (".strip_tags($argument).")",__FILE__,__LINE__);
 
 	$mod = _FN_MOD;
+
 	$topicfile = "";
 	$topicfile= get_forum_root()."/$group/$argument/$topic";
-
 	if (!check_path($topicfile,get_forum_root(),"true"))
 		ff_die("\$topicfile is not valid! (".strip_tags($topicfile).")",__FILE__,__LINE__);
 
-	$topicdata = array();
 
+
+	$topicdata = array();
 	if (file_exists($topicfile)){
 		$topicdata = load_topic($topicfile);
-
-		if (!_FN_IS_GUEST and trim(_FN_USERNAME)!="" and !in_array(_FN_USERNAME,$topicdata['properties']['emailalert']))
+		if (!_FN_IS_GUEST and trim(_FN_USERNAME)!="" and !in_array(_FN_USERNAME,$topicdata))
 			$topicdata['properties']['emailalert'][]=_FN_USERNAME;
-
 		save_topic($topicfile,$topicdata);
 	}
-
 	else {
 		fflogf("topic file doesn't exists! (".strip_tags($topicfile).")","ERROR");
 	}
-
 	//In caso di nuovi messaggi in questa discussione sarai avvisato con una e-mail
 	echo "<div align=\"center\"><b>E-mail alert on</b></div>";
 	echo "<meta http-equiv=\"Refresh\" content=\"1; URL=index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=$topic\" >";
@@ -1804,7 +1779,7 @@ function alert_list_remove(){
 	$topicdata = array();
 	if (file_exists($topicfile)){
 		$topicdata = load_topic($topicfile);
-		if (!_FN_IS_GUEST and trim(_FN_USERNAME)!=""){
+		if (!_FN_IS_GUEST and trim(_FN_USERNAME)!="" and in_array(_FN_USERNAME,$topicdata['properties']['emailalert'])){
 			for ($count=0;$count<count($topicdata['properties']['emailalert']);$count++){
 				if ($topicdata['properties']['emailalert'][$count]==_FN_USERNAME)
 					unset($topicdata['properties']['emailalert'][$count]);
@@ -1815,7 +1790,7 @@ function alert_list_remove(){
 	else {
 		fflogf("topic file doesn't exists! (".strip_tags($topicfile).")","ERROR");
 	}
-	//In caso di nuovi messaggi in questa discussione non sarai più avvisato con una e-mail.
+	//In caso di nuovi messaggi in questa discussione non sarai piu' avvisato con una e-mail.
 	echo "<div align=\"center\"><b>E-mail alert off</b></div>";
 	echo "<meta http-equiv=\"Refresh\" content=\"1; URL=index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=$topic\" >";
 
@@ -1875,7 +1850,7 @@ function email_alert($group,$argument,$topic){
 
 			if (!isset($userprofile['mail'])) continue;
 
-			//controllo la validità della mail
+			//controllo la validita' della mail
 			if (!check_mail($userprofile['mail'])) continue;
 
 			//url
@@ -1893,12 +1868,12 @@ function email_alert($group,$argument,$topic){
 }
 
 /**
- * Restituisce TRUE se l'argomento è bloccato, FALSE in caso contrario.
+ * Restituisce TRUE se l'argomento e' bloccato, FALSE in caso contrario.
  *
  * @param string $root la root del forum
  * @param string $group il gruppo di riferimento
  * @param string $argument l'argomento di riferimento
- * @return TRUE se l'argomento è bloccato, FALSE in caso contrario
+ * @return TRUE se l'argomento e' bloccato, FALSE in caso contrario
  * @author Aldo Boccacci
  * @since 0.1
  */
@@ -2022,7 +1997,7 @@ function ff_is_spam($string,$spamfile){
  * Salva le statistiche dell'argomento indicato, in modo da visualizzarle velocemente in fase di lettura
  * @param string $group il gruppo di riferimento
  * @param string $argument l'argomento di riferimento
- * @return TRUE se l'argomento è bloccato, FALSE in caso contrario
+ * @return TRUE se l'argomento e' bloccato, FALSE in caso contrario
  * @author Aldo Boccacci
  * @since 0.1
  */
@@ -2068,7 +2043,7 @@ function save_argument_stats($group,$argument,$data){
 </argstats>";
 
 	if (preg_match("/\<\?/",$string) or preg_match("/\?\>/",$string)) ff_die("\$string cannot contains php tags! ".__FILE__.": ".__LINE__);
-	fnwrite(get_forum_root()."/$group/$argument/stats.php","<?xml version='1.0' encoding='UTF-8'?>\n".$string,"w",array("nonull"));
+	fnwrite(get_forum_root()."/$group/$argument/stats.php","<?xml version='1.0'?>\n".$string,"w",array("nonull"));
 
 }
 
@@ -2076,7 +2051,7 @@ function save_argument_stats($group,$argument,$data){
  * Carica le statistiche dell'argomento indicato, in modo da visualizzarle velocemente in fase di lettura
  * @param string $group il gruppo di riferimento
  * @param string $argument l'argomento di riferimento
- * @return TRUE se l'argomento è bloccato, FALSE in caso contrario
+ * @return TRUE se l'argomento e' bloccato, FALSE in caso contrario
  * @author Aldo Boccacci
  * @since 0.1
  */
@@ -2351,7 +2326,7 @@ function ff_page_selector($page,$pagescount,$link){
 	if (!check_var($page,"digit")) return;
 	if (!check_var($pagescount,"digit")) return;
 // 		$pagescount = ceil(count($topics)/$topicperpage);
-		echo "<b>"._GOTOTHEPAGE.":</b><br>";
+		echo "<b>"._GOTOTHEPAGE.":</b><br />";
 	if ($page>1){
 		echo "<span class=\"forum-page-selector\"><a style=\"text-decoration: none;\" href=\"$link\" title=\""._GOTOTHEFIRSTPAGE."\">&#060;&#060;</a></span>&nbsp;";
 	}
@@ -2395,7 +2370,7 @@ function ff_get_xml_element($elem, $xml) {
  * Il messaggio viene formattato aggiungendo campi di interesse.
  *
  * @param string $message il messaggio da salvare
- * @param string $type il tipo di messaggio. Può essere lasciato vuoto o
+ * @param string $type il tipo di messaggio. Puo' essere lasciato vuoto o
  *               impostato a "ERROR"
  * @author Aldo Boccacci
  * @since 0.1

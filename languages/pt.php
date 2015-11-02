@@ -11,7 +11,7 @@ $mesi = array("Janeiro","Fevereiro","Mar&ccedilla;o","Abril","Maio","Junho","Jul
 $GLOBALS['giorni'] = $giorni;
 $GLOBALS['mesi'] = $mesi;
 
-define("_CHARSET","UTF-8"); // ISO-8859-1 to UTF-8
+define("_CHARSET","ISO-8859-1");
 define("_CERCA","Buscar");
 define("_CERCASTR","Buscar palavra em:");
 define("_ALLSITE","Todo o sitio");
@@ -123,7 +123,6 @@ define("_FUTENTE","Utilizador");
 define("_FMESS","Mensagem");
 define("_FNUOVOMESS","Nova mensagem");
 define("_FOGG","Objecto");
-define("_FCREATOP","Create new thread"); // need translation
 define("_FTOPOK","Discuss&atilde;o criada");
 define("_FLEGGI","Ler");
 define("_FMESSOK","Mensagem enviado");
@@ -137,20 +136,26 @@ define("_FDELUTENTE","Eliminar conta");
 define("_REG_AGREEMENT_TERMS","Enquanto os administradores e moderadores deste forum tentar&atilde;o remover ou editar qualquer
 material question&aacute;vel t&atilde;o rapido como possivel, &eacute; impossivel de se rever todas as mensagens. De qualquer maneira deve ser do seu
 conhecimento que todos os posts feitos a estes forums expressam os pontos de vista e opini&otilde;es do autor e n&atilde;o dos administradores,
-moderadores ou webmaster (excepto os posts destas pessoas) and hence will not be held liable.<br><br>
+moderadores ou webmaster (excepto os posts destas pessoas) and hence will not be held liable.<br /><br />
 Concorda que n&atilde;o postar&aacute; qualquer material abusivo, obsceno, vulgar, escandaloso, de odio, sexualmente orientado, ou qualquer
 outro que viole qualquer leis aplic&aacute;vel. Fazendo isto o permitira ser imediatamente e permanentemente banido (e o seu provedor
 de internet informado). O endere&ccedilla;o IP de todos os posts &eacute; guardado para ajudar a consolidar estas condi&ccedilla;&otilde;es. Concorda que o
 webmaster, administrador e moderadores deste forum tem o direito de remover, editar, mover ou fechar qualquer t&oacute;pico em qualquer
 momento que estes achem necess&aacute;rio. Como utilizador concorda que toda informa&ccedilla;&atilde;o que enviou fica guardada numa base de dados.
 Enquanto esta informa&ccedilla;&atilde;o n&atilde;o ficar&aacute; aberta a quaisquer terceiros sem o seu consentimento, o webmaster, administrador e moderadores
-n&atilde;o podem se responsabilizar de quaisquer tentativas de crack em que a seguran&ccedilla;a destes dados fique comprometida.<br><br>
+n&atilde;o podem se responsabilizar de quaisquer tentativas de crack em que a seguran&ccedilla;a destes dados fique comprometida.<br /><br />
 Este sistema de forum utiliza cookies para guardar informa&ccedilla;&atilde;o no seu computador local.  Estes cookies n&atilde;o cont&eacute;m qualquer das
 informa&ccedilla;&otilde;es que enviou acima; servem apenas para uma visualiza&ccedilla;&atilde;o melhor desejada. O endere&ccedilla;o e-mail n&atilde;o &eacute; utilizada em qualquer
-fun&ccedilla;&atilde;o autom&aacute;tica.<br><br>Ao clicar em Registar abaixo, assume concordar com estas condi&ccedilla;&otilde;es."); // taken & modified from PhpBB (http://www.phpbb.com/)
+fun&ccedilla;&atilde;o autom&aacute;tica.<br /><br />Ao clicar em Registar abaixo, assume concordar com estas condi&ccedilla;&otilde;es."); // taken & modified from PhpBB (http://www.phpbb.com/)
 define("_LEGAL"," This is a free software released under the GNU General Public License.");// need translation
 define("_NOPUBNEWS","Nenhumas noticias destacadas");
-define("_MOTDMESS","<h1>Hello, FlatNuke!</h1><br><p>Please complete the configuration of your new website by clicking on \"<a href=\"index.php?mod=none_Admin\">Manage the website</a>\" inside the Login block.<br>To find out everything you can do with your new CMS, have a look to the file <a href=\"README\" target=\"_blank\">README</a> and register to the official forum on <a href=\"http://flatnuke.org\" target=\"_blank\">http://flatnuke.org</a>.</p>");// need translation
+define("_MOTDMESS","Congratulations! You have successfully installed <b>FlatNuke</b>, a CMS (Content Management
+System) that doesn&#8217;t need any database and uses only flat-files (so the name).<br />
+Please complete the configuration of your new website by clicking on
+\"<a href=\"index.php?mod=none_Admin\">Manage the website</a>\" inside the Login block.<br />
+To find out everything you can do with your new CMS, have a look to the file <a
+href=\"README\">README</a> and register to the official forum on
+<a href=\"http://www.flatnuke.org\">flatnuke.org</a>.");// need translation
 define("_LEVEL","nivel");
 define("_NOLEVELSECT","Utilizador n&atilde;o tem permiss&atilde;o de visualizar esta sec&ccedilla;&atilde;o");
 define("_SICURO","Est&aacute; seguro que o deseja fazer?");
@@ -301,11 +306,11 @@ define("_GROUPRENAMED","Group successfully renamed!");//need translation
 define("_DOESNTEXISTS","doesn&#8217;t exists!");//need translation
 define("_ATTENTION","Attention");//need translation
 define("_DELETEGROUPALERT1","Do you really want to delete the group");//need translation
-define("_DELETEGROUPALERT2","If you want to delete the group you have to check the form below and clik on the OK button.<br><b>Attention:</b> the group will be deleted only if it doesn&#8217;t contain any argument.");//need translation
+define("_DELETEGROUPALERT2","If you want to delete the group you have to check the form below and clik on the OK button.<br /><b>Attention:</b> the group will be deleted only if it doesn&#8217;t contain any argument.");//need translation
 define("_DELETEGROUPALERT3","Definitively delete the group");//need translation
 define("_DELETEGROUPNOCONFIRM","If you want to delete the group you have to check the checkbox in the previous page.");//need translation
 define("_DELETEGROUPOK","Group successfully deleted!");//need translation
-define("_GROUPNOTEMPTY","isn&#8217;t empty and contains one ore more arguments. <br>You will have to delete or move arguments before try to delete the group.");//need translation
+define("_GROUPNOTEMPTY","isn&#8217;t empty and contains one ore more arguments. <br />You will have to delete or move arguments before try to delete the group.");//need translation
 define("_ARGUMENTGROUP","Choose a group for the argument");//need translation
 define("_ARGUMENTNAME","Choose the name of the argument");//need translation
 define("_ARGUMENTLEVEL","Select a level");//need translation
@@ -331,7 +336,7 @@ define("_ARGUMENTUNLOCKED","Argument unlocked");//need translation
 define("_ARGALREADYUNLOCKED","The argument was already unlocked");//need translation
 define("_DELETEARGUMENT1","Do you really want delete the argument");//need translation
 define("_DELETEARGUMENT2","inside the group");//need translation
-define("_DELETEARGUMENT3","If you want do that please check the checkbox present below and press the OK button.<br><b>Attention</b>: all topic contained will be deleted!");//need translation
+define("_DELETEARGUMENT3","If you want do that please check the checkbox present below and press the OK button.<br /><b>Attention</b>: all topic contained will be deleted!");//need translation
 define("_DELETEARGUMENT","delete the argument");//need translation
 define("_ARGUMENTDELETED","Argument successfully deleted");//need translation
 define("_DIRNOTDELETED","It was impossible to delete the dir");//need translation
@@ -430,10 +435,10 @@ define("_FNPRESENTATION","Presentation");//need translation
 
 // 2.7.1
 define("_NEWPWDSTRING","Lost password");//need translation
-define("_NEWPWDFORM","<b>Recover Password</b>:<br><br>
+define("_NEWPWDFORM","<b>Recover Password</b>:<br /><br />
 	To recover your password, please provide the e-mail address you have
-	associated with your member account and click on the Submit button.<br>
-	The e-mail will also contain your NEW password.<br>
+	associated with your member account and click on the Submit button.<br />
+	The e-mail will also contain your NEW password.<br />
 	Pay attention on the fact that you will not be able to use your new password
 	till you will validate the request; so, without validation,
 	you still have to use the old password.");//need translation
@@ -472,7 +477,7 @@ define("_FN_SETUP_RESULT","Result");//need translation
 define("_FN_SETUP_RELOAD","Page refresh");//need translation
 define("_FN_SETUP_ADMINPROFILE","Administrator profile");//need translation
 define("_FN_SETUP_ADMINTXT","To administrate the site you need to create a new profile, the first registered user will be the administrator (he will have all the permissions):");//need translation
-define("_FN_SETUP_END","Congratulazioni!<br>FLATNUKE installation is completed!");//need translation
+define("_FN_SETUP_END","Congratulazioni!<br />FLATNUKE installation is completed!");//need translation
 define("_STICKYNEWS","Sticky news");//need translation
 define("_UNSTICKYNEWS","Normal news");//need translation
 define("_SEARCHTAG","Search the tag");//need translation

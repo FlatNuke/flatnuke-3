@@ -21,21 +21,21 @@ global $maintenance;
 
 if ($maintenance == "1") {
 	if(!is_admin()) {
-		?><div id="FN-maint-structure" style="text-align:center">
+		?><div id="FN-maint-structure" align="center">
 			<div id="FN-maint-box">
-			<img alt="Flatnuke CMS login" src="images/maintenance.png" /><br>
-			<br>
+			<img alt="Flatnuke CMS login" src="images/maintenance.png" /><br />
+			<br />
 			<span id="FN-maint-text">
-				<b><?php echo _MAINT ?></b><br>
+				<b><?php echo _MAINT ?></b><br />
 				<?php echo _MAINT_MSG ?>
-			</span><br><br>
+			</span><br /><br />
 			<form action="sections/none_Login/section.php" method="post">
 			<input type="hidden" name="action" value="login" />
-			<label for="username" class="FN-maint-label"><?php echo _NOMEUTENTE ?>:</label><br>
-			<input alt="username" name="nome" size="15" id="username" class="FN-maint-input" value="Username" onfocus="if(this.value=='Username'){this.value='';}" onblur="if(this.value==''){this.value='Username';}" /><br>
-			<label for="password" class="FN-maint-label"><?php echo _PASSWORD ?>:</label><br>
-			<input alt="password" name="logpassword" type="password" size="15" id="password" class="FN-maint-input" value="********" onfocus="javascript:this.value='';" /><br>
-			<br>
+			<label for="username" class="FN-maint-label"><?php echo _NOMEUTENTE ?>:</label><br />
+			<input alt="username" name="nome" size="15" id="username" class="FN-maint-input" value="Username" onfocus="if(this.value=='Username'){this.value='';}" onblur="if(this.value==''){this.value='Username';}" /><br />
+			<label for="password" class="FN-maint-label"><?php echo _PASSWORD ?>:</label><br />
+			<input alt="password" name="logpassword" type="password" size="15" id="password" class="FN-maint-input" value="********" onfocus="javascript:this.value='';" /><br />
+			<br />
 			<input type="submit" value="<?php echo _LOGIN ?>" class="FN-maint-submit" />
 			</form>
 			</div>
@@ -45,8 +45,8 @@ if ($maintenance == "1") {
 		echo $footer_elements['img_w3c']." ";
 		echo $footer_elements['img_css']." ";
 		echo $footer_elements['img_rss']." ";
-		echo $footer_elements['img_mail']."<br>";
-		echo $footer_elements['legal']."<br>";
+		echo $footer_elements['img_mail']."<br />";
+		echo $footer_elements['legal']."<br />";
 		echo $footer_elements['time'];
 		exit();
 	} else {

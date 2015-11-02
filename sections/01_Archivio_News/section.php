@@ -125,11 +125,11 @@ function view_news_archive_section(){
 				$modstring="";
 				if ($news_sections[$n]!="none_News")
 					$modstring="mod=".$news_sections[$n]."&amp;";
-				echo _ICONREAD."&nbsp;<a href=\"index.php?$modstring"."action=viewnews&amp;news=".$newsok[$i]."\" title=\""._READNEWS."\">";
+				echo "<img src=\"themes/$theme/images/read.png\" alt=\"News\" />&nbsp;<a href=\"index.php?$modstring"."action=viewnews&amp;news=".$newsok[$i]."\" title=\""._READNEWS."\">";
 				if (!$data['title']=="")
 					echo $data['title'];
 				else echo "------";
-				echo "</a> (".date("d/m/Y - H:i", get_news_time($newsok[$i])).", "._LETTO.$data['reads']." "._VOLTE.")<br>";
+				echo "</a> (".date("d/m/Y - H:i", get_news_time($newsok[$i])).", "._LETTO.$data['reads']." "._VOLTE.")<br />";
 			}
 		}
 	}
@@ -138,7 +138,7 @@ function view_news_archive_section(){
 		echo "<h2>Per tags:</h2>";
 		$tags = load_tags_list();
 
-		// Questo codice Ã¨ parzialmente tratto da Wordpress 2.2
+		// Questo codice è parzialmente tratto da Wordpress 2.2
 		// WP CODE
 		$largest = 20;
 		$smallest = 8;
@@ -159,7 +159,7 @@ function view_news_archive_section(){
 			foreach ($tags as $tag => $count){
 				if ($count>0)
 					echo "<span style=\"font-size: ".( $smallest + ( ( $count - $min_count ) * $font_step ) )."pt;\"><a href=\"index.php?mod=none_Search&amp;where=news&amp;tags=$tag\" title=\"$count  news\">$tag</a> </span>";
-			// 		echo "&#187;&nbsp;<a href=\"index.php\">$tag</a>&nbsp;($count)<br>";
+			// 		echo "&#187;&nbsp;<a href=\"index.php\">$tag</a>&nbsp;($count)<br />";
 			}
 		}
 		echo "<h2>"._PERARGOMENTI.":</h2>";
@@ -170,15 +170,15 @@ function view_news_archive_section(){
 			echo "<div style=\"float:left; padding: 10px 10px 10px 10px; text-align:center\">";
 			echo "<a href=\"index.php?mod=none_Search&amp;where=news&amp;category=".$categories[$i]."\">";
 			$w3c_title = _ARGOMENTO.": ".preg_replace("/\.png$|\.gif$|\.jpeg$|\.jpg$/i","",$categories[$i]);
-			echo "<img src=\"images/news/".$categories[$i]."\" style=\"border:0\" alt=\"".$label."\" title=\"$w3c_title\" />";
-			echo "<br>".$label."</a></div>";
+			echo "<img src=\"images/news/".$categories[$i]."\" border=\"0\" alt=\"".$label."\" title=\"$w3c_title\" />";
+			echo "<br />".$label."</a></div>";
 // 			if($i%5==0) echo "<div style=\"clear:both\"></div>";
 		}
 		//gestisco anche le news senza categoria
 		echo "<div style=\"float:left; padding: 10px 10px 10px 10px; text-align:center\">";
 		echo "<a href=\"index.php?mod=none_Search&amp;where=news&amp;category=nonews.png\">";
-		echo "<img src=\"images/nonews.png\" style=\"border:0\" alt=\"nonews\" title=\"nonews\" />";
-		echo "<br>nonews</a></div>";
+		echo "<img src=\"images/nonews.png\" border=\"0\" alt=\"nonews\" title=\"nonews\" />";
+		echo "<br />nonews</a></div>";
 		if($i%5==0) echo "<div style=\"clear:both\"></div>";
 		echo "<div style=\"clear:both\"></div>";
 	}

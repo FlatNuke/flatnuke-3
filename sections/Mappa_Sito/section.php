@@ -29,7 +29,7 @@ if (preg_match("/section.php/i",$_SERVER['PHP_SELF']))
 
 
 
-if (!function_exists("getLang"))	//compatibilità con flatnuke 2.xx (non traduce nulla)
+if (!function_exists("getLang"))	//compatibilita' con flatnuke 2.xx (non traduce nulla)
 {
 	function getLang($filename,$title=null)
 	{
@@ -40,7 +40,7 @@ if (!function_exists("getLang"))	//compatibilità con flatnuke 2.xx (non traduce
 global $lang,$theme;
 
 
-echo "\n\n<ul class=\"fa-ul\" ><li><i class=\"fa-li fa fa-home fa-lg\"></i>&nbsp;";
+echo "\n\n<ul style= \" list-style-image: url(themes/$theme/images/menu.png) \" ><li>";
 echo "<a href='index.php' title=\""._HOMEMENUTITLE."\">";
 
 if(($text = getLang("sections/.lang.xml")))
@@ -95,10 +95,6 @@ function list_sections_sitemap($path)
  *
  * @author Alessandro Vernassa <speleoalex@gmail.com>
  *
- * Edited by Alfredo Cosco <orazio.nelson@gmail.com>
- * 05/2014
- * Uses FontAwesome icons as default, sections icons 
- * can be overwritten by custom *.png in the theme.
  */
 function printsection($path)
 {
@@ -127,19 +123,15 @@ function printsection($path)
 
 			//$next=count(list_sections("$path/$mod"));
 			//if ($next>0)
-				echo "\n<ul class=\"fa-ul\">";
+				echo "\n<ul>";
 
 			// Find the image that identifies the current (sub)section; if not find, it takes the default one by the theme
 			if(file_exists(str_replace("//","/","$path/$mod/section.png"))) {
 				$section_image = str_replace("//","/","$path/$mod/section.png");
-				$list_trigger = "<li style= \" list-style-image: url(".$section_image.") \">";
-			} else {
-				$section_image = "themes/$theme/images/section.png";
-				$list_trigger =  "<li><i class=\"fa-li fa fa-folder-open-o fa-lg\"></i>&nbsp;";
-			}
+			} else $section_image = "themes/$theme/images/section.png";
 
 
-			echo $list_trigger;
+			echo "\n<li style= \" list-style-image: url($section_image) \">";
 
 
 

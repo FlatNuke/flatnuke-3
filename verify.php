@@ -86,7 +86,7 @@ case "modlevel":
 			fnlog("Site maintenance", $ip."||".$myforum."||Section $section with no more level restrictions.");
 		}
 	}
-	?><script>window.location='index.php?mod=<?php echo $section?>';</script><?php
+	?><script language="javascript">window.location='index.php?mod=<?php echo $section?>';</script><?php
 break;
 
 // Modifica di un file
@@ -109,7 +109,7 @@ case "modcont":
 
 	if(is_admin() and file_exists($file)) {
 		if(stristr($file,"..")) {
-			?><script>window.location='index.php';</script><?php
+			?><script language="javascript">window.location='index.php';</script><?php
 		}
 		fnwrite($file, $mybody, "w", array());
 		fnlog("Site maintenance", $ip."||".$myforum."||File ".$file." modified.");
@@ -119,7 +119,7 @@ case "modcont":
 			protect_file($file);
 		}
 	}
-	?><script>window.location='<?php echo $from?>';</script><?php
+	?><script language="javascript">window.location='<?php echo $from?>';</script><?php
 break;
 
 // Modifica di un file
@@ -151,7 +151,7 @@ case "usermodcont":
 			protect_file($file);
 		}
 	}
-	?><script>window.location='<?php echo $from?>';</script><?php
+	?><script language="javascript">window.location='<?php echo $from?>';</script><?php
 break;
 
 }

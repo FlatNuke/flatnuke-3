@@ -119,8 +119,8 @@ function uploadurl(){
 
 	}
 	else {
-		echo "<br><br><div align=\"center\">"._FDFILENOTSELECT;
-		echo "<br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br><br></div>";
+		echo "<br /><br /><div align=\"center\">"._FDFILENOTSELECT;
+		echo "<br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br /><br /></div>";
 		fd_die("File to upload not selected. FDadmin:".__LINE__);
 	}
 
@@ -133,8 +133,8 @@ function uploadurl(){
 	$extensions_array=array();
 	$extensions_array = split(",",strtolower($extensions));
 	if (!in_array(strtolower($info['extension']),$extensions_array)) {
-		echo "<br><br><div align=\"center\">"._NOTVALIDEXT;
-		echo "<br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br><br></div>";
+		echo "<br /><br /><div align=\"center\">"._NOTVALIDEXT;
+		echo "<br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br /><br /></div>";
 		fd_die("Invalid extension! FDurl:".__LINE__);
 
 	}
@@ -143,10 +143,10 @@ function uploadurl(){
 	$file = basename($fdurl);
 	$file = preg_replace("/\?.*/i","",$file);
 
-	//controllo che nella sezione non ci sia gi√† un file con lo stesso nome
+	//controllo che nella sezione non ci sia gi‡ un file con lo stesso nome
 	if (file_exists("$path/$file")){
-		echo "<div align=\"center\"><br>"._FDUPLOADEXISTS."<br>";
-		echo "<br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br><br></div>";
+		echo "<div align=\"center\"><br />"._FDUPLOADEXISTS."<br />";
+		echo "<br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br /><br /></div>";
 		return;
 
 	}
@@ -189,7 +189,7 @@ function uploadurl(){
 
 		$path = preg_replace("/http:\/\//i","",$path);
 		$path = preg_replace("/.*sections\//i", "", $path);
-		echo "<br><br><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($path)."\"><b>"._FDARCHIVERETURN."</b></a></div>";
+		echo "<br /><br /><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($path)."\"><b>"._FDARCHIVERETURN."</b></a></div>";
 }
 
 /**
@@ -322,12 +322,12 @@ global $maxFileSize,$extensions,$extsig,$extscreenshot;
 		$filepathok = $fdfile;
 	}
 
-	//aggiusto gli "a capo": solo se non √® attivo fckeditor
+	//aggiusto gli "a capo": solo se non Ë attivo fckeditor
 	if (!file_exists("include/plugins/editors/FCKeditor/fckeditor.php")){
-		$description =str_replace("\n", "<br>", $description);
+		$description =str_replace("\n", "<br />", $description);
 	}
 	else if (!preg_match("/gecko/i",$_SERVER['HTTP_USER_AGENT']) and !preg_match("/msie/i",$_SERVER['HTTP_USER_AGENT'])){
-		$description =str_replace("\n", "<br>", $description);
+		$description =str_replace("\n", "<br />", $description);
 	}
 
 
@@ -364,7 +364,7 @@ global $maxFileSize,$extensions,$extsig,$extscreenshot;
 
 
 	//permetti di tornare indietro.
-	echo "<br><br><div align=\"center\">"._FDEDITDONE."<br><br>";
+	echo "<br /><br /><div align=\"center\">"._FDEDITDONE."<br /><br />";
 	$path = dirname($fdfile);
 	$path = preg_replace("/.*sections\//i", "", $path);
 	echo "<a href=\"index.php?mod=".rawurlencodepath($path)."\"><b>"._FDRETURN."</b></a></div>";

@@ -19,7 +19,7 @@ if ($mod!="" AND !file_exists("$sections_path/$mod/forum")
 	AND !file_exists("$sections_path/$mod/download")
 	AND (!file_exists("$sections_path/$mod/downloadsection") OR (file_exists("$sections_path/$mod/downloadsection") AND $section_show_header=="0"))) {
 		if ($home_section!="" and _FN_MOD=="")
-			echo "<br>";
+			echo "<br />";
 		print_subsections($mod);
 }
 

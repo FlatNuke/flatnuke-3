@@ -63,20 +63,20 @@ if (user_can_view_section($mod)){
 		include_once("flatnews/include/news_functions.php");
 		if(!file_exists(_FN_SECTIONS_DIR."/$mod/none_newsdata/$news.fn.php")) {
 			OpenTable();
-			print("<div class=\"centeredDiv\"><b>"._NORESULT."</b></div>");
+			print("<div align='center'><b>"._NORESULT."</b></div>");
 			CloseTable();
 			return;
 		}
 		$data = load_news($mod,$news);
 
-		$title = tag2html($data['title']);
-		$header = tag2html($data['header']);
-		$body = tag2html($data['body']);
+		$title = tag2html($data['title'],"home");
+		$header = tag2html($data['header'],"home");
+		$body = tag2html($data['body'],"home");
 
-		echo "<div class=\"centeredDiv\"><h1>$title</h1><br><table width='80%'><tr><td>";
-		echo "<font size='3'>$header<br><br>$body</font>";
+		echo "<div align='center'><h1>$title</h1><br /><table width='80%'><tr><td>";
+		echo "<font size='3'>$header<br /><br />$body</font>";
 		echo "</td></tr></table>";
-		echo "<br><br><small>"._ARTTR." <b>$sitename</b> - <a href='$url'>$url</a><br>";
+		echo "<br /><br /><small>"._ARTTR." <b>$sitename</b> - <a href='$url'>$url</a><br />";
 		echo _URLREF." <a href='$url"."index.php?mod=$mod&amp;action=viewnews&amp;news=$news'>$url"."index.php?mod=$mod&amp;action=viewnews&amp;news=$news</a>";
 		echo "</small></div>";
 	}
@@ -84,14 +84,14 @@ if (user_can_view_section($mod)){
 		if($file=="") {
 			if(!file_exists("sections/$mod/section.php") AND !file_exists("sections/$mod/gallery")) {
 				OpenTable();
-				print("<div class=\"centeredDiv\"><b>"._NORESULT."</b></div>");
+				print("<div align='center'><b>"._NORESULT."</b></div>");
 				CloseTable();
 				return;
 			}
 		} else {
 			if(!file_exists("sections/$mod/$file")) {
 				OpenTable();
-				print("<div class=\"centeredDiv\"><b>"._NORESULT."</b></div>");
+				print("<div align='center'><b>"._NORESULT."</b></div>");
 				CloseTable();
 				return;
 			}
@@ -99,24 +99,24 @@ if (user_can_view_section($mod)){
 
 		$mod_title = preg_replace("/^([0-9]*)_|(none)_/i", "", $mod);
 		$mod_title = str_replace("_", " ", $mod_title);
-		echo "<div class=\"centeredDiv\"><h3>$mod_title</h3><br><table width='90%'><tr><td><font size='3'>" ;
+		echo "<div align='center'><h3>$mod_title</h3><br /><table width='90%'><tr><td><font size='3'>" ;
 		if($file=="") {
 			if(file_exists("sections/$mod/section.php"))
 				include("sections/$mod/section.php");
 		} else include("sections/$mod/$file");
 		/* Gestisce la galleria con gallery */
 		if(file_exists("sections/$mod/gallery")) {
-			echo "<br><br>";
+			echo "<br /><br />";
 			include("gallery/gallery.php");
 		}
 		echo "</font></td></tr></table>";
-		echo "<br><br><small>"._ARTTR." <b>$sitename</b> - <a href=\"$url\">$url</a><br>";
+		echo "<br /><br /><small>"._ARTTR." <b>$sitename</b> - <a href=\"$url\">$url</a><br />";
 		echo _URLREF." <a href=\"$url"."index.php?mod=$mod\">$url"."index.php?mod=$mod</a></small></div>";
 	}
 }//fine user_can_view_section
 else {
 	OpenTable();
-	print("<div class=\"centeredDiv\"><b>"._NOLEVELSECT."</b></div>");
+	print("<div align='center'><b>"._NOLEVELSECT."</b></div>");
 	CloseTable();
 	return;
 }

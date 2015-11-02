@@ -27,6 +27,7 @@ if (preg_match("/section.php/i",$_SERVER['PHP_SELF'])) {
 	// set again charset: using ajax, it could be rewritten by the web server
 	@header("Content-Type: text/html; charset="._CHARSET."");
 }
+
 // security checks
 $req = getparam("REQUEST_URI", PAR_SERVER, SAN_NULL);
 if(strstr($req,"myforum="))
@@ -51,7 +52,7 @@ switch($lang) {
 include_once (get_fn_dir("sections")."/$mod/none_functions/func_interfaces.php");
 
 // constants definitions
-define("_FNCC_GOTOP", "<a href=\"#fncctoppage\"><img src='".get_fn_dir("sections")."/$mod/none_images/top.png' alt='top' title='top' style='vertical-align:middle; border:0'></a>");
+define("_FNCC_GOTOP", "<a href=\"#fncctoppage\"><img src='".get_fn_dir("sections")."/$mod/none_images/top.png' alt='top' border='0' title='top' style='vertical-align:middle'></a>");
 
 ################################################################
 /*                     MAIN EXECUTION                         */
@@ -61,6 +62,15 @@ if(is_admin()) {
 	// external code declarations
 	include_once (get_fn_dir("sections")."/$mod/none_functions/func_operations.php");
 	include_once (get_fn_dir("sections")."/$mod/none_functions/func_verify.php");
+	// GET menu list
+	switch($fncclist) {
+		case "fncclist1" :		fncc_list1();		break;	// option group 1 # flatnuke
+		case "fncclist2" :		fncc_list2();		break;	// option group 2 # other configurations
+		case "fncclist3" :		fncc_list3();		break;	// option group 3 # users
+		case "fncclist4" :		fncc_list4();		break;	// option group 4 # security
+		case "fncclist5" :		fncc_list5();		break;	// option group 5 # graphics
+		case "fnccplugins": get_thirdparty_plugins(); break;// # plugins
+	}
 	// POST actions
 	switch($conf_mod) {
 		case "phpinfo":			fncc_phpinfo();			break;	// print PHP configuration on the web server
@@ -83,25 +93,25 @@ if(is_admin()) {
 	}
 	// GET options
 	switch($op) {
-		case "fnccinfo":		fncc_create_module_page(_FNCC_SERVERINFO,'fncc_info');		break;	// general infos on the site
-		case "fnccconf":		fncc_create_module_page(_FNCC_DESGENERALCONF, 'fncc_generalconf');	break;	// main Flatnuke configuration
+		case "fnccinfo":		fncc_info();		break;	// general infos on the site
+		case "fnccconf":		fncc_conf();		break;	// main Flatnuke configuration
 		/*----------------------------------------------*/
-		case "fnccmotd"    :	fncc_create_module_page(_FNCC_DESMOTD,'fncc_editconffile', get_fn_dir("var")."/motd.php" ); break;	// manage MOTD file
-		case "fnccpolledit":	fncc_create_module_page(_FNCC_DESPOLL, 'fncc_editpoll');	break;	// manage poll configuration
-		case "fnccdownconf":	fncc_create_module_page(_FNCC_DESDOWNCONF,'fncc_fdplusconf');	break;	// manage fdplus configuration
+		case "fnccmotd"    :	fncc_motd();		break;	// manage MOTD file
+		case "fnccpolledit":	fncc_polledit();	break;	// manage poll configuration
+		case "fnccdownconf":	fncc_downconf();	break;	// manage fdplus configuration
 		/*----------------------------------------------*/
-		case "fnccmembers"   :	fncc_create_module_page(_FNCC_DESUSERSLIST,'fncc_userslist');		break;	// manage users of the site
-		case "fnccnewprofile":	fncc_create_module_page(_FNCC_DESADDUSER,'fncc_newuserprofile' );	break;	// add a new user profile
-		case "fnccwaitingusers":fncc_create_module_page(_FNCC_WAITINGUSERS,'fncc_listwaiting');break;	// manage profiles waiting for activation
+		case "fnccmembers"   :	fncc_members();		break;	// manage users of the site
+		case "fnccnewprofile":	fncc_newprofile();	break;	// add a new user profile
+		case "fnccwaitingusers":fncc_waitingusers();break;	// manage profiles waiting for activation
 		/*----------------------------------------------*/
-		case "fnccbackup":		fncc_create_module_page(_FNCC_DESBACKUPS,'fncc_managebackups');		break;	// manage FN backups
-		case "fncclogs":		fncc_create_module_page(_FNCC_DESLOGS,'fncc_managelogs');		break;	// manage system logs
-		case "fnccblacklists":	fncc_create_module_page(_FNCC_DESBLACKLISTS,'fncc_manageblacklists');	break;	// manage FN blacklists
+		case "fnccbackup":		fncc_backups();		break;	// manage FN backups
+		case "fncclogs":		fncc_logs();		break;	// manage system logs
+		case "fnccblacklists":	fncc_blacklists();	break;	// manage FN blacklists
 		/*----------------------------------------------*/
-		case "fnccthemestruct":	fncc_create_module_page(_FNCC_DESTHEMESTRUCTURE,'fncc_editconffile',get_fn_dir("themes")."/$theme/structure.php");	break;	// manage theme's structure
-		case "fnccthemestyle" :	fncc_create_module_page(_FNCC_DESTHEMESTYLE,'fncc_editconffile',get_fn_dir("themes")."/$theme/theme.php" );	break;	// manage theme's style
-		case "fnccthemecss"   :	fncc_create_module_page(_FNCC_DESCSSTHEME,'fncc_editconffile',get_fn_dir("themes")."/$theme/style.css");	break;	// manage theme's CSS
-		case "fnccforumcss"   :	fncc_create_module_page(_FNCC_DESCSSFORUM, 'fncc_editconffile',get_fn_dir("themes")."/$theme/forum.css");	break;	// manage forum's CSS
+		case "fnccthemestruct":	fncc_themestruct();	break;	// manage theme's structure
+		case "fnccthemestyle" :	fncc_themestyle();	break;	// manage theme's style
+		case "fnccthemecss"   :	fncc_themecss();	break;	// manage theme's CSS
+		case "fnccforumcss"   :	fncc_forumcss();	break;	// manage forum's CSS
 	}
 } else fncc_onlyadmin();	// only admins can access this section
 

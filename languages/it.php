@@ -9,7 +9,7 @@ $mesi = array("Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio","
 $GLOBALS['giorni'] = $giorni;
 $GLOBALS['mesi'] = $mesi;
 
-define("_CHARSET","UTF-8"); // ISO-8859-1 to UTF-8
+define("_CHARSET","ISO-8859-1");
 define("_CERCA","Cerca");
 define("_CERCASTR","Cerca parola in:");
 define("_ALLSITE","Tutto il sito");
@@ -27,7 +27,7 @@ define("_INTMESSAGGIO","Intestazione messaggio");
 define("_CORPOMESSAGGIO","Corpo messaggio");
 define("_PASSWORD","Password");
 define("_INSNOTIZIA","Inserisci notizia");
-define("_SEGNEWS","Segnala notizia");
+define("_SEGNEWS","Segnala News");
 define("_ANTEPRIMA","Anteprima");
 define("_SEGNNOTIZIE","Notizie segnalate");
 define("_LEGGI","Leggile");
@@ -66,14 +66,14 @@ define("_REMEMBERLOGIN", "Ricorda login");
 define("_SITEURL","Indirizzo del sito");
 define("_SITENAME","Nome del sito");
 define("_THEME","Tema FlatNuke");
-define("_NEWSPP","Notizie visibili in home page");
+define("_NEWSPP","News visibili in home page");
 define("_ADMIN","Nome del webmaster");
 define("_ADMINM","Mail del webmaster");
 define("_LANG","Lingua del sito");
-define("_GUESTN","Un utente non registrato pu&ograve; segnalare una notizia");
+define("_GUESTN","Un utente non registrato pu&ograve; segnalare una news");
 define("_GUESTC","Un utente non registrato pu&ograve; inserire un commento");
 define("_FUSO","Differenza di orario tra server e ora locale");
-define("_TOPICPP","Discussioni forum per pagina");
+define("_TOPICPP","Topic forum per pagina");
 define("_POSTPP","Post forum per pagina");
 define("_MEMBRIPP","Membri forum per pagina");
 define("_SECTNOTEXIST","Sezione non esistente!");
@@ -96,7 +96,7 @@ define("_FPROV","Provenienza");
 define("_FAVAT","Avatar");
 define("_FAVATREM","Oppure indirizzo immagine remota");
 define("_USEGRAVATAR","Usa Gravatar");
-define("_GRAVATARINFO","* (compila l&#8217;e-mail)");
+define("_GRAVATARINFO","* (compila l&#8217;email)");
 define("_FFIRMA","Firma");
 define("_FNUOVOTOP","Nuova discussione");
 define("_FTITTOP","Titolo discussione");
@@ -121,7 +121,6 @@ define("_FUTENTE","Utente");
 define("_FMESS","Messaggio");
 define("_FNUOVOMESS","Nuovo messaggio");
 define("_FOGG","Oggetto");
-define("_FCREATOP","Crea nuova discussione");
 define("_FTOPOK","Discussione creata");
 define("_FLEGGI","Leggi");
 define("_FMESSOK","Messaggio inviato");
@@ -135,21 +134,27 @@ define("_FDELUTENTE","Elimina account");
 define("_REG_AGREEMENT_TERMS","Anche se gli amministratori e i moderatori di questo forum cercheranno di rimuovere o modificare
 tutto il materiale contestabile il pi&ugrave; velocemente possibile, &egrave; comunque impossibile verificare ogni messaggio. Tuttavia sei
 consapevole che tutti i messaggi di questo forum esprimono il punto di vista e le opinioni dell&#8217;autore e non quelle degli
-amministratori, dei moderatori o del webmaster (eccetto i messaggi degli stessi) e per questo non sono perseguibili.<br><br>
+amministratori, dei moderatori o del webmaster (eccetto i messaggi degli stessi) e per questo non sono perseguibili.<br /><br />
 L&#8217;utente concorda di non inviare messaggi abusivi, osceni, volgari, diffamatori, di odio, minatori, sessuali o qualunque altro
 materiale che possa violare qualunque legge applicabile. Inserendo messaggi di questo tipo l&#8217;utente verr&agrave; immediatamente e
 permanentemente escluso (e il tuo provider verr&agrave; informato). L&#8217;indirizzo IP di tutti i messaggi viene registrato per aiutare
 a rinforzare queste condizioni. L&#8217;utente concorda che il webmaster, l&#8217;amministratore e i moderatori di questo forum hanno il
-diritto di rimuovere, modificare, o chiudere ogni Discussione ogni volta che lo ritengano necessario. Come utente concordi che ogni
+diritto di rimuovere, modificare, o chiudere ogni Topic ogni volta che lo ritengano necessario. Come utente concordi che ogni
 informazione che &egrave; stata inserita verr&agrave; conservata in un database. Poich&egrave; queste informazioni non verranno cedute a terzi senza
 il tuo consenso, il webmaster, l&#8217;amministratore e i moderatori non possono essere ritenuti responsabili per gli attacchi da parte
-di crackers che possano compromettere i dati.<br><br>Questo forum usa i cookies per conservare informazioni sul tuo computer
+di crackers che possano compromettere i dati.<br /><br />Questo forum usa i cookies per conservare informazioni sul tuo computer
 locale. Questi cookies non contengono le informazioni che hai inserito in precedenza, servono soltanto per migliorare il piacere
-della tua visita. L&#8217;indirizzo e-mail non viene attualmente utilizzato in nessuna procedura automatica.<br><br>Cliccando qui
+della tua visita. L&#8217;indirizzo email non viene attualmente utilizzato in nessuna procedura automatica.<br /><br />Cliccando qui
 sotto accetti queste condizioni."); // taken & modified from PhpBB (http://www.phpbb.com/)
 define("_LEGAL","This is a free software released under the GNU General Public License.");
 define("_NOPUBNEWS","Non ci sono notizie segnalate");
-define("_MOTDMESS","<h1>Hello, FlatNuke!</h1><br><p>Accedi e completa la configurazione del tuo nuovo sito cliccando su \"<a href=\"index.php?mod=none_Admin\">Amministra sito</a>\" nel blocco di Login.<br>Per scoprire tutte le funzionalit&agrave;, leggi il file <a href=\"README\" target=\"_blank\">README</a> e iscriviti al forum su <a href=\"http://flatnuke.org\" target=\"_blank\">http://flatnuke.org</a>.</p>");
+define("_MOTDMESS","Complimenti per aver installato <b>FlatNuke</b>, un CMS (Content Management
+System) che non fa uso di Database, appoggiandosi esclusivamente a file di
+testo (da qui il nome). <br />Completa la configurazione del tuo nuovo sito cliccando su \"<a
+href=\"index.php?mod=none_Admin\">Amministra sito</a>\" nel blocco di Login.
+Per scoprire tutte le funzionalit&agrave; del tuo nuovo CMS, leggi il file <a
+href=\"README\">README</a> e iscriviti al forum su <a
+href=\"http://www.flatnuke.org\">flatnuke.org</a>.");
 define("_LEVEL","Livello");
 define("_NOLEVELSECT","Non hai i permessi per visualizzare questa sezione");
 define("_SICURO","Sei sicuro di volerlo fare?");
@@ -221,7 +226,7 @@ define("_FIG_DEVIREG2","per inserire un commento!");
 define("_FIG_INGRANDIRE","Clicca per ingrandire");
 define("_MAINT","ATTENZIONE: sito in manutenzione.");
 define("_MAINT_MSG","L&#8217;amministratore pu&ograve; eseguire il login dal form sottostante:");
-define("_FASTNEWSSTR","Aggiungi questo link ai preferiti e usalo come scorciatoia per pubblicare le notizie in modo rapido e semplice:");
+define("_FASTNEWSSTR","Aggiungi questo link ai preferiti e usalo come scorciatoia per pubblicare le news in modo rapido e semplice:");
 
 // 2.6
 define("_SPAMALERT","Il testo del tuo messaggio &egrave; considerato spam. Per piacere clicca su \"Indietro\" e modificalo.");
@@ -256,15 +261,15 @@ define("_GOTOTHEFIRSTPAGE","Vai alla prima pagina");
 define("_GOTOTHELASTPAGE","Vai all&#8217;ultima pagina");
 define("_GOTOTHEPREVIOUSPAGE","Vai alla pagina precedente");
 define("_GOTOTHENEXTPAGE","Vai alla pagina successiva");
-define("_EDITTOPIC","Modifica la discussione");
-define("_DELETETOPIC","Elimina la discussione");
-define("_MOVETOPIC","Sposta la discussione");
-define("_STICKYTOPIC","Evidenzia la discussione");
-define("_UNSTICKYTOPIC","Togli l&#8217;evidenziazione alla discussione");
-define("_HIDETOPIC","Nascondi la discussione");
-define("_SHOWTOPIC","Mostra la discussione");
-define("_LOCKTOPIC","Blocca la discussione");
-define("_UNLOCKTOPIC","Sblocca la discussione");
+define("_EDITTOPIC","Modifica il topic");
+define("_DELETETOPIC","Elimina il topic");
+define("_MOVETOPIC","Sposta il topic");
+define("_STICKYTOPIC","Evidenzia il topic");
+define("_UNSTICKYTOPIC","Togli l&#8217;evidenziazione al topic");
+define("_HIDETOPIC","Nascondi il topic");
+define("_SHOWTOPIC","Mostra il topic");
+define("_LOCKTOPIC","Blocca il topic");
+define("_UNLOCKTOPIC","Sblocca il topic");
 define("_STICKY","Evidenzia");
 define("_UNSTICKY","Togli evidenziazione");
 define("_HIDE","Nascondi");
@@ -300,11 +305,11 @@ define("_GROUPRENAMED","Gruppo rinominato con successo!");
 define("_DOESNTEXISTS","non esiste");
 define("_ATTENTION","Attenzione");
 define("_DELETEGROUPALERT1","Sei sicuro di voler eliminare il gruppo");
-define("_DELETEGROUPALERT2","Se sei sicuro di volerlo eliminare fai un segno di spunta nella casella sottostante e clicca su ok.<br><b>Attenzione:</b> sar&agrave; possibile eliminare il gruppo soltanto se non contiene nessun argomento.");
+define("_DELETEGROUPALERT2","Se sei sicuro di volerlo eliminare fai un segno di spunta nella casella sottostante e clicca su ok.<br /><b>Attenzione:</b> sar&agrave; possibile eliminare il gruppo soltanto se non contiene nessun argomento.");
 define("_DELETEGROUPALERT3","Elimina definivamente il gruppo");
 define("_DELETEGROUPNOCONFIRM","Per confermare la volont&agrave; di eliminare il gruppo devi fare un segno di spunta nel form precedente.");
 define("_DELETEGROUPOK","Gruppo eliminato correttamente!");
-define("_GROUPNOTEMPTY","Non &egrave; vuoto ma contiene ancora uno o pi&ugrave; argomenti. <br>Prima di eliminarlo dovrete rimuovere o spostare gli argomenti contenuti");
+define("_GROUPNOTEMPTY","Non &egrave; vuoto ma contiene ancora uno o pi&ugrave; argomenti. <br />Prima di eliminarlo dovrete rimuovere o spostare gli argomenti contenuti");
 define("_ARGUMENTGROUP","Scegli in quale gruppo creare l&#8217;argomento");
 define("_ARGUMENTNAME","Scegli il nome dell&#8217;argomento");
 define("_ARGUMENTLEVEL","Indica il livello dell&#8217;argomento");
@@ -330,7 +335,7 @@ define("_ARGUMENTUNLOCKED","Argomento sbloccato");
 define("_ARGALREADYUNLOCKED","L&#8217;argomento era gi&agrave; sbloccato");
 define("_DELETEARGUMENT1","Sei sicuro di voler eliminare l&#8217;argomento");
 define("_DELETEARGUMENT2","contenuto nell&#8217;argomento");
-define("_DELETEARGUMENT3","Se sei sicuro di volerlo eliminare fai un segno di spunta nella casella sottostante e clicca su ok.<br><b>Attenzione</b>: tutte le discussioni saranno eliminate definitivamente!");
+define("_DELETEARGUMENT3","Se sei sicuro di volerlo eliminare fai un segno di spunta nella casella sottostante e clicca su ok.<br /><b>Attenzione</b>: tutti i topic saranno eliminati definitivamente!");
 define("_DELETEARGUMENT","elimina l&#8217;argomento");
 define("_ARGUMENTDELETED","Argomento eliminato con successo");
 define("_DIRNOTDELETED","Non &egrave; stato possibile eliminare la cartella");
@@ -342,10 +347,10 @@ define("_TOPICDELETED","Discussione eliminata");
 define("_CHOOSETOPICDEST","Scegli dove spostare la discussione");
 define("_TOPICMOVED","Discussione spostata");
 define("_TOPICNOTMOVED","Non sono riuscito a spostare la discussione");
-define("_TOPICHIDDEN","Discussione nascosta");
-define("_TOPICSHOWED","Discussione mostrata");
-define("_TOPICLOCKED","Discussione bloccata");
-define("_TOPICUNLOCKED","Discussione sbloccata");
+define("_TOPICHIDDEN","Il topic sar&agrave; nascosto");
+define("_TOPICSHOWED","Il topic sar&agrave; mostrato");
+define("_TOPICLOCKED","Il topic sar&agrave; bloccato");
+define("_TOPICUNLOCKED","Il topic sar&agrave; sbloccato");
 define("_VIEWFFLOG","Visualizza il log di Flatforum");
 define("_VIEWFFERRORLOG","Visualizza il log degli errori di Flatforum");
 define("_ISSPAM","E&#8217; considerato spam");
@@ -357,7 +362,7 @@ define("_POSTDELETED","Post eliminato!");
 define("_THEDIR","La cartella");
 define("_COMP_REG","Ti &egrave; stata inviata una e-mail all&#8217; indirizzo:");
 define("_COMP_REG2"," con le istruzioni per completare la registrazione");
-define ("_ERREMAIL","Indirizzo e-mail non valido");
+define ("_ERREMAIL","Indirizzo email non valido");
 define("_IST_REG_MAIL","Per completare la registrazione clicca sul seguente indirizzo:");
 define("_COMP_REG_MAIL","Completa registrazione su");
 define("_THEMAIL","L&#8217;e-mail");
@@ -429,10 +434,10 @@ define("_FNPRESENTATION","Presentazione");
 
 // 2.7.1
 define("_NEWPWDSTRING","Recupera password");
-define("_NEWPWDFORM","<b>Richiedi una nuova password</b>:<br><br>Inserisci il tuo indirizzo
+define("_NEWPWDFORM","<b>Richiedi una nuova password</b>:<br /><br />Inserisci il tuo indirizzo
 	di posta elettronica; ti verr&agrave; immediatamente spedita una e-mail contenente le
-	istruzioni su come convalidare la tua richiesta di recupero della password.<br>
-	L&#8217;e-mail inviata conterr&agrave; inoltre la tua NUOVA password.<br>
+	istruzioni su come convalidare la tua richiesta di recupero della password.<br />
+	L&#8217;e-mail inviata conterr&agrave; inoltre la tua NUOVA password.<br />
 	Presta bene attenzione al fatto che non sarai in grado di utilizzare la nuova password
 	finch&eacute; non avrai convalidato la richiesta; quindi, in mancanza di convalida,
 	rester&agrave; valida la vecchia password.");
@@ -472,24 +477,24 @@ define("_FN_SETUP_RESULT","Risultato");
 define("_FN_SETUP_RELOAD","Aggiorna la pagina");
 define("_FN_SETUP_ADMINPROFILE","Profilo amministratore");
 define("_FN_SETUP_ADMINTXT","Per amministrare il sito occorre creare un account, il primo utente che si registra sar&agrave; amministratore (avr&agrave; tutti i permessi):");
-define("_FN_SETUP_END","Congratulazioni!<br>L&#8217;installazione di FLATNUKE &egrave; terminata!");
-define("_STICKYNEWS","Evidenzia la notizia");
-define("_UNSTICKYNEWS","Togli l&#8217;evidenziazione alla notizia");
+define("_FN_SETUP_END","Congratulazioni!<br />L&#8217;installazione di FLATNUKE &egrave; terminata!");
+define("_STICKYNEWS","Evidenzia la news");
+define("_UNSTICKYNEWS","Togli l&#8217;evidenziazione alla news");
 define("_SEARCHTAG","Cerca il tag");
 define("_IMAGESUPLOAD","Carica delle immagini");
-define("_DELETENEWSALERT","Sei sicuro di voler eliminare la notizia");
+define("_DELETENEWSALERT","Sei sicuro di voler eliminare la news");
 define("_INTHESECT","nella sezione");
 define("_INHOMEPAGE","in <b>Home Page</b>");
-define("_THENEWS","La notizia");
+define("_THENEWS","La news");
 define("_NEWSDELETED","&egrave; stata eliminata correttamente");
-define("_NEWSNOTDELETED","Non &egrave; stato possibile eliminare la notizia");
+define("_NEWSNOTDELETED","Non &egrave; stato possibile eliminare la news");
 define("_NEWSNOTDELETED2"," perch&egrave; non &egrave; scrivibile");
 define("_THESECTION","La sezione");
 define("_NEWSPUBLISHED","&egrave; stata pubblicata nella sezione");
-define("_READNEWS","Leggi la notizia");
-define("_MANAGEOTHERPROPOSEDNEWS","Approva le altre notizie proposte");
-define("_NOTPOSSIBLEPUBLISHNEWS","Non &egrave; stato possibile pubblicare la notizia");
-define("_NOOTHERNEWSSECT","Non ci sono altre sezioni di notizie in cui spostarla");
+define("_READNEWS","Leggi la news");
+define("_MANAGEOTHERPROPOSEDNEWS","Approva le altre news proposte");
+define("_NOTPOSSIBLEPUBLISHNEWS","Non &egrave; stato possibile pubblicare la news");
+define("_NOOTHERNEWSSECT","Non ci sono altre sezioni di news in cui spostare la notizia");
 define("_NEWSMOVED","Notizia spostata");
 define("_NEWSNOTMOVED","Non &egrave; stato possibile spostare la notizia");
 define("_NEWSDATECHANGED","La data della notizia &egrave; stata cambiata");
@@ -499,16 +504,16 @@ define("_COMMENTDELETED","Il commento &egrave; stato eliminato correttamente");
 define("_ADDIMAGE","Inserisci immagine");
 define("_IMAGESUPLOADTITLE","Clicca qui per caricare un&#8217;immagine sul sito");
 define("_INSERTTAG","Inserisci tag");
-define("_EDITNEWS","Modifica notizia");
-define("_DELETENEWS","Elimina notizia");
-define("_MOVENEWS","Sposta notizia");
+define("_EDITNEWS","Modifica news");
+define("_DELETENEWS","Elimina news");
+define("_MOVENEWS","Sposta news");
 define("_VIEWCOMMENTS","Visualizza i commenti");
 define("_NEWSONTOP","La notizia sar&agrave; visualizzata in cima alle altre");
 define("_NEWSHIDDEN","La notizia sar&agrave; nascosta");
-define("_NEWSNORMAL","La notizia sar&agrave; visualizzata nella sua posizione normale");
-define("_NEWSSHOWN","La notizia sar&agrave; visualizzata");
-define("_NEWSSAVED","Notizia salvata correttamente");
-define("_NEWSWAITING","La notizia &egrave; in attesa di approvazione");
+define("_NEWSNORMAL","La news sar&agrave; visualizzata nella sua posizione normale");
+define("_NEWSSHOWN","La news sar&agrave; visualizzata");
+define("_NEWSSAVED","News salvata correttamente");
+define("_NEWSWAITING","La news &egrave; in attesa di approvazione da parte dell&#8217;amministratore del sito");
 define("_TAGSPAM","Hai inserito un tag considerato spam. Per piacere clicca su \"Indietro\" e controlla.");
 define("_TITLESPAM","Il titolo che hai inserito &egrave; considerato spam. Per piacere clicca su \"Indietro\" e modificalo.");
 define("_CATEGORYSPAM","La categoria che hai scelto &egrave; considerata spam. Per piacere clicca su \"Indietro\" e cambiala.");
@@ -519,7 +524,7 @@ define("_REQUIREDFIELD","campo richiesto");
 define("_REPEATPASSWORD","Ripeti&nbsp;password");
 define("_IMAGE","Immagine");
 define("_POSTEDBY","Scritto da");
-define("_NEW_MESSAGE_TOPIC","E&#8217; arrivato un nuovo messaggio nella discussione");
+define("_NEW_MESSAGE_TOPIC","E&#8217; arrivato un nuovo messaggio nel topic");
 define("_NEW_MESSAGE_ON","Arrivato un nuovo messaggio su");
 define("_NEWNAME","Nuovo nome");
 define("_BROWSE","Navigazione");
@@ -528,7 +533,7 @@ define("_VISITS","Visite");
 define("_COMMENT_EDITED","Il commento &egrave; stato modificato");
 //Contact section
 define("_CN_YOUR_EMAIL","Tua e-mail");
-define("_CN_TITLE", "Completa il form sottostante per contattarmi direttamente al mio indirizzo e-mail:");
+define("_CN_TITLE", "Completa il form sottostante per contattarmi direttamente al mio indirizzo email:");
 define("_CN_SUBJECT", "Soggetto");
 define("_CN_ANTISPAM", "Anti-Spam: inserisci");
 define("_CN_ADVISORY", "Avviso: utilizzando questo form accetti che venga registrato il tuo IP, <b>al solo scopo di sicurezza</b>,
@@ -538,7 +543,7 @@ define("_CN_CLEAR", "Pulisci");
 define("_CN_CODERROR", "Codice Anti-Spam errato!");
 define("_CN_SENDOK", "Messaggio inviato con successo!");
 define("_CN_SENDKO", "Impossibile inviare il messaggio, server di posta non configurato o non correttamente installato");
-define("_CN_ADDRESSERROR", "Il tuo indirizzo e-mail presenta qualche errore!");
+define("_CN_ADDRESSERROR", "Il tuo indirizzo email presenta qualche errore!");
 define("_CN_WROTE", "ha scritto");
 define("_CN_IP", "Indirizzo IP");
 define("_SPAMWORDIS","<b>Filtro antispam.</b> Parola bloccata");
@@ -550,5 +555,5 @@ define("_BYYEAR", "Per anno");
 define("_GUEST","ospite");
 define("_CREATEGROUPS","Devi prima creare uno o pi&ugrave; gruppi");
 define("_CREATEARGUMENTS","Devi prima creare uno o pi&ugrave; argomenti");
-define("_NOTOPICS","Nessuna discussione");
+define("_NOTOPICS","Nessun topic");
 ?>

@@ -1,6 +1,6 @@
 <?php 
 //-----------------------------------------------------------------------------
-//Se Ã¨ impostato il safe mode nel php rinominate questo file togliendo
+//Se è impostato il safe mode nel php rinominate questo file togliendo
 //la parte in maiuscolo (FOR_SAFE_MODE_) lasciando solo la parte in minuscolo
 //(deve rimanere solo fn_mkdir.php).
 //Inserire i parametri di accesso allo spazio ftp nei parametri qua sotto
@@ -21,7 +21,7 @@ $prepath = "";
 if (!check_path($dirpath,"","false"))
 	fn_die("Mkdir","the dir ".strip_tags($dirpath)." isn't valid! (include/redefine/fn_mkdir())");
 $mode = trim($mode);
-//se $mode non Ã¨ valido metto quello di default del php
+//se $mode non è valido metto quello di default del php
 if (!check_var($mode,"digit"))
 	$mode = 0777;
 

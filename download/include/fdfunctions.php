@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Per purificare una stringa html da tutto quello che non √® permesso
+ * Per purificare una stringa html da tutto quello che non Ë permesso
  * Questa funzione usa la libreria kses
  * @param string $string la stringa da purificare
  * @return la stringa purificata
@@ -18,11 +18,11 @@ function purge_html_string($string){
 }
 
 /**
- * Restituisce TRUE se la sezione passata come parametro √® gestita dal metodo fd_view_section()
+ * Restituisce TRUE se la sezione passata come parametro Ë gestita dal metodo fd_view_section()
  * Attenzione: non la ritengo affidabile al 100%. Potrebbero essere segnalate sezioni
  * che contengono il codice richiesto come semplice testo, e non come codice eseguibile.
  * @param string $sect la sezione da verificare
- * @return TRUE se la sezione passata come parametro √® gestita dal metodo fd_view_section, FALSE
+ * @return TRUE se la sezione passata come parametro Ë gestita dal metodo fd_view_section, FALSE
  *         in caso contrario
  * @author Aldo Boccacci
  * @since 0.7
@@ -183,10 +183,10 @@ function track($url){
 include_once("config.php");
 include_once("shared.php");
 
-if (file_exists("include/redefine/track.php")){
-	include("include/redefine/track.php");
-	return;
-}
+	if (file_exists("include/redefine/track.php")){
+		include("include/redefine/track.php");
+		return;
+	}
 
 //I files gestiti devono essere inseriti in sections/
 //non posso salire
@@ -200,8 +200,19 @@ if (!file_exists($url.".description")) fd_die(_FDNONPUOI.basename(__FILE__).": "
 $track_count = 0;
 $track_count = getDownloads($url);
 
-//se l'utente non √® loggato come admin incremento il contatore
-if (!fd_is_admin()) $track_count++;
+if(fd_is_admin()){
+
+//in questo caso mostro unicamente il numero di visite della pagina senza
+//incrementare il contatore.
+//Questo per non falsare i risultati del numero di visite inserendo anche quelle dell'admin.
+
+}
+
+else {
+//se l'utente non Ë loggato come admin incremento il contatore
+$track_count++;
+
+}
 
 insert_in_max_download($url,$track_count);
 
@@ -239,7 +250,7 @@ header("Location: $url");
  * @param string $data['level'] il livello del file
  * @param boolean $data['showinblocks'] true se il file deve essere mostrato nei blocchi
  * @param string $data['uploadedby'] l'utente che ha uploadato il file
- * @param string $data['time'] il timestamp del momento in cui il file √® stato caricato
+ * @param string $data['time'] il timestamp del momento in cui il file Ë stato caricato
  * @param string $data['url'] url di file remoto
  * @param string $data['userlabel'] l'etichetta personalizzabile dall'utente
  * @param string $data['uservalue'] il valore associato all'etichetta personalizzabile dall'utente
@@ -487,7 +498,7 @@ else {
 </fd>";
 	if (preg_match("/\<\?/",$string) or preg_match("/\?\>/",$string)) fd_die(_FDNONPUOI.basename(__FILE__).": ".__LINE__);
 
-	fnwrite("$file.description","<?xml version='1.0' encoding='UTF-8'?>\n".$string,"w",array("nonull"));
+	fnwrite("$file.description","<?xml version='1.0'?>\n".$string,"w",array("nonull"));
  }
 
 /**
@@ -499,21 +510,21 @@ function update_description(){
 
 /**
  * Carica la descrizione del file dal corrisptettivo .description
- * Lo script √® in grado di riconoscere se il file contenente la descrizione
- * √® nel vecchio formato con i separatori o nel nuovo formato xml.
+ * Lo script Ë in grado di riconoscere se il file contenente la descrizione
+ * Ë nel vecchio formato con i separatori o nel nuovo formato xml.
  * @param string $file il file da cui daricare la descrizione
- * @return un array contenente la descrizione del file. La struttura dell'array √®:
+ * @return un array contenente la descrizione del file. La struttura dell'array Ë:
  * array['name'] = il nome del file
  * array['desc'] = la descrizione
  * array['version'] = la versione
  * array['md5'] = la somma md5
  * array['sha1'] = la somma sha1
  * array['hits'] = il numero di download del file
- * array['hide'] = true se il file √® nascosto, false se √® visibile
+ * array['hide'] = true se il file Ë nascosto, false se Ë visibile
  * array['showinblocks'] = true se il file deve essere mostrato nei blocchi di statistica, false in caso contrario
  * array['level'] = il livello del file: da -1 (visibile a tutti) a 10
  * array['uploadedby'] = l'utente che ha caricato il file
- * array['time'] il timestamp del momento in cui il file √® stato caricato
+ * array['time'] il timestamp del momento in cui il file Ë stato caricato
  * array['enablerating'] = attiva il voto del file
  * array['url'] url di file remoto
  * array['userlabel'] l'etichetta personalizzabile dall'utente
@@ -537,46 +548,46 @@ function load_description($file){
 		return load_description_old($file);
 	}
 
-	$description['name'] = strip_tags($xml->name);
-	$description['desc'] = $xml->desc->asXML();
+	$description['name'] = strip_tags(utf8_decode($xml->name));
+	$description['desc'] = utf8_decode($xml->desc->asXML());
 	if ($description['desc']=="<desc/>")
 		$description['desc']="";
-	$description['version'] = strip_tags($xml->version);
-	$description['md5'] = strip_tags($xml->md5);
-	$description['hits'] = strip_tags($xml->hits);
-	$description['hide'] = $xml->hide;
+	$description['version'] = strip_tags(utf8_decode($xml->version));
+	$description['md5'] = strip_tags(utf8_decode($xml->md5));
+	$description['hits'] = strip_tags(utf8_decode($xml->hits));
+	$description['hide'] = utf8_decode($xml->hide);
 	if (!($description['hide']=="false" or $description['hide']=="true"))
 		$description['hide']="0";
-	$description['sha1'] = strip_tags($xml->sha1);
-	$description['level'] = strip_tags($xml->level);
+	$description['sha1'] = strip_tags(utf8_decode($xml->sha1));
+	$description['level'] = strip_tags(utf8_decode($xml->level));
 	//fix
 	if ($description['level']=="") $description['level']="-1";
-
+	
 	if (preg_match("/^false$|^true$/i",$xml->showinblocks)){
-		$description['showinblocks'] = $xml->showinblocks;
+		$description['showinblocks'] = utf8_decode($xml->showinblocks);
 	}
 	else $description['showinblocks'] ="true";
 
-	$description['uploadedby'] = strip_tags($xml->uploadedby);
-	$description['time'] = strip_tags($xml->time);
-	$description['url'] = strip_tags($xml->url);
+	$description['uploadedby'] = strip_tags(utf8_decode($xml->uploadedby));
+	$description['time'] = strip_tags(utf8_decode($xml->time));
+	$description['url'] = strip_tags(utf8_decode($xml->url));
 
 
-	if (preg_match("/1|0/",$xml->enablerating)){
-		$description['enablerating'] = strip_tags($xml->enablerating);
+	if (preg_match("/1|0/",utf8_decode($xml->enablerating))){
+		$description['enablerating'] = strip_tags(utf8_decode($xml->enablerating));
 	}
 	else $description['enablerating'] ="$defaultvoteon";
 
 	$user_defined = $xml->userfield;
-	$description['userlabel'] = strip_tags($user_defined->userlabel);
-	$description['uservalue'] = strip_tags($user_defined->uservalue);
+	$description['userlabel'] = strip_tags(utf8_decode($user_defined->userlabel));
+	$description['uservalue'] = strip_tags(utf8_decode($user_defined->uservalue));
 
 	$votestring = "";
 	$vote_data = $xml->vote;
 
-	$description['totalscore'] = strip_tags($vote_data->totalscore);
+	$description['totalscore'] = strip_tags(utf8_decode($vote_data->totalscore));
 	if ($description['totalscore']=="") $description['totalscore'] ="0";
-	$description['totalvote'] = strip_tags($vote_data->totalvote);
+	$description['totalvote'] = strip_tags(utf8_decode($vote_data->totalvote));
 	if ($description['totalvote']=="") $description['totalvote'] ="0";
 
 	return $description;
@@ -584,21 +595,21 @@ function load_description($file){
 
 /**
  * Carica la descrizione del file dal corrisptettivo .description
- * Lo script √® in grado di riconoscere se il file contenente la descrizione
- * √® nel vecchio formato con i separatori o nel nuovo formato xml.
+ * Lo script Ë in grado di riconoscere se il file contenente la descrizione
+ * Ë nel vecchio formato con i separatori o nel nuovo formato xml.
  * @param string $file il file da cui daricare la descrizione
- * @return un array contenente la descrizione del file. La struttura dell'array √®:
+ * @return un array contenente la descrizione del file. La struttura dell'array Ë:
  * array['name'] = il nome del file
  * array['desc'] = la descrizione
  * array['version'] = la versione
  * array['md5'] = la somma md5
  * array['sha1'] = la somma sha1
  * array['hits'] = il numero di download del file
- * array['hide'] = true se il file √® nascosto, false se √® visibile
+ * array['hide'] = true se il file Ë nascosto, false se Ë visibile
  * array['showinblocks'] = true se il file deve essere mostrato nei blocchi di statistica, false in caso contrario
  * array['level'] = il livello del file: da -1 (visibile a tutti) a 10
  * array['uploadedby'] = l'utente che ha caricato il file
- * array['time'] il timestamp del momento in cui il file √® stato caricato
+ * array['time'] il timestamp del momento in cui il file Ë stato caricato
  * array['enablerating'] = attiva il voto del file
  * array['url'] url di file remoto
  * array['userlabel'] l'etichetta personalizzabile dall'utente
@@ -617,7 +628,7 @@ function load_description_old($file){
 	$descriptions = get_file($file.".description");
 // echo $descriptions;
 	$description=array();
-	if (preg_match("/^<\?xml version=\'1.0\' encoding=\'UTF\-8\'\?\>/i",$descriptions)){
+	if (preg_match("/^<\?xml version=\'1.0\'\?\>/i",$descriptions)){
 // 	echo "nuovo formato";
 		$description['name'] = get_xml_element("name",$descriptions);
 		$description['desc'] = get_xml_element("desc",$descriptions);
@@ -625,17 +636,17 @@ function load_description_old($file){
 		$description['md5'] = get_xml_element("md5",$descriptions);
 		$description['hits'] = str_replace("<br>","",get_xml_element("hits",$descriptions));
 		$description['hide'] = get_xml_element("hide",$descriptions);
-		//non √® detto che sia presente il campo sha1
+		//non Ë detto che sia presente il campo sha1
 		if (preg_match("/\<sha1\>.*\<\/sha1\>/i",$descriptions)){
 			$description['sha1'] = get_xml_element("sha1",$descriptions);
 		}
 		else $description['sha1'] ="";
-		//non √® detto che sia presente il campo level
+		//non Ë detto che sia presente il campo level
 		if (preg_match("/\<level\>.*\<\/level\>/i",$descriptions)){
 			$description['level'] = get_xml_element("level",$descriptions);
 		}
 		else $description['level'] ="-1";
-		//non √® detto che sia presente il campo showinblocks
+		//non Ë detto che sia presente il campo showinblocks
 		if (preg_match("/\<showinblocks\>.*\<\/showinblocks\>/i",$descriptions)){
 			if (preg_match("/false|true/i",get_xml_element("showinblocks",$descriptions))){
 				$description['showinblocks'] = get_xml_element("showinblocks",$descriptions);
@@ -643,23 +654,23 @@ function load_description_old($file){
 			else $description['showinblocks'] ="true";
 		}
 		else $description['showinblocks'] ="true";
-		//non √® detto che sia presente il campo uploadedby
+		//non Ë detto che sia presente il campo uploadedby
 		if (preg_match("/\<uploadedby\>.*\<\/uploadedby\>/i",$descriptions)){
 			$description['uploadedby'] = get_xml_element("uploadedby",$descriptions);
 		}
 		else $description['uploadedby'] = "";
-		//non √® detto che sia presente il campo time
+		//non Ë detto che sia presente il campo time
 		if (preg_match("/\<time\>.*\<\/time\>/i",$descriptions)){
 			$description['time'] = get_xml_element("time",$descriptions);
 		}
 		else $description['time'] = filectime($file);
-		//non √® detto che sia presente il campo url
+		//non Ë detto che sia presente il campo url
 		if (preg_match("/\<url\>.*\<\/url\>/i",$descriptions)){
 			$description['url'] = get_xml_element("url",$descriptions);
 		}
 		else $description['url'] = "";
 
-		//non √® detto che sia presente il campo enablerating
+		//non Ë detto che sia presente il campo enablerating
 		if (preg_match("/\<enablerating\>.*\<\/enablerating\>/i",$descriptions)){
 			if (preg_match("/1|0/",get_xml_element("enablerating",$descriptions))){
 				$description['enablerating'] = get_xml_element("enablerating",$descriptions);
@@ -686,7 +697,7 @@ function load_description_old($file){
 
 	else {
 // 	echo "vecchio formato";
-		//√® nel vecchio formato
+		//Ë nel vecchio formato
 		$descriptionold = explode("||",$descriptions);
 		$description['name'] = $descriptionold[0];
 		$description['desc'] = $descriptionold[1];
@@ -721,7 +732,7 @@ function load_description_old($file){
  */
 function purge_string($text){
 
-	//se la stringa √® vuota ritorno subito
+	//se la stringa Ë vuota ritorno subito
 	if (trim($text)=="") return "";
 
 	//controllo la lunghezza della stringa
@@ -798,7 +809,7 @@ function insert_in_max_download($filepath,$hits){
 
 	//idem per il file con le statistiche
 	if (!file_exists(get_fn_dir("var")."/fdplus/".$max_download_file)){
-		$string= "<?xml version='1.0' encoding='UTF-8'?>\n<topdownloads>\n</topdownloads>";
+		$string= "<?xml version='1.0'?>\n<topdownloads>\n</topdownloads>";
 
 		fnwrite(get_fn_dir("var")."/fdplus/".$max_download_file,$string,"w",array("nonull"));
 	}
@@ -875,7 +886,7 @@ function insert_in_max_download($filepath,$hits){
 		}
 	}
 	if (!stristr($newstring,$filepath)){
-// 		echo "non √® contenuta";
+// 		echo "non Ë contenuta";
 		$newstring .= "\n\t<file>
 		<path>$filepath</path>
 		<hits>$hits</hits>
@@ -885,7 +896,7 @@ function insert_in_max_download($filepath,$hits){
 	//per sicurezza
 	if (preg_match("/\<\?/",$newstring) or preg_match("/\?\>/",$newstring)) fd_die(_FDNONPUOI.basename(__FILE__).": ".__LINE__);
 
-	$newstring ="<?xml version='1.0' encoding='UTF-8'?>\n".$newstring."\n</topdownloads>";
+	$newstring ="<?xml version='1.0'?>\n".$newstring."\n</topdownloads>";
 // 	global $max_download_file;
 
 	fnwrite(get_fn_dir("var")."/fdplus/$max_download_file",$newstring,"w",array("nonull"));
@@ -1176,15 +1187,15 @@ function fd_user_can_view_file($file,$description=""){
  * Questa funzione si occupa di creare l'interfaccia web per la gestione
  * delle informazioni associate ai file gestiti da FD+.
  *
- * L'array contiene tutte le propriet√† del file
- * (non √® obbligatorio inserire tutti questi valori, anzi l'array passato come parametro pu√≤ essere vuoto)
+ * L'array contiene tutte le propriet‡ del file
+ * (non Ë obbligatorio inserire tutti questi valori, anzi l'array passato come parametro puÚ essere vuoto)
  * array['name'] = il nome del file
  * array['desc'] = la descrizione
  * array['version'] = la versione
  * array['md5'] = la somma md5
  * array['sha1'] = la somma sha1
  * array['hits'] = il numero di download del file
- * array['hide'] = true se il file √® nascosto, false se √® visibile
+ * array['hide'] = true se il file Ë nascosto, false se Ë visibile
  * array['showinblocks'] = true se il file deve essere mostrato nei blocchi di statistica, false in caso contrario
  * array['level'] = il livello del file: da -1 (visibile a tutti) a 10
  * array['user'] = l'utente che ha caricato il file
@@ -1317,24 +1328,24 @@ global $automd5,$autosha1,$defaultvoteon;
 	//aggiusto gli "a capo" (solo se non trovo fckeditor)
 	if (!file_exists("include/plugins/editors/FCKeditor/fckeditor.php") and isset($desc)){
 		if (preg_match("/gecko/i",$_SERVER['HTTP_USER_AGENT'])||preg_match("/msie/i",$_SERVER['HTTP_USER_AGENT'])){
-			$desc =str_replace("<br>", "\n", $desc);
+			$desc =str_replace("<br />", "\n", $desc);
 		}
 	}
 	else if (!preg_match("/gecko/i",$_SERVER['HTTP_USER_AGENT']) and !preg_match("/msie/i",$_SERVER['HTTP_USER_AGENT'])){
-		$desc =str_replace("<br>", "\n", $desc);
+		$desc =str_replace("<br />", "\n", $desc);
 	}
 
 //crea interfaccia web
 if ($action =="edit"){
 ?>
-<div style="text-align:center"><b><?php echo _FDEDITDESC; ?><?php echo $filepath; ?></b></div>
+<div align="center"><b><?php echo _FDEDITDESC; ?><?php echo $filepath; ?></b></div>
 
 <?php
 } //fine edit
 else if ($action=="upload" or $action=="addurl"){
 	echo "
 <div align=\"center\"><b>"._FDADDWHERE."$path</b></div>";
-// <br><br>"._FDADDHEADER."<br><br>";
+// <br /><br />"._FDADDHEADER."<br /><br />";
 }
 else if ($action=="userupload"){
 echo "
@@ -1343,7 +1354,7 @@ echo "
 if ($action=="upload" or $action=="userupload"){
 ?>
 
-	<script type="text/javascript">
+	<script type="text/javascript" language="javascript">
 	function validatefile()
 		{
 			if(document.getElementsByName('fdfile')[1].value=='')
@@ -1374,7 +1385,7 @@ else if ($action=="userupload") echo "userupload";
 <input type="hidden" name="path" value="<?php echo $path; ?>" readonly="readonly">
 
 
-<br><div style="text-align:center;"><?php
+<br /><div style="text-align:center;"><?php
 	if ($action=="edit"){
 // 		echo _FDEDITFOOTER;
 	}
@@ -1382,9 +1393,9 @@ else if ($action=="userupload") echo "userupload";
 		echo _FDADDFOOTER;
 	}
 
- ?><br><br>
+ ?><br /><br />
 
-<div align="center">
+
 <?php
 
 if ($action=="userupload"){
@@ -1393,7 +1404,7 @@ if ($action=="userupload"){
 else echo "<input type=\"hidden\" name=\"max_file_size\" value=\"$maxFileSize\">";
 
 if ($action=="addurl") {
-	echo _FDCHOOSEURL."<br><br>";
+	echo _FDCHOOSEURL."<br /><br />";
 	echo "<b>Url: </b> ";
 	echo "<input type=\"text\" name=\"fdurl\" value=\"\" size=\"50\">";
 
@@ -1411,7 +1422,7 @@ else if ($action =="edit"){
 }
 
 ?>
-<br><input type="SUBMIT" value="<?php
+<br /><br /><input type="SUBMIT" value="<?php
 	if ($action=="edit"){
 		echo _FDEDITSAVE;
 	}
@@ -1421,19 +1432,19 @@ else if ($action =="edit"){
 
 ?>">
 </div>
-</div>
 
-<br>
-<fieldset><legend><b><?php echo _FDBASIC; ?></b></legend>
+
+
+<div align="center"><fieldset><legend><b><?php echo _FDBASIC; ?></b></legend>
 <table width="100%">
 
   <tbody>
     <tr>
-      <td style="text-align:right; vertical-align:top;"><b><?php echo _FDNAME ?></b></td>
-      <td><input type="text" name="filename" value="<?php if (isset($name)) echo $name; ?>" size="42"></td>
+      <td  valign="top" align="right"><b><?php echo _FDNAME ?></b></td>
+      <td>  <input type="text" name="filename" value="<?php if (isset($name)) echo $name; ?>" size="42"></td>
     </tr>
     <tr>
-      <td style="text-align:right; vertical-align:top;"><b><?php echo _FDDESC ?></b></td>
+      <td valign="top" align="right"><b><?php echo _FDDESC ?></b></td>
       <td>
       <?php
       //verifico $desc
@@ -1453,48 +1464,49 @@ else if ($action =="edit"){
 
     </tr>
     <tr>
-      <td style="text-align:right; vertical-align:top;"><b><?php echo _FDVERSION ?></b></td>
+      <td  valign="top" align="right"><b><?php echo _FDVERSION ?></b></td>
       <td><input type="text" name="version" value="<?php if (isset($version)) echo $version; ?>"></td>
     </tr>
-    <tr><td style="text-align:right; vertical-align:top;"><br><b><?php echo _FDUSERLABEL; ?>&nbsp;(*)</b><br><input type="text" name="userlabel" value="<?php echo $userlabel; ?>" size="8"></td>
-    <td><b><br><?php echo _FDUSERVALUE; ?> (*)</b><br><textarea name="uservalue" rows="1" cols="40"><?php echo $uservalue; ?></textarea></td></tr>
-    <tr><td></td><td><i>(*) <?php echo _FDUSERBOTH; ?></i></td></tr>
+    <tr><td valign="top" align="right"><br /><b><?php echo _FDUSERLABEL; ?>&nbsp;(*)</b><br /><input type="text" name="userlabel" value="<?php echo $userlabel; ?>" size="8"></td>
+    <td><b><br /><?php echo _FDUSERVALUE; ?> (*)</b><br /><textarea name="uservalue" rows="1" cols="40"><?php echo $uservalue; ?></textarea></td></tr>
+    <tr><td align="center" colspan="2"><i>(*) <?php echo _FDUSERBOTH; ?></i></td></tr>
     <?php if ($action!="userupload"){ ?>
     <tr>
-      <td style="text-align:right; vertical-align:top;"><br /><b>Screenshot</b></td>
-      <td><br><input name="fdscreenshot" type="file"></td>
+      <td  valign="top" align="right"><br /><b>Screenshot</b></td>
+      <td><br /><input name="fdscreenshot" type="file"></td>
     </tr>
     <?php }//fine if userupload ?>
+<!--     <tr><td colspan="2"><hr></td></tr> -->
 
   </tbody>
 </table>
 </fieldset>
-<br>
+
 <fieldset><legend><b><?php echo _FDADVANCED; ?></b></legend>
 
-<table width="100%">
+<table>
 <tr>
-      <td style="text-align:right; vertical-align:top;"><b>md5</b></td>
+      <td  valign="top" align="right"><br /><b>md5</b></td>
       <td><input type="text" name="md5" value="<?php if (isset($md5)) echo $md5; ?>" size="32">
       <input type="checkbox" name="automd5post" <?php
       if ($automd5=="1") echo "checked";
       ?>> auto</td>
     </tr>
     <tr>
-      <td style="text-align:right; vertical-align:top;"><b>sha1</b></td>
+      <td  valign="top" align="right"><b>sha1</b></td>
       <td><input type="text" name="sha1" value="<?php if (isset($sha1)) echo $sha1; ?>" size="42">
       <input type="checkbox" name="autosha1post" <?php
       if ($autosha1=="1") echo "checked";
       ?>> auto</td>
     </tr>
     <tr>
-      <td style="text-align:right; vertical-align:top;"><b><?php echo _FDGPGSIGN; ?></b></td>
+      <td  valign="top" align="right"><b><?php echo _FDGPGSIGN; ?></b></td>
       <td><input name="fdsig" type="file">
       </td>
     </tr>
     <tr>
-      <td style="text-align:right; vertical-align:top;"><br /><b><?php echo _LEVEL; ?></b></td>
-      <td><br><select name="fdfilelevel"><?php
+      <td  valign="top" align="right"><br /><b><?php echo _LEVEL; ?></b></td>
+      <td><br /><select name="fdfilelevel"><?php
       echo "<option value=\"-1\">---</option>";
       $countlevel=0;
 
@@ -1507,13 +1519,13 @@ else if ($action =="edit"){
       ?></select></td>
     </tr>
     <tr>
-      <td  style="text-align:right; vertical-align:top;"><br><b><?php echo _FDBLOCKS; ?></b></td>
+      <td  valign="top" align="right"><br /><b><?php echo _FDBLOCKS; ?></b></td>
       <td><?php
       if (!isset($showinblocks)) $showinblocks="true";
       if ($showinblocks=="true"){
-	echo "<br><input type=\"checkbox\" name=\"showinblocks\" value=\"true\" checked=\"checked\" />";
+	echo "<br /><input type=\"checkbox\" name=\"showinblocks\" value=\"true\" checked=\"checked\" />";
       }
-      else echo "<br><input type=\"checkbox\" name=\"showinblocks\" value=\"true\" />";
+      else echo "<br /><input type=\"checkbox\" name=\"showinblocks\" value=\"true\" />";
 
       echo _FDSHOWINBLOCKS;
       ?>
@@ -1521,7 +1533,7 @@ else if ($action =="edit"){
       </td>
     </tr>
     <tr>
-      <td  style="text-align:right; vertical-align:top;"><b><?php echo _ENABLEVOTE; ?></b></td>
+      <td  valign="top" align="right"><b><?php echo _ENABLEVOTE; ?></b></td>
       <td>
       <input type="checkbox" name="enablerating" <?php
       if ($enablerating=="1") echo "checked";
@@ -1532,8 +1544,8 @@ else if ($action =="edit"){
 
 </table>
 </fieldset>
-<div align="center">
-<br><input type="SUBMIT" value="<?php
+
+<br /><br /><input type="SUBMIT" value="<?php
 	if ($action=="edit"){
 		echo _FDEDITSAVE;
 	}
@@ -1542,7 +1554,7 @@ else if ($action =="edit"){
 	}
 
 ?>">
-</div>
+
 </div>
 </form>
 
@@ -1623,10 +1635,10 @@ function create_id($filename){
 
 //Le seguenti funzioni in precedenza erano in fd+.php
 /**
- * Restituisce true se l'utente √® di livello 10
+ * Restituisce true se l'utente Ë di livello 10
  * (e dunque possiede i privilegi di amministrazione)
  *
- * @return TRUE se l'utente collegato √® di livello 10, FALSE se non lo √®
+ * @return TRUE se l'utente collegato Ë di livello 10, FALSE se non lo Ë
  * @author Aldo Boccacci
  */
 function fd_is_admin(){
@@ -1667,17 +1679,29 @@ function rename_archivedir($archivedir){
 
 }
 
+/**
+ *
+ * @return TRUE se l'utente ha i permessi per vedere il file specificato, FALSE se
+ * non li ha
+ * @since 0.7
+ * @author Aldo Boccacci
+ */
+/*
+function user_can_view_file($file){
+	if (!fc_check_path($file)) return FALSE;
+}
+*/
 
 /**
  * Questa funzione serve per salvare il log di fd+.
  * Il messaggio viene formattato aggiungendo campi di interesse.
  *
  * Dalla versione 0.8 sono presenti due file di log:
- * 1. √® quello impostato dalla variabile $logfile. Viene utilizzato se non viene impostato il secondo parametro.
- * 2. se viene impostato come secondo parametro "ERROR" il file di log avr√† nome fdlogerror.php (di default)
+ * 1. Ë quello impostato dalla variabile $logfile. Viene utilizzato se non viene impostato il secondo parametro.
+ * 2. se viene impostato come secondo parametro "ERROR" il file di log avr‡ nome fdlogerror.php (di default)
  *
  * @param string $message il messaggio da salvare
- * @param string $type il tipo di messaggio. Pu√≤ essere lasciato vuoto o
+ * @param string $type il tipo di messaggio. PuÚ essere lasciato vuoto o
  *               impostato a "ERROR"
  * @author Aldo Boccacci
  * @since 0.7
@@ -1685,7 +1709,7 @@ function rename_archivedir($archivedir){
 function fdlogf($message,$type="") {
 	global $fdlogfile;
 	$fdlogfile_originale = $fdlogfile;
-	if (!isset($fdlogfile)) $fdlogfile = get_fn_dir("var")."/log/fdpluslog.php";
+	if (!isset($fdlogfile)) $fdlogfile=get_fn_dir("var")."/log/fdpluslog.php";
 
 	if (preg_match("/\<\?/",$message) or preg_match("/\?\>/",$message)) fd_die(_FDNONPUOI.basename(__FILE__).": ".__LINE__);
 
@@ -1704,7 +1728,7 @@ function fdlogf($message,$type="") {
 	else {
 		$logtext="";
 		$logtext = get_file($fdlogfile);
-		if (!preg_match("/^\<\?php exit\(1\);\?\>/i",$logtext)){
+		if (!preg_match("/\<\?php exit\(1\);\?\>/i",$logtext)){
 // 		echo "no codice controllo";
 			fnwrite($fdlogfile,"<?php exit(1);?>\n$logtext","w",array("nonull"));
 		}
@@ -1763,7 +1787,7 @@ function fdlog($message) {
 	else {
 		$logtext="";
 		$logtext = get_file($fdlogfile);
-		if (!preg_match("/^\<\?php exit\(1\);\?\>/i",$logtext)){
+		if (!preg_match("/\<\?php exit\(1\);\?\>/i",$logtext)){
 // 		echo "no codice controllo";
 			$flogtemp = fopen($fdlogfile,"w");
 			fwrite($flogtemp,"<?php exit(1);?>\n".strip_tags($logtext));
@@ -1794,7 +1818,7 @@ function fdlog($message) {
  * salva un messaggio nel log
  * @param string $message il messaggio da stampare a schermo e da salvare nel log
  * @param string $file il file che ha generato l'errore
- * @param string $line la linea nella quale √® stato generato l'errore
+ * @param string $line la linea nella quale Ë stato generato l'errore
  * @author Aldo Boccacci
  * @since 0.7
  */

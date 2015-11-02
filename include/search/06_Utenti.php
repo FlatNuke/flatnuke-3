@@ -56,10 +56,10 @@ function show_users_result($files){
 	//se non ho trovato niente...
 	if ($where!="allsite"){
 		if (count($files)==0){
-			echo _NORESULT."<br><a href=\"javascript:history.back();\" title=\""._INDIETRO."\">&lt;&lt; "._INDIETRO."</a>";
+			echo _NORESULT."<br /><a href=\"javascript:history.back();\" title=\""._INDIETRO."\">&lt;&lt; "._INDIETRO."</a>";
 
 		}
-		else echo "<br><b>"._FP_RISULTATI.":</b><br><br>";
+		else echo "<br /><b>"._FP_RISULTATI.":</b><br /><br />";
 	}
 	else {
 		echo "<h4>".ucfirst(_FUTENTI).":</h4>";
@@ -71,7 +71,7 @@ function show_users_result($files){
 
 		if (getlevel($username,"home")=="10") echo "<img src=\"images/useronline/usr-admin.gif\" alt=\"admin\" />&nbsp;";
 		else echo "<img src=\"images/useronline/usr-user.gif\" alt=\"user\" />&nbsp;";
-		echo "<a href=\"index.php?mod=none_Login&amp;action=viewprofile&amp;user=$username\" title=\""._VIEW_USERPROFILE."\">$username</a><br>";
+		echo "<a href=\"index.php?mod=none_Login&amp;action=viewprofile&amp;user=$username\" title=\""._VIEW_USERPROFILE."\">$username</a><br />";
 
 	}
 }
@@ -82,8 +82,8 @@ function show_users_result($files){
  * Cerca la stringa $string nei file $files
  * @param string $string la stringa da cercare
  * @param array $files l'array di file in cui cercare la stringa
- * @param string $method il metodo di ricerca. PuÃ² essere "OR" oppure "AND"
- * @return un array con i percorsi dei file in cui Ã¨ stata trovata la stringa
+ * @param string $method il metodo di ricerca. Può essere "OR" oppure "AND"
+ * @return un array con i percorsi dei file in cui è stata trovata la stringa
  */
 function find_users($string,$files,$method){
 	//se non sono un utente registrato

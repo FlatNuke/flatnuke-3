@@ -151,7 +151,7 @@ define("_FDCREATESUBSECT","Cr&eacute;er une nouvelle section au sein de: ");
 //Alert
 define("_FDDESCTOOLONG","<b>Attention!</b> la cha&icirc;ne contenant la description est trop long!");
 define("_FDNAMETOOLONG","<b>Attention!</b> la cha&icirc;ne contenant la description est trop long!");
-define("_FDREADONLYDIR","<b>Attention:</b> vous ne pouvez pas &eacute;crire dans le dossier. V&eacute;rifiez les autorisations.");
+define("_FDREDONLYDIR","<b>Attention:</b> vous ne pouvez pas &eacute;crire dans le dossier. V&eacute;rifiez les autorisations.");
 define("_FDERROR","<B>Erreur!</B>");
 
 //error

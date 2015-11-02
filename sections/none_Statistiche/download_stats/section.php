@@ -83,7 +83,7 @@ function fdview_check_file($topdownloadsfile){
 	if (!is_dir(dirname($topdownloadsfile))) fn_mkdir(dirname($topdownloadsfile),0777);
 	if (!file_exists($topdownloadsfile)){
 		$tmpfile = fopen($topdownloadsfile,"w");
-		fwrite($tmpfile,"<?xml version='1.0' encoding='UTF-8'?>\n<topdownloads>\n</topdownloads>");
+		fwrite($tmpfile,"<?xml version='1.0'?>\n<topdownloads>\n</topdownloads>");
 		fclose($tmpfile);
 	}
 }
@@ -99,13 +99,13 @@ function fdview_check_file($topdownloadsfile){
 function show_file($filepath,$archivedir,$newfiletime,$icon_style){
 	$description  = load_description($filepath);
 	if ($description['hide']=="true" and !is_admin()) return;
-	//controllo se il livello dell'utente Ã¨ adeguato a quello del file
+	//controllo se il livello dell'utente è adeguato a quello del file
 	if ($description['level']!="-1"){
 		if($description['level'] > _FN_USERLEVEL)
 			return;
 	}
 
-	//controllo se il livello dell'utente Ã¨ adeguato a quello della sezione che ospita il file
+	//controllo se il livello dell'utente è adeguato a quello della sezione che ospita il file
 	$mod="";
 	$mod = preg_replace("/^.*sections\//i","",dirname($filepath));
 	if(getsectlevel($mod) > _FN_USERLEVEL) return;

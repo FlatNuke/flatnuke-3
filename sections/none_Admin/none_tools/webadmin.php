@@ -33,7 +33,7 @@ include_once("header.php");
 if(!is_admin()) {
 	$ip = getparam("REMOTE_ADDR", PAR_SERVER, SAN_NULL);
 	fnlog("Security", "$ip||".get_username()."||Tried to access the FTP file manager.");
-	echo "<div><h2>Reserved area: keep out!</h2></div>";
+	echo "<center><h2>Reserved area: keep out!</h2></center>";
 	return;
 }
 // <---
@@ -229,7 +229,7 @@ case 'view':
 		html_header();
 		echo '<h2 style="text-align: left; margin-bottom: 0">' . html($file) . '</h2>
 
-<hr>
+<hr />
 
 <table>
 <tr>
@@ -385,11 +385,11 @@ case 'delete':
 ';
 
 		foreach ($files as $file) {
-			echo "\t" . html($file) . "<br>\n";
+			echo "\t" . html($file) . "<br />\n";
 		}
 
 		echo '	</p>
-	<hr>
+	<hr />
 	<input type="submit" name="no" value="' . word('no') . '" id="red_button" />
 	<input type="submit" name="yes" value="' . word('yes') . '" id="green_button" style="margin-left: 50px" />
 </td>
@@ -435,7 +435,7 @@ case 'rename':
 	<p>' . html($file) . '</p>
 	<b>' . substr($file, 0, strlen($file) - strlen($name)) . '</b>
 	<input type="text" name="destination" size="' . textfieldsize($name) . '" value="' . html($name) . '" />
-	<hr>
+	<hr />
 	<input type="submit" value="' . word('rename') . '" />
 </td>
 </tr>
@@ -500,11 +500,11 @@ case 'move':
 ';
 
 		foreach ($files as $file) {
-			echo "\t" . html($file) . "<br>\n";
+			echo "\t" . html($file) . "<br />\n";
 		}
 
 		echo '	</p>
-	<hr>
+	<hr />
 	' . word('destination') . ':
 	<input type="text" name="destination" size="' . textfieldsize($directory) . '" value="' . html($directory) . '" />
 	<input type="submit" value="' . word('move') . '" />
@@ -583,11 +583,11 @@ case 'copy':
 ';
 
 		foreach ($files as $file) {
-			echo "\t" . html($file) . "<br>\n";
+			echo "\t" . html($file) . "<br />\n";
 		}
 
 		echo '	</p>
-	<hr>
+	<hr />
 	' . word('destination') . ':
 	<input type="text" name="destination" size="' . textfieldsize($directory) . '" value="' . html($directory) . '" />
 	<input type="submit" value="' . word('copy') . '" />
@@ -633,7 +633,7 @@ case 'create_symlink':
 <tr>
 	<td style="vertical-align: top">' . word('destination') . ': </td>
 	<td>
-		<b>' . html($file) . '</b><br>
+		<b>' . html($file) . '</b><br />
 		<input type="checkbox" name="relative" value="yes" id="checkbox_relative" checked="checked" style="margin-top: 1ex" />
 		<label for="checkbox_relative">' . word('relative') . '</label>
 		<input type="hidden" name="action" value="create_symlink" />
@@ -715,7 +715,7 @@ case 'permission':
 
 	<p style="margin: 0">' . phrase('permission_for', $file) . '</p>
 
-	<hr>
+	<hr />
 
 	<table id="permission">
 	<tr>
@@ -744,7 +744,7 @@ case 'permission':
 	</tr>
 	</table>
 
-	<hr>
+	<hr />
 
 	<input type="submit" name="set" value="' . word('set') . '" />
 
@@ -1456,7 +1456,7 @@ function edit ($file) {
 
 	echo '</textarea>
 
-	<hr>
+	<hr />
 ';
 
 	if ($apache && basename($file) == $htpasswd) {
@@ -1465,7 +1465,7 @@ function edit ($file) {
 	' . word('password') . ': <input type="password" name="password" />
 	<input type="submit" value="' . word('add') . '" />
 
-	<hr>
+	<hr />
 ';
 
 	}
@@ -1474,7 +1474,7 @@ function edit ($file) {
 		echo '
 	<input type="submit" name="basic_auth" value="' . word('add_basic_auth') . '" />
 
-	<hr>
+	<hr />
 ';
 
 	}
@@ -1569,7 +1569,7 @@ function getwords ($lang) {
 'file' => 'Datei',
 'filename' => 'Dateiname',
 
-'size' => 'GrÃ¶ÃŸe',
+'size' => 'Größe',
 'permission' => 'Rechte',
 'owner' => 'Eigner',
 'group' => 'Gruppe',
@@ -1578,10 +1578,10 @@ function getwords ($lang) {
 
 'read' => 'lesen',
 'write' => 'schreiben',
-'execute' => 'ausfÃ¼hren',
+'execute' => 'ausführen',
 
 'create_symlink' => 'Symlink erstellen',
-'delete' => 'lÃ¶schen',
+'delete' => 'löschen',
 'rename' => 'umbenennen',
 'move' => 'verschieben',
 'copy' => 'kopieren',
@@ -1592,29 +1592,29 @@ function getwords ($lang) {
 'change' => 'wechseln',
 'save' => 'speichern',
 'set' => 'setze',
-'reset' => 'zurÃ¼cksetzen',
+'reset' => 'zurücksetzen',
 'relative' => 'Pfad zum Ziel relativ',
 
 'yes' => 'Ja',
 'no' => 'Nein',
-'back' => 'zurÃ¼ck',
+'back' => 'zurück',
 'destination' => 'Ziel',
 'symlink' => 'Symbolischer Link',
 'no_output' => 'keine Ausgabe',
 
 'user' => 'Benutzername',
 'password' => 'Kennwort',
-'add' => 'hinzufÃ¼gen',
-'add_basic_auth' => 'HTTP-Basic-Auth hinzufÃ¼gen',
+'add' => 'hinzufügen',
+'add_basic_auth' => 'HTTP-Basic-Auth hinzufügen',
 
 'uploaded' => '"[%1]" wurde hochgeladen.',
 'not_uploaded' => '"[%1]" konnte nicht hochgeladen werden.',
 'already_exists' => '"[%1]" existiert bereits.',
 'created' => '"[%1]" wurde erstellt.',
 'not_created' => '"[%1]" konnte nicht erstellt werden.',
-'really_delete' => 'Sollen folgende Dateien wirklich gelÃ¶scht werden?',
-'deleted' => "Folgende Dateien wurden gelÃ¶scht:\n[%1]",
-'not_deleted' => "Folgende Dateien konnten nicht gelÃ¶scht werden:\n[%1]",
+'really_delete' => 'Sollen folgende Dateien wirklich gelöscht werden?',
+'deleted' => "Folgende Dateien wurden gelöscht:\n[%1]",
+'not_deleted' => "Folgende Dateien konnten nicht gelöscht werden:\n[%1]",
 'rename_file' => 'Benenne Datei um:',
 'renamed' => '"[%1]" wurde in "[%2]" umbenannt.',
 'not_renamed' => '"[%1] konnte nicht in "[%2]" umbenannt werden.',
@@ -1625,15 +1625,15 @@ function getwords ($lang) {
 'copied' => "Folgende Dateien wurden nach \"[%2]\" kopiert:\n[%1]",
 'not_copied' => "Folgende Dateien konnten nicht nach \"[%2]\" kopiert werden:\n[%1]",
 'not_edited' => '"[%1]" kann nicht editiert werden.',
-'executed' => "\"[%1]\" wurde erfolgreich ausgefÃ¼hrt:\n{%2}",
-'not_executed' => "\"[%1]\" konnte nicht erfolgreich ausgefÃ¼hrt werden:\n{%2}",
+'executed' => "\"[%1]\" wurde erfolgreich ausgeführt:\n{%2}",
+'not_executed' => "\"[%1]\" konnte nicht erfolgreich ausgeführt werden:\n{%2}",
 'saved' => '"[%1]" wurde gespeichert.',
 'not_saved' => '"[%1]" konnte nicht gespeichert werden.',
 'symlinked' => 'Symbolischer Link von "[%2]" nach "[%1]" wurde erstellt.',
 'not_symlinked' => 'Symbolischer Link von "[%2]" nach "[%1]" konnte nicht erstellt werden.',
-'permission_for' => 'Rechte fÃ¼r "[%1]":',
-'permission_set' => 'Die Rechte fÃ¼r "[%1]" wurden auf [%2] gesetzt.',
-'permission_not_set' => 'Die Rechte fÃ¼r "[%1]" konnten nicht auf [%2] gesetzt werden.',
+'permission_for' => 'Rechte für "[%1]":',
+'permission_set' => 'Die Rechte für "[%1]" wurden auf [%2] gesetzt.',
+'permission_not_set' => 'Die Rechte für "[%1]" konnten nicht auf [%2] gesetzt werden.',
 'not_readable' => '"[%1]" kann nicht gelesen werden.'
 		);
 
@@ -1643,34 +1643,34 @@ function getwords ($lang) {
 		$word_charset = _CHARSET;
 
 		return array(
-'directory' => 'RÃ©pertoire',
+'directory' => 'Répertoire',
 'file' => 'Fichier',
 'filename' => 'Nom fichier',
 
 'size' => 'Taille',
 'permission' => 'Droits',
-'owner' => 'PropriÃ©taire',
+'owner' => 'Propriétaire',
 'group' => 'Groupe',
 'other' => 'Autres',
 'functions' => 'Fonctions',
 
 'read' => 'Lire',
 'write' => 'Ecrire',
-'execute' => 'ExÃ©cuter',
+'execute' => 'Exécuter',
 
-'create_symlink' => 'CrÃ©er lien symbolique',
+'create_symlink' => 'Créer lien symbolique',
 'delete' => 'Effacer',
 'rename' => 'Renommer',
-'move' => 'DÃ©placer',
+'move' => 'Déplacer',
 'copy' => 'Copier',
 'edit' => 'Ouvrir',
-'download' => 'TÃ©lÃ©charger sur PC',
-'upload' => 'TÃ©lÃ©charger sur serveur',
-'create' => 'CrÃ©er',
+'download' => 'Télécharger sur PC',
+'upload' => 'Télécharger sur serveur',
+'create' => 'Créer',
 'change' => 'Changer',
 'save' => 'Sauvegarder',
-'set' => 'ExÃ©cuter',
-'reset' => 'RÃ©initialiser',
+'set' => 'Exécuter',
+'reset' => 'Réinitialiser',
 'relative' => 'Relatif',
 
 'yes' => 'Oui',
@@ -1685,34 +1685,34 @@ function getwords ($lang) {
 'add' => 'Ajouter',
 'add_basic_auth' => 'add basic-authentification',
 
-'uploaded' => '"[%1]" a Ã©tÃ© tÃ©lÃ©chargÃ© sur le serveur.',
-'not_uploaded' => '"[%1]" n a pas Ã©tÃ© tÃ©lÃ©chargÃ© sur le serveur.',
-'already_exists' => '"[%1]" existe dÃ©jÃ .',
-'created' => '"[%1]" a Ã©tÃ© crÃ©Ã©.',
-'not_created' => '"[%1]" n\'a pas pu Ãªtre crÃ©Ã©.',
+'uploaded' => '"[%1]" a été téléchargé sur le serveur.',
+'not_uploaded' => '"[%1]" n a pas été téléchargé sur le serveur.',
+'already_exists' => '"[%1]" existe déjà.',
+'created' => '"[%1]" a été créé.',
+'not_created' => '"[%1]" n\'a pas pu être créé.',
 'really_delete' => 'Effacer le fichier?',
-'deleted' => "Ces fichiers ont Ã©tÃ© dÃ©tuits:\n[%1]",
-'not_deleted' => "Ces fichiers n ont pu Ãªtre dÃ©truits:\n[%1]",
+'deleted' => "Ces fichiers ont été détuits:\n[%1]",
+'not_deleted' => "Ces fichiers n ont pu être détruits:\n[%1]",
 'rename_file' => 'Renomme fichier:',
-'renamed' => '"[%1]" a Ã©tÃ© renommÃ© en "[%2]".',
-'not_renamed' => '"[%1] n\'a pas pu Ãªtre renommÃ© en "[%2]".',
-'move_files' => 'DÃ©placer ces fichiers:',
-'moved' => "Ces fichiers ont Ã©tÃ© dÃ©placÃ©s en \"[%2]\":\n[%1]",
-'not_moved' => "Ces fichiers n'ont pas pu Ãªtre dÃ©placÃ©s en \"[%2]\":\n[%1]",
+'renamed' => '"[%1]" a été renommé en "[%2]".',
+'not_renamed' => '"[%1] n\'a pas pu être renommé en "[%2]".',
+'move_files' => 'Déplacer ces fichiers:',
+'moved' => "Ces fichiers ont été déplacés en \"[%2]\":\n[%1]",
+'not_moved' => "Ces fichiers n'ont pas pu être déplacés en \"[%2]\":\n[%1]",
 'copy_files' => 'Copier ces fichiers:',
-'copied' => "Ces fichiers ont Ã©tÃ© copiÃ©s en \"[%2]\":\n[%1]",
-'not_copied' => "Ces fichiers n'ont pas pu Ãªtre copiÃ©s en \"[%2]\":\n[%1]",
-'not_edited' => '"[%1]" ne peut Ãªtre ouvert.',
-'executed' => "\"[%1]\" a Ã©tÃ© brillamment exÃ©cutÃ© :\n{%2}",
-'not_executed' => "\"[%1]\" n'a pas pu Ãªtre exÃ©cutÃ©:\n{%2}",
-'saved' => '"[%1]" a Ã©tÃ© sauvegardÃ©.',
-'not_saved' => '"[%1]" n\'a pas pu Ãªtre sauvegardÃ©.',
-'symlinked' => 'Un lien symbolique depuis "[%2]" vers "[%1]" a Ã©tÃ© crÃ©e.',
-'not_symlinked' => 'Un lien symbolique depuis "[%2]" vers "[%1]" n\'a pas pu Ãªtre crÃ©Ã©.',
+'copied' => "Ces fichiers ont été copiés en \"[%2]\":\n[%1]",
+'not_copied' => "Ces fichiers n'ont pas pu être copiés en \"[%2]\":\n[%1]",
+'not_edited' => '"[%1]" ne peut être ouvert.',
+'executed' => "\"[%1]\" a été brillamment exécuté :\n{%2}",
+'not_executed' => "\"[%1]\" n'a pas pu être exécuté:\n{%2}",
+'saved' => '"[%1]" a été sauvegardé.',
+'not_saved' => '"[%1]" n\'a pas pu être sauvegardé.',
+'symlinked' => 'Un lien symbolique depuis "[%2]" vers "[%1]" a été crée.',
+'not_symlinked' => 'Un lien symbolique depuis "[%2]" vers "[%1]" n\'a pas pu être créé.',
 'permission_for' => 'Droits de "[%1]":',
-'permission_set' => 'Droits de "[%1]" ont Ã©tÃ© changÃ©s en [%2].',
-'permission_not_set' => 'Droits de "[%1]" n\'ont pas pu Ãªtre changÃ©s en[%2].',
-'not_readable' => '"[%1]" ne peut pas Ãªtre ouvert.'
+'permission_set' => 'Droits de "[%1]" ont été changés en [%2].',
+'permission_not_set' => 'Droits de "[%1]" n\'ont pas pu être changés en[%2].',
+'not_readable' => '"[%1]" ne peut pas être ouvert.'
 		);
 
 	case 'it':
@@ -1751,7 +1751,7 @@ function getwords ($lang) {
 'reset' => 'reimposta',
 'relative' => 'Percorso relativo per la destinazione',
 
-'yes' => 'SÃ¬',
+'yes' => 'Si',
 'no' => 'No',
 'back' => 'indietro',
 'destination' => 'Destinazione',
@@ -1763,34 +1763,34 @@ function getwords ($lang) {
 'add' => 'aggiungi',
 'add_basic_auth' => 'aggiungi autenticazione base',
 
-'uploaded' => '"[%1]" Ã¨ stato caricato.',
-'not_uploaded' => '"[%1]" non Ã¨ stato caricato.',
-'already_exists' => '"[%1]" esiste giÃ .',
-'created' => '"[%1]" Ã¨ stato creato.',
-'not_created' => '"[%1]" non Ã¨ stato creato.',
+'uploaded' => '"[%1]" è stato caricato.',
+'not_uploaded' => '"[%1]" non è stato caricato.',
+'already_exists' => '"[%1]" esiste già.',
+'created' => '"[%1]" è stato creato.',
+'not_created' => '"[%1]" non è stato creato.',
 'really_delete' => 'Cancello questi file?',
 'deleted' => "Questi file sono stati cancellati:\n[%1]",
 'not_deleted' => "Questi file non possono essere cancellati:\n[%1]",
 'rename_file' => 'File rinominato:',
-'renamed' => '"[%1]" Ã¨ stato rinominato in "[%2]".',
-'not_renamed' => '"[%1] non Ã¨ stato rinominato in "[%2]".',
+'renamed' => '"[%1]" è stato rinominato in "[%2]".',
+'not_renamed' => '"[%1] non è stato rinominato in "[%2]".',
 'move_files' => 'Sposto questi file:',
 'moved' => "Questi file sono stati spostati in \"[%2]\":\n[%1]",
 'not_moved' => "Questi file non possono essere spostati in \"[%2]\":\n[%1]",
 'copy_files' => 'Copio questi file',
 'copied' => "Questi file sono stati copiati in \"[%2]\":\n[%1]",
 'not_copied' => "Questi file non possono essere copiati in \"[%2]\":\n[%1]",
-'not_edited' => '"[%1]" non puÃ² essere modificato.',
-'executed' => "\"[%1]\" Ã¨ stato eseguito con successo:\n{%2}",
-'not_executed' => "\"[%1]\" non Ã¨ stato eseguito con successo\n{%2}",
-'saved' => '"[%1]" Ã¨ stato salvato.',
-'not_saved' => '"[%1]" non Ã¨ stato salvato.',
-'symlinked' => 'Il link simbolico da "[%2]" a "[%1]" Ã¨ stato creato.',
-'not_symlinked' => 'Il link simbolico da "[%2]" a "[%1]" non Ã¨ stato creato.',
+'not_edited' => '"[%1]" non può essere modificato.',
+'executed' => "\"[%1]\" è stato eseguito con successo:\n{%2}",
+'not_executed' => "\"[%1]\" non è stato eseguito con successo\n{%2}",
+'saved' => '"[%1]" è stato salvato.',
+'not_saved' => '"[%1]" non è stato salvato.',
+'symlinked' => 'Il link simbolico da "[%2]" a "[%1]" è stato creato.',
+'not_symlinked' => 'Il link simbolico da "[%2]" a "[%1]" non è stato creato.',
 'permission_for' => 'Permessi di "[%1]":',
 'permission_set' => 'I permessi di "[%1]" sono stati impostati [%2].',
 'permission_not_set' => 'I permessi di "[%1]" non sono stati impostati [%2].',
-'not_readable' => '"[%1]" non puÃ² essere letto.'
+'not_readable' => '"[%1]" non può essere letto.'
 		);
 
 	case 'es':
@@ -1803,7 +1803,7 @@ function getwords ($lang) {
 'file' => 'Archivo',
 'filename' => 'Nombre Archivo',
 
-'size' => 'TamaÃ±o',
+'size' => 'Tamaño',
 'permission' => 'Permisos',
 'owner' => 'Propietario',
 'group' => 'Grupo',
@@ -1812,7 +1812,7 @@ function getwords ($lang) {
 
 'read' => 'lectura',
 'write' => 'escritura',
-'execute' => 'ejecuciÃ²n',
+'execute' => 'ejecuciòn',
 
 'create_symlink' => 'crear enlace',
 'delete' => 'borrar',
@@ -1831,7 +1831,7 @@ function getwords ($lang) {
 
 'yes' => 'Si',
 'no' => 'No',
-'back' => 'atrÃ¡s',
+'back' => 'atrás',
 'destination' => 'Destino',
 'symlink' => 'Enlace',
 'no_output' => 'sin salida',
@@ -1839,14 +1839,14 @@ function getwords ($lang) {
 'user' => 'Usuario',
 'password' => 'Clave',
 'add' => 'agregar',
-'add_basic_auth' => 'agregar autenticaciÃ³n bÃ¡sica',
+'add_basic_auth' => 'agregar autenticación básica',
 
 'uploaded' => '"[%1]" ha sido subido.',
 'not_uploaded' => '"[%1]" no pudo ser subido.',
 'already_exists' => '"[%1]" ya existe.',
 'created' => '"[%1]" ha sido creado.',
 'not_created' => '"[%1]" no pudo ser creado.',
-'really_delete' => 'Â¿Borra estos archivos?',
+'really_delete' => '¿Borra estos archivos?',
 'deleted' => "Estos archivos han sido borrados:\n[%1]",
 'not_deleted' => "Estos archivos no pudieron ser borrados:\n[%1]",
 'rename_file' => 'Renombra archivo:',
@@ -1868,7 +1868,7 @@ function getwords ($lang) {
 'permission_for' => 'Permisos de "[%1]":',
 'permission_set' => 'Permisos de "[%1]" fueron seteados a [%2].',
 'permission_not_set' => 'Permisos de "[%1]" no pudo ser seteado a [%2].',
-'not_readable' => '"[%1]" no pudo ser leÃ­do.'
+'not_readable' => '"[%1]" no pudo ser leído.'
 		);
 
 	case 'en':

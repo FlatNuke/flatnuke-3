@@ -75,7 +75,7 @@ if($showtext == 1){
 	$preflang = substr(preflang(),0,2);
 	switch($preflang) {
 		case("de"):
-			echo "Deine Sprache vorwÃ¤hlen:";
+			echo "Deine Sprache vorwählen:";
 		break;
 		case("en"):
 			echo "Choose your language:";
@@ -90,7 +90,7 @@ if($showtext == 1){
 			echo "Scegli la lingua:";
 		break;
 		case("pt"):
-			echo "Seleciona tua lÃ­ngua:";
+			echo "Seleciona tua língua:";
 		break;
 		default:
 			echo _LANG.":";
@@ -102,10 +102,10 @@ if($showtext == 1){
 ?><div style="text-align:center;">
 <a href="<?php echo $newurl?>&amp;userlang=de" title="deutsch"><img alt="deutsch" src="images/languages/de.png" style="border:1px solid #000000;padding:2px;" /></a>
 <a href="<?php echo $newurl?>&amp;userlang=en" title="english"><img alt="english" src="images/languages/en.png" style="border:1px solid #000000;padding:2px;" /></a>
-<a href="<?php echo $newurl?>&amp;userlang=es" title="espaÃ±ol"><img alt="espaÃ±ol" src="images/languages/es.png" style="border:1px solid #000000;padding:2px;" /></a>
-<a href="<?php echo $newurl?>&amp;userlang=fr" title="franÃ§ais"><img alt="franÃ§ais" src="images/languages/fr.png" style="border:1px solid #000000;padding:2px;" /></a>
+<a href="<?php echo $newurl?>&amp;userlang=es" title="español"><img alt="español" src="images/languages/es.png" style="border:1px solid #000000;padding:2px;" /></a>
+<a href="<?php echo $newurl?>&amp;userlang=fr" title="français"><img alt="français" src="images/languages/fr.png" style="border:1px solid #000000;padding:2px;" /></a>
 <a href="<?php echo $newurl?>&amp;userlang=it" title="italiano"><img alt="italiano" src="images/languages/it.png" style="border:1px solid #000000;padding:2px;" /></a>
-<a href="<?php echo $newurl?>&amp;userlang=pt" title="portuguÃªs"><img alt="portuguÃªs" src="images/languages/pt.png" style="border:1px solid #000000;padding:2px;" /></a>
+<a href="<?php echo $newurl?>&amp;userlang=pt" title="português"><img alt="português" src="images/languages/pt.png" style="border:1px solid #000000;padding:2px;" /></a>
 </div>
 
 <?php
@@ -119,8 +119,7 @@ if($showtext == 1){
  * @return array $lang_index Default language(s) of the browser
  */
 function preflang() {
-	$lang_list = (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : 'en';
-	$languages = preg_split("/,/", $lang_list);
+	$languages = preg_split("/,/", $_SERVER['HTTP_ACCEPT_LANGUAGE'] );
 	$lang_q = Array();
 	foreach( $languages as $aLang ) {
 		$lang_array = preg_split("/;q=/", trim( $aLang ) );

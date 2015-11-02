@@ -61,7 +61,7 @@ if($canc!="" AND is_admin()) {
 	$file_da_canc = getparam("file_da_canc",PAR_POST,SAN_FLAT);
 	unlink($percorso_vecchi."/".$file_da_canc);	// elimina sondaggio selezionato
 	fnlog($zone, "$ip_indirizzo||$myforum||Old poll deleted.");
-	echo "<script>
+	echo "<script language=\"javascript\">
 			alert(\""._FP_DELETEOK1." "
 			.date("j/n/Y, H:i:s", substr($file_da_canc,0,strpos($file_da_canc,'.'))).
 			" "._FP_DELETEOK2."\");
@@ -96,7 +96,7 @@ for ($i=0; $i<count($array_dir); $i++)				// stampa sondaggi
 
 		OpenTableTitle("<img src=\"themes/$theme/images/news.png\" alt=\"News\" />&nbsp;".get_xml_element("domanda",$file_xml)." ($voti_tot "._FP_VOTITOTALI.")");
 
-		echo "<br><table align=\"center\"><tbody>";
+		echo "<br /><table align=\"center\"><tbody>";
 		for($n=0; $n<count($opzione); $n++)				// stampa risultati sondaggio
 			{ if(get_xml_element("voto",$opzione[$n])==0)	// calcolo %
 				$perc = 0;
@@ -112,7 +112,7 @@ for ($i=0; $i<count($array_dir); $i++)				// stampa sondaggi
 			echo "<td align=\"right\">(".get_xml_element("voto",$opzione[$n])." "._FP_VOTI.")</td>";
 			echo "</tr>";
 			}
-		echo "</tbody></table><br>";
+		echo "</tbody></table><br />";
 
 		echo "<table width=\"100%\"><tbody><tr>";
 		echo "<td>"._FP_CHIUSO." ".date("j/n/Y, H:i:s", substr($array_dir[$i],0,strpos($array_dir[$i],'.')))."</td>";
@@ -125,7 +125,7 @@ for ($i=0; $i<count($array_dir); $i++)				// stampa sondaggi
 			echo "</form>";
 			echo "</td>";
 			}
-		echo "</tr></tbody></table><br>";
+		echo "</tr></tbody></table><br />";
 
 		$commenti = get_xml_element("commenti",$file_xml);
 		$commento = get_xml_array("commento",$commenti);
@@ -134,9 +134,9 @@ for ($i=0; $i<count($array_dir); $i++)				// stampa sondaggi
 			if(get_xml_element("by",$commento[$n]) == "")
 				echo "<b>"._FP_DA."</b> "._FP_SCON;
 			else echo "<b>"._FP_DA."</b> ".get_xml_element("by",$commento[$n]);
-			echo "<br><br>".get_xml_element("what",$commento[$n]);
+			echo "<br /><br />".get_xml_element("what",$commento[$n]);
 			CloseTable();
-			echo "<br>";
+			echo "<br />";
 			}
 		CloseTableTitle();
 		}

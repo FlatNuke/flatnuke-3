@@ -1,5 +1,5 @@
 <?php
-//lo script non pu√≤ essere richiamato direttamente
+//lo script non puÚ essere richiamato direttamente
 
 if (preg_match("/fdadmin.php/i",$_SERVER['PHP_SELF'])) {
     Header("Location: ../../index.php");
@@ -30,19 +30,17 @@ function file_admin_panel($path,$description){
 	if ($mod=="") return;
 // 	if (!fd_check_path($mod,"","false")) return;
 
-	echo "<tr><td>&nbsp;</td></tr>";
-
 	//gestisco i file in attesa di validazione
 	if ($mod=="none_Fdplus" or user_uploaded($path)) {
 		global $separator_char;
 		$correctname ="";
 		$correctname = preg_replace("/[0-9]+\\$separator_char/","",$path);
-		echo "<tr><th colspan=\"2\"><div align=\"center\"><br><form action=\"index.php?mod=none_Fdplus\" method=\"POST\">
+		echo "<tr><th colspan=\"2\"><div align=\"center\"><br /><form action=\"index.php?mod=none_Fdplus\" method=\"POST\">
 		<input type=\"hidden\" name=\"fdaction\" value=\"publishuserfile\" readonly=\"readonly\">
 		<input type=\"hidden\" name=\"fdfile\" value=\"$path\" readonly=\"readonly\">
 		<input type=\"SUBMIT\" value=\""._FDPUBLISH." ".basename($correctname)."\"></form></div>";
 
-		echo "<div align=\"center\"><br><form action=\"index.php?mod=none_Fdplus\" method=\"POST\">
+		echo "<div align=\"center\"><br /><form action=\"index.php?mod=none_Fdplus\" method=\"POST\">
 		<input type=\"hidden\" name=\"fdaction\" value=\"deleteuserfile\" readonly=\"readonly\">
 		<input type=\"hidden\" name=\"fdfile\" value=\"$path\" readonly=\"readonly\">
 		<input type=\"SUBMIT\" value=\""._FDDELETE." ".basename($correctname)."\"></form></div></th></tr>";
@@ -61,7 +59,7 @@ function file_admin_panel($path,$description){
 
 				if ($description['hide'] != "true"){
 					if(is_writable($filename.".description")){
-						echo "<th colspan=\"2\"><div align='center'><a href=\"index.php?mod=none_Fdplus&amp;fdaction=hide&amp;value=true&amp;fdfile=".rawurlencodepath($filename)."\" title=\""._FDHIDETITLE.basename($filename)."\">"._FDHIDE."</a> | ";
+						echo "<th colspan=\"2\"><a href=\"index.php?mod=none_Fdplus&amp;fdaction=hide&amp;value=true&amp;fdfile=".rawurlencodepath($filename)."\" title=\""._FDHIDETITLE.basename($filename)."\">"._FDHIDE."</a> | ";
 					}
 					else {
 						echo "<th colspan=\"2\"><span style=\"color : #ff0000; text-decoration : line-through;\">"._FDHIDE."</span> | ";
@@ -145,7 +143,7 @@ function file_admin_panel($path,$description){
 				else {
 					echo "<span style=\"color : #ff0000; text-decoration : line-through;\">"._FDEDIT."</span> ";
 				}
-
+				echo "<br /><hr style=\"width : 60%;\">";
 				//Opzione elimina
 				if (is_writable($filename) and is_writable($filename.".description") and is_writable(dirname($filename)) and (!file_exists($filename.".$extsig") or is_writable($filename.".$extsig"))
 				and (!file_exists($filename.".$extscreenshot") or is_writable($filename.".$extscreenshot"))){
@@ -172,10 +170,8 @@ function file_admin_panel($path,$description){
 						echo " | <span style=\"color : #ff0000; text-decoration : line-through;\">"._FDDELETESCREEN."</span>";
 					}
 				}
-				
-				echo "<br /><hr style=\"width : 60%;\">";
-				
-				echo "</div></th>";
+
+				echo "</th>";
 				echo "</tr>";
 }
 
@@ -186,7 +182,7 @@ function file_admin_panel($path,$description){
  *
  * @param string $dir la cartella in cui caricare la firma
  * @param string $mode "upload" se stiamo caricando un nuovo file, "edit" se ne stiamo modificando
- *                     uno gi√† presente
+ *                     uno gi‡ presente
  * @author Aldo Boccacci
  * @since 0.7
  */
@@ -212,7 +208,7 @@ function fd_upload_sig($file,$mode="upload"){
 
 	if (basename($file)!=preg_replace("/\.$extsig$/i","",basename($_FILES['fdsig']['name']))){
 		fdlogf("<b>Error! </b> the sig file is called ".basename($_FILES['fdsig']['name'])." but the correspondant file is called ".basename($file).". FDadmin: ".__LINE__);
-		echo "<b>Error! </b> the sig file is called ".basename($_FILES['fdsig']['name'])." but the correspondant file is called ".basename($file).". FDadmin: ".__LINE__."<br>The sign file will not be uploaded.";
+		echo "<b>Error! </b> the sig file is called ".basename($_FILES['fdsig']['name'])." but the correspondant file is called ".basename($file).". FDadmin: ".__LINE__."<br />The sign file will not be uploaded.";
 		return;
 	}
 
@@ -229,8 +225,8 @@ function fd_upload_sig($file,$mode="upload"){
 	}
 
 	if (isset($_FILES['fdsig']['name']) and trim($_FILES['fdsig']['name'])==""){
-		echo "<br><br><div align=\"center\">"._FDFILENOTSELECT;
-		echo "<br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br><br></div>";
+		echo "<br /><br /><div align=\"center\">"._FDFILENOTSELECT;
+		echo "<br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br /><br /></div>";
 			fd_die(_FDNONPUOI.basename(__FILE__).": ".__LINE__);
 	}
 
@@ -249,11 +245,11 @@ function fd_upload_sig($file,$mode="upload"){
 		else if ($_FILES['fdsig']['error']==6) echo _FDERROR6;
 		else if ($_FILES['fdsig']['error']==7) echo _FDERROR7;
 
-		fd_die("<br><br><b>FDadmin:</b> upload error.");
+		fd_die("<br /><br /><b>FDadmin:</b> upload error.");
 
 
 	}
-	if ($_FILES['fdsig']['size']==0) fd_die("<br><b>Error! </b>"._FDSIZE." file: 0 kb FDadmin: ".__LINE__);
+	if ($_FILES['fdsig']['size']==0) fd_die("<br /><b>Error! </b>"._FDSIZE." file: 0 kb FDadmin: ".__LINE__);
 
 	if (file_exists("$file.$extsig")) unlink("$file.$extsig");
 
@@ -289,8 +285,8 @@ function elimina($file){
 // 		/*include "config.php";*/ global $siteurl;
 
 		if (unlink($file)&&unlink("$file.description")){
-			echo "<div align=\"center\"><br><br>"._FDDELOK."<br><b>".preg_replace("/^sections\//i","",$file)."</b> </div>";
-			//._FDAND."<br><b> ".$file.".description</b><br>";
+			echo "<div align=\"center\"><br /><br />"._FDDELOK."<br /><b>".preg_replace("/^sections\//i","",$file)."</b> </div>";
+			//._FDAND."<br /><b> ".$file.".description</b><br />";
 			//l'utente che ha modificato il file
 			$myforum=get_username();
 
@@ -321,7 +317,7 @@ function elimina($file){
 		#$path = preg_replace("/$siteurl/", "", $path);
 		$path = preg_replace("/\/sections\//i", "", $path);
 		$path = preg_replace("/sections\//i", "", $path);
-		echo "<br><br><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($path)."\"><b>"._FDRETURN."</b></a></div>";
+		echo "<br /><br /><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($path)."\"><b>"._FDRETURN."</b></a></div>";
 
 	}
 }
@@ -343,9 +339,9 @@ function confermaElimina($file){
 	if(!fd_is_admin()) fd_die(_FDNONPUOI.basename(__FILE__).": ".__LINE__);
 
 	?>
-	<div style="text-align:center">
-	<br><?php echo _FDDELSURE; ?><b><?php echo preg_replace("/^sections\//i","",$file); ?></b>?
-	<br><br>
+	<div align="center">
+	<br /><?php echo _FDDELSURE; ?><b><?php echo preg_replace("/^sections\//i","",$file); ?></b>?
+	<br /><br />
 	<a href="index.php?mod=none_Fdplus&amp;fdaction=delete&amp;fdfile=<?php echo rawurlencodepath($file); ?>"><?php echo _FDDEL; ?></a>
 	<a href="javascript:history.back()"><?php echo _FDCANC; ?></a>
 	</div>
@@ -417,7 +413,7 @@ function archivia($file,$archivedir){
 	$description=array();
 	$description = load_description("$path/$archivedir/$filename");
 	insert_in_max_download("$path/$archivedir/$filename",$description['hits']);
-	echo "<br><br><div align=\"center\">"._FDARCHIVEOK."<br><br>";
+	echo "<br /><br /><div align=\"center\">"._FDARCHIVEOK."<br /><br />";
 			$path = preg_replace("/http:\/\//i","",$path);
 			$path = preg_replace("/.*sections\//i", "", $path);
 			echo "<a href=\"index.php?mod=".rawurlencodepath($path)."\"><b>"._FDARCHIVERETURN."</b></a> | ";
@@ -486,7 +482,7 @@ function ripristina($file,$archivedir){
 			}
 
 			//avvisa e permetti di ritornare indietro
-			echo "<br><br><div align=\"center\">"._FDRESTOREOK."<br><br>";
+			echo "<br /><br /><div align=\"center\">"._FDRESTOREOK."<br /><br />";
 			$path = preg_replace("/http:\/\//i","",$path_up);
 			$path = preg_replace("/.*sections\//i", "", $path);
 			echo "<a href=\"index.php?mod=".rawurlencodepath($path)."\"><b>"._GOTOSECTION."</b></a></div>";
@@ -600,24 +596,24 @@ function upload(){
 
 
 	if (!isset($_FILES['fdfile'])) {
-		echo "<br><br><div align=\"center\"><b>"._FDFILENOTSELECT."</b></div>";
+		echo "<br /><br /><div align=\"center\"><b>"._FDFILENOTSELECT."</b></div>";
 		fd_die("File to upload not selected. FDadmin:".__LINE__);
 	}
 
 	if (!check_file_array($_FILES['fdfile'],$maxFileSize)) fd_die("\$_FILES array is not valid! FDadmin: ".__LINE__);
-	//conviene usare un array alternativo??? Lo ho comunque controllato, √® sicuro
+	//conviene usare un array alternativo??? Lo ho comunque controllato, Ë sicuro
 	$_files_array = check_file_array($_FILES['fdfile'],$maxFileSize);
 
 	if (isset($_FILES['fdfile']['name']) and trim($_FILES['fdfile']['name'])==""){
-		echo "<br><br><div align=\"center\">"._FDFILENOTSELECT;
-		echo "<br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br><br></div>";
+		echo "<br /><br /><div align=\"center\">"._FDFILENOTSELECT;
+		echo "<br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br /><br /></div>";
 			fd_die("File to upload not selected. FDadmin:".__LINE__);
 	}
 
 	if ($_FILES['fdfile']['size']>$maxFileSize) {
-		echo "<div align=\"center\"><br>"._FDTOOBIG;
-		// Il file non √® stato caricato perch√® le sue dimensioni sono eccessive.<br>";
-		echo "<br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br><br>";
+		echo "<div align=\"center\"><br />"._FDTOOBIG;
+		// Il file non Ë stato caricato perchË le sue dimensioni sono eccessive.<br />";
+		echo "<br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br /><br />";
 		echo "</div>";
 		fdlogf($_FILES['fdfile']['size'].": "._FDTOOBIG);
 		fd_die("File to upload has size==0. FDadmin:".__LINE__);
@@ -631,11 +627,11 @@ function upload(){
 		else if ($_FILES['fdfile']['error']==6) echo _FDERROR6;
 		else if ($_FILES['fdfile']['error']==7) echo _FDERROR7;
 
-		fd_die("<br><br><b>FD+:</b> upload error.");
+		fd_die("<br /><br /><b>FD+:</b> upload error.");
 
 
 	}
-	if ($_FILES['fdfile']['size']==0) fd_die("<br><b>Error! </b>"._FDSIZE." file: 0 kb. FDadmin: ".__LINE__);
+	if ($_FILES['fdfile']['size']==0) fd_die("<br /><b>Error! </b>"._FDSIZE." file: 0 kb. FDadmin: ".__LINE__);
 
 	//ULTIMO CONTROLLO ALL'ARRAY $_FILES
 // 	if (fd_check_uploaded_file($_FILES['fdfile'],$maxFileSize,"false")!=TRUE){
@@ -655,8 +651,8 @@ function upload(){
 		$extensions_array=array();
 		$extensions_array = split(",",strtolower($extensions));
 		if (!in_array(strtolower($info['extension']),$extensions_array)) {
-			echo "<br><br><div align=\"center\">"._NOTVALIDEXT;
-			echo "<br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br><br></div>";
+			echo "<br /><br /><div align=\"center\">"._NOTVALIDEXT;
+			echo "<br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br /><br /></div>";
 			fd_die();
 
 		}
@@ -678,10 +674,10 @@ function upload(){
 	if(fd_is_admin()){
 
 		if ($_FILES['fdfile']['name']<>""){
-			//controllo che il file non sia gi√† esistente
+			//controllo che il file non sia gi‡ esistente
 			if (file_exists("$path/".$_FILES['fdfile']['name'])){
-				echo "<div align=\"center\"><br>"._FDUPLOADEXISTS."<br>";
-				echo "<br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br><br></div>";
+				echo "<div align=\"center\"><br />"._FDUPLOADEXISTS."<br />";
+				echo "<br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br /><br /></div>";
 				fd_die();
 
 			}
@@ -727,13 +723,13 @@ function upload(){
 		if ($_FILES['fdsig']['tmp_name']<>"") fd_upload_sig("$path/".$_FILES['fdfile']['name']);
 		if ($_FILES['fdscreenshot']['tmp_name']<>"") fd_upload_screenshot("$path/".$_FILES['fdfile']['name']);
 
-		echo "<br><div align=\"center\">"._FDUPLOADOK."</div>";
+		echo "<br /><div align=\"center\">"._FDUPLOADOK."</div>";
 
 	}//fine fd_is_admin(?)
 
 		$path = preg_replace("/http:\/\//","",$path);
 		$path = preg_replace("/.*sections\//", "", $path);
-		echo "<br><br><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($path)."\"><b>"._FDARCHIVERETURN."</b></a></div>";
+		echo "<br /><br /><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($path)."\"><b>"._FDARCHIVERETURN."</b></a></div>";
 }
 
 /**
@@ -843,15 +839,15 @@ function save_changes(){
 	if ($mod!="none_Fdplus") fd_die(_FDNONPUOI.basename(__FILE__).": ".__LINE__);
 
 	if (isset($_FILES['newfile']['tmpname']) and !check_file_array($_FILES['newfile'],$maxFileSize)) fd_die("\$_FILES array is not valid! FDadmin: ".__LINE__);
-	//conviene usare un array alternativo??? Lo ho comunque controllato, √® sicuro
+	//conviene usare un array alternativo??? Lo ho comunque controllato, Ë sicuro
 	$_newfile_array = check_file_array($_FILES['newfile'],$maxFileSize);
 
 	if (isset($_FILES['newfile']['name']) and trim($_FILES['newfile']['name'])!=""){
 		//impedisco di caricare file .php
 		$info = pathinfo($_FILES['newfile']['name']);
 		if (!isset($info['extension'])) {
-			echo "<br><br><div align=\"center\">"._NOTVALIDEXT;
-			echo "<br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br><br></div>";
+			echo "<br /><br /><div align=\"center\">"._NOTVALIDEXT;
+			echo "<br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br /><br /></div>";
 			fd_die(_FDNONPUOI.basename(__FILE__).": ".__LINE__);
 		}
 		if (preg_match("/php/i",$info['extension'])) fd_die(_FDNONPUOI.basename(__FILE__).": ".__LINE__);
@@ -862,8 +858,8 @@ function save_changes(){
 
 		$extensions_array = split(",",strtolower($extensions));
 		if (!in_array(strtolower($info['extension']),$extensions_array)) {
-			echo "<br><br><div align=\"center\">"._NOTVALIDEXT;
-			echo "<br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br><br></div>";
+			echo "<br /><br /><div align=\"center\">"._NOTVALIDEXT;
+			echo "<br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br /><br /></div>";
 			fd_die();
 
 		}
@@ -889,9 +885,9 @@ function save_changes(){
 	if(fd_is_admin()){
 		//controllo le dimensioni del file
 		if ($_FILES['newfile']['size']>$maxFileSize){
-			echo "<br><div align=\"center\">"._FDSAVESIZE.filesize($_FILES['newfile']['tmp_name'])."bit";
-			echo "<br>"._FDTOOBIG;
-			echo "<br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a></div>";
+			echo "<br /><div align=\"center\">"._FDSAVESIZE.filesize($_FILES['newfile']['tmp_name'])."bit";
+			echo "<br />"._FDTOOBIG;
+			echo "<br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a></div>";
 			fd_die();
 		}
 
@@ -945,7 +941,7 @@ function save_changes(){
 				else if ($_FILES['newfile']['error']==6) echo _FDERROR6;
 				else if ($_FILES['newfile']['error']==7) echo _FDERROR7;
 
-				fd_die("<br><br><b>FD+:</b> errore nell'upload.");
+				fd_die("<br /><br /><b>FD+:</b> errore nell'upload.");
 			}
 
 		}
@@ -967,12 +963,12 @@ function save_changes(){
 
 		if ($showinblocks!="true") $showinblocks="false";
 
-		//aggiusto gli "a capo": solo se non √® attivo fckeditor
+		//aggiusto gli "a capo": solo se non Ë attivo fckeditor
 		if (!file_exists("include/plugins/editors/FCKeditor/fckeditor.php")){
-			$description =str_replace("\n", "<br>", $description);
+			$description =str_replace("\n", "<br />", $description);
 		}
 		else if (!preg_match("/gecko/i",$_SERVER['HTTP_USER_AGENT']) and !preg_match("/msie/i",$_SERVER['HTTP_USER_AGENT'])){
-			$description =str_replace("\n", "<br>", $description);
+			$description =str_replace("\n", "<br />", $description);
 		}
 
 		$origdesc = load_description($filepathok);
@@ -1026,7 +1022,7 @@ function save_changes(){
 		}
 
 		//permetti di tornare indietro.
-		echo "<br><br><div align=\"center\">"._FDEDITDONE."<br><br>";
+		echo "<br /><br /><div align=\"center\">"._FDEDITDONE."<br /><br />";
 		$path = dirname($_POST['fdfile']);
 		$path = preg_replace("/.*sections\//i", "", $path);
 		echo "<a href=\"index.php?mod=".rawurlencodepath($path)."\"><b>"._FDRETURN."</b></a></div>";
@@ -1051,16 +1047,16 @@ function mksection_interface(){
 // 	if (trim($fdmod)=="")fd_die(_FDNONPUOI.basename(__FILE__).": ".__LINE__);
 	if (!fd_check_path($fdmod,"","false")) fd_die(_FDNONPUOI.basename(__FILE__).": ".__LINE__);
 	if (!fd_is_admin()) fd_die(_FDNONPUOI.basename(__FILE__).": ".__LINE__);
-	echo "<h3>"._FDCREATESUBSECT."<b>$fdmod</b></h3><br>";
+	echo "<h3>"._FDCREATESUBSECT."<b>$fdmod</b></h3><br />";
 
-	echo _FDCHOOSESECTNAME."<br>";
+	echo _FDCHOOSESECTNAME."<br />";
 
 	echo "<form action=\"index.php?mod=none_Fdplus\" method=\"POST\">
 	<input type=\"hidden\" name=\"fdaction\" readonly=\"readonly\" value=\"createsect\">
 	<input type=\"hidden\" name=\"fdmod\" readonly=\"readonly\" value=\"$fdmod\">
-	<input type=\"text\" name=\"fdnewsect\" size=\"20\"><br><br>
-	<input type=\"checkbox\" name=\"fdsecthidden\" value=\"true\">"._FDHIDDENSECT."<br><br>
-	<input type=\"checkbox\" name=\"fdsectallowuserupload\" value=\"true\">"._FDALLOWUSERUPLOAD."<br><br><br>
+	<input type=\"text\" name=\"fdnewsect\" size=\"20\"><br /><br />
+	<input type=\"checkbox\" name=\"fdsecthidden\" value=\"true\">"._FDHIDDENSECT."<br /><br />
+	<input type=\"checkbox\" name=\"fdsectallowuserupload\" value=\"true\">"._FDALLOWUSERUPLOAD."<br /><br /><br />
 	<input type=\"submit\" name=\"fdok\" value=\""._FDCREATESECT."\">
 	</form>";
 
@@ -1086,19 +1082,19 @@ function mksection($mod, $dirname,$hidden="false",$allowuserupload="false"){
 
 	$dirname = preg_replace("/ /","_",$dirname);
 // 	$dirname = strtr($dirname,
-//   "???????¬•¬µ√Ä√Å√Ç√É√Ñ√Ö√Ü√á√à√â√ä√ã√å√ç√é√è√ê√ë√í√ì√î√ï√ñ√ò√ô√ö√õ√ú√ù√ü√†√°√¢√£√§√•√¶√ß√®√©√™√´√¨√≠√Æ√Ø√∞√±√≤√≥√¥√µ√∂√∏√π√∫√ª√º√Ω√ø",
+//   "???????•µ¿¡¬√ƒ≈∆«»… ÀÃÕŒœ–—“”‘’÷ÿŸ⁄€‹›ﬂ‡·‚„‰ÂÊÁËÈÍÎÏÌÓÔÒÚÛÙıˆ¯˘˙˚¸˝ˇ",
 //   "SOZsozYYuAAAAAAACEEEEIIIIDNOOOOOOUUUUYsaaaaaaaceeeeiiiionoooooouuuuyy");
 
 	if (fd_is_admin()){
 		if ($hidden=="true") $dirname="none_$dirname";
 		if (is_dir("sections/$mod/".$dirname)){
-			echo "<div align=\"center\"><br><br>"._THEDIR." <b>$mod/$dirname</b> "._ALREADYEXISTS."
-			<br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a></div>";
+			echo "<div align=\"center\"><br /><br />"._THEDIR." <b>$mod/$dirname</b> "._ALREADYEXISTS."
+			<br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a></div>";
 			return;
 		}
 		if(fn_mkdir("sections/$mod/".$dirname,0777)){
-			echo "<div align=\"center\"><br><br>"._FDSECT." <b>$mod/$dirname</b> "._FDCREATESECTOK;
-			echo "<br><br><a href=\"index.php?mod=".rawurlencodepath("$mod/$dirname")."\" title=\""._GOTOSECTION." $dirname\"><b>"._GOTOSECTION."</b></a></div>";
+			echo "<div align=\"center\"><br /><br />"._FDSECT." <b>$mod/$dirname</b> "._FDCREATESECTOK;
+			echo "<br /><br /><a href=\"index.php?mod=".rawurlencodepath("$mod/$dirname")."\" title=\""._GOTOSECTION." $dirname\"><b>"._GOTOSECTION."</b></a></div>";
 			fnwrite("sections/$mod/$dirname/section.php","&nbsp;","w",array());
 			fnwrite("sections/$mod/$dirname/downloadsection","&nbsp;","w",array());
 			if (file_exists("sections/$mod/$dirname/downloadsection")){
@@ -1115,13 +1111,13 @@ function mksection($mod, $dirname,$hidden="false",$allowuserupload="false"){
 
 			}
 		}
-		else echo "<div align=\"center\"><br><br>"._FDCREATEDIRERROR."<b>sections/$mod/$dirname</b><br><br>"._FDCHECKPERM."</div>";
+		else echo "<div align=\"center\"><br /><br />"._FDCREATEDIRERROR."<b>sections/$mod/$dirname</b><br /><br />"._FDCHECKPERM."</div>";
 	}
 }
 
 /**
  * Imposta se nascondere o meno un file.
- * Il file viene nascosto se value √® impostata a "true" e viene mostrato se √® impostata
+ * Il file viene nascosto se value Ë impostata a "true" e viene mostrato se Ë impostata
  * a "false".
  * @param string $filepath il percorso del file di cui mosificare le impostazioni
  * @param string $value indica se nascondere o meno un file
@@ -1172,14 +1168,14 @@ $mod = trim($mod);
 if ($mod!="none_Fdplus") fd_die(_FDNONPUOI.basename(__FILE__).": ".__LINE__);
 
 
-echo _FDRENAMETITLE."<b>".basename($file)."</b><br><br>";
+echo _FDRENAMETITLE."<b>".basename($file)."</b><br /><br />";
 
-echo _FDRENAMECHOOSE."<br>";
+echo _FDRENAMECHOOSE."<br />";
 echo "<form action=\"index.php?mod=none_Fdplus\" method=\"POST\">
 <input type=\"hidden\" name=\"fdaction\" readonly=\"readonly\" value=\"renamefile\">
 <input type=\"hidden\" name=\"fdpath\" readonly=\"readonly\" value=\"".dirname($file)."\">
 <input type=\"hidden\" name=\"oldfilename\" readonly=\"readonly\" value=\"".basename($file)."\">
-<input type=\"text\" name=\"newfilename\" size=\"35\" value=\"".basename($file)."\"><br><br>
+<input type=\"text\" name=\"newfilename\" size=\"35\" value=\"".basename($file)."\"><br /><br />
 <input type=\"submit\" name=\"fdok\" value=\""._FDRENAME." file\">";
 
 echo "</form>";
@@ -1216,20 +1212,20 @@ $basemod = preg_replace("/^sections\//i","",$path);
 //se il nome non cambia...
 if ($oldname==$newname) {
 	echo _FDRENAMENOTCHANGED;
-	echo "<br><br><a href=\"index.php?mod=".rawurlencodepath($basemod)."\">"._FDARCHIVERETURN."</a>";
+	echo "<br /><br /><a href=\"index.php?mod=".rawurlencodepath($basemod)."\">"._FDARCHIVERETURN."</a>";
 	return;
 }
 
-//se la cartella non √® scrivibile...
+//se la cartella non Ë scrivibile...
 if (!is_writable($path)){
-	echo _FDREADONLYDIR;
-	echo "<br><br><a href=\"index.php?mod=".rawurlencodepath($basemod)."\">"._FDARCHIVERETURN."</a>";
+	echo _FDREDONLYDIR;
+	echo "<br /><br /><a href=\"index.php?mod=".rawurlencodepath($basemod)."\">"._FDARCHIVERETURN."</a>";
 	return;
 }
-//se esiste gi√† un file con quel nome...
+//se esiste gi‡ un file con quel nome...
 if (file_exists("$path/$newname")){
-	echo _FDRENAMEEXISTS1." <b>$newname</b> "._FDRENAMEEXISTS2." <b>$path</b>.<br>"._FDRENAMECHANGENAME;
-	echo "<br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a>";
+	echo _FDRENAMEEXISTS1." <b>$newname</b> "._FDRENAMEEXISTS2." <b>$path</b>.<br />"._FDRENAMECHANGENAME;
+	echo "<br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a>";
 	return;
 }
 
@@ -1245,14 +1241,14 @@ else $newext="";
 
 if ($oldext !=$newext){
 	echo _FDERROR." "._FDRENAMEEXTLIMIT;
-	echo "<br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a>";
+	echo "<br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a>";
 	return;
 }
 
 //se tutti i controlli vengono passati posso rinominare il file
 if (rename("$path/$oldname","$path/$newname") and rename("$path/$oldname.description","$path/$newname.description")){
-	echo "<div align=\"center\"><br><br><b>"._FDRENAMEOK."</b>";
-	echo "<br><br><a href=\"index.php?mod=".rawurlencodepath($basemod)."\">"._FDARCHIVERETURN."</a></div>";
+	echo "<div align=\"center\"><br /><br /><b>"._FDRENAMEOK."</b>";
+	echo "<br /><br /><a href=\"index.php?mod=".rawurlencodepath($basemod)."\">"._FDARCHIVERETURN."</a></div>";
 	//l'utente che ha modificato il file
 	$myforum="";
 	$myforum=get_username();
@@ -1322,18 +1318,18 @@ function move_file_interface($file){
 	$startdir ="";
 	$startdir = dirname($file);
 
-	echo "<br>"._FDMOVEFILE."<b>".preg_replace("/^sections\//i","",$file)."</b>"._FDMOVEFILESECTION.":<br><i>"._FDMOVELINK."</i><br><br>";
+	echo "<br />"._FDMOVEFILE."<b>".preg_replace("/^sections\//i","",$file)."</b>"._FDMOVEFILESECTION.":<br /><i>"._FDMOVELINK."</i><br /><br />";
 	$dirs = list_fd_sections(".");
 	foreach($dirs as $dir){
-// 	echo "$startdir<br>$dir<br><rb>";
+// 	echo "$startdir<br />$dir<br /><rb>";
 		if ($startdir==preg_replace("/^\.\//","",$dir)) continue;
-		if (is_writable($dir)) echo "<a href=\"index.php?mod=none_Fdplus&amp;fdaction=movefileconfirm&amp;fdfile=".rawurlencodepath($file)."&amp;newdir=".rawurlencodepath($dir)."\">".preg_replace("/^\.\//","",$dir)."</a><br>";
+		if (is_writable($dir)) echo "<a href=\"index.php?mod=none_Fdplus&amp;fdaction=movefileconfirm&amp;fdfile=".rawurlencodepath($file)."&amp;newdir=".rawurlencodepath($dir)."\">".preg_replace("/^\.\//","",$dir)."</a><br />";
 		else {
-			echo "<span style=\"color : #ff0000; text-decoration : line-through;\">".preg_replace("/^\.\//","",$dir)."</span><br>";
+			echo "<span style=\"color : #ff0000; text-decoration : line-through;\">".preg_replace("/^\.\//","",$dir)."</span><br />";
 		}
 	}
 
-	echo "<br><hr><a href=\"javascript:history.back()\">&lt;&lt; "._FDCANC."</a>";
+	echo "<br /><hr><a href=\"javascript:history.back()\">&lt;&lt; "._FDCANC."</a>";
 
 }
 
@@ -1351,15 +1347,15 @@ function move_file_confirm($file, $newdir){
 
 	if (!file_exists($file.".description")) fd_die(_FDRENAMEFILE." $file"._FDRENAMENOFD." FDadmin: ".__LINE__);
 
-	echo "<br>"._FDMOVECONFIRM." <b>".preg_replace("/^sections\//i","",$file)."</b> <br>"._FDMOVEFILESECTION." <b>".preg_replace("/^sections\//i","",$newdir)."</b>?<br>";
+	echo "<br />"._FDMOVECONFIRM." <b>".preg_replace("/^sections\//i","",$file)."</b> <br />"._FDMOVEFILESECTION." <b>".preg_replace("/^sections\//i","",$newdir)."</b>?<br />";
 
-	echo "<br><br><form action=\"index.php?mod=none_Fdplus\" method=\"POST\">
+	echo "<br /><br /><form action=\"index.php?mod=none_Fdplus\" method=\"POST\">
 <input type=\"hidden\" name=\"fdfile\" value=\"$file\" readonly=\"readonly\">
 <input type=\"hidden\" name=\"fdaction\" value=\"movefile\" readonly=\"readonly\">
 <input type=\"hidden\" name=\"newdir\" value=\"$newdir\" readonly=\"readonly\">
 <input type=\"SUBMIT\" value=\""._FDMOVE."\"></form>";
 
-	echo "<br><hr><a href=\"javascript:history.back()\">&lt;&lt; "._FDCANC."</a>";
+	echo "<br /><hr><a href=\"javascript:history.back()\">&lt;&lt; "._FDCANC."</a>";
 
 }
 
@@ -1382,26 +1378,26 @@ function fd_move_file($file, $newdir){
 
 	if (!is_writable($newdir)) {
 		echo _FDDIR." <b>$newdir</b> "._FDNOTWRITE;
-		echo "<br>"._FDCHECKPERM;
-		echo "<br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a>";
+		echo "<br />"._FDCHECKPERM;
+		echo "<br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a>";
 		return;
 	}
 
 	if (!is_fd_sect($newdir)){
 		echo "The dir $newdir is not managed by FD+.";
-		echo "<br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a>";
+		echo "<br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a>";
 		return;
 	}
 
 	if (file_exists($newdir."/".basename($file))){
 		echo _FDRENAMEEXISTS1." <b>".basename($file)."</b> "._FDRENAMEEXISTS2." <b>$newdir</b>";
-		echo "<br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br><br>";
+		echo "<br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br /><br />";
 		return;
 
 	}
 	if (file_exists($newdir."/".basename($file).".description")){
 		echo _FDRENAMEEXISTS1." <b>".basename($file).".description</b> "._FDRENAMEEXISTS2." <b>$newdir</b>";
-		echo "<br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br><br>";
+		echo "<br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br /><br />";
 		return;
 	}
 
@@ -1409,7 +1405,7 @@ function fd_move_file($file, $newdir){
 	if ($extsig=="") $extsig="sig";
 	if (file_exists($newdir."/".basename($file).".$extsig")){
 		echo _FDRENAMEEXISTS1." <b>".basename($file).".$extsig</b> "._FDRENAMEEXISTS2." <b>$newdir</b>";
-		echo "<br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br><br>";
+		echo "<br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br /><br />";
 		return;
 	}
 
@@ -1417,7 +1413,7 @@ function fd_move_file($file, $newdir){
 	if ($extscreenshot=="") $extscreenshot="png";
 	if (file_exists($newdir."/".basename($file).".$extscreenshot")){
 		echo _FDRENAMEEXISTS1." <b>".basename($file).".$extscreenshot</b> "._FDRENAMEEXISTS2." <b>$newdir</b>";
-		echo "<br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br><br>";
+		echo "<br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br /><br />";
 		return;
 	}
 
@@ -1453,7 +1449,7 @@ function fd_move_file($file, $newdir){
 	insert_in_max_download($newdir."/".basename($file),$desc['hits']);
 
 	$olddir = preg_replace("/sections\//i","",dirname($file));
-	echo "<br><br><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($olddir)."\"><b>"._FDARCHIVERETURN."</b></a> | ";
+	echo "<br /><br /><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($olddir)."\"><b>"._FDARCHIVERETURN."</b></a> | ";
 
 	$newdir = preg_replace("/sections\//i","",$newdir);
 	echo "<a href=\"index.php?mod=".rawurlencodepath($newdir)."\" title=\""._GOTOSECTION."\"><b>"._GOTOSECTION." $newdir</b></a></div>";
@@ -1463,7 +1459,7 @@ function fd_move_file($file, $newdir){
 /**
  * Interfaccia per l'eliminazione della firma gpg associata a un file gestito da FD+.
  *
- * Questa funzione crea l'interfaccia web dalla quale sar√† possibile eliminare
+ * Questa funzione crea l'interfaccia web dalla quale sar‡ possibile eliminare
  * la firma gpg associata a un file gestito da FD+.
  *
  * @param string $file il file di cui eliminare la firma
@@ -1480,8 +1476,8 @@ function delete_sign_interface($file){
 	if (!file_exists($file.".$extsig")) fd_die("There isn't a sign file for ".strip_tags($file)."! FDadmin: ".__LINE__);
 	?>
 	<div  style="text-align : center;">
-	<br><?php echo _FDDELSURE; ?><b><?php echo $file.".$extsig"; ?></b>?
-	<br><br>
+	<br /><?php echo _FDDELSURE; ?><b><?php echo $file.".$extsig"; ?></b>?
+	<br /><br />
 	<a href="index.php?mod=none_Fdplus&amp;fdaction=deletesign&amp;fdfile=<?php echo rawurlencodepath($file); ?>"><?php echo _FDDEL; ?></a>
 	<a href="javascript:history.back()"><?php echo _FDCANC; ?></a>
 	</div>
@@ -1522,14 +1518,14 @@ function delete_sign($file){
 	$path = preg_replace("/http:\/\//i","",dirname($file));
 	$path = preg_replace("/\/sections\//i", "", $path);
 	$path = preg_replace("/sections\//i", "", $path);
-	echo "<br><br><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($path)."\"><b>"._FDRETURN."</b></a></div>";
+	echo "<br /><br /><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($path)."\"><b>"._FDRETURN."</b></a></div>";
 
 }
 
 /**
  * Interfaccia per l'eliminazione dello screenshot associato a un file gestito da FD+.
  *
- * Questa funzione crea l'interfaccia web dalla quale sar√† possibile eliminare
+ * Questa funzione crea l'interfaccia web dalla quale sar‡ possibile eliminare
  * lo screenshot associato a un file gestito da FD+.
  *
  * @param string $file il file di cui eliminare lo screenshot
@@ -1546,8 +1542,8 @@ function delete_screenshot_interface($file){
 	if (!file_exists($file.".$extscreenshot")) fd_die("There isn't a screenshot for ".strip_tags($file)."! FDadmin: ".__LINE__);
 	?>
 	<div  style="text-align : center;">
-	<br><?php echo _FDDELSURE; ?><b><?php echo $file.".$extscreenshot"; ?></b>?
-	<br><br>
+	<br /><?php echo _FDDELSURE; ?><b><?php echo $file.".$extscreenshot"; ?></b>?
+	<br /><br />
 	<a href="index.php?mod=none_Fdplus&amp;fdaction=deletescreenshot&amp;fdfile=<?php echo rawurlencodepath($file); ?>"><?php echo _FDDEL; ?></a>
 	<a href="javascript:history.back()"><?php echo _FDCANC; ?></a>
 	</div>
@@ -1589,7 +1585,7 @@ function delete_screenshot($file){
 	$path = preg_replace("/http:\/\//i","",dirname($file));
 	$path = preg_replace("/\/sections\//i", "", $path);
 	$path = preg_replace("/sections\//i", "", $path);
-	echo "<br><br><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($path)."\"><b>"._FDRETURN."</b></a></div>";
+	echo "<br /><br /><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($path)."\"><b>"._FDRETURN."</b></a></div>";
 
 }
 
@@ -1599,7 +1595,7 @@ function delete_screenshot($file){
  * Questa funzione si occupa di caricare lo screenshot associato al file gestito da FD+.
  * @param string $dir la cartella in cui caricare lo screenshot
  * @param string $mode "upload" se stiamo caricando un nuovo file, "edit" se ne stiamo modificando
- *                     uno gi√† presente
+ *                     uno gi‡ presente
  * @author Aldo Boccacci
  * @since 0.8
  */
@@ -1626,13 +1622,13 @@ function fd_upload_screenshot($file,$mode="upload"){
 	}
 
 	if (isset($files_screenshot['name']) and trim($files_screenshot['name'])==""){
-		echo "<br><br><div align=\"center\">"._FDFILENOTSELECT;
-		echo "<br><br><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br><br></div>";
+		echo "<br /><br /><div align=\"center\">"._FDFILENOTSELECT;
+		echo "<br /><br /><a href=\"javascript:history.back()\">&lt;&lt; "._FDBACK."</a><br /><br /></div>";
 			fd_die(_FDNONPUOI.basename(__FILE__).": ".__LINE__);
 	}
 
 	if (!preg_match("/$extscreenshot$/i",$files_screenshot['name'])){
-		echo "<br><div align=\"center\"><b>ERROR</b>The screenshot must be a <b>$extscreenshot</b> file. The file will not be uploaded!</div><br>";
+		echo "<br /><div align=\"center\"><b>ERROR</b>The screenshot must be a <b>$extscreenshot</b> file. The file will not be uploaded!</div><br />";
 		return;
 	}
 
@@ -1656,11 +1652,11 @@ function fd_upload_screenshot($file,$mode="upload"){
 		else if ($files_screenshot['error']==6) echo _FDERROR6;
 		else if ($files_screenshot['error']==7) echo _FDERROR7;
 
-		fd_die("<br><br><b>FDadmin:</b> upload error.");
+		fd_die("<br /><br /><b>FDadmin:</b> upload error.");
 
 
 	}
-// 	if ($files_screenshot['size']==0) fd_die("<br><b>Error! </b>"._FDSIZE." file: 0 kb");
+// 	if ($files_screenshot['size']==0) fd_die("<br /><b>Error! </b>"._FDSIZE." file: 0 kb");
 
 	//eventualmente elimino il vecchio screenshots
 	if (file_exists("$file.$extscreenshot")){
@@ -1671,7 +1667,7 @@ function fd_upload_screenshot($file,$mode="upload"){
 
 	//controllo per codice php
 	if (preg_match("/\<\?|\?\>/",get_file($files_screenshot['tmp_name']))){
-		fd_die("The screenshot file contains php tags! "._FDNONPUOI.basename(__FILE__).": ".__LINE__);
+		fd_die("The screenshot filename contains php tags! "._FDNONPUOI.basename(__FILE__).": ".__LINE__);
 	}
 
 	$dir ="";
@@ -1684,10 +1680,10 @@ function fd_upload_screenshot($file,$mode="upload"){
 /**
  * Funzione che si occupa di effettuare l'upload dei file sul server
  *
- * Questa √® la funzione centralizzata deputata al caricamento sul server dei file degli utenti.
+ * Questa Ë la funzione centralizzata deputata al caricamento sul server dei file degli utenti.
  *
  * @param array $files_array l'array $_FILES con i dati da caricare
- * @param string $filepath il percorso che dovr√† avere il file
+ * @param string $filepath il percorso che dovr‡ avere il file
  * @author Aldo Boccacci
  * @since 0.8
  */
@@ -1739,19 +1735,19 @@ function allow_user_upload($mod){
 	$path="sections/$mod";
 
 	if (file_exists("sections/$mod/fduserupload")){
-		echo "<br><div align=\"center\"><b>Users already can upload files in this section</div>";
-		echo "<br><br><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($mod)."\"><b>"._FDRETURN."</b></a></div>";
+		echo "<br /><div align=\"center\"><b>Users already can upload files in this section</div>";
+		echo "<br /><br /><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($mod)."\"><b>"._FDRETURN."</b></a></div>";
 	}
 	else {
 		if (!is_writeable("sections/$mod/")){
 			echo _FDDIR." sections/$mod"._FDNOTWRITE;
-			echo "<br><br><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($mod)."\"><b>"._FDRETURN."</b></a></div>";
+			echo "<br /><br /><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($mod)."\"><b>"._FDRETURN."</b></a></div>";
 		}
 		else {
 			fnwrite("sections/$mod/fduserupload"," ","w",array());
 			fdlogf("user can upload files in the section $mod");
 			echo _FDUSERUPLOADPERMSADDED." <b>$mod</b>";
-			echo "<br><br><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($mod)."\"><b>"._FDRETURN."</b></a></div>";
+			echo "<br /><br /><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($mod)."\"><b>"._FDRETURN."</b></a></div>";
 		}
 	}
 
@@ -1778,24 +1774,24 @@ function remove_user_upload($mod){
 	if (file_exists("sections/$mod/fduserupload")){
 		if (!is_writeable("sections/$mod/fduserupload")){
 			echo _FDRENAMEFILE." sections/$mod/fduserupload"._FDNOTWRITE;
-			echo "<br><br><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($mod)."\"><b>"._FDRETURN."</b></a></div>";
+			echo "<br /><br /><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($mod)."\"><b>"._FDRETURN."</b></a></div>";
 		}
 		else {
 			if (unlink("sections/$mod/fduserupload")){
 				fdlogf("user cannot upload files in the section $mod");
 				echo _FDUSERUPLOADPERMSREMOVED." <b>$mod</b>";
-				echo "<br><br><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($mod)."\"><b>"._FDRETURN."</b></a></div>";
+				echo "<br /><br /><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($mod)."\"><b>"._FDRETURN."</b></a></div>";
 
 			}
 			else {
 				echo _FILENOTDELETED." <b>sections/$mod/fduserupload</b>";
-				echo "<br><br><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($mod)."\"><b>"._FDRETURN."</b></a></div>";
+				echo "<br /><br /><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($mod)."\"><b>"._FDRETURN."</b></a></div>";
 			}
 		}
 	}
 	else {
-		echo "<br><div align=\"center\"><b>Users cannot upload files in this section</div>";
-		echo "<br><br><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($mod)."\"><b>"._FDRETURN."</b></a></div>";
+		echo "<br /><div align=\"center\"><b>Users cannot upload files in this section</div>";
+		echo "<br /><br /><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($mod)."\"><b>"._FDRETURN."</b></a></div>";
 	}
 }
 ?>

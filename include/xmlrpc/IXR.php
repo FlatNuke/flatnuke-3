@@ -1,6 +1,6 @@
-<?php
+<?php 
 
-/*
+/* 
    IXR - The Inutio XML-RPC Library - (c) Incutio Ltd 2002
    Version 1.61 - Simon Willison, 11th July 2003 (htmlentities -> htmlspecialchars)
    Site:   http://scripts.incutio.com/xmlrpc/
@@ -49,7 +49,7 @@ class IXR_Value {
         }
         // If it is a normal PHP object convert it in to a struct
         if (is_object($this->data)) {
-
+            
             $this->data = get_object_vars($this->data);
             return 'struct';
         }
@@ -267,7 +267,7 @@ class IXR_Message {
                 $this->params[] = $value;
             }
         }
-    }
+    }       
 }
 
 
@@ -361,7 +361,7 @@ EOD;
         $this->output($error->getXml());
     }
     function output($xml) {
-        $xml = "<?xml version='1.0' encoding='UTF-8'?>"."\n".$xml;
+        $xml = '<?xml version="1.0"?>'."\n".$xml;
         $length = strlen($xml);
         header('Connection: close');
         header('Content-Length: '.$length);
@@ -388,7 +388,7 @@ EOD;
                 'specUrl' => 'http://www.xmlrpc.com/discuss/msgReader$1208',
                 'specVersion' => 1
             ),
-        );
+        );   
     }
     function getCapabilities($args) {
         return $this->capabilities;
@@ -435,7 +435,7 @@ class IXR_Request {
         $this->method = $method;
         $this->args = $args;
         $this->xml = <<<EOD
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0"?>
 <methodCall>
 <methodName>{$this->method}</methodName>
 <params>
@@ -587,7 +587,7 @@ class IXR_Error {
       </struct>
     </value>
   </fault>
-</methodResponse>
+</methodResponse> 
 
 EOD;
         return $xml;
@@ -620,7 +620,7 @@ class IXR_Date {
     }
     function parseIso($iso) {
         $this->year = substr($iso, 0, 4);
-        $this->month = substr($iso, 4, 2);
+        $this->month = substr($iso, 4, 2); 
         $this->day = substr($iso, 6, 2);
         $this->hour = substr($iso, 9, 2);
         $this->minute = substr($iso, 12, 2);
@@ -660,27 +660,27 @@ class IXR_IntrospectionServer extends IXR_Server {
             'specVersion' => 1
         );
         $this->addCallback(
-            'system.methodSignature',
-            'this:methodSignature',
-            array('array', 'string'),
+            'system.methodSignature', 
+            'this:methodSignature', 
+            array('array', 'string'), 
             'Returns an array describing the return type and required parameters of a method'
         );
         $this->addCallback(
-            'system.getCapabilities',
-            'this:getCapabilities',
-            array('struct'),
+            'system.getCapabilities', 
+            'this:getCapabilities', 
+            array('struct'), 
             'Returns a struct describing the XML-RPC specifications supported by this server'
         );
         $this->addCallback(
-            'system.listMethods',
-            'this:listMethods',
-            array('array'),
+            'system.listMethods', 
+            'this:listMethods', 
+            array('array'), 
             'Returns an array of available methods on this server'
         );
         $this->addCallback(
-            'system.methodHelp',
-            'this:methodHelp',
-            array('string', 'string'),
+            'system.methodHelp', 
+            'this:methodHelp', 
+            array('string', 'string'), 
             'Returns a documentation string for the specified method'
         );
     }

@@ -83,12 +83,12 @@ if(count($arraynews>0))
 echo "\n<div id='calendar' class='calendar'>\n";
 
 // print current date and time
-echo "\n<div style='padding-bottom:0.5em; text-align:left'>\n";
-echo "<b>"._DATA.":</b> ".date("d/m/Y",time()+(3600*$fuso_orario))."<br>";
+echo "\n<div style='padding-bottom:0.5em;' align='left'>\n";
+echo "<b>"._DATA.":</b> ".date("d/m/Y",time()+(3600*$fuso_orario))."<br />";
 echo "<b>"._ORA.":</b> ".date("H:i",time()+(3600*$fuso_orario));
 echo "\n</div>";
 
-// print header navigation; something like: Â« Month Year Â»
+// print header navigation; something like: « Month Year »
 $anno = $aa;
 $mese = $mm;
 if ($mese==1) { // first month of the year
@@ -106,7 +106,7 @@ if ($mese==12) { // last month of the year
 	$nexttitle = $mesi[$mm]." ".($aa);
 }
 
-echo "\n<div class=\"centeredDiv\">\n";
+echo "\n<div align='center'>\n";
 echo "<a href=\"javascript:jQueryFNcall('$baseurl?$back','GET','calendar');\" title='$backtitle'>&laquo;</a>&nbsp;"; // go back 1 month
 echo "<b>".$mesi[$mm-1]."&nbsp;$aa</b>&nbsp;"; // current month
 echo "<a href=\"javascript:jQueryFNcall('$baseurl?$next','GET','calendar');\" title='$nexttitle'>&raquo;</a>&nbsp;"; // go next month
@@ -156,7 +156,7 @@ for ($i=1;$i<=date("t",$primo);$i++) {
 }
 
 // print options boxes to change month/year
-echo "\n<div class=\"centeredDiv\">";
+echo "\n<div align='center'>";
 echo "\n<form method='get' action='".str_replace("&","&amp;","index.php")."' name='calendar_module'>";
 echo "\n<select name='mm' onchange=\"javascript:jQueryFNcall('$baseurl?aa='+aa.options[aa.selectedIndex].value+'&amp;mm='+this.options[this.selectedIndex].value,'GET','calendar');\">";
 for ($i=1; $i<=12; $i++) {
@@ -172,7 +172,7 @@ for ($i=date("Y")-10; $i<=date("Y")+5; $i++) {
 	} else echo "\n\t<option value='$i'>".$i."</option>";
 }
 echo "\n</select>";
-echo "\n<noscript><br><br><input type='submit' value='Ok' /></noscript>";
+echo "\n<noscript><br /><br /><input type='submit' value='Ok' /></noscript>";
 echo "\n</form>";
 echo "\n</div>\n";
 
@@ -208,7 +208,7 @@ function is_there_a_news($dd, $mm, $yy, $arraynews=array()) {
 		$giorno = date("j", $tmp+(3600*$fuso_orario));
 		$mese   = date("n", $tmp+(3600*$fuso_orario));
 		$anno   = date("Y", $tmp+(3600*$fuso_orario));
-		#echo "$dd-$mm-$yy|$giorno/$mese/$anno<br>";	//-> TEST
+		#echo "$dd-$mm-$yy|$giorno/$mese/$anno<br />";	//-> TEST
 		if($mese==$mm AND $anno==$yy AND $giorno==$dd) {
 			return "&amp;aa=$anno&amp;mm=$mese&amp;dd=$giorno\" class=\"day\" title=\"News ".$giorno."/".$mese."/".$anno."\"><b>".$dd."</b>";
 		}

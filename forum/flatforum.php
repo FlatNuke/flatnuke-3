@@ -29,16 +29,9 @@ if (is_admin() or is_forum_moderator()) include("forum/include/ffadmin.php");
 
 check_get_params();
 
-$group     = getparam("group"    ,PAR_GET,SAN_FLAT);
-$argument  = getparam("argument" ,PAR_GET,SAN_FLAT);
-$topic     = getparam("topic"    ,PAR_GET,SAN_FLAT);
-$number    = getparam("number"   ,PAR_GET,SAN_FLAT);
-$topicpath = getparam("topicpath",PAR_GET,SAN_FLAT);
-
 //scelgo l'azione
 if (isset($_POST['ffaction'])){
 	$ffaction = getparam("ffaction",PAR_POST,SAN_FLAT);
-
 	if ($ffaction=="newgroup"){
 		create_group_interface(get_forum_root());
 	}
@@ -98,206 +91,295 @@ if (isset($_POST['ffaction'])){
 	}
 }
 else if (isset($_GET['ffaction'])){
-	$ffaction  = getparam("ffaction" ,PAR_GET,SAN_FLAT);
-
+	$ffaction = getparam("ffaction",PAR_GET,SAN_FLAT);
 	if ($ffaction=="newtopic"){
 		edit_post_interface("newtopic");
 	}
 	else if ($ffaction=="newpost"){
+		$group = getparam("group",PAR_GET,SAN_FLAT);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($group,"","false")) 
 			ff_die("\$group is invalid! (".strip_tags($group).")",__FILE__,__LINE__);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($argument,"","false")) 
 			ff_die("\$argument is invalid! (".strip_tags($argument).")",__FILE__,__LINE__);
+		$topic = getparam("topic",PAR_GET,SAN_FLAT);
 		if (!check_path($topic,"","true")) 
 			ff_die("\$topic is invalid! (".strip_tags($topic).")",__FILE__,__LINE__);
 		edit_post_interface("newpost",get_forum_root()."/$group/$argument/$topic");
 	}
 	else if ($ffaction=="editpost"){
+		$group = getparam("group",PAR_GET,SAN_FLAT);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($group,"","false")) 
 			ff_die("\$group is invalid! (".strip_tags($group).")",__FILE__,__LINE__);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($argument,"","false")) 
 			ff_die("\$argument is invalid! (".strip_tags($argument).")",__FILE__,__LINE__);
+		$topic = getparam("topic",PAR_GET,SAN_FLAT);
 		if (!check_path($topic,"","true")) 
 			ff_die("\$topic is invalid! (".strip_tags($topic).")",__FILE__,__LINE__);
 		edit_post_interface("editpost",get_forum_root()."/$group/$argument/$topic");
 	}
-	else if ($ffaction=="ontop" and (is_admin() or is_forum_moderator())){
+	else if ($ffaction=="ontop"){
+		$group = getparam("group",PAR_GET,SAN_FLAT);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($group,"","false")) 
 			ff_die("\$group is invalid! (".strip_tags($group).")",__FILE__,__LINE__);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($argument,"","false")) 
 			ff_die("\$argument is invalid! (".strip_tags($argument).")",__FILE__,__LINE__);
+		$topic = getparam("topic",PAR_GET,SAN_FLAT);
 		if (!check_path($topic,"","true")) 
 			ff_die("\$topic is invalid! (".strip_tags($topic).")",__FILE__,__LINE__);
 		evidenzia_topic($group,$argument,$topic,"true");
 	}
 	else if ($ffaction=="normal"){
+		$group = getparam("group",PAR_GET,SAN_FLAT);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($group,"","false")) 
 			ff_die("\$group is invalid! (".strip_tags($group).")",__FILE__,__LINE__);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($argument,"","false")) 
 			ff_die("\$argument is invalid! (".strip_tags($argument).")",__FILE__,__LINE__);
+		$topic = getparam("topic",PAR_GET,SAN_FLAT);
 		if (!check_path($topic,"","true")) 
 			ff_die("\$topic is invalid! (".strip_tags($topic).")",__FILE__,__LINE__);
 		evidenzia_topic($group,$argument,$topic,"false");
 	}
-	else if ($ffaction=="hide" and (is_admin() or is_forum_moderator())){
+	else if ($ffaction=="hide"){
+		$group = getparam("group",PAR_GET,SAN_FLAT);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($group,"","false")) 
 			ff_die("\$group is invalid! (".strip_tags($group).")",__FILE__,__LINE__);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($argument,"","false")) 
 			ff_die("\$argument is invalid! (".strip_tags($argument).")",__FILE__,__LINE__);
+		$topic = getparam("topic",PAR_GET,SAN_FLAT);
 		if (!check_path($topic,"","true")) 
 			ff_die("\$topic is invalid! (".strip_tags($topic).")",__FILE__,__LINE__);
 		hide_topic($group,$argument,$topic);
 	}
-	else if ($ffaction=="show" and (is_admin() or is_forum_moderator())){
+	else if ($ffaction=="show"){
+		$group = getparam("group",PAR_GET,SAN_FLAT);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($group,"","false")) 
 			ff_die("\$group is invalid! (".strip_tags($group).")",__FILE__,__LINE__);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($argument,"","false")) 
 			ff_die("\$argument is invalid! (".strip_tags($argument).")",__FILE__,__LINE__);
+		$topic = getparam("topic",PAR_GET,SAN_FLAT);
 		if (!check_path($topic,"","true")) 
 			ff_die("\$topic is invalid! (".strip_tags($topic).")",__FILE__,__LINE__);
 		show_topic($group,$argument,$topic);
 	}
-	else if ($ffaction=="lock" and (is_admin() or is_forum_moderator())){
+	else if ($ffaction=="lock"){
+		$group = getparam("group",PAR_GET,SAN_FLAT);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($group,"","false")) 
 			ff_die("\$group is invalid! (".strip_tags($group).")",__FILE__,__LINE__);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($argument,"","false")) 
 			ff_die("\$argument is invalid! (".strip_tags($argument).")",__FILE__,__LINE__);
+		$topic = getparam("topic",PAR_GET,SAN_FLAT);
 		if (!check_path($topic,"","true")) 
 			ff_die("\$topic is invalid! (".strip_tags($topic).")",__FILE__,__LINE__);
 		lock_topic($group,$argument,$topic);
 	}
-	else if ($ffaction=="unlock" and (is_admin() or is_forum_moderator())){
+	else if ($ffaction=="unlock"){
+		$group = getparam("group",PAR_GET,SAN_FLAT);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($group,"","false")) 
 			ff_die("\$group is invalid! (".strip_tags($group).")",__FILE__,__LINE__);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($argument,"","false")) 
 			ff_die("\$argument is invalid! (".strip_tags($argument).")",__FILE__,__LINE__);
+		$topic = getparam("topic",PAR_GET,SAN_FLAT);
 		if (!check_path($topic,"","true")) 
 			ff_die("\$topic is invalid! (".strip_tags($topic).")",__FILE__,__LINE__);
 		unlock_topic($group,$argument,$topic);
 	}
-	else if ($ffaction=="deletepost" and (is_admin() or is_forum_moderator())){
+	else if ($ffaction=="deletepost"){
+		$group = getparam("group",PAR_GET,SAN_FLAT);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($group,"","false")) 
 			ff_die("\$group is invalid! (".strip_tags($group).")",__FILE__,__LINE__);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($argument,"","false")) 
 			ff_die("\$argument is invalid! (".strip_tags($argument).")",__FILE__,__LINE__);
+		$topic = getparam("topic",PAR_GET,SAN_FLAT);
 		if (!check_path($topic,"","true")) 
 			ff_die("\$topic is invalid! (".strip_tags($topic).")",__FILE__,__LINE__);
+		$number = getparam("number",PAR_GET,SAN_FLAT);
 		if (!check_var($number,"digit")) 
 			ff_die("\$number is invalid! (".strip_tags($number).")",__FILE__,__LINE__);
 		delete_post($group,$argument,$topic,$number);
 	}
-	else if ($ffaction=="setpostontop" and (is_admin() or is_forum_moderator())){
+	else if ($ffaction=="setpostontop"){
+		$group = getparam("group",PAR_GET,SAN_FLAT);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($group,"","false")) 
 			ff_die("\$group is invalid! (".strip_tags($group).")",__FILE__,__LINE__);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($argument,"","false")) 
 			ff_die("\$argument is invalid! (".strip_tags($argument).")",__FILE__,__LINE__);
+		$topic = getparam("topic",PAR_GET,SAN_FLAT);
 		if (!check_path($topic,"","true")) 
 			ff_die("\$topic is invalid! (".strip_tags($topic).")",__FILE__,__LINE__);
+		$number = getparam("number",PAR_GET,SAN_FLAT);
 		if (!check_var($number,"digit")) 
 			ff_die("\$number is invalid! (".strip_tags($number).")",__FILE__,__LINE__);
 		set_post_on_top($group,$argument,$topic,$number);
 	}
-	else if ($ffaction=="removepostontop" and (is_admin() or is_forum_moderator())){
+	else if ($ffaction=="removepostontop"){
+		$group = getparam("group",PAR_GET,SAN_FLAT);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($group,"","false")) 
 			ff_die("\$group is invalid! (".strip_tags($group).")",__FILE__,__LINE__);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($argument,"","false")) 
 			ff_die("\$argument is invalid! (".strip_tags($argument).")",__FILE__,__LINE__);
+		$topic = getparam("topic",PAR_GET,SAN_FLAT);
 		if (!check_path($topic,"","true")) 
 			ff_die("\$topic is invalid! (".strip_tags($topic).")",__FILE__,__LINE__);
+		$number = getparam("number",PAR_GET,SAN_FLAT);
 		if (!check_var($number,"digit")) 
 			ff_die("\$number is invalid! (".strip_tags($number).")",__FILE__,__LINE__);
 		remove_post_on_top($group,$argument,$topic,$number);
 	}
-	else if ($ffaction=="editargument" and (is_admin() or is_forum_moderator())){
+	else if ($ffaction=="editargument"){
+		$group = getparam("group",PAR_GET,SAN_FLAT);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($group,"","false")) 
 			ff_die("\$group is invalid! (".strip_tags($group).")",__FILE__,__LINE__);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($argument,"","false")) 
 			ff_die("\$argument is invalid! (".strip_tags($argument).")",__FILE__,__LINE__);
+
 		edit_argument_interface(get_forum_root(),$group,$argument);
 	}
-	else if ($ffaction=="deleteargumentinterface" and (is_admin() or is_forum_moderator())){
+	else if ($ffaction=="deleteargumentinterface"){
+		$group = getparam("group",PAR_GET,SAN_FLAT);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($group,"","false")) 
 			ff_die("\$group is invalid! (".strip_tags($group).")",__FILE__,__LINE__);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($argument,"","false")) 
 			ff_die("\$argument is invalid! (".strip_tags($argument).")",__FILE__,__LINE__);
+
 		delete_argument_interface(get_forum_root(),$group,$argument);
 	}
-	else if ($ffaction=="renameargument" and (is_admin() or is_forum_moderator())){
+	else if ($ffaction=="renameargument"){
+		$group = getparam("group",PAR_GET,SAN_FLAT);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($group,"","false")) 
 			ff_die("\$group is invalid! (".strip_tags($group).")",__FILE__,__LINE__);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($argument,"","false")) 
 			ff_die("\$argument is invalid! (".strip_tags($argument).")",__FILE__,__LINE__);
+
 		rename_argument_interface(get_forum_root(),$group,$argument);
 	}
-	else if ($ffaction=="lockargument" and (is_admin() or is_forum_moderator())){
+	else if ($ffaction=="lockargument"){
+		$group = getparam("group",PAR_GET,SAN_FLAT);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($group,"","false")) 
 			ff_die("\$group is invalid! (".strip_tags($group).")",__FILE__,__LINE__);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($argument,"","false")) 
 			ff_die("\$argument is invalid! (".strip_tags($argument).")",__FILE__,__LINE__);
+
 		lock_argument(get_forum_root(),$group,$argument);
 	}
-	else if ($ffaction=="unlockargument" and (is_admin() or is_forum_moderator())){
+	else if ($ffaction=="unlockargument"){
+		$group = getparam("group",PAR_GET,SAN_FLAT);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($group,"","false")) 
 			ff_die("\$group is invalid! (".strip_tags($group).")",__FILE__,__LINE__);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($argument,"","false")) 
 			ff_die("\$argument is invalid! (".strip_tags($argument).")",__FILE__,__LINE__);
+
 		unlock_argument(get_forum_root(),$group,$argument);
 	}
-	else if ($ffaction=="moveargumentinterface" and (is_admin() or is_forum_moderator())){
+	else if ($ffaction=="moveargumentinterface"){
+		$group = getparam("group",PAR_GET,SAN_FLAT);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($group,"","false")) 
 			ff_die("\$group is invalid! (".strip_tags($group).")",__FILE__,__LINE__);
+		$argument = getparam("argument",PAR_GET,SAN_FLAT);
 		if (!check_path($argument,"","false")) 
 			ff_die("\$argument is invalid! (".strip_tags($argument).")",__FILE__,__LINE__);
+
 		move_argument_interface(get_forum_root(),$group,$argument);
 	}
-	else if ($ffaction=="deletegroupinterface" and (is_admin() or is_forum_moderator())){
+	else if ($ffaction=="deletegroupinterface"){
+		$group = getparam("group",PAR_GET,SAN_FLAT);
 		if (!check_path($group,"","false")) 
 			ff_die("\$group is invalid! (".strip_tags($group).")",__FILE__,__LINE__);
 		delete_group_interface(get_forum_root(),$group);
 	}
-	else if ($ffaction=="renamegroupinterface" and (is_admin() or is_forum_moderator())){
+	else if ($ffaction=="renamegroupinterface"){
+		$group = getparam("group",PAR_GET,SAN_FLAT);
 		if (!check_path($group,"","false")) 
 			ff_die("\$group is invalid! (".strip_tags($group).")",__FILE__,__LINE__);
+		
 		rename_group_interface(get_forum_root(),$group);
 	}
 	else if ($ffaction=="forumguide"){
 		view_forum_header();
 		include("forum/help.php");
 	}
-	else if ($ffaction=="movetopicinterface" and (is_admin() or is_forum_moderator())){
+	else if ($ffaction=="movetopicinterface"){
+		$topicpath=getparam("topicpath",PAR_GET,SAN_FLAT);
 		if (!check_path($topicpath,get_forum_root(),"true")) 
 			ff_die("\$topicpath is invalid! (".strip_tags($topicpath).")",__FILE__,__LINE__);
 		move_topic_interface($topicpath);
 	}
-	else if ($ffaction=="deletetopicinterface" and (is_admin() or is_forum_moderator())){
+	else if ($ffaction=="deletetopicinterface"){
+		$topicpath=getparam("topicpath",PAR_GET,SAN_FLAT);
 		if (!check_path($topicpath,get_forum_root(),"true")) 
 			ff_die("\$topicpath is invalid! (".strip_tags($topicpath).")",__FILE__,__LINE__);
 		delete_topic_interface($topicpath);
 	}
 	else if ($ffaction=="viewrules"){
+
 		include(get_forum_root()."/rules.php");
-		echo "<br><div style=\"text-align : center;\"><b><a href=\"javascript:history.back()\">Indietro</a></b></div>";
+		
+		echo "<br /><div style=\"text-align : center;\"><b><a href=\"javascript:history.back()\">Indietro</a></b></div>";
 	}
 }
 else if (isset($_GET['group']) and isset($_GET['argument']) and !isset($_GET['topic'])){
+	$group = getparam("group",PAR_GET,SAN_FLAT);
+	$argument = getparam("argument",PAR_GET,SAN_FLAT);
 	if (!check_path($group,"","false")) 
 		ff_die("\$group is invalid! (".strip_tags($group).")",__FILE__,__LINE__);
+	$argument = getparam("argument",PAR_GET,SAN_FLAT);
 	if (!check_path($argument,"","false")) 
 		ff_die("\$argument is invalid! (".strip_tags($argument).")",__FILE__,__LINE__);
+		
 	forum_view_argument(get_forum_root(),$group,$argument);
+
 }
 else if (isset($_GET['group']) and isset($_GET['argument']) and isset($_GET['topic'])){
+	$group = getparam("group",PAR_GET,SAN_FLAT);
+	$argument = getparam("argument",PAR_GET,SAN_FLAT);
 	if (!check_path($group,"","false")) 
 		ff_die("\$group is invalid! (".strip_tags($group).")",__FILE__,__LINE__);
+	$argument = getparam("argument",PAR_GET,SAN_FLAT);
 	if (!check_path($argument,"","false")) 
 		ff_die("\$argument is invalid! (".strip_tags($argument).")",__FILE__,__LINE__);
+	$topic = getparam("topic",PAR_GET,SAN_FLAT);
 	if (!check_path($topic,"","true")) 
 		ff_die("\$topic is invalid! (".strip_tags($topic).")",__FILE__,__LINE__);
+	
 	forum_view_topic(get_forum_root(),$group,$argument,$topic);
 }
 else if (isset($_GET['group']) and !isset($_GET['argument'])){
+	$group = getparam("group",PAR_GET,SAN_FLAT);
 	if (!check_path($group,"","false")) 
 		ff_die("\$group is invalid! (".strip_tags($group).")",__FILE__,__LINE__);
+
 	ff_view_group(get_forum_root(),$group);
 }
 else forum_overview(get_forum_root());

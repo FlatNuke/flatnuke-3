@@ -43,7 +43,7 @@ if (!check_path($root,get_forum_root(),"false")) ff_die("\$root is not valid! ("
 
 	$mod = _FN_MOD;
 	?>
-	<script type="text/javascript">
+	<script type="text/javascript" language="javascript">
 	function validate_group_form()
 		{
 			if(document.getElementById('ffnewgroup').value=='')
@@ -60,7 +60,7 @@ if (!check_path($root,get_forum_root(),"false")) ff_die("\$root is not valid! ("
 	echo "<b>"._CHOOSEGROUPNAME.":</b><br/><br/>";
 	echo "<form action=\"index.php?mod=$mod\" method=\"POST\" onsubmit=\"return validate_group_form()\">
 	<input type=\"hidden\" name=\"ffaction\" readonly=\"readonly\" value=\"creategroup\" />
-	<input type=\"text\" name=\"ffnewgroup\" id=\"ffnewgroup\" class=\"ffinput\" /><br/><br/>
+	<input type=\"text\" name=\"ffnewgroup\" id=\"ffnewgroup\" size=\"20\" /><br/><br/>
 	<input type=\"submit\" name=\"ffok\" value=\""._CREATEGROUP."\">
 	</form>";
 }
@@ -92,7 +92,7 @@ function create_group($root){
 	else {
 		fn_mkdir(stripslashes("$root/$group"),0777);
 		fnwrite("$root/$group/level.php","10","w",array("nonull"));
-		fnwrite("$root/$group/group.php","in futuro conterrÃ  le proprietÃ  del gruppo","w",array("nonull"));
+		fnwrite("$root/$group/group.php","in futuro conterrà le proprietà del gruppo","w",array("nonull"));
 		fflogf("created group $group");
 	}
 
@@ -116,7 +116,7 @@ if (!check_path($root,get_forum_root(),"false")) ff_die("\$root is not valid! ("
 global $theme;
 	$mod = _FN_MOD;
 	?>
-	<script type="text/javascript">
+	<script type="text/javascript" language="javascript">
 	function validate_argument_form()
 		{
 			if(document.getElementById('ffnewargument').value=='')
@@ -154,7 +154,7 @@ global $theme;
 
 	echo "<b>"._ARGUMENTNAME.":</b><br/><br/>";
 
-	echo "<input type=\"text\" name=\"ffnewargument\" id=\"ffnewargument\" class=\"ffinput\" /><br/><br/>";
+	echo "<input type=\"text\" name=\"ffnewargument\" id=\"ffnewargument\" size=\"20\" /><br/><br/>";
 
 	echo "<b>"._ARGUMENTLEVEL.":</b><br/><br/>";
 
@@ -166,7 +166,7 @@ global $theme;
 	}
 	echo "</select><br/><br/>";
 
-	echo "<b>"._ARGUMENTIMAGE.":</b><br><br>";
+	echo "<b>"._ARGUMENTIMAGE.":</b><br /><br />";
 	$argicons=array();
 	$argicons = glob("forum/icons/argument_icons/*");
 	if (!$argicons) $argicons = array(); // glob may returns boolean false instead of an empty array on some systems
@@ -179,7 +179,7 @@ global $theme;
 	}
 	echo "<option value=\"themes/$theme/images/section.png\">default</option>";
 
-	echo "</select><br><br>";
+	echo "</select><br /><br />";
 
 	echo "<b>"._ARGUMENTDESC.":</b><br/><br/>";
 
@@ -235,14 +235,14 @@ function create_argument($root){
 
 	if (is_dir("$root/$group/$argument")){
 		echo _THEARGUMENT." <b>$argument</b> "._ARGUMENTEXISTS." <b>$group</b>, "._ARGUMENTCHANGENAME;
-		echo "<br><br><a href=\"javascript:history.back()\">"._INDIETRO."</a>";
+		echo "<br /><br /><a href=\"javascript:history.back()\">"._INDIETRO."</a>";
 
 	}
 	else {
 		if (fn_mkdir("$root/$group/$argument",0777)){
 			fnwrite("$root/$group/$argument/level.php","10","w",array("nonull"));
 			fflogf("Created argument $argument in the group $group");
-			echo "<div align=\"center\"><br><b>"._ARGUMENTCREATED."!</b>";
+			echo "<div align=\"center\"><br /><b>"._ARGUMENTCREATED."!</b>";
 			echo "<br/><br/><a href=\"index.php?mod=".rawurlencodepath($mod)."\"><b>"._RETURN."</b></a></div>";
 		}
 	}
@@ -360,7 +360,7 @@ function hide_topic($group, $argument, $topic){
 		fflogf("I cannot set hide status because the file ".strip_tags($topicfile)." doesn't exists!","ERROR");
 	}
 
-	echo "<div align=\"center\"><b>"._TOPICHIDDEN."</b><br><br>
+	echo "<div align=\"center\"><b>"._TOPICHIDDEN."</b><br /><br />
 	<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."\" >"._RETURN."</a>
 	</div>";
 
@@ -409,7 +409,7 @@ function show_topic($group, $argument, $topic){
 	update_topics_list($group,$argument);
 	update_argument_stats($group,$argument);
 
-	echo "<div align=\"center\"><b>"._TOPICSHOWED."<b/><br><br>
+	echo "<div align=\"center\"><b>"._TOPICSHOWED."<b/><br /><br />
 	<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."\" >"._RETURN."</a>
 	</div>";
 	//ritorno
@@ -454,7 +454,7 @@ function lock_topic($group, $argument, $topic){
 	else {
 		fflogf("I cannot set lock status because the file ".strip_tags($topicfile)." doesn't exists!","ERROR");
 	}
-	echo "<div align=\"center\"><b>"._TOPICLOCKED."<b/><br><br>
+	echo "<div align=\"center\"><b>"._TOPICLOCKED."<b/><br /><br />
 	<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."\" >"._RETURN."</a>
 	</div>";
 	//ritorno
@@ -499,7 +499,7 @@ function unlock_topic($group, $argument, $topic){
 	else {
 		fflogf("I cannot set lock status because the file ".strip_tags($topicfile)." doesn't exists!","ERROR");
 	}
-	echo "<div align=\"center\"><b>"._TOPICUNLOCKED."</b><br><br>
+	echo "<div align=\"center\"><b>"._TOPICUNLOCKED."</b><br /><br />
 	<a href=\"index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."\" >"._RETURN."</a>
 	</div>";
 	//ritorno
@@ -602,7 +602,7 @@ if (!is_forum_moderator()) ff_die("only moderators and admins can do this!",__FI
 
 	save_topic($topicfile,$topicdata);
 
-	echo "<div align=\"center\">Il post sar&agrave; visualizzato in cima</div>";
+	echo "<div align=\"center\">Il post sarà visualizzato in cima</div>";
 	//ritorno
 	echo "<meta http-equiv=\"Refresh\" content=\"1; URL=index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=$topic\" ></div>";
 }
@@ -641,7 +641,7 @@ if (!is_forum_moderator()) ff_die("only moderators and admins can do this!",__FI
 
 	save_topic($topicfile,$topicdata);
 
-	echo "<div align=\"center\">Il post sar&agrave; visualizzato normalmente</div>";
+	echo "<div align=\"center\">Il post sarà visualizzato normalmente</div>";
 	//ritorno
 	echo "<meta http-equiv=\"Refresh\" content=\"1; URL=index.php?mod=".rawurlencodepath($mod)."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=$topic\" ></div>";
 }
@@ -680,7 +680,7 @@ function edit_argument_interface($root,$group,$argument){
 
 // 	echo "<b>Scegli il nome dell'argomento:</b><br/><br/>";
 //
-// 	echo "<input type=\"text\" name=\"ffnewargument\" class=\"ffinput\"><br/><br/>";
+// 	echo "<input type=\"text\" name=\"ffnewargument\" size=\"20\"><br/><br/>";
 
 	echo "<b>"._ARGUMENTLEVEL.":</b><br/><br/>";
 
@@ -694,7 +694,7 @@ function edit_argument_interface($root,$group,$argument){
 	}
 	echo "</select><br/><br/>";
 
-	echo "<b>"._ARGUMENTIMAGE.":</b><br><br>";
+	echo "<b>"._ARGUMENTIMAGE.":</b><br /><br />";
 	$argicons=array();
 	$argicons = glob("forum/icons/argument_icons/*");
 	if (!$argicons) $argicons = array(); // glob may returns boolean false instead of an empty array on some systems
@@ -709,7 +709,7 @@ function edit_argument_interface($root,$group,$argument){
 	}
 	echo "<option value=\"themes/$theme/images/section.png\">default</option>";
 
-	echo "</select><br><br>";
+	echo "</select><br /><br />";
 
 	echo "<b>"._ARGUMENTDESC.":</b><br/><br/>";
 
@@ -798,7 +798,7 @@ function rename_argument_interface($root,$group,$argument){
 	echo "<input type=\"hidden\" readonly name=\"ffaction\" value=\"renameargument\" />";
 	echo "<br/>"._RENAMETHEARGUMENT." <b>$argument</b><br/><br/>";
 
-	echo "<input type=\"text\" name=\"ffnewargumentname\" class=\"ffinput\" value=\"$argument\" /><br/><br/>
+	echo "<input type=\"text\" name=\"ffnewargumentname\" size=\"20\" value=\"$argument\" /><br/><br/>
 	<input type=\"submit\" name=\"ffok\" value=\""._RENAMEARGUMENT."\" />";
 
 	echo "</form>";
@@ -832,7 +832,7 @@ function rename_argument($root){
 	$mod = _FN_MOD;
 
 	if (trim($oldargumentname)==trim($newargumentname)){
-	echo "<div align=\"center\">Il nome dell'argomento non &egrave; cambiato!</div>";
+	echo "<div align=\"center\">Il nome dell'argomento non è cambiato!</div>";
 	}
 
 	if (!is_dir("$root/$group/$oldargumentname"))
@@ -894,7 +894,7 @@ function lock_argument($root,$group,$argument){
 	}
 	else {
 		if (touch("$root/$group/$argument/lock"))
-			echo "<br/><div align=\"center\"><b>"._ARGUMENTLOCKED."!</b><br><br>
+			echo "<br/><div align=\"center\"><b>"._ARGUMENTLOCKED."!</b><br /><br />
 			<a href=\"index.php?mod=".rawurlencodepath($mod)."\"><b>"._RETURN."</b></a>
 			</div>";
 	}
@@ -934,7 +934,7 @@ function unlock_argument($root,$group,$argument){
 	if (file_exists("$root/$group/$argument/lock")){
 		if (unlink("$root/$group/$argument/lock"))
 			echo "<br/><div align=\"center\"><b>"._ARGUMENTUNLOCKED."!</b>
-			<br><br><a href=\"index.php?mod=".rawurlencodepath($mod)."\"><b>"._RETURN."</b></a>
+			<br /><br /><a href=\"index.php?mod=".rawurlencodepath($mod)."\"><b>"._RETURN."</b></a>
 			</div>";
 	}
 	else {
@@ -1079,7 +1079,7 @@ function delete_argument($root){
 	if (!rmdir("$root/$group/$argument")){
 		echo "<b>"._ATTENTION."! </b>"._DIRNOTDELETED.": $root/$group/$argument";
 	}
-	else echo "<br><div style=\"align: center;\"><b>"._ARGUMENTDELETED."!</b></div><br><br><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($mod)."\"><b>"._RETURN."</b></a></div>";
+	else echo "<br /><div style=\"align: center;\"><b>"._ARGUMENTDELETED."!</b></div><br /><br /><div align=\"center\"><a href=\"index.php?mod=".rawurlencodepath($mod)."\"><b>"._RETURN."</b></a></div>";
 }
 
 /**
@@ -1378,7 +1378,7 @@ function rename_group_interface($root,$group){
 	echo "<input type=\"hidden\" readonly name=\"ffaction\" value=\"renamegroup\" />";
 	echo "<br/>"._RENAMEGROUP." <b>$group</b><br/><br/>";
 
-	echo "<input type=\"text\" name=\"ffnewgroupname\" class=\"ffinput\" value=\"$group\" /><br/><br/>
+	echo "<input type=\"text\" name=\"ffnewgroupname\" size=\"20\" value=\"$group\" /><br/><br/>
 	<input type=\"submit\" name=\"ffok\" value=\""._RENAMEGROUP."\" />";
 
 	echo "</form>";
@@ -1460,7 +1460,7 @@ function move_topic(){
 	}
 
 	if (!is_writable($topicpath)){
-		ff_die("<b>".ATTENTION."</b>: il topic ".strip_tags($topicpath)." non &egrave; scrivibile, impossibile spostarlo!");
+		ff_die("<b>".ATTENTION."</b>: il topic ".strip_tags($topicpath)." non è scrivibile, impossibile spostarlo!");
 	}
 
 	if (!preg_match("/ff.php$/i",$topicpath)){
@@ -1527,7 +1527,7 @@ function move_topic_interface($topicpath){
 	echo "<input type=\"hidden\" name=\"fftopicpath\" readonly=\"readonly\" value=\"$topicpath\" />";
 	echo "<input type=\"hidden\" name=\"ffmod\" readonly=\"readonly\" value=\"$mod\" />";
 	echo _CHOOSETOPICDEST." <b>".$topicdata['properties']['topictitle']."</b>:";
-	echo "<br><br><select name=\"ffdestargument\">";
+	echo "<br /><br /><select name=\"ffdestargument\">";
 	$argument="";
 	foreach ($arguments as $argument){
 		if (is_dir("$root/$argument") and is_writable("$root/$argument")){
@@ -1538,8 +1538,8 @@ function move_topic_interface($topicpath){
 	}
 	echo "</select>";
 	if (count($arguments)<2)
-		echo "<br><br><b>"._CREATEARGUMENTS."</b>";
-	echo "<br><br><input ";
+		echo "<br /><br /><b>"._CREATEARGUMENTS."</b>";
+	echo "<br /><br /><input ";
 	if (count($arguments)<2) echo "disabled=\"disabled\"";
 	echo "type=\"submit\" name=\"ffok\" value=\""._MOVETOPIC."\" />";
 	echo "</form>";
@@ -1562,13 +1562,13 @@ function delete_topic_interface($topicpath){
 	$topicdata = load_topic_properties($topicpath);
 // 	print_r($topicdata);
 	$mod = _FN_MOD;
-	echo "<div style=\"text-align: center;\">"._ASKDELETETOPIC.": <b> ".$topicdata['properties']['topictitle']."</b>?<br>";
+	echo "<div style=\"text-align: center;\">"._ASKDELETETOPIC.": <b> ".$topicdata['properties']['topictitle']."</b>?<br />";
 
 	echo "<form action=\"index.php?mod=$mod\" method=\"POST\">";
 	echo "<input type=\"hidden\" name=\"ffaction\" readonly=\"readonly\" value=\"deletetopic\" />";
 	echo "<input type=\"hidden\" name=\"fftopicpath\" readonly=\"readonly\" value=\"".rawurlencodepath($topicpath)."\" />";
 	echo "<input type=\"hidden\" name=\"ffmod\" readonly=\"readonly\" value=\"$mod\" />";
-	echo "<br><br><input type=\"submit\" name=\"ffok\" value=\""._DELETETOPIC."\" />";
+	echo "<br /><br /><input type=\"submit\" name=\"ffok\" value=\""._DELETETOPIC."\" />";
 	echo "</form></div>";
 
 
@@ -1607,12 +1607,12 @@ if (!_FN_IS_ADMIN) ff_die("Only admins can delete topics!",__FILE__,__LINE__);
 
 		update_topics_list($group,$argument);
 
-		echo "<div style=\"text-align: center;\">"._TOPICDELETED.": <b> ".$topicdata['properties']['topictitle']."</b><br>";
+		echo "<div style=\"text-align: center;\">"._TOPICDELETED.": <b> ".$topicdata['properties']['topictitle']."</b><br />";
 
-		echo "<br/><br/><a href=\"index.php?mod=".rawurlencodepath($origmod)."&group=".$group."&argument=".$argument."\"><b>"._RETURN."</b></a></div>";
+		echo "<br/><br/><a href=\"index.php?mod=".rawurlencodepath($origmod)."\"><b>"._RETURN."</b></a></div>";
 	}
 	else {
-		echo "<div style=\"text-align: center;\"><b>"._ATTENTION."!</b>I wasn't able to delete the topic: <b> ".$topicdata['properties']['topictitle']."</b><br>";
+		echo "<div style=\"text-align: center;\"><b>"._ATTENTION."!</b>I wasn't able to delete the topic: <b> ".$topicdata['properties']['topictitle']."</b><br />";
 		echo "<br/><br/><a href=\"index.php?mod=".rawurlencodepath($origmod)."\"><b>"._RETURN."</b></a></div>";
 	}
 
@@ -1637,10 +1637,10 @@ if (!file_exists(get_forum_root()."/rules.php"))
 	fnwrite(get_forum_root()."/rules.php"," ","w",array());
 ?>
 <h3><?php echo _FFCONTROLPANEL; ?>: </h3>
-<hr>
+<hr />
 <div style="text-align : center;">
 
-<br>
+<br />
 <fieldset><legend><?php echo _FORUMMANAGEMENT; ?></legend>
 <form action="index.php?mod=<?php echo $mod; ?>" method="post">
 <input type="hidden" name="ffaction" value="newgroup" />
@@ -1649,7 +1649,7 @@ if (!is_writable(get_forum_root())) echo "disabled=\"disabled\"";
 ?> />
 </form>
 <?php
-if (!is_writable(get_forum_root())) echo "La cartella <b>".get_forum_root()."</b> non &egrave; scrivible: controllare i permessi.<br/><br/>";
+if (!is_writable(get_forum_root())) echo "La cartella <b>".get_forum_root()."</b> non è scrivible: controllare i permessi.<br/><br/>";
 ?>
 <form action="index.php?mod=<?php echo $mod; ?>" method="post">
 <input type="hidden" name="ffaction" value="newargument" />
@@ -1657,7 +1657,7 @@ if (!is_writable(get_forum_root())) echo "La cartella <b>".get_forum_root()."</b
 
 if (count(list_forum_groups(get_forum_root()))==0) echo "disabled=\"disabled\"";
 ?> />
-<?php if (count(list_forum_groups(get_forum_root()))==0) echo "<br><i>"._CREATEGROUPS."</i>";?>
+<?php if (count(list_forum_groups(get_forum_root()))==0) echo "<br /><i>"._CREATEGROUPS."</i>";?>
 </form>
 
 <form action="index.php?mod=<?php echo $mod; ?>" method="post">
@@ -1709,7 +1709,7 @@ if (count(list_forum_groups(get_forum_root()))==0) echo "disabled=\"disabled\"";
 
 </fieldset>
 
-<br><br>
+<br /><br />
 		<strong><a href="javascript:history.back()"><?php echo _INDIETRO; ?></a></strong>
 
 </div>

@@ -91,7 +91,7 @@ if (!fd_check_path($filename,"sections/","")) {
 		if (ltrim($description['name'])==""){
 			$string_title = "<a id=\"".create_id($filename)."\" title=\"mime icon\">".getIcon($ext,$icon_style)."</a><a href=\"index.php?mod=none_Fdplus&amp;fdaction=download&amp;url=".rawurlencodepath($filename)."\" title=\""._FDDOWNLOADFILE.basename($filename)."\">".basename($filename)."</a>";
 
-			//se Ã¨ nascosto
+			//se è nascosto
 			if ($description['hide']=="true") $string_title = "<span style=\"color : #ff0000; text-decoration : line-through;\"><a href=\"index.php?mod=none_Fdplus&amp;fdaction=download&amp;url=".rawurlencodepath($filename)."\" title=\""._FDDOWNLOADFILE.basename($filename)."\">".$string_title."</a></span>";
 
 
@@ -102,14 +102,14 @@ if (!fd_check_path($filename,"sections/","")) {
 			$string_title = "<a id=\"".create_id($filename)."\">".getIcon($ext,$icon_style)."</a><a href=\"index.php?mod=none_Fdplus&amp;fdaction=download&amp;url=".rawurlencodepath($filename)."\" title=\""._FDDOWNLOADFILE.basename($filename)."\">".$description['name']."</a>";
 
 
-			//se il file Ã¨ nascosto
+			//se il file è nascosto
 			if ($description['hide']=="true") $string_title = "<span style=\"color : #ff0000; text-decoration : line-through;\"><a href=\"index.php?mod=none_Fdplus&amp;fdaction=download&amp;url=".rawurlencodepath($filename)."\" title=\""._FDDOWNLOADFILE.basename($filename)."\">".$string_title."</a></span>";
 
 
 			echo $string_title.$newfilestring;
 		}
 
-		echo " ($size, $lastupdate) <a href=\"javascript:ShowHideDiv('fdfileinfo".create_id($filename)."');\" style=\"text-decoration: none;\">+</a><br>";
+		echo " ($size, $lastupdate) <a href=\"javascript:ShowHideDiv('fdfileinfo".create_id($filename)."');\" style=\"text-decoration: none;\">+</a><br />";
 
 
 
@@ -128,10 +128,10 @@ if (!fd_check_path($filename,"sections/","")) {
 			if (is_alphanumeric(trim($description['uploadedby']))){
 				if (file_exists(get_fn_dir("users")."/".trim($description['uploadedby']).".php")){
 					echo "<b>"._FDUPLOADER."</b>:
-					<a href=\"index.php?mod=none_Login&action=viewprofile&user=".$description['uploadedby']."\" title=\""._FDUPLOADERTITLE."\">".$description['uploadedby']."</a><br>";
+					<a href=\"index.php?mod=none_Login&action=viewprofile&user=".$description['uploadedby']."\" title=\""._FDUPLOADERTITLE."\">".$description['uploadedby']."</a><br />";
 				}
 				else {
-					echo "<b>"._FDUPLOADER."</b>: ".$description['uploadedby']."<br>";
+					echo "<b>"._FDUPLOADER."</b>: ".$description['uploadedby']."<br />";
 				}
 			}
 			else if (trim($description['uploadedby'])!=""){
@@ -144,7 +144,7 @@ if (!fd_check_path($filename,"sections/","")) {
 		$track = getDownloads($filename);
 		//se esiste un contatore
 		if ($track!=""){
-			echo "<b>"._FDHITS."</b>: $track<br>";
+			echo "<b>"._FDHITS."</b>: $track<br />";
 		}
 		//VOTO
 		if (isset($_POST['fdvote'])){
@@ -153,7 +153,7 @@ if (!fd_check_path($filename,"sections/","")) {
 			//ricarico l'array con i dati in modo che vengano mostrati quelli aggiornati
 			$description = load_description($filename);
 			// se ho aggiunto un voto devo ricaricare la pagina per mostrarlo
-			// -> (non Ã¨ piÃ¹ necessario essendo stato inserito il codice prima che vengano
+			// -> (non è più necessario essendo stato inserito il codice prima che vengano
 			// mostrati i dati
 // 				echo "<meta http-equiv=\"Refresh\" content=\"1; URL=index.php?mod=$mod\">";
 		}
@@ -162,7 +162,7 @@ if (!fd_check_path($filename,"sections/","")) {
 		fd_show_vote($filename,$description);
 		//inserisco la chiave
 		if (file_exists($filename.".$extsig")){
-			echo "(<b><a href=\"$filename.$extsig\" title=\""._FDGPGSIGNTITLE.basename($filename)."\">"._FDGPGSIGN."</a></b>)<br>";
+			echo "(<b><a href=\"$filename.$extsig\" title=\""._FDGPGSIGNTITLE.basename($filename)."\">"._FDGPGSIGN."</a></b>)<br />";
 		}
 
 		//se esiste lo screenshot
@@ -170,7 +170,7 @@ if (!fd_check_path($filename,"sections/","")) {
 		if (file_exists("$filename.$extscreenshot")){
 // 			echo "<b>Screenshot</b>:";
 			fd_show_screenshot($filename);
-			echo "<br>";
+			echo "<br />";
 		}
 
 		//se si tratta di un file immagine:
@@ -178,7 +178,7 @@ if (!fd_check_path($filename,"sections/","")) {
 			//se contemporaneamente non esiste uno screenshot:
 			if (!file_exists("$filename.$extscreenshot")){
 // 				echo "<tr><td style=\"vertical-align : top;\"><b>Screenshot</b></td><td>";
-				echo "<a rel=\"lightbox\" href=\"$filename\" title=\""._FDSCREENSHOT.basename($filename)."\"><img src=\"$filename\" style=\"max-height : 100px;\"></a><br>";
+				echo "<a rel=\"lightbox\" href=\"$filename\" title=\""._FDSCREENSHOT.basename($filename)."\"><img src=\"$filename\" style=\"max-height : 100px;\"></a><br />";
 // 				echo "</td></tr>";
 			}
 		}
@@ -187,41 +187,41 @@ if (!fd_check_path($filename,"sections/","")) {
 		//se non e' nullo mostro anche il campo "versione"
 		if (trim($description['version'])!=""){
 			echo "<b>"._FDVERSION."</b>: ";
-			echo $description['version']."<br>";
+			echo $description['version']."<br />";
 		}
 
 		//CAMPI PERSONALIZZATI
 		//se sono entrambi settati mostro i campi personalizzati
 		if (trim($description['userlabel'])!="" and trim($description['uservalue'])!=""){
 			echo "<b>".$description['userlabel']."</b>: ";
-			echo $description['uservalue']."<br>";
+			echo $description['uservalue']."<br />";
 
 		}
 
 		//se non e' nullo mostro anche il campo "md5"
 		if (ltrim($description['md5'])!=""){
 			echo "<b>md5</b>: ";
-			echo $description['md5']."<br>";
+			echo $description['md5']."<br />";
 		}
 
 		//se non e' nullo mostro anche il campo "sha1"
 		if (ltrim($description['sha1'])!=""){
 			echo "<b>sha1</b>: ";
-			echo $description['sha1']."<br>";
+			echo $description['sha1']."<br />";
 		}
 
 
-		//stampo la dimensione (se Ã¨ un file locale)
+		//stampo la dimensione (se è un file locale)
 // 		if (trim($description['url'])=="")
-// 			echo "<b>"._FDSIZE."</b>: $size<br>";
+// 			echo "<b>"._FDSIZE."</b>: $size<br />";
 
 		if(fd_is_admin()){
 			echo "<div style=\"border: solid 1px;text-align: center;\"";
 			file_admin_panel($filename,$description);
-			echo "</div><br>";
+			echo "</div><br />";
 
 		}
-		else echo "<br>";
+		else echo "<br />";
 		//FINE PANNELLO NASCOSTO
 		echo "</i></div>";
 

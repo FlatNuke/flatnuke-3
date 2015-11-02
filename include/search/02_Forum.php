@@ -45,10 +45,10 @@ global $theme;
 $where = getparam("where",PAR_POST,SAN_FLAT);
 	if ($where!="allsite"){
 		if (count($files)==0){
-			echo _NORESULT."<br><a href=\"javascript:history.back();\" title=\""._INDIETRO."\">&lt;&lt; "._INDIETRO."</a>";
+			echo _NORESULT."<br /><a href=\"javascript:history.back();\" title=\""._INDIETRO."\">&lt;&lt; "._INDIETRO."</a>";
 
 		}
-		else echo "<br><b>"._FP_RISULTATI.":</b><br><br>";
+		else echo "<br /><b>"._FP_RISULTATI.":</b><br /><br />";
 	}
 	else {
 		echo "<h4>Topics:</h4>";
@@ -77,7 +77,7 @@ $where = getparam("where",PAR_POST,SAN_FLAT);
 			else if (getlevel(get_username(),"home")<$argdata['level']) continue;
 		}
 
-		echo _ICONREAD."&nbsp;<a href=\"index.php?mod=".rawurlencodepath(find_forum_mod())."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=".rawurlencodepath($topic)."\" >".$topicdata['properties']['topictitle']."</a><br>";
+		echo "<img src=\"themes/$theme/images/read.png\" alt=\"topic\" />&nbsp;<a href=\"index.php?mod=".rawurlencodepath(find_forum_mod())."&amp;group=".rawurlencodepath($group)."&amp;argument=".rawurlencodepath($argument)."&amp;topic=".rawurlencodepath($topic)."\" >".$topicdata['properties']['topictitle']."</a><br />";
 
 	}
 
@@ -89,8 +89,8 @@ $where = getparam("where",PAR_POST,SAN_FLAT);
  *
  * @param string $string la stringa da cercare
  * @param array $files l'array di file in cui cercare la stringa
- * @param string $method il metodo di ricerca. PuÃ² essere "OR" oppure "AND"
- * @return un array con i percorsi dei file in cui Ã¨ stata trovata la stringa
+ * @param string $method il metodo di ricerca. Può essere "OR" oppure "AND"
+ * @return un array con i percorsi dei file in cui è stata trovata la stringa
  * @author Aldo Boccacci
  * @since 0.1
  */

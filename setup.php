@@ -213,7 +213,7 @@ function fn_install_checks() {
 	} else {
 		?><b class="FN-control-no"><?php echo _ERROR?></b></p><?php
 		foreach($print_err as $text_err) {
-			echo "<small>".$text_err."</small><br>";
+			echo "<small>".$text_err."</small><br />";
 		}
 		?></div><div id="FN-setup-footer">
 		<input type='button' class="FN-link" value='&lt;&lt;' onclick="window.location='?step=<?php echo $step-1?>&amp;lang=<?php echo $lang?>';" />&nbsp;
@@ -314,7 +314,7 @@ function fn_test_sections() {
 function fn_reg_admin() {
 	global $step, $tot_steps, $lang;
 	?>
-	<script type="text/javascript">
+	<script type="text/javascript" language="javascript">
 	function validate()
 		{
 			if(document.getElementsByName('nome')[0].value=='')
@@ -368,8 +368,8 @@ function fn_reg_admin() {
 	<tr>
 		<td><label for="avatar"><b><?php echo _FAVAT?></b></label></td>
 		<td style="text-align:center">
-			<img name="avatar_img" src="forum/images/blank.png" alt="avatar" style="max-width:120px;border:0" id="avatar_img" />
-			<br>
+			<img name="avatar_img" src="forum/images/blank.png" alt="avatar" border="0" style="max-width:120px;" id="avatar_img" />
+			<br />
 			<select name="avatar" id="avatar" onchange='document.avatar_img.src="forum/images/"+this.options[this.selectedIndex].value'>
 			<option value="">----</option><?php
 				$modlist = array();
@@ -390,9 +390,9 @@ function fn_reg_admin() {
 	</tr>
 	<tr>
 	<td colspan="2">
-	<?php echo _FAVATREM?>:<br>
+	<?php echo _FAVATREM?>:<br />
 	<input style="width: 100%" type="text" name="url_avatar" />
-	<br><br><?php echo _FCAMPI?></td>
+	<br /><br /><?php echo _FCAMPI?></td>
 	</tr>
 	</table>
 	</div>
@@ -448,7 +448,7 @@ function fn_main_config() {
 		<tr><td style="width:25%"><?php echo _FNCC_CONFSITENAME?>&nbsp;</td><td><input style="width:100%" type="text" name="sitename" value="<?php echo $sitename?>" /></td></tr>
 		<tr><td><?php echo _FNCC_CONFSITEDESCRIPTION?>&nbsp;</td><td><input style="width:100%" type="text" name="sitedescription" value="<?php echo $sitedescription?>" /></td></tr>
 		<tr><td><?php echo _FNCC_CONFKEYWORDS?>&nbsp;</td><td><textarea style="width:100%" cols="30" rows="14" name="keywords"><?php echo $keywords?></textarea></td></tr>
-		<tr><td><?php echo _FNCC_CONFADMINMAIL?>&nbsp;</td><td><input style="width:100%" type="text" name="emailadmin" value="<?php echo $email?>" /><br><i>(<?php echo _FNCC_CONFADMINMAIL_CONTACT;?>)</i></td></tr>
+		<tr><td><?php echo _FNCC_CONFADMINMAIL?>&nbsp;</td><td><input style="width:100%" type="text" name="emailadmin" value="<?php echo $email?>" /><br /><i>(<?php echo _FNCC_CONFADMINMAIL_CONTACT;?>)</i></td></tr>
 		<tr>
 			<td><?php echo _FNCC_CONFTHEME?>&nbsp;</td>
 			<td>
@@ -485,7 +485,7 @@ function fn_main_config() {
 	<input type='submit' class='FN-link' value='&gt;&gt;' />
 	</div>
 	</form>
-	<SCRIPT>
+	<SCRIPT language="JavaScript">
 
 
 function changepic(theme) {
@@ -506,7 +506,6 @@ function changepic(theme) {
  */
 function fn_ready_to_install() {
 	global $step, $tot_steps, $lang;
-	$ip = "IP unknown";
 
 	$nome    = getparam("nome",    PAR_POST, SAN_FLAT);
 	$regpass = getparam("regpass", PAR_POST, SAN_FLAT);
@@ -547,12 +546,12 @@ function fn_ready_to_install() {
 			} else $new_file .= $file[$id];
 		}
 		// write the new file
+		$ip = getparam("REMOTE_ADDR", PAR_SERVER, SAN_NULL);
 		fnwrite($conf_file, $new_file, "wb", array("nonull"));
 	}
 
 	// delete /var/firstinstall to end this installation script
 	@unlink(get_fn_dir("var")."/firstinstall");
-	$ip = getparam("REMOTE_ADDR", PAR_SERVER, SAN_NULL);
 	fnlog("Site maintenance", "$ip||".get_username()."||Installation completed.");
 
 	?>

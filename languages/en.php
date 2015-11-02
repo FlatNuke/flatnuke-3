@@ -9,7 +9,7 @@ $mesi = array("January","February","March","April","May","June","July","August",
 $GLOBALS['giorni'] = $giorni;
 $GLOBALS['mesi'] = $mesi;
 
-define("_CHARSET","UTF-8"); // ISO-8859-1 to UTF-8
+define("_CHARSET","ISO-8859-1");
 define("_CERCA","Find");
 define("_CERCASTR","Find word in:");
 define("_ALLSITE","All the site");
@@ -121,7 +121,6 @@ define("_FUTENTE","User");
 define("_FMESS","Message");
 define("_FNUOVOMESS","New message");
 define("_FOGG","Subject");
-define("_FCREATOP","Create new thread");
 define("_FTOPOK","Thread created");
 define("_FLEGGI","Read");
 define("_FMESSOK","Message sent");
@@ -135,19 +134,18 @@ define("_FDELUTENTE","Delete account");
 define("_REG_AGREEMENT_TERMS","While the administrators and moderators of this forum will attempt to remove or edit any generally
 objectionable material as quickly as possible, it is impossible to review every message. Therefore you acknowledge that all posts
 made to these forums express the views and opinions of the author and not the administrators, moderators or webmaster (except
-for posts by these people) and hence will not be held liable.<br><br>You agree not to post any abusive, obscene, vulgar, slanderous,
+for posts by these people) and hence will not be held liable.<br /><br />You agree not to post any abusive, obscene, vulgar, slanderous,
 hateful, threatening, sexually-oriented or any other material that may violate any applicable laws. Doing so may lead to you
 being immediately and permanently banned (and your service provider being informed). The IP address of all posts is recorded
 to aid in enforcing these conditions. You agree that the webmaster, administrator and moderators of this forum have the right
 to remove, edit, move or close any topic at any time should they see fit. As a user you agree to any information you have entered
 above being stored in a database. While this information will not be disclosed to any third party without your consent the
 webmaster, administrator and moderators cannot be held responsible for any cracking attempt that may lead to the data being
-compromised.<br><br>This forum system uses cookies to store information on your local computer. These cookies do not contain
+compromised.<br /><br />This forum system uses cookies to store information on your local computer. These cookies do not contain
 any of the information you have entered above; they serve only to improve your viewing pleasure. The e-mail address is not
-actually used in any automatic function.<br><br>By clicking Register below you agree to be bound by these conditions."); // taken & modified from PhpBB (http://www.phpbb.com/)
+actually used in any automatic function.<br /><br />By clicking Register below you agree to be bound by these conditions."); // taken & modified from PhpBB (http://www.phpbb.com/)
 define("_LEGAL","This is a free software released under the GNU General Public License.");
 define("_NOPUBNEWS","No highlighted news");
-define("_MOTDMESS","<h1>Hello, FlatNuke!</h1><br><p>Please complete the configuration of your new website by clicking on \"<a href=\"index.php?mod=none_Admin\">Manage the website</a>\" inside the Login block.<br>To find out everything you can do with your new CMS, have a look to the file <a href=\"README\" target=\"_blank\">README</a> and register to the official forum on <a href=\"http://flatnuke.org\" target=\"_blank\">http://flatnuke.org</a>.</p>");// need translation
 define("_LEVEL","Level");
 define("_NOLEVELSECT","You don&#8217;t have right permissions to view this section");
 define("_SICURO","Are you sure you want to do it?");
@@ -298,11 +296,11 @@ define("_GROUPRENAMED","Group successfully renamed!");
 define("_DOESNTEXISTS","doesn&#8217;t exists!");
 define("_ATTENTION","Attention");
 define("_DELETEGROUPALERT1","Do you really want to delete the group");
-define("_DELETEGROUPALERT2","If you want to delete the group you have to check the form below and clik on the OK button.<br><b>Attention:</b> the group will be deleted only if it doesn&#8217;t contain any argument.");
+define("_DELETEGROUPALERT2","If you want to delete the group you have to check the form below and clik on the OK button.<br /><b>Attention:</b> the group will be deleted only if it doesn&#8217;t contain any argument.");
 define("_DELETEGROUPALERT3","Definitively delete the group");
 define("_DELETEGROUPNOCONFIRM","If you want to delete the group you have to check the checkbox in the previous page.");
 define("_DELETEGROUPOK","Group successfully deleted!");
-define("_GROUPNOTEMPTY","isn&#8217;t empty and contains one ore more arguments. <br>You will have to delete or move arguments before try to delete the group.");
+define("_GROUPNOTEMPTY","isn&#8217;t empty and contains one ore more arguments. <br />You will have to delete or move arguments before try to delete the group.");
 define("_ARGUMENTGROUP","Choose a group for the argument");
 define("_ARGUMENTNAME","Choose the name of the argument");
 define("_ARGUMENTLEVEL","Select a level");
@@ -328,7 +326,7 @@ define("_ARGUMENTUNLOCKED","Argument unlocked");
 define("_ARGALREADYUNLOCKED","The argument was already unlocked");
 define("_DELETEARGUMENT1","Do you really want delete the argument");
 define("_DELETEARGUMENT2","inside the group");
-define("_DELETEARGUMENT3","If you want do that please check the checkbox present below and press the OK button.<br><b>Attention</b>: all topic contained will be deleted!");
+define("_DELETEARGUMENT3","If you want do that please check the checkbox present below and press the OK button.<br /><b>Attention</b>: all topic contained will be deleted!");
 define("_DELETEARGUMENT","delete the argument");
 define("_ARGUMENTDELETED","Argument successfully deleted");
 define("_DIRNOTDELETED","It was impossible to delete the dir");
@@ -427,10 +425,10 @@ define("_FNPRESENTATION","Presentation");//check translation
 
 // 2.7.1
 define("_NEWPWDSTRING","Lost password");
-define("_NEWPWDFORM","<b>Recover Password</b>:<br><br>
+define("_NEWPWDFORM","<b>Recover Password</b>:<br /><br />
 	To recover your password, please provide the e-mail address you have
-	associated with your member account and click on the Submit button.<br>
-	The e-mail will also contain your NEW password.<br>
+	associated with your member account and click on the Submit button.<br />
+	The e-mail will also contain your NEW password.<br />
 	Pay attention on the fact that you will not be able to use your new password
 	till you will validate the request; so, without validation,
 	you still have to use the old password.");
@@ -469,7 +467,7 @@ define("_FN_SETUP_RESULT","Result");
 define("_FN_SETUP_RELOAD","Page refresh");
 define("_FN_SETUP_ADMINPROFILE","Administrator profile");
 define("_FN_SETUP_ADMINTXT","To administrate the site you need to create a new profile, the first registered user will be the administrator (he will have all the permissions):");
-define("_FN_SETUP_END","Congratulazioni!<br>FLATNUKE installation is completed!");
+define("_FN_SETUP_END","Congratulazioni!<br />FLATNUKE installation is completed!");
 define("_STICKYNEWS","Sticky news");
 define("_UNSTICKYNEWS","Normal news");
 define("_SEARCHTAG","Search the tag");

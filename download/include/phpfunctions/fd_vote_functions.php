@@ -11,15 +11,16 @@ include_once("shared.php");
 
 if (!file_exists($fdiplogfile)) {
 	if (!is_dir(_FN_VAR_DIR."/fdplus"))
-		fn_mkdir(_FN_VAR_DIR."/fdplus/",0777);
-	fnwrite($fdiplogfile," ","w",array());
-}
+	fn_mkdir(_FN_VAR_DIR."/fdplus/",0777);
 
+	fnwrite($fdiplogfile," ","w",array());
+
+}
 /**
  * Aggiunge un voto
  *
  * Funzione che si occupa di aggiungere un voto seguendo le indicazioni del form di invio
- * e controllando che l'utente non abbia gi√† votato.
+ * e controllando che l'utente non abbia gi‡ votato.
  *
  * @author Aldo Boccacci
  * @since 0.8
@@ -71,7 +72,7 @@ function fd_add_vote(){
 	$tempdesc['totalvote'] = $tempdesc['totalvote']+1;
 	$tempdesc['totalscore'] = $tempdesc['totalscore']+$fdvote;
 
-	//se non √® gestito da fd+ ritorno
+	//se non Ë gestito da fd+ ritorno
 	if (!file_exists($fdfilename.".description")) return;
 
 	save_description($fdfilename,$tempdesc);
@@ -106,32 +107,32 @@ function fd_encode_ip($ip){
  * @author Aldo Boccacci
  */
 function fd_check_ip_log_data() {
-	global $fdiplogfile;
-	if ($fdiplogfile=="") $fdiplogfile = _FN_VAR_DIR."/fdplus/fdipvotelog.php";
-	if (!check_path($fdiplogfile,"","true")) fd_die("IP log file is not valid! fd_vote_functions: ".__LINE__);
+global $fdiplogfile;
+if ($fdiplogfile=="") $fdiplogfile = _FN_VAR_DIR."/fdplus/fdipvotelog.php";
+if (!check_path($fdiplogfile,"","true")) fd_die("IP log file is not valid! fd_vote_functions: ".__LINE__);
 
-	$old_data = load_ip_log_data();
-	$newdata = array();
-	if (count($old_data)>0){
-		$data = array();
-		foreach($old_data as $data){
+$old_data = load_ip_log_data();
+$newdata = array();
+if (count($old_data)>0){
+	$data = array();
+	foreach($old_data as $data){
 // 	echo "time:".time();
 // 	echo "<br>file:".$data['time']."<br>";
 // 	echo (time()-$data['time']);
-			if ($data['time']>(time()-86400)) {
-//				echo $data['path']." √® vecchio";
-				$newdata[] = $data;
-			}
-//			echo "√® minore";
-//			$newdata[] = $data;
+		if ($data['time']>(time()-86400)) {
+// 		echo $data['path']." Ë vecchio";
+		$newdata[] = $data;
 		}
+// 		echo "Ë minore";
+// 			$newdata[] = $data;
 	}
-//	print_r($newdata);
+}
+// 	print_r($newdata);
 	save_ip_log_data($newdata);
 }
 
 /**
- * Restituisce true se l'utente pu√≤ votare. Restituisce FALSE se l'utente ha gi√† votato questo file
+ * Restituisce true se l'utente puÚ votare. Restituisce FALSE se l'utente ha gi‡ votato questo file
  */
 function fd_user_can_vote($file ){
 
@@ -167,42 +168,46 @@ return TRUE;
  */
 function save_ip_log_data($data){
 
-	global $fdiplogfile;
-	if ($fdiplogfile=="") $fdiplogfile = _FN_VAR_DIR."/fdplus/fdipvotelog.php";
-	if (!check_path($fdiplogfile,"","true")) fd_die("IP log file is not valid! fd_vote_functions: ".__LINE__);
+global $fdiplogfile;
+if ($fdiplogfile=="") $fdiplogfile = _FN_VAR_DIR."/fdplus/fdipvotelog.php";
+if (!check_path($fdiplogfile,"","true")) fd_die("IP log file is not valid! fd_vote_functions: ".__LINE__);
 
-	if (!is_array($data)){
-		fdlogf("\$data must be an array! ".__FILE__.": line ".__LINE__, "Error");
-	}
+if (!is_array($data)){
+	fdlogf("\$data must be an array! ".__FILE__.": line ".__LINE__, "Error");
+}
 
-	$datastring = "<votelog>";
+$datastring = "<votelog>";
 
-	if (count($data)>0){
-		$file = array();
-		foreach ($data as $votedata){
-			if (check_var($votedata['md5ip'],"alnum")){
-				$md5ip = $votedata['md5ip'];
-			}
-			else return;
-			if (check_var($votedata['time'],"digit")){
-				$time = $votedata['time'];
-			}
-			else return;
-			if (check_path($votedata['path'],"sections","false")){
-				$path = $votedata['path'];
-			}
-			else return;
-
-			$datastring .= "\n\t<entry>
-			<md5ip>$md5ip</md5ip>
-			<time>$time</time>
-			<path>$path</path>
-			</entry>";
+if (count($data)>0){
+	$file = array();
+	foreach ($data as $votedata){
+		if (check_var($votedata['md5ip'],"alnum")){
+			$md5ip = $votedata['md5ip'];
 		}
+		else return;
+		if (check_var($votedata['time'],"digit")){
+			$time = $votedata['time'];
+		}
+		else return;
+		if (check_path($votedata['path'],"sections","false")){
+			$path = $votedata['path'];
+		}
+		else return;
+
+		$datastring .= "\n\t<entry>
+		<md5ip>$md5ip</md5ip>
+		<time>$time</time>
+		<path>$path</path>
+	</entry>";
 	}
-	$datastring .= "\n</votelog>";
+
+
+
+}
+$datastring .= "\n</votelog>";
 	if (preg_match("/\<\?/",$datastring) or preg_match("/\?\>/",$datastring)) continue;
-	fnwrite($fdiplogfile, "<?xml version='1.0' encoding='UTF-8'?>\n".$datastring,"w",array("nonull")); // ISO-8859-1 to UTF-8
+
+	fnwrite($fdiplogfile, "<?xml version='1.0' encoding='ISO-8859-1'?>\n".$datastring,"w",array("nonull"));
 }
 
 /**
@@ -236,12 +241,12 @@ function load_ip_log_data(){
 	$item= array();
 	foreach ($xml->entry as $item){
 		$path = "";
-		$path = (string)$item->path;
+		$path = utf8_decode((string)$item->path);
 		if (!check_path($path,"sections/","false")) continue;
 		$md5ip = "";
-		$md5ip = (string)$item->md5ip;
+		$md5ip = utf8_decode((string)$item->md5ip);
 		if (!ctype_alnum($md5ip)) continue;
-		$time = (string)$item->time;
+		$time = utf8_decode((string)$item->time);
 		if (!ctype_digit($time)) continue;
 
 		$data[$counter]['md5ip']= $md5ip;
@@ -255,7 +260,7 @@ function load_ip_log_data(){
 
 /**
  * Carica i dati relativi ai voti.
- * Questa √® la vecchia funzione che viene mantenuta perch√® viene chiamata
+ * Questa Ë la vecchia funzione che viene mantenuta perchË viene chiamata
  * nel caso che simplexml_load_file fallisca il suo compito.
  *
  * Questa funzione carica i dati presenti nel file che tiene traccia dei voti espressi
@@ -366,7 +371,7 @@ $mod = _FN_MOD;
 // else return;
 
 //---------------------------------------------------------
-//ORA QUESTO CODICE √à INSERITO IN FDVIEW.PHP
+//ORA QUESTO CODICE » INSERITO IN FDVIEW.PHP
 //IN MODO CHE VENGA AGGIORNATO PRIMA DELLA VISUALIZZAZIONE
 //---------------------------------------------------------
 //CONTROLLO COSA FARE
@@ -429,10 +434,10 @@ if (!_FN_IS_GUEST){
 
 if (fd_user_can_vote($filename)){
 
-//CONTO I FORM GI√Ä STAMPATI
+//CONTO I FORM GI¿ STAMPATI
 global $fdcountform;
 if (!isset($fdcountform)){
-// 	echo "non √® settata<br>";
+// 	echo "non Ë settata<br>";
 	$GLOBALS['fdcountform'] = 0;
 }
 else $fdcountform++;
